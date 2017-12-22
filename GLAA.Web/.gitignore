@@ -1,0 +1,5 @@
+﻿**/css/*.min.*
+**/css/*.min.*.map
+**/js/*.min.*
+**/js/*.min.*.map
+**/secrets/

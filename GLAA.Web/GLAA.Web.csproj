@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-GLAA.Web.Core-9F5397C7-4871-4566-A542-1DD3A67ADD4E</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Helpers\HtmlHelpers.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\sass\accordion.css">
+      <DependentUpon>accordion.scss</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\sass\accordion.min.css">
+      <DependentUpon>accordion.css</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\sass\admin\application-list.css">
+      <DependentUpon>application-list.scss</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\sass\licence\statuses.css">
+      <DependentUpon>statuses.scss</DependentUpon>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\AlternativeBusinessRepresentative\" />
+    <Folder Include="Views\AlternativeBusinessRepresentatives\" />
+    <Folder Include="Views\DirectorOrPartner\" />
+    <Folder Include="Views\DirectorsOrPartners\" />
+    <Folder Include="Views\JobTitle\" />
+    <Folder Include="Views\NamedIndividual\" />
+    <Folder Include="Views\NamedIndividuals\" />
+    <Folder Include="Views\PrincipalAuthority\" />
+    <Folder Include="Views\Organisation\" />
+    <Folder Include="Views\OrganisationDetails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GLAA.Services\GLAA.Services.csproj" />
+    <ProjectReference Include="..\GLAA.ViewModels\GLAA.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

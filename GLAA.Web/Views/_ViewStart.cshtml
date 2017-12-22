@@ -1,0 +1,18 @@
+﻿
+@using Microsoft.AspNetCore.Http
+@{
+
+    var controller = ViewContext.RouteData.Values["Controller"];
+    var controllerName = Convert.ToString(controller);
+    string layoutFile;
+    switch (controllerName)
+    {
+        case "Admin":
+            layoutFile = "~/Views/Shared/_GOV.UKAdminLayout.cshtml";
+            break;
+        default:
+            layoutFile = "~/Views/Shared/_GOV.UKLayout.cshtml";
+            break;
+    }
+    Layout = layoutFile;
+}
