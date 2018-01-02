@@ -1,0 +1,41 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: glaa-db
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: glaa-db
+    spec:
+      containers:
+      - name: glaa-test-db
+        image: quay.io/ukhomeofficedigital/glaa-db:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 1433        
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sa-pass
+              key: supersecret
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db_user
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db_pass
+        resources:
+          limits:
+            memory: "4096Mi"
+          requests:
+            memory: "2048Mi"

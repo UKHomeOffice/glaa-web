@@ -1,0 +1,29 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: glaa-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: glaa-web
+    spec:
+      containers:
+      - name: glaa-test-core
+        image: quay.io/ukhomeofficedigital/glaa-web:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80
+        env:
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: db_user          
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: db_pass                
