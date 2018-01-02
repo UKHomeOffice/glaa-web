@@ -446,30 +446,10 @@ namespace GLAA.Web.Controllers
             return View($"Fees.{id}");
         }
 
-        [Route("Licence/Apply/Declaration/Part/{id}")]
-        public IActionResult Declaration(int id)
-        {
-            return View($"Declaration.{id}");
-        }
-
         [Route("Licence/Apply/Summary/Part/{id}")]
         public IActionResult Summary(int id)
         {
             return View($"Summary.{id}");
-        }
-
-        [Route("Licence/Declaration")]
-        [HttpGet]
-        public IActionResult Declaration()
-        {
-            var licenceApplicationModel = new LicenceApplicationViewModel();
-            return View(licenceApplicationModel);
-        }
-
-        [HttpPost]
-        public IActionResult SaveDeclaration()
-        {
-            return View("TaskList");
         }
 
         [Route("Licence/SubmitApplication")]

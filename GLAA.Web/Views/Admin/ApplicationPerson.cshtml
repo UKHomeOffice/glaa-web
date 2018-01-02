@@ -1,8 +1,17 @@
 ﻿@{
     ViewBag.Title = "ApplicationPerson";
-    var name = Request.QueryString["name"];
-    var personType = Request.QueryString["personType"];
-    var id = Request.QueryString["id"];
+
+    var queryString = Context.Request.Query;
+
+    queryString.TryGetValue("name", out var nameValue);
+    var name = nameValue.ToString();
+
+    queryString.TryGetValue("personType", out var personTypeValue);
+    var personType = personTypeValue.ToString();
+
+
+    queryString.TryGetValue("id", out var idValue);
+    var id = int.Parse(idValue);
 }
 
 <main id="content" role="main">
