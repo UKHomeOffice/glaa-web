@@ -10,7 +10,7 @@ pipeline:
       - docker build -t glaa-db kubedb/
     when:
       branch: master
-      event: push
+      event: push 
   image_to_quay:
     image: docker:17.09-dind
     environment:
