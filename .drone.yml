@@ -38,6 +38,6 @@ services:
   dind:
     image: docker:17.09-dind
     privileged: true
-    command:
+    command: 
       - "-s"
       - "overlay"
