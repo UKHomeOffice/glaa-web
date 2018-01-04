@@ -34,10 +34,3 @@ pipeline:
     when:
       event: [deployment, push]
       branch: master
-
-services:
-  dind:
-    image: docker:17.09-dind 
-    command: 
-      - "-s"
-      - "overlay"
