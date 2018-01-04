@@ -1,36 +1,54 @@
 pipeline:
 
   build_images:
-    image: docker:17.09-dind
+
+    image: docker:17.09-ce
+
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
+
     commands:
       - docker build -t glaa-web .
       - docker build -t glaa-db kubedb/
+
     when:
       branch: master
       event: push 
+
   image_to_quay:
-    image: docker:17.09-dind 
+
+    image: docker:17.09-ce
+
     secrets:
       - docker_password    
+
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
+
     commands:
       - docker login -u="ukhomeofficedigital+glaa" -p=$${DOCKER_PASSWORD} quay.io
-      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:${DRONE_COMMIT_SHA}
+      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:latest
-      - docker push quay.io/ukhomeofficedigital/glaa-web:${DRONE_COMMIT_SHA}
-      - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
+      - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:$${DRONE_COMMIT_SHA}
       - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:latest
-      - docker push quay.io/ukhomeofficedigital/glaa-db:${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/glaa-db:$${DRONE_COMMIT_SHA}
+
     when:
       branch: master
       event: push
+
   deploy_to_not_prod:
+
     image: quay.io/ukhomeofficedigital/kd:v0.3.1
+
+    secrets:
+      - kube_token_acp_notprod
+      - kube_server_acp_notprod 
+
     commands:
       - ./deploy.sh
+
     when:
       event: [deployment, push]
       branch: master
