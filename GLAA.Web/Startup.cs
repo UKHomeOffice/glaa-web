@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using GLAA.Domain;
 using GLAA.Domain.Core;
@@ -108,7 +109,7 @@ namespace GLAA.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -178,6 +179,7 @@ namespace GLAA.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            BuildRoles(serviceProvider).Wait();
         }
 
         private List<LicenceStatus> GetDefaultStatuses()
@@ -199,6 +201,45 @@ namespace GLAA.Web
                 }
             }
             return defaultStatuses;
+        }
+
+        private async Task BuildRoles(IServiceProvider serviceProvider)
+        {
+            var rm = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
+
+            // TODO Actual names
+            // TODO put these in an enum so we can do more with them
+            var roleNames = new[] {"Administrator", "LabourProvider", "LabourUser", "OGDUser"};
+
+            foreach (var roleName in roleNames)
+            {
+                var exists = await rm.RoleExistsAsync(roleName);
+
+                if (!exists)
+                {
+                    await rm.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            var su = await um.FindByEmailAsync(Configuration.GetSection("SuperUser")["SuperUserEmail"]);
+
+            if (su == null)
+            {
+                su = new GLAAUser
+                {
+                    UserName = Configuration.GetSection("SuperUser")["SuperUserEmail"],
+                    Email = Configuration.GetSection("SuperUser")["SuperUserEmail"]
+                };
+                await um.CreateAsync(su, Configuration.GetSection("SuperUser")["SuperUserPassword"]);
+
+                su = await um.FindByEmailAsync(Configuration.GetSection("SuperUser")["SuperUserEmail"]);
+            }
+
+            if (!await um.IsInRoleAsync(su, "Administrator"))
+            {
+                await um.AddToRoleAsync(su, "Administrator");
+            }
         }
     }
 }
