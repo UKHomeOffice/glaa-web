@@ -1,10 +1,9 @@
 pipeline:
 
   build_images:
-    privileged: true
     image: docker:17.09-dind
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker build -t glaa-web .
       - docker build -t glaa-db kubedb/
@@ -14,7 +13,7 @@ pipeline:
   image_to_quay:
     image: docker:17.09-dind 
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+glaa" -p=${DOCKER_PASSWORD} quay.io
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:${DRONE_COMMIT_SHA}
@@ -37,7 +36,6 @@ pipeline:
 services:
   dind:
     image: docker:17.09-dind 
-    privileged: true
     command: 
       - "-s"
       - "overlay"
