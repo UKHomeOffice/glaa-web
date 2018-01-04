@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -11,8 +10,6 @@ namespace GLAA.Domain.Models
 {
     public class GLAAUser : IdentityUser
     {
-        [Key]
-        public string Id { get; set; }
         public virtual ICollection<Licence> Licences { get; set; }
 
         //public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<GLAAUser> manager)
