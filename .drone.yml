@@ -12,7 +12,7 @@ pipeline:
       branch: master
       event: push 
   image_to_quay:
-    image: docker:17.09-dind
+    image: docker:17.09-dind 
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
