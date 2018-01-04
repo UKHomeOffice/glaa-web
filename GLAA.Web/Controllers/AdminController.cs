@@ -9,7 +9,7 @@ using Microsoft.Extensions.Primitives;
 
 namespace GLAA.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         private readonly ISessionHelper session;
