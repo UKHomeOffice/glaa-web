@@ -52,7 +52,7 @@ namespace GLAA.Web
             //TODO: take DataSource intro environment
             var connectionString = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == EnvironmentName.Development ?
                 Configuration["GLAAContext"] :
-                $"Data Source=glaa-test-db-service.glaa-dev.svc.cluster.local,1433;Initial Catalog=GLAA_Core;Integrated Security=False;User Id={user};Password={password};MultipleActiveResultSets=True";
+                $"Data Source=glaa-db-service.glaa-dev.svc.cluster.local,1433;Initial Catalog=GLAA_Core;Integrated Security=False;User Id={user};Password={password};MultipleActiveResultSets=True";
 
             services.AddDbContext<GLAAContext>(options =>
                 options.UseSqlServer(connectionString));

@@ -13,7 +13,7 @@ spec:
       securityContext:
         runAsNonRoot: true       
       containers:
-      - name: glaa-test-db
+      - name: glaa-db
         image: quay.io/ukhomeofficedigital/glaa-db:latest
         imagePullPolicy: IfNotPresent
         ports:

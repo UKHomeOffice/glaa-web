@@ -2,13 +2,13 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: glaa-test-ingress
+  name: glaa-db-ingress
 spec:
   rules:
   - host: glaa-test.notprod.glaa.homeoffice.gov.uk
     http:
       paths:
       - backend:
-          serviceName: glaa-test-service
+          serviceName: glaa-db-service
           servicePort: 80
         path: /
