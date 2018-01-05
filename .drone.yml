@@ -45,6 +45,7 @@ pipeline:
     secrets:
       - kube_token_acp_notprod
       - kube_server_acp_notprod 
+      - sa_pass
 
     commands:
       - ./deploy.sh
