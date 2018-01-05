@@ -9,11 +9,11 @@ spec:
     metadata:
       labels:
         name: glaa-db
-    spec:
-      securityContext:
-        runAsNonRoot: true       
+    spec:  
       containers:
       - name: glaa-db
+        securityContext:
+          runAsNonRoot: true       
         image: quay.io/ukhomeofficedigital/glaa-db:latest
         imagePullPolicy: IfNotPresent
         ports:

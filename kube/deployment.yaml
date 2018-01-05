@@ -9,11 +9,11 @@ spec:
     metadata:
       labels:
         name: glaa-web
-    spec:
-      securityContext:
-        runAsNonRoot: true     
+    spec:  
       containers:
       - name: glaa-web
+        securityContext:
+          runAsNonRoot: true            
         image: quay.io/ukhomeofficedigital/glaa-web:latest
         imagePullPolicy: IfNotPresent
         ports:
