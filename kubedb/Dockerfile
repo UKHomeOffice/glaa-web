@@ -7,4 +7,7 @@ COPY ./db_setup.sql .
 COPY ./db_setup.sh .
 
 RUN chmod +x db_setup.sh
+
+USER mssql
+
 #CMD ./db_setup.sh
