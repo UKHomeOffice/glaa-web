@@ -30,6 +30,12 @@ namespace GLAA.Web
 {
     public class Startup
     {
+        private static readonly string[] FirstNames = { "Aaron", "Abdul", "Abe", "Abel", "Abraham", "Adam", "Adan", "Adrian", "Abby", "Abigail", "Adele", "Christina", "Doug", "Chantelle", "Adam", "Luke", "Conrad", "Moray" };
+        private static readonly string[] LastNames = { "Abbott", "Acosta", "Adams", "Adkins", "Aguilar", "Aguilara", "McDonald", "MacDonald", "Danson", "Spokes", "Grinnell", "Jackson" };
+        // TODO Actual names
+        // TODO put these in an enum so we can do more with them
+        private static readonly string[] RoleNames = { "Administrator", "LabourProvider", "LabourUser", "OGDUser" };
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder();
@@ -180,6 +186,8 @@ namespace GLAA.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
             BuildRoles(serviceProvider).Wait();
+            BuildAdminUser(serviceProvider).Wait();
+            BuildUsers(serviceProvider).Wait();
         }
 
         private List<LicenceStatus> GetDefaultStatuses()
@@ -203,16 +211,11 @@ namespace GLAA.Web
             return defaultStatuses;
         }
 
-        private async Task BuildRoles(IServiceProvider serviceProvider)
+        private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
             var rm = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
-
-            // TODO Actual names
-            // TODO put these in an enum so we can do more with them
-            var roleNames = new[] {"Administrator", "LabourProvider", "LabourUser", "OGDUser"};
-
-            foreach (var roleName in roleNames)
+            
+            foreach (var roleName in RoleNames)
             {
                 var exists = await rm.RoleExistsAsync(roleName);
 
@@ -221,6 +224,11 @@ namespace GLAA.Web
                     await rm.CreateAsync(new IdentityRole(roleName));
                 }
             }
+        }
+
+        private async Task BuildAdminUser(IServiceProvider serviceProvider)
+        {
+            var um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
 
             var su = await um.FindByEmailAsync(Configuration.GetSection("SuperUser")["SuperUserEmail"]);
 
@@ -239,6 +247,43 @@ namespace GLAA.Web
             if (!await um.IsInRoleAsync(su, "Administrator"))
             {
                 await um.AddToRoleAsync(su, "Administrator");
+            }
+        }
+
+        private static async Task BuildUsers(IServiceProvider serviceProvider)
+        {
+            var um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
+
+            if (um.Users.Count() <= 1)
+            {
+                var rnd = new Random();
+
+                for (var i = 0; i < 50; i++)
+                {
+                    string un;
+                    do
+                    {
+                        un =
+                            $"{FirstNames[rnd.Next(FirstNames.Length)]}.{LastNames[rnd.Next(LastNames.Length)]}@example.com";
+                    } while (await um.FindByEmailAsync(un) != null);
+
+                    var user = new GLAAUser
+                    {
+                        UserName = un,
+                        Email = un
+                    };
+                    var pw = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+
+                    var createResult = await um.CreateAsync(user, pw);
+
+                    if (createResult.Succeeded)
+                    {
+                        user = await um.FindByEmailAsync(un);
+                        var role = RoleNames[rnd.Next(RoleNames.Length)];
+
+                        await um.AddToRoleAsync(user, role);
+                    }
+                }
             }
         }
     }
