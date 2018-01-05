@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: glaa-test-ingress
+  name: glaa-web-ingress
   annotations:
     kubernetes.io/ingress.allow-http: "true"
 spec:
@@ -11,6 +11,6 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: glaa-test-service
+          serviceName: glaa-web-service
           servicePort: 80
         path: /
