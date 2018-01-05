@@ -10,6 +10,8 @@ spec:
       labels:
         name: glaa-db
     spec:
+      securityContext:
+        runAsNonRoot: true       
       containers:
       - name: glaa-test-db
         image: quay.io/ukhomeofficedigital/glaa-db:latest
@@ -39,5 +41,3 @@ spec:
             memory: "4096Mi"
           requests:
             memory: "2048Mi"
-        securityContext:
-          runAsNonRoot: true

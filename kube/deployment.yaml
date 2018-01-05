@@ -10,6 +10,8 @@ spec:
       labels:
         name: glaa-web
     spec:
+      securityContext:
+        runAsNonRoot: true     
       containers:
       - name: glaa-test-core
         image: quay.io/ukhomeofficedigital/glaa-web:latest
@@ -26,6 +28,4 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: db-secret
-                key: db_pass
-        securityContext:
-          runAsNonRoot: true                               
+                key: db_pass                              
