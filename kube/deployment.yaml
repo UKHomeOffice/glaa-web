@@ -26,4 +26,6 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: db-secret
-                key: db_pass                
+                key: db_pass
+        securityContext:
+          runAsNonRoot: true                               
