@@ -38,8 +38,7 @@ namespace GLAA.Services.Admin
             foreach (var role in roles)
             {
                 var users = await um.GetUsersInRoleAsync(role);
-
-                result.Users.Add(role, mapper.Map(users, new List<AdminUserViewModel>()));
+                result.Users.Add(role, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
             }
 
             return result;
