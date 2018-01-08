@@ -17,16 +17,18 @@ namespace GLAA.Web.Controllers
         private readonly IAdminLicenceListViewModelBuilder listBuilder;
         private readonly IAdminLicenceViewModelBuilder licenceBuilder;
         private readonly IAdminLicencePostDataHandler postDataHandler;
+        private readonly IAdminUserListViewModelBuilder userBuilder;
 
         public AdminController(ISessionHelper session, IAdminHomeViewModelBuilder homeBuilder,
             IAdminLicenceListViewModelBuilder listBuilder,
-            IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler)
+            IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler, IAdminUserListViewModelBuilder userBuilder)
         {
             this.session = session;
             this.homeBuilder = homeBuilder;
             this.listBuilder = listBuilder;
             this.licenceBuilder = licenceBuilder;
             this.postDataHandler = postDataHandler;
+            this.userBuilder = userBuilder;
         }
 
         public ActionResult Index()
@@ -67,6 +69,13 @@ namespace GLAA.Web.Controllers
         public ActionResult ApplicationPerson()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Users()
+        {
+            var model = userBuilder.Build().GetAwaiter().GetResult();
+            return View(model);
         }
     }
 }

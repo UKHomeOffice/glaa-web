@@ -100,6 +100,7 @@ namespace GLAA.Web
             services.AddTransient<IAdminLicenceListViewModelBuilder, AdminLicenceListViewModelBuilder>();
             services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
+            services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
@@ -261,16 +262,20 @@ namespace GLAA.Web
                 for (var i = 0; i < 50; i++)
                 {
                     string un;
+                    string fn;
                     do
                     {
-                        un =
-                            $"{FirstNames[rnd.Next(FirstNames.Length)]}.{LastNames[rnd.Next(LastNames.Length)]}@example.com";
+                        var f = FirstNames[rnd.Next(FirstNames.Length)];
+                        var l = LastNames[rnd.Next(LastNames.Length)];
+                        un = $"{f}.{l}@example.com";
+                        fn = $"{f} {l}";
                     } while (await um.FindByEmailAsync(un) != null);
 
                     var user = new GLAAUser
                     {
                         UserName = un,
-                        Email = un
+                        Email = un,
+                        FullName = fn
                     };
                     var pw = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
