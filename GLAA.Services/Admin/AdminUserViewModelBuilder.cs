@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.ViewModels.Admin;
@@ -28,7 +29,7 @@ namespace GLAA.Services.Admin
             var user = um.FindByIdAsync(id).GetAwaiter().GetResult();
 
             var model = mapper.Map(user, New());
-            model.Roles = um.GetRolesAsync(user).GetAwaiter().GetResult();
+            model.Role = um.GetRolesAsync(user).GetAwaiter().GetResult().Single();
 
             return model;
         }
