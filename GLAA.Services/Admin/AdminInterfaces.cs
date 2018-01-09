@@ -27,4 +27,9 @@ namespace GLAA.Services.Admin
     {
         Task<AdminUserListViewModel> Build();
     }
+
+    public interface IAdminUserViewModelBuilder : IViewModelBuilder<AdminUserViewModel>
+    {
+        AdminUserViewModel Build(string id);
+    }
 }

@@ -17,17 +17,20 @@ namespace GLAA.Web.Controllers
         private readonly IAdminLicenceListViewModelBuilder listBuilder;
         private readonly IAdminLicenceViewModelBuilder licenceBuilder;
         private readonly IAdminLicencePostDataHandler postDataHandler;
-        private readonly IAdminUserListViewModelBuilder userBuilder;
+        private readonly IAdminUserListViewModelBuilder userListBuilder;
+        private readonly IAdminUserViewModelBuilder userBuilder;
 
         public AdminController(ISessionHelper session, IAdminHomeViewModelBuilder homeBuilder,
             IAdminLicenceListViewModelBuilder listBuilder,
-            IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler, IAdminUserListViewModelBuilder userBuilder)
+            IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler,
+            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder)
         {
             this.session = session;
             this.homeBuilder = homeBuilder;
             this.listBuilder = listBuilder;
             this.licenceBuilder = licenceBuilder;
             this.postDataHandler = postDataHandler;
+            this.userListBuilder = userListBuilder;
             this.userBuilder = userBuilder;
         }
 
@@ -74,7 +77,15 @@ namespace GLAA.Web.Controllers
         [HttpGet]
         public ActionResult Users()
         {
-            var model = userBuilder.Build().GetAwaiter().GetResult();
+            var model = userListBuilder.Build().GetAwaiter().GetResult();
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("Admin/UserDetails/{id}")]
+        public ActionResult UserDetails(string id)
+        {
+            var model = userBuilder.Build(id);
             return View(model);
         }
     }

@@ -101,6 +101,7 @@ namespace GLAA.Web
             services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
+            services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
@@ -180,11 +181,11 @@ namespace GLAA.Web
                     name: "applicationGet",
                     template: "Licence/Apply/{controller}/{action}/{id}");
                 routes.MapRoute(
-                    name: "applicationPost",
-                    template: "Licence/Apply/{controller}/{action}");
-                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "applicationPost",
+                    template: "Licence/Apply/{controller}/{action}");
             });
             BuildRoles(serviceProvider).Wait();
             BuildAdminUser(serviceProvider).Wait();

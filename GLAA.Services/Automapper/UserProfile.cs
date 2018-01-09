@@ -14,6 +14,7 @@ namespace GLAA.Services.Automapper
             CreateMap<GLAAUser, AdminUserViewModel>()
                 .ForMember(x => x.Email, opt => opt.MapFrom(y => y.Email))
                 .ForMember(x => x.FullName, opt => opt.MapFrom(y => y.FullName))
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.Id))
                 .ForAllOtherMembers(opt => opt.Ignore());
         }
     }
