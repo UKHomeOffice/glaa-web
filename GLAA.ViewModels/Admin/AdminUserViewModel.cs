@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GLAA.ViewModels.Admin
 {
@@ -11,5 +9,7 @@ namespace GLAA.ViewModels.Admin
         public string FullName { get; set; }
 
         public string Email { get; set; }
+
+        public IEnumerable<string> Roles { get; set; }
     }
 }

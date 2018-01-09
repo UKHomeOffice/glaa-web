@@ -27,7 +27,10 @@ namespace GLAA.Services.Admin
         {
             var user = um.FindByIdAsync(id).GetAwaiter().GetResult();
 
-            return mapper.Map(user, New());
+            var model = mapper.Map(user, New());
+            model.Roles = um.GetRolesAsync(user).GetAwaiter().GetResult();
+
+            return model;
         }
     }
 }

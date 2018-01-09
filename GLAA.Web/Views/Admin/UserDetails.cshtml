@@ -12,6 +12,15 @@
         <td>Email address</td>
         <td>@Model.Email</td>
     </tr>
+    <tr>
+        <td>Roles</td>
+        <td>
+            @foreach (var role in Model.Roles)
+            {
+                @role<br/>
+            }
+        </td>
+    </tr>
     </tbody>
 </table>
 
