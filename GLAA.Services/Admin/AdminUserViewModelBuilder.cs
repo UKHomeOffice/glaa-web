@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
+using GLAA.Repository;
 using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,11 +13,13 @@ namespace GLAA.Services.Admin
     {
         private readonly UserManager<GLAAUser> um;
         private readonly IMapper mapper;
+        private readonly IRoleRepository roleRepository;
 
-        public AdminUserViewModelBuilder(IServiceProvider serviceProvider, IMapper mp)
+        public AdminUserViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr)
         {
             um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
             mapper = mp;
+            roleRepository = rr;
         }
 
         public AdminUserViewModel New()
@@ -29,7 +32,8 @@ namespace GLAA.Services.Admin
             var user = um.FindByIdAsync(id).GetAwaiter().GetResult();
 
             var model = mapper.Map(user, New());
-            model.Role = um.GetRolesAsync(user).GetAwaiter().GetResult().Single();
+            var role = um.GetRolesAsync(user).GetAwaiter().GetResult().Single();
+            model.Role = roleRepository.GetByName(role).ReadableName;
 
             return model;
         }

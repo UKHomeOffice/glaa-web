@@ -32,6 +32,7 @@ namespace GLAA.Domain
         public DbSet<Conviction> Convictions { get; set; }
         public DbSet<OffenceAwaitingTrial> OffencesAwaitingTrial { get; set; }
         public DbSet<PreviousTradingName> PreviousTradingNames { get; set; }
+        public DbSet<RoleDescription> RoleDescriptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            

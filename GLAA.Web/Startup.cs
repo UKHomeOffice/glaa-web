@@ -36,6 +36,34 @@ namespace GLAA.Web
         // TODO put these in an enum so we can do more with them
         private static readonly string[] RoleNames = { "Administrator", "LabourProvider", "LabourUser", "OGDUser" };
 
+        private static readonly RoleDescription[] Roles =
+        {
+            new RoleDescription
+            {
+                Name = "Administrator",
+                ReadableName = "Administrator",
+                Description = "A role for administrators"
+            },
+            new RoleDescription
+            {
+                Name = "LabourProvider",
+                ReadableName = "Labour Provider",
+                Description = "A role for labour providers"
+            },
+            new RoleDescription
+            {
+                Name = "LabourUser",
+                ReadableName = "Labour User",
+                Description = "A role for labour users"
+            },
+            new RoleDescription
+            {
+                Name = "OGDUser",
+                ReadableName = "OGD User",
+                Description = "A role for Other Government Department users"
+            },
+        };
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder();
@@ -96,6 +124,7 @@ namespace GLAA.Web
 
             // admin profile
             services.AddTransient<ILicenceRepository, LicenceRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IAdminHomeViewModelBuilder, AdminHomeViewModelBuilder>();
             services.AddTransient<IAdminLicenceListViewModelBuilder, AdminLicenceListViewModelBuilder>();
             services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
@@ -216,14 +245,20 @@ namespace GLAA.Web
         private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
             var rm = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var rr = serviceProvider.GetRequiredService<IRoleRepository>();
             
-            foreach (var roleName in RoleNames)
+            foreach (var role in Roles)
             {
-                var exists = await rm.RoleExistsAsync(roleName);
+                var exists = await rm.RoleExistsAsync(role.Name);
 
                 if (!exists)
                 {
-                    await rm.CreateAsync(new IdentityRole(roleName));
+                    await rm.CreateAsync(new IdentityRole(role.Name));
+                    var desc = rr.Create<RoleDescription>();
+                    desc.Name = role.Name;
+                    desc.Description = role.Description;
+                    desc.ReadableName = role.ReadableName;
+                    rr.Upsert(role);
                 }
             }
         }
