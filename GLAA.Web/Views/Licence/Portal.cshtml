@@ -8,12 +8,12 @@
 <div class="grid-row">
     
     <div class="column-two-thirds">
-        <section class="application-summary">
+        <section class="govuk-box-highlight">
             <h1 class="heading-xlarge">Application Complete</h1>
             <h2 class="heading-medium">Your Application Reference is</h2>
-            <h2 class="heading-large">@Model.ApplicationId</h2>
-            <h3 class="heading-small">We have sent you an email confirmation</h3>
+            <h2 class="heading-large">@Model.ApplicationId</h2>            
         </section>
+        <p>We have sent you a confirmation email</p>
         <h2 class="heading-large">What happens next?</h2>
         <p>The next step is to pay your application and inspection fee using the steps below.</p>
         <p>Once you have paid the application fee your application will be reviewed and processed by the team at the GLAA</p>
@@ -110,9 +110,9 @@
             <h2>Portal</h2>
             <nav>
                 <ul>
-                    <li><a href="@Url.Action("Licence", "Portal")">Summary</a></li>
-                    <li><a href="@Url.Action("Licence", "TaskList")">View licence</a></li>
-                    <li><a href="@Url.Action("Account", "UserProfile")">Account</a></li>
+                    <li><a href="@Url.Action("Licence", "Portal")">Licence status</a></li>
+                    <li><a href="@Url.Action("Licence", "ApplicationView")">View your application</a></li>
+                    <li><a href="@Url.Action("Account", "UserProfile")">Your account</a></li>
                 </ul>
             </nav>
         </aside>

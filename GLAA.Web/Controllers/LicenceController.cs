@@ -509,24 +509,6 @@ namespace GLAA.Web.Controllers
             return View(model);
         }
 
-        [Route("Licence/DecisionWait")]
-        [HttpGet]
-        public IActionResult DecisionWait()
-        {
-            var licenceId = Session.GetCurrentLicenceId();
-
-            var model = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
-            return View(model);
-        }
-
-        [Route("Licence/PayFee")]
-        [HttpGet]
-        public IActionResult PayFee()
-        {
-            var licenceApplicationModel = new LicenceApplicationViewModel();
-            return View(licenceApplicationModel);
-        }
-
         [HttpGet]
         [Route("Licence/Resume")]
         public IActionResult Resume()
