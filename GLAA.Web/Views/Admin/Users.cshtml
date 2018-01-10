@@ -1,0 +1,26 @@
+﻿@model GLAA.ViewModels.Admin.AdminUserListViewModel
+
+<h2 class="heading-large admin-page-title">Users</h2>
+@foreach (var group in Model.Users)
+{
+    <h2 class="heading-medium">@group.Key</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Full name</th>
+            <th>Email address</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in group.Value)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td><a href="@Url.Action("UserDetails", "Admin", new {id = user.Id})">Edit</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

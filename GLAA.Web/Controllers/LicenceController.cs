@@ -8,6 +8,7 @@ using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GLAA.Web.Controllers
 {
@@ -493,25 +494,30 @@ namespace GLAA.Web.Controllers
             };
             LicenceApplicationPostDataHandler.Update(licenceId, model);
 
-            return RedirectToAction("DecisionWait");
+            return RedirectToAction("Portal");
         }
 
-        [Route("Licence/DecisionWait")]
+        [Route("Licence/Portal")]
         [HttpGet]
-        public IActionResult DecisionWait()
+        public IActionResult Portal()
         {
             var licenceId = Session.GetCurrentLicenceId();
 
-            var model = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+            var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
             return View(model);
         }
 
-        [Route("Licence/PayFee")]
+        [Authorize]
+        [Route("Licence/ViewApplication")]
         [HttpGet]
-        public IActionResult PayFee()
+        public IActionResult ViewApplication()
         {
-            var licenceApplicationModel = new LicenceApplicationViewModel();
-            return View(licenceApplicationModel);
+            var licenceId = Session.GetCurrentLicenceId();
+
+            var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
+            return View(model);
         }
 
         [HttpGet]
