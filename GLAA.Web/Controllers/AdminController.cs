@@ -88,7 +88,7 @@ namespace GLAA.Web.Controllers
         public ActionResult EditUser(string id)
         {
             var model = userBuilder.Build(id);
-            return View("UserDetails", model);
+            return View(model);
         }
 
         [HttpPost]
