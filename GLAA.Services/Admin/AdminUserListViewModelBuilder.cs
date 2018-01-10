@@ -14,14 +14,14 @@ namespace GLAA.Services.Admin
     public class AdminUserListViewModelBuilder : IAdminUserListViewModelBuilder
     {
         private readonly UserManager<GLAAUser> um;
-        private readonly RoleManager<IdentityRole> rm;
+        private readonly RoleManager<GLAARole> rm;
         private readonly IRoleRepository roleRepository;
         private readonly IMapper mapper;
 
-        public AdminUserListViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr)
+        public AdminUserListViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr, RoleManager<GLAARole> rm, UserManager<GLAAUser> um)
         {
-            um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
-            rm = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            this.um = um;
+            this.rm = rm;
             mapper = mp;
             roleRepository = rr;
         }

@@ -25,6 +25,7 @@ namespace GLAA.Web.Controllers
     {
         private readonly UserManager<GLAAUser> _userManager;
         private readonly SignInManager<GLAAUser> _signInManager;
+        private readonly RoleManager<GLAARole> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ISessionHelper session;
@@ -33,6 +34,7 @@ namespace GLAA.Web.Controllers
         public AccountController(
             UserManager<GLAAUser> userManager,
             SignInManager<GLAAUser> signInManager,
+            RoleManager<GLAARole> roleManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger, 
             ILicenceApplicationPostDataHandler licencePostDataHandler, 
@@ -41,6 +43,7 @@ namespace GLAA.Web.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _roleManager = roleManager;
             _logger = logger;
             this.licencePostDataHandler = licencePostDataHandler;
             this.session = session;
@@ -75,7 +78,16 @@ namespace GLAA.Web.Controllers
                 {
                     _logger.LogInformation("User logged in.");
 
-                    //TODO is this an admin login or an applicant login
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    var isLabourProvider = await _userManager.IsInRoleAsync(user, "LabourProvider");                    
+
+                    if (isLabourProvider)
+                    {
+                        _logger.LogInformation($"User {user.Email} is in role LabourProvider");
+
+                        return RedirectToAction("Portal", "Licence", null);
+                    }
+
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -248,8 +260,13 @@ namespace GLAA.Web.Controllers
                     licencePostDataHandler.Update(licenceId, x => x, model);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    // add role
+                    await _userManager.AddToRoleAsync(user, "LabourProvider");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");

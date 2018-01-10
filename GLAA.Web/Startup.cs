@@ -94,7 +94,7 @@ namespace GLAA.Web
 
             services.AddScoped<SignInManager<GLAAUser>, SignInManager<GLAAUser>>();
 
-            services.AddIdentity<GLAAUser, IdentityRole>()
+            services.AddIdentity<GLAAUser, GLAARole>()
                 .AddEntityFrameworkStores<GLAAContext>()
                 .AddDefaultTokenProviders();
 
@@ -244,7 +244,7 @@ namespace GLAA.Web
 
         private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
-            var rm = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var rm = serviceProvider.GetRequiredService<RoleManager<GLAARole>>();
             var rr = serviceProvider.GetRequiredService<IRoleRepository>();
             
             foreach (var role in Roles)
@@ -253,12 +253,7 @@ namespace GLAA.Web
 
                 if (!exists)
                 {
-                    await rm.CreateAsync(new IdentityRole(role.Name));
-                    var desc = rr.Create<RoleDescription>();
-                    desc.Name = role.Name;
-                    desc.Description = role.Description;
-                    desc.ReadableName = role.ReadableName;
-                    rr.Upsert(role);
+                    await rm.CreateAsync(new GLAARole(role.Name));
                 }
             }
         }
@@ -276,9 +271,14 @@ namespace GLAA.Web
                     UserName = Configuration.GetSection("SuperUser")["SuperUserEmail"],
                     Email = Configuration.GetSection("SuperUser")["SuperUserEmail"]
                 };
-                await um.CreateAsync(su, Configuration.GetSection("SuperUser")["SuperUserPassword"]);
+                var result = await um.CreateAsync(su, Configuration.GetSection("SuperUser")["SuperUserPassword"]);
 
-                su = await um.FindByEmailAsync(Configuration.GetSection("SuperUser")["SuperUserEmail"]);
+                if (result.Succeeded)
+                {
+                    su = await um.FindByEmailAsync(Configuration.GetSection("SuperUser")["SuperUserEmail"]);
+                } else {
+                    throw new Exception($"Could not create superuser {result.Errors.First().Description}");
+                }
             }
 
             if (!await um.IsInRoleAsync(su, "Administrator"))
