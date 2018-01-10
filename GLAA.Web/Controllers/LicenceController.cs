@@ -504,7 +504,16 @@ namespace GLAA.Web.Controllers
 
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
 
-            //var model = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+            return View(model);
+        }
+
+        [Route("Licence/ViewApplication")]
+        [HttpGet]
+        public IActionResult ViewApplication()
+        {
+            var licenceId = Session.GetCurrentLicenceId();
+
+            var model = LicenceApplicationViewModelBuilder.Build(licenceId);
 
             return View(model);
         }

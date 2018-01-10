@@ -10,14 +10,16 @@
     <div class="column-two-thirds">
         <section class="govuk-box-highlight">
             <h1 class="heading-xlarge">Application Complete</h1>
-            <h2 class="heading-medium">Your Application Reference is</h2>
-            <h2 class="heading-large">@Model.ApplicationId</h2>            
+            <p class="font-large">
+                Your reference number is<br/>
+                <b>@Model.ApplicationId</b>
+            </p>
         </section>
         <p>We have sent you a confirmation email</p>
         <h2 class="heading-large">What happens next?</h2>
         <p>The next step is to pay your application and inspection fee using the steps below.</p>
         <p>Once you have paid the application fee your application will be reviewed and processed by the team at the GLAA</p>
-        <p>This may take several weeks, in the meantime you can return here and <a href="@Url.Action("Licence", "Portal")">view your application progress</a> here.</p>
+        <p>This may take several weeks, in the meantime you can return here and <a href="@Url.Action("Portal", "Licence")">view your application progress</a> here.</p>
         <h3 class="heading-medium">How to pay</h3>
         <p>You can pay for your licence using one of the methods below, please note your licence will not be processed until payment 
         received.  This fee is non-refundable whether your licence is granted or refused.</p> 
@@ -110,9 +112,9 @@
             <h2>Portal</h2>
             <nav>
                 <ul>
-                    <li><a href="@Url.Action("Licence", "Portal")">Licence status</a></li>
-                    <li><a href="@Url.Action("Licence", "ApplicationView")">View your application</a></li>
-                    <li><a href="@Url.Action("Account", "UserProfile")">Your account</a></li>
+                    <li><a href="@Url.Action("Portal", "Licence")">Licence status</a></li>
+                    <li><a href="@Url.Action("ViewApplication", "Licence")">View my application</a></li>
+                    <li><a href="@Url.Action("UserProfile", "Account")">My account</a></li>
                 </ul>
             </nav>
         </aside>
