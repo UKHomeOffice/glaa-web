@@ -8,6 +8,7 @@ using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GLAA.Web.Controllers
 {
@@ -507,6 +508,7 @@ namespace GLAA.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         [Route("Licence/ViewApplication")]
         [HttpGet]
         public IActionResult ViewApplication()
