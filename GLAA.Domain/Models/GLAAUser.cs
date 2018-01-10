@@ -6,8 +6,8 @@ namespace GLAA.Domain.Models
 {
     public class GLAAUser : IdentityUser
     {
-        [Key]
-        public string Id { get; set; }
+        public string FullName { get; set; }
+
         public virtual ICollection<Licence> Licences { get; set; }
 
         //public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<GLAAUser> manager)

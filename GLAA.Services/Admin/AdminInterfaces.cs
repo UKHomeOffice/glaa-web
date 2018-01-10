@@ -1,4 +1,5 @@
-﻿using GLAA.ViewModels;
+﻿using System.Threading.Tasks;
+using GLAA.ViewModels;
 using GLAA.ViewModels.Admin;
 
 namespace GLAA.Services.Admin
@@ -20,5 +21,15 @@ namespace GLAA.Services.Admin
     public interface IAdminLicencePostDataHandler : IPostDataHandler<AdminLicenceViewModel>
     {
         void UpdateStatus(AdminLicenceViewModel model);
+    }
+
+    public interface IAdminUserListViewModelBuilder : IViewModelBuilder<AdminUserListViewModel>
+    {
+        Task<AdminUserListViewModel> Build();
+    }
+
+    public interface IAdminUserViewModelBuilder : IViewModelBuilder<AdminUserViewModel>
+    {
+        AdminUserViewModel Build(string id);
     }
 }

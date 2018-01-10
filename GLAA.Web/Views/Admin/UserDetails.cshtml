@@ -1,0 +1,22 @@
+﻿@model GLAA.ViewModels.Admin.AdminUserViewModel
+
+<h2 class="heading-large admin-page-title">Edit User</h2>
+
+<table class="table">
+    <tbody>
+    <tr>
+        <td>Full name</td>
+        <td>@Model.FullName</td>
+    </tr>
+    <tr>
+        <td>Email address</td>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <td>Role</td>
+        <td>@Model.Role</td>
+    </tr>
+    </tbody>
+</table>
+
+@Html.ActionLink("Back to list", "Users")
