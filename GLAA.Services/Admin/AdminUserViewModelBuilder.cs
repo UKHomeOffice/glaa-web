@@ -5,19 +5,20 @@ using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GLAA.Services.Admin
 {
     public class AdminUserViewModelBuilder : IAdminUserViewModelBuilder
     {
-        private readonly UserManager<GLAAUser> um;
+        private readonly UserManager<GLAAUser> userManager;
         private readonly IMapper mapper;
         private readonly IRoleRepository roleRepository;
 
-        public AdminUserViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr)
+        public AdminUserViewModelBuilder(UserManager<GLAAUser> um, IMapper mp, IRoleRepository rr)
         {
-            um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
+            userManager = um;
             mapper = mp;
             roleRepository = rr;
         }
@@ -29,11 +30,13 @@ namespace GLAA.Services.Admin
 
         public AdminUserViewModel Build(string id)
         {
-            var user = um.FindByIdAsync(id).GetAwaiter().GetResult();
+            var user = userManager.FindByIdAsync(id).GetAwaiter().GetResult();
 
             var model = mapper.Map(user, New());
-            var role = um.GetRolesAsync(user).GetAwaiter().GetResult().Single();
+            var role = userManager.GetRolesAsync(user).GetAwaiter().GetResult().Single();
             model.Role = roleRepository.GetByName(role).ReadableName;
+            model.AvailableRoles = roleRepository.GetAll<RoleDescription>().Select(r =>
+                new SelectListItem {Value = r.Name, Text = r.ReadableName, Selected = r.Name == role});
 
             return model;
         }

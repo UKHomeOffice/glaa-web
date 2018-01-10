@@ -19,11 +19,12 @@ namespace GLAA.Web.Controllers
         private readonly IAdminLicencePostDataHandler postDataHandler;
         private readonly IAdminUserListViewModelBuilder userListBuilder;
         private readonly IAdminUserViewModelBuilder userBuilder;
+        private readonly IAdminUserPostDataHandler userPostDataHandler;
 
         public AdminController(ISessionHelper session, IAdminHomeViewModelBuilder homeBuilder,
             IAdminLicenceListViewModelBuilder listBuilder,
             IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler,
-            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder)
+            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder, IAdminUserPostDataHandler updh)
         {
             this.session = session;
             this.homeBuilder = homeBuilder;
@@ -32,6 +33,7 @@ namespace GLAA.Web.Controllers
             this.postDataHandler = postDataHandler;
             this.userListBuilder = userListBuilder;
             this.userBuilder = userBuilder;
+            this.userPostDataHandler = updh;
         }
 
         public ActionResult Index()
@@ -82,11 +84,19 @@ namespace GLAA.Web.Controllers
         }
 
         [HttpGet]
-        [Route("Admin/UserDetails/{id}")]
-        public ActionResult UserDetails(string id)
+        [Route("Admin/EditUser/{id}")]
+        public ActionResult EditUser(string id)
         {
             var model = userBuilder.Build(id);
-            return View(model);
+            return View("UserDetails", model);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(AdminUserViewModel model)
+        {
+            userPostDataHandler.Update(model);
+
+            return RedirectToAction("Users", new {id = model.Id});
         }
     }
 }

@@ -131,6 +131,7 @@ namespace GLAA.Web
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
+            services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();

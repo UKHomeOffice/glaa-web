@@ -13,15 +13,16 @@ namespace GLAA.Services.Admin
 {
     public class AdminUserListViewModelBuilder : IAdminUserListViewModelBuilder
     {
-        private readonly UserManager<GLAAUser> um;
-        private readonly RoleManager<IdentityRole> rm;
+        private readonly UserManager<GLAAUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IRoleRepository roleRepository;
         private readonly IMapper mapper;
 
-        public AdminUserListViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr)
+        public AdminUserListViewModelBuilder(UserManager<GLAAUser> um, RoleManager<IdentityRole> rm, IMapper mp,
+            IRoleRepository rr)
         {
-            um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
-            rm = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            userManager = um;
+            roleManager = rm;
             mapper = mp;
             roleRepository = rr;
         }
@@ -35,12 +36,12 @@ namespace GLAA.Services.Admin
         {
             var result = New();
 
-            var roles = rm.Roles.Select(r => r.Name).OrderBy(role => role);
+            var roles = roleManager.Roles.Select(r => r.Name).OrderBy(role => role);
 
             foreach (var role in roles)
             {
                 var roleDescription = roleRepository.GetByName(role);
-                var users = await um.GetUsersInRoleAsync(role);
+                var users = await userManager.GetUsersInRoleAsync(role);
                 result.Users.Add(roleDescription.ReadableName, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
             }
 
