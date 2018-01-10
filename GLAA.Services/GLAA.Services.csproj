@@ -13,6 +13,7 @@
     <ProjectReference Include="..\GLAA.Domain\GLAA.Domain.csproj" />
     <ProjectReference Include="..\GLAA.Repository\GLAA.Repository.csproj" />
     <ProjectReference Include="..\GLAA.ViewModels\GLAA.ViewModels.csproj" />
+    <ProjectReference Include="..\Notify\Notify.csproj" />
   </ItemGroup>
 
 </Project>

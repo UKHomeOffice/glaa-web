@@ -94,6 +94,9 @@ namespace GLAA.Web
             services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
 
+            // notify
+            services.AddTransient<IEmailService, EmailService>();
+
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
 
