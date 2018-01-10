@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using GLAA.Domain.Models;
 using GLAA.Services.LicenceApplication;
+using GLAA.ViewModels.Account;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Core.Models.AccountViewModels;
 using GLAA.Web.Core.Services;
@@ -13,6 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ForgotPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ForgotPasswordViewModel;
+using ResetPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ResetPasswordViewModel;
 
 namespace GLAA.Web.Controllers
 {
@@ -71,6 +74,8 @@ namespace GLAA.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    //TODO is this an admin login or an applicant login
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

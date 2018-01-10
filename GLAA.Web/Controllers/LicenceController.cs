@@ -493,7 +493,20 @@ namespace GLAA.Web.Controllers
             };
             LicenceApplicationPostDataHandler.Update(licenceId, model);
 
-            return RedirectToAction("DecisionWait");
+            return RedirectToAction("Portal");
+        }
+
+        [Route("Licence/Portal")]
+        [HttpGet]
+        public IActionResult Portal()
+        {
+            var licenceId = Session.GetCurrentLicenceId();
+
+            var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
+            //var model = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+
+            return View(model);
         }
 
         [Route("Licence/DecisionWait")]

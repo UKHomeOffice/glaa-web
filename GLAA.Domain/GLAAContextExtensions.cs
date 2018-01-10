@@ -373,7 +373,7 @@ namespace GLAA.Domain
                                 }
                             },
                             HasPreviouslyHeldLicence = true,
-                            PreviousLicenceDescription = "I had a previous licence.",
+                            PreviousLicenceDescription = "I had a previous licence."
                         }
                     },
                     DirectorOrPartners = new List<DirectorOrPartner>
@@ -451,7 +451,42 @@ namespace GLAA.Domain
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
                             DateOfBirth = DateTime.Now,
-                            FullName = "Joe Bloggs"
+                            FullName = "Joe Bloggs",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RequiresVisa = false,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
                         }
                     },
                     LicenceStatusHistory = new List<LicenceStatusChange>
