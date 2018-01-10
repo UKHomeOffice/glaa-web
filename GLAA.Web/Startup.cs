@@ -132,6 +132,9 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
 
+            // notify
+            services.AddTransient<IEmailService, EmailService>();
+
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
 
