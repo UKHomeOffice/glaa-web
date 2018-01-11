@@ -5,21 +5,29 @@
 @Html.ActionLink("Back to list", "Users")
 @using (Html.BeginForm())
 {
-    <table class="table">
-        <tbody>
-        <tr>
-            <td>Full name</td>
-            <td>@Html.EditorFor(m => m.FullName, new { @class = "form-control" })</td>
-        </tr>
-        <tr>
-            <td>Email address</td>
-            <td>@Html.EditorFor(m => m.Email, new { @class = "form-control" })</td>
-        </tr>
-        <tr>
-            <td>Role</td>
-            <td>@Html.DropDownListFor(m => m.Role, Model.AvailableRoles, new { @class = "form-control" })</td>
-        </tr>
-        </tbody>
-    </table>
-    <button type="submit" class="button">Save</button>
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.HiddenFor(m => m.Id)
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>@Html.LabelFor(m => m.FullName)</td>
+                    <td>@Html.EditorFor(m => m.FullName, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Email)</td>
+                    <td>@Html.EditorFor(m => m.Email, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Role)</td>
+                    <td>@Html.DropDownListFor(m => m.Role, Model.AvailableRoles, new {@class = "form-control"})</td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="button">Save</button>
+        </div>
+    </div>
 }

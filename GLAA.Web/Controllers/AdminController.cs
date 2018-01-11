@@ -93,6 +93,21 @@ namespace GLAA.Web.Controllers
         [HttpPost]
         public ActionResult CreateUser(AdminUserViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.AvailableRoles = userBuilder.GetRoles();
+                ViewData["doOverride"] = true;
+                return View("EditUser", model);
+            }
+
+            if (userPostDataHandler.Exists(model))
+            {
+                model.AvailableRoles = userBuilder.GetRoles();
+                ViewData["doOverride"] = true;
+                ModelState.AddModelError("Email", "A user with this email address already exists");
+                return View("EditUser", model);
+            }
+
             userPostDataHandler.Insert(model);
             return RedirectToAction("Users");
         }
@@ -108,6 +123,12 @@ namespace GLAA.Web.Controllers
         [HttpPost]
         public ActionResult EditUser(AdminUserViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewData["doOverride"] = true;
+                return View(model);
+            }
+
             userPostDataHandler.Update(model);
             return RedirectToAction("Users");
         }

@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
-using GLAA.Repository;
 using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +14,16 @@ namespace GLAA.Services.Admin
         private readonly RoleManager<GLAARole> roleManager;
         private readonly IMapper mapper;
 
+        private readonly SelectListItem[] pleaseSelect =
+        {
+            new SelectListItem
+            {
+                Text = "Please select",
+                Value = string.Empty,
+                Selected = true
+            }
+        };
+
         public AdminUserViewModelBuilder(UserManager<GLAAUser> um, RoleManager<GLAARole> rm, IMapper mp)
         {
             userManager = um;
@@ -25,7 +35,7 @@ namespace GLAA.Services.Admin
         {
             var result = new AdminUserViewModel
             {
-                AvailableRoles = roleManager.Roles.Select(r => new SelectListItem {Value = r.Name, Text = r.Name})
+                AvailableRoles = GetRoles()
             };
             return result;
         }
@@ -41,6 +51,12 @@ namespace GLAA.Services.Admin
                 new SelectListItem { Value = r.Name, Text = r.Name, Selected = r.Name == role });
 
             return model;
+        }
+
+        public IEnumerable<SelectListItem> GetRoles()
+        {
+            return pleaseSelect.Concat(
+                roleManager.Roles.Select(r => new SelectListItem {Value = r.Name, Text = r.Name}));
         }
     }
 }

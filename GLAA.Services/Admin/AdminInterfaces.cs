@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using GLAA.ViewModels;
 using GLAA.ViewModels.Admin;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.Services.Admin
 {
@@ -31,5 +33,7 @@ namespace GLAA.Services.Admin
     public interface IAdminUserViewModelBuilder : IViewModelBuilder<AdminUserViewModel>
     {
         AdminUserViewModel Build(string id);
+
+        IEnumerable<SelectListItem> GetRoles();
     }
 }

@@ -7,5 +7,7 @@ namespace GLAA.Services.Admin
         string Insert(AdminUserViewModel model);
 
         void Update(AdminUserViewModel model);
+
+        bool Exists(AdminUserViewModel model);
     }
 }

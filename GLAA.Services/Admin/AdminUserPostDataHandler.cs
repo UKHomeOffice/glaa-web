@@ -21,8 +21,7 @@ namespace GLAA.Services.Admin
         public string Insert(AdminUserViewModel model)
         {
             var existing = userManager.FindByEmailAsync(model.Email).GetAwaiter().GetResult();
-
-            // TODO Handle nicely
+            
             if (existing != null)
             {
                 return null;
@@ -54,6 +53,11 @@ namespace GLAA.Services.Admin
                     userManager.AddToRoleAsync(user, model.Role).GetAwaiter().GetResult();
                 }
             }
+        }
+
+        public bool Exists(AdminUserViewModel model)
+        {
+            return userManager.FindByEmailAsync(model.Email) != null;
         }
     }
 }
