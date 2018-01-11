@@ -15,11 +15,11 @@
                 <tbody>
                 <tr>
                     <td>@Html.LabelFor(m => m.FullName)</td>
-                    <td>@Html.EditorFor(m => m.FullName, new {@class = "form-control"})</td>
+                    <td>@Html.TextBoxFor(m => m.FullName, new {@class = "form-control"})</td>
                 </tr>
                 <tr>
                     <td>@Html.LabelFor(m => m.Email)</td>
-                    <td>@Html.EditorFor(m => m.Email, new {@class = "form-control"})</td>
+                    <td>@Html.TextBoxFor(m => m.Email, new {@class = "form-control"})</td>
                 </tr>
                 <tr>
                     <td>@Html.LabelFor(m => m.Role)</td>
@@ -27,7 +27,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button type="submit" class="button">Save</button>
+            <p><button type="submit" class="button">Save</button></p>
         </div>
     </div>
 }
