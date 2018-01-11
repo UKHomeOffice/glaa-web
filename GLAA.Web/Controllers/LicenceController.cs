@@ -518,6 +518,8 @@ namespace GLAA.Web.Controllers
             var licenceId = Session.GetCurrentLicenceId();
 
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
+            model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
             
             ViewData["IsSubmitted"] = model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
 

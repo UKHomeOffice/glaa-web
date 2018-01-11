@@ -7,10 +7,7 @@
 <table class="check-your-answers">
     <thead>
         <tr>
-            @{ 
-                var colspan = isEditable ? 2 : 3;
-             }
-            <th colspan="@colspan">Company Details</th>
+            <th colspan="@(isEditable ? 3 : 2)">Company Details</th>
         </tr>
     </thead>
     <tbody>
