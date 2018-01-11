@@ -10,18 +10,22 @@ using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace GLAA.Web.Controllers
 {
     //[SessionTimeout]
     public class LicenceController : LicenceApplicationBaseController
     {
+        private readonly UserManager<GLAAUser> _userManager;
+
         public LicenceController(ISessionHelper session,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
+            IConstantService constantService,
+            UserManager<GLAAUser> _userManager) : base(session, licenceApplicationViewModelBuilder,
             licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
         {
         }

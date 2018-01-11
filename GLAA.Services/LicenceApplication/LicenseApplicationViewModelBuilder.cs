@@ -107,5 +107,12 @@ namespace GLAA.Services.LicenceApplication
 
             return model;
         }
+
+        public IList<LicenceApplicationViewModel> BuildLicencesForUser(string userId)
+        {
+            var licences = licenceRepository.GetAllApplications().Where(x => x.UserId == userId);
+
+            return mapper.Map<IList<LicenceApplicationViewModel>>(licences);
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace GLAA.Services.LicenceApplication
 
         LicenceApplicationViewModel Build(int id);
 
+        IList<LicenceApplicationViewModel> BuildLicencesForUser(string userId);
+
         T Build<T>(int licenceId) where T : new();
 
         T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : new() where U : new();

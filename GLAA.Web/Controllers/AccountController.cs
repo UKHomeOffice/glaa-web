@@ -30,6 +30,7 @@ namespace GLAA.Web.Controllers
         private readonly ILogger _logger;
         private readonly ISessionHelper session;
         private readonly ILicenceApplicationPostDataHandler licencePostDataHandler;
+        private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder;
 
         public AccountController(
             UserManager<GLAAUser> userManager,
@@ -37,7 +38,8 @@ namespace GLAA.Web.Controllers
             RoleManager<GLAARole> roleManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger, 
-            ILicenceApplicationPostDataHandler licencePostDataHandler, 
+            ILicenceApplicationPostDataHandler licencePostDataHandler,
+            ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ISessionHelper session)
         {
             _userManager = userManager;
@@ -46,6 +48,7 @@ namespace GLAA.Web.Controllers
             _roleManager = roleManager;
             _logger = logger;
             this.licencePostDataHandler = licencePostDataHandler;
+            this.licenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
             this.session = session;
         }
 
@@ -84,6 +87,10 @@ namespace GLAA.Web.Controllers
                     if (isLabourProvider)
                     {
                         _logger.LogInformation($"User {user.Email} is in role LabourProvider");
+
+                        var licenceId = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).First().Id;
+
+                        session.SetCurrentLicenceId(licenceId);
 
                         return RedirectToAction("Portal", "Licence", null);
                     }
@@ -256,6 +263,8 @@ namespace GLAA.Web.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    licencePostDataHandler.UpdateUser(licenceId, user.Id);
 
                     licencePostDataHandler.Update(licenceId, x => x, model);
 

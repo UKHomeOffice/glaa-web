@@ -14,7 +14,7 @@
     
 @Html.DisplayFor(m => m.OrganisationDetails, new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.PrincipalAuthority, new { IsSubmitted = isSubmitted })
-@Html.DisplayFor(m => m.AlternativeBusinessRepresentatives, new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.AlternativeBusinessRepresentatives, "ReadOnly/AlternativeBusinessRepresentativeCollectionViewModel", new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.DirectorOrPartner, new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.NamedIndividuals, new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.Organisation, new { IsSubmitted = isSubmitted })

@@ -126,6 +126,8 @@ namespace GLAA.Domain.Models
 
         public virtual GLAAUser User { get; set; }
 
+        public string UserId { get; set; }
+
         public virtual ICollection<PrincipalAuthority> PrincipalAuthorities { get; set; } = new List<PrincipalAuthority>();
 
         public virtual ICollection<AlternativeBusinessRepresentative> AlternativeBusinessRepresentatives { get; set; } = new List<AlternativeBusinessRepresentative>();
