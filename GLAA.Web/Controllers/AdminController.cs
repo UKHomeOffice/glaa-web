@@ -84,6 +84,20 @@ namespace GLAA.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult CreateUser()
+        {
+            var model = userBuilder.New();
+            return View("EditUser", model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateUser(AdminUserViewModel model)
+        {
+            userPostDataHandler.Insert(model);
+            return RedirectToAction("Users");
+        }
+
+        [HttpGet]
         [Route("Admin/EditUser/{id}")]
         public ActionResult EditUser(string id)
         {
@@ -95,8 +109,7 @@ namespace GLAA.Web.Controllers
         public ActionResult EditUser(AdminUserViewModel model)
         {
             userPostDataHandler.Update(model);
-
-            return RedirectToAction("Users", new {id = model.Id});
+            return RedirectToAction("Users");
         }
     }
 }

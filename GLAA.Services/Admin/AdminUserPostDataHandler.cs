@@ -20,7 +20,20 @@ namespace GLAA.Services.Admin
 
         public string Insert(AdminUserViewModel model)
         {
-            throw new NotImplementedException();
+            var existing = userManager.FindByEmailAsync(model.Email).GetAwaiter().GetResult();
+
+            // TODO Handle nicely
+            if (existing != null)
+            {
+                return null;
+            }
+
+            var user = mapper.Map<GLAAUser>(model);
+            userManager.CreateAsync(user).GetAwaiter().GetResult();
+
+            userManager.AddToRoleAsync(user, model.Role).GetAwaiter().GetResult();
+
+            return user.Id;
         }
 
         //TODO Make this async?

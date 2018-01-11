@@ -23,7 +23,11 @@ namespace GLAA.Services.Admin
 
         public AdminUserViewModel New()
         {
-            return new AdminUserViewModel();
+            var result = new AdminUserViewModel
+            {
+                AvailableRoles = roleManager.Roles.Select(r => new SelectListItem {Value = r.Name, Text = r.Name})
+            };
+            return result;
         }
 
         public AdminUserViewModel Build(string id)
@@ -32,8 +36,9 @@ namespace GLAA.Services.Admin
 
             var model = mapper.Map(user, New());
             var role = userManager.GetRolesAsync(user).GetAwaiter().GetResult().Single();
+
             model.AvailableRoles = roleManager.Roles.Select(r =>
-                new SelectListItem {Value = r.Name, Text = r.Name, Selected = r.Name == role});
+                new SelectListItem { Value = r.Name, Text = r.Name, Selected = r.Name == role });
 
             return model;
         }
