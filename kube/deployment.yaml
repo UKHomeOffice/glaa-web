@@ -9,9 +9,11 @@ spec:
     metadata:
       labels:
         name: glaa-web
-    spec:
+    spec:  
       containers:
-      - name: glaa-test-core
+      - name: glaa-web
+        securityContext:
+          runAsNonRoot: true            
         image: quay.io/ukhomeofficedigital/glaa-web:latest
         imagePullPolicy: IfNotPresent
         ports:
@@ -26,4 +28,4 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: db-secret
-                key: db_pass                
+                key: db_pass                              

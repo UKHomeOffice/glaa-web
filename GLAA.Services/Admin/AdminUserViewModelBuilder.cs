@@ -11,14 +11,14 @@ namespace GLAA.Services.Admin
     public class AdminUserViewModelBuilder : IAdminUserViewModelBuilder
     {
         private readonly UserManager<GLAAUser> userManager;
+        private readonly RoleManager<GLAARole> roleManager;
         private readonly IMapper mapper;
-        private readonly IRoleRepository roleRepository;
 
-        public AdminUserViewModelBuilder(UserManager<GLAAUser> um, IMapper mp, IRoleRepository rr)
+        public AdminUserViewModelBuilder(UserManager<GLAAUser> um, RoleManager<GLAARole> rm, IMapper mp)
         {
             userManager = um;
+            roleManager = rm;
             mapper = mp;
-            roleRepository = rr;
         }
 
         public AdminUserViewModel New()
@@ -32,9 +32,8 @@ namespace GLAA.Services.Admin
 
             var model = mapper.Map(user, New());
             var role = userManager.GetRolesAsync(user).GetAwaiter().GetResult().Single();
-            model.Role = roleRepository.GetByName(role).ReadableName;
-            model.AvailableRoles = roleRepository.GetAll<RoleDescription>().Select(r =>
-                new SelectListItem {Value = r.Name, Text = r.ReadableName, Selected = r.Name == role});
+            model.AvailableRoles = roleManager.Roles.Select(r =>
+                new SelectListItem {Value = r.Name, Text = r.Name, Selected = r.Name == role});
 
             return model;
         }

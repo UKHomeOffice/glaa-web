@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 namespace GLAA.Domain
 {
     [ExcludeFromCodeCoverage]
-    public class GLAAContext : IdentityDbContext<GLAAUser>
+    public class GLAAContext : IdentityDbContext<GLAAUser, GLAARole, string>
     {
         public GLAAContext(DbContextOptions<GLAAContext> options) : base(options)
         {            
@@ -32,11 +32,12 @@ namespace GLAA.Domain
         public DbSet<Conviction> Convictions { get; set; }
         public DbSet<OffenceAwaitingTrial> OffencesAwaitingTrial { get; set; }
         public DbSet<PreviousTradingName> PreviousTradingNames { get; set; }
-        public DbSet<RoleDescription> RoleDescriptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
             modelBuilder.Entity<GLAAUser>().ToTable("User", "dbo");
+
+            modelBuilder.Entity<GLAARole>().ToTable("Role", "dbo");
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {

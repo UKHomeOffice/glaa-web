@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GLAA.Domain.Models;
-using GLAA.Repository;
 using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,17 +11,14 @@ namespace GLAA.Services.Admin
     public class AdminUserListViewModelBuilder : IAdminUserListViewModelBuilder
     {
         private readonly UserManager<GLAAUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IRoleRepository roleRepository;
+        private readonly RoleManager<GLAARole> roleManager;
         private readonly IMapper mapper;
 
-        public AdminUserListViewModelBuilder(UserManager<GLAAUser> um, RoleManager<IdentityRole> rm, IMapper mp,
-            IRoleRepository rr)
+        public AdminUserListViewModelBuilder(UserManager<GLAAUser> um, RoleManager<GLAARole> rm, IMapper mp)
         {
             userManager = um;
             roleManager = rm;
             mapper = mp;
-            roleRepository = rr;
         }
 
         public AdminUserListViewModel New()
@@ -38,9 +34,8 @@ namespace GLAA.Services.Admin
 
             foreach (var role in roles)
             {
-                var roleDescription = roleRepository.GetByName(role);
                 var users = await userManager.GetUsersInRoleAsync(role);
-                result.Users.Add(roleDescription.ReadableName, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
+                result.Users.Add(role, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
             }
 
             return result;
