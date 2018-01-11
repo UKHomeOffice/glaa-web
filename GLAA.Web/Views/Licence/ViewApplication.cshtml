@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "ViewApplication";
-    var isSubmitted = Html.ViewData["IsSubmitted"];
+    var isSubmitted = Html.ViewData["IsSubmitted"] ?? false;
 }
 
 <h2 class="heading-large">View Application</h2>
@@ -15,7 +15,7 @@
 @Html.DisplayFor(m => m.OrganisationDetails, new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.PrincipalAuthority, new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.AlternativeBusinessRepresentatives, "ReadOnly/AlternativeBusinessRepresentativeCollectionViewModel", new { IsSubmitted = isSubmitted })
-@Html.DisplayFor(m => m.DirectorOrPartner, new { IsSubmitted = isSubmitted })
-@Html.DisplayFor(m => m.NamedIndividuals, new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.DirectorOrPartner, "ReadOnly/DirectorOrPartnerCollectionViewModel", new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.NamedIndividuals, "ReadOnly/NamedIndividualCollectionViewModel", new { IsSubmitted = isSubmitted })
 @Html.DisplayFor(m => m.Organisation, new { IsSubmitted = isSubmitted })
     
