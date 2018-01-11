@@ -9,6 +9,7 @@ using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace GLAA.Web.Controllers
 {
@@ -492,6 +493,7 @@ namespace GLAA.Web.Controllers
             {
                 Id = ConstantService.ApplicationSubmittedOnlineStatusId
             };
+
             LicenceApplicationPostDataHandler.Update(licenceId, model);
 
             return RedirectToAction("Portal");
@@ -516,6 +518,8 @@ namespace GLAA.Web.Controllers
             var licenceId = Session.GetCurrentLicenceId();
 
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+            
+            ViewData["IsSubmitted"] = model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
 
             return View(model);
         }

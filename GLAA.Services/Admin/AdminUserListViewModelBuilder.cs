@@ -15,15 +15,13 @@ namespace GLAA.Services.Admin
     {
         private readonly UserManager<GLAAUser> um;
         private readonly RoleManager<GLAARole> rm;
-        private readonly IRoleRepository roleRepository;
         private readonly IMapper mapper;
 
-        public AdminUserListViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr, RoleManager<GLAARole> rm, UserManager<GLAAUser> um)
+        public AdminUserListViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, RoleManager<GLAARole> rm, UserManager<GLAAUser> um)
         {
             this.um = um;
             this.rm = rm;
             mapper = mp;
-            roleRepository = rr;
         }
 
         public AdminUserListViewModel New()
@@ -39,9 +37,8 @@ namespace GLAA.Services.Admin
 
             foreach (var role in roles)
             {
-                var roleDescription = roleRepository.GetByName(role);
                 var users = await um.GetUsersInRoleAsync(role);
-                result.Users.Add(roleDescription.ReadableName, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
+                result.Users.Add(role, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
             }
 
             return result;

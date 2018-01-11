@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GLAA.Domain;
-using GLAA.Domain.Core;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.Services;
@@ -14,7 +13,6 @@ using GLAA.Services.LicenceApplication;
 using GLAA.Web.Core.Services;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
-using GLAA.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +22,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace GLAA.Web
 {
@@ -36,33 +33,6 @@ namespace GLAA.Web
         // TODO put these in an enum so we can do more with them
         private static readonly string[] RoleNames = { "Administrator", "LabourProvider", "LabourUser", "OGDUser" };
 
-        private static readonly RoleDescription[] Roles =
-        {
-            new RoleDescription
-            {
-                Name = "Administrator",
-                ReadableName = "Administrator",
-                Description = "A role for administrators"
-            },
-            new RoleDescription
-            {
-                Name = "LabourProvider",
-                ReadableName = "Labour Provider",
-                Description = "A role for labour providers"
-            },
-            new RoleDescription
-            {
-                Name = "LabourUser",
-                ReadableName = "Labour User",
-                Description = "A role for labour users"
-            },
-            new RoleDescription
-            {
-                Name = "OGDUser",
-                ReadableName = "OGD User",
-                Description = "A role for Other Government Department users"
-            },
-        };
 
         public Startup(IHostingEnvironment env)
         {
@@ -124,7 +94,6 @@ namespace GLAA.Web
 
             // admin profile
             services.AddTransient<ILicenceRepository, LicenceRepository>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IAdminHomeViewModelBuilder, AdminHomeViewModelBuilder>();
             services.AddTransient<IAdminLicenceListViewModelBuilder, AdminLicenceListViewModelBuilder>();
             services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
@@ -245,15 +214,14 @@ namespace GLAA.Web
         private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
             var rm = serviceProvider.GetRequiredService<RoleManager<GLAARole>>();
-            var rr = serviceProvider.GetRequiredService<IRoleRepository>();
             
-            foreach (var role in Roles)
+            foreach (var role in RoleNames)
             {
-                var exists = await rm.RoleExistsAsync(role.Name);
+                var exists = await rm.RoleExistsAsync(role);
 
                 if (!exists)
                 {
-                    await rm.CreateAsync(new GLAARole(role.Name));
+                    await rm.CreateAsync(new GLAARole(role));
                 }
             }
         }
