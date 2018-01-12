@@ -88,11 +88,19 @@ namespace GLAA.Web.Controllers
                     {
                         _logger.LogInformation($"User {user.Email} is in role LabourProvider");
 
-                        var licenceId = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).First().Id;
+                        try
+                        {
+                            var licenceId = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).First().Id;
 
-                        session.SetCurrentLicenceId(licenceId);
+                            session.SetCurrentLicenceId(licenceId);
 
-                        return RedirectToAction("Portal", "Licence", null);
+                            return RedirectToAction("Portal", "Licence", null);
+
+                        }
+                        catch (Exception e)
+                        {
+                            return RedirectToAction("TaskList", "Licence");
+                        }
                     }
 
                     return RedirectToLocal(returnUrl);

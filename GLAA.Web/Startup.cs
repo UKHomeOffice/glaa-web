@@ -30,6 +30,29 @@ namespace GLAA.Web
         private static readonly string[] FirstNames = { "Aaron", "Abdul", "Abe", "Abel", "Abraham", "Adam", "Adan", "Adrian", "Abby", "Abigail", "Adele", "Christina", "Doug", "Chantelle", "Adam", "Luke", "Conrad", "Moray" };
         private static readonly string[] LastNames = { "Abbott", "Acosta", "Adams", "Adkins", "Aguilar", "Aguilara", "McDonald", "MacDonald", "Danson", "Spokes", "Grinnell", "Jackson" };
 
+        private static readonly GLAARole[] Roles =
+        {
+            new GLAARole
+            {
+                Name = "Administrator",
+                Description = "A role for administrators"
+            },
+            new GLAARole
+            {
+                Name = "Labour Provider",
+                Description = "A role for labour providers"
+            },
+            new GLAARole
+            {
+                Name = "Labour User",
+                Description = "A role for labour users"
+            },
+            new GLAARole
+            {
+                Name = "OGD User",
+                Description = "A role for Other Government Department users"
+            },
+        };
 
         public Startup(IHostingEnvironment env)
         {
@@ -215,10 +238,10 @@ namespace GLAA.Web
         private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
             var rm = serviceProvider.GetRequiredService<RoleManager<GLAARole>>();
-            
-            foreach (var role in RoleNames)
+
+            foreach (var role in Roles)
             {
-                var exists = await rm.RoleExistsAsync(role);
+                var exists = await rm.RoleExistsAsync(role.Name);
 
                 if (!exists)
                 {

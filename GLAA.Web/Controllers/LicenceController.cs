@@ -491,8 +491,7 @@ namespace GLAA.Web.Controllers
                 model.Organisation = dbModel.Organisation;
                 return View("SubmitApplication", model);
             }
-
-            // TODO: A better way
+            
             model.NewLicenceStatus = new LicenceStatusViewModel
             {
                 Id = ConstantService.ApplicationSubmittedOnlineStatusId
@@ -511,7 +510,18 @@ namespace GLAA.Web.Controllers
 
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
 
-            return View(model);
+            ViewData["IsSubmitted"] = false;
+
+            model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+            
+            if (model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId 
+                || model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedByPhoneId)
+            {
+                ViewData["IsSubmitted"] = true;
+            } 
+
+            return View("Portal", model);
+
         }
 
         [Authorize]
