@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "AlternativeBusinessRepresentativeCollectionViewModel";
+}
+
+@model GLAA.ViewModels.LicenceApplication.AlternativeBusinessRepresentativeCollectionViewModel
+
+@if (Model.HasAlternativeBusinessRepresentatives.HasValue && Model.HasAlternativeBusinessRepresentatives.Value)
+{
+    <table class="check-your-answers">
+        <thead>
+            <tr>
+                <th colspan="2">Current Alternative Business Representatives</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var abr in Model.AlternativeBusinessRepresentatives)
+            {
+                @Html.DisplayFor(x => abr, new { IsEditable = false })                
+            }
+        </tbody>
+    </table>
+}
+
+
+

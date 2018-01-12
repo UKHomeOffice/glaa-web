@@ -1,0 +1,103 @@
+﻿
+@model GLAA.ViewModels.LicenceApplication.LicenceApplicationViewModel
+
+
+<section class="govuk-box-highlight">
+    <h1 class="heading-xlarge">Application Complete</h1>
+    <p class="font-large">
+        Your reference number is<br />
+        <b>@Model.ApplicationId</b>
+    </p>
+</section>
+<p>We have sent you a confirmation email</p>
+<h2 class="heading-large">What happens next?</h2>
+<p>The next step is to pay your application and inspection fee using the steps below.</p>
+<p>Once you have paid the application fee your application will be reviewed and processed by the team at the GLAA</p>
+<p>This may take several weeks, in the meantime you can return here and <a href="@Url.Action("Portal", "Licence")">view your application progress</a> here.</p>
+<h3 class="heading-medium">How to pay</h3>
+<p>
+    You can pay for your licence using one of the methods below, please note your licence will not be processed until payment
+    received.  This fee is non-refundable whether your licence is granted or refused.
+</p>
+
+<div class="panel panel-border-wide">
+    <p>
+        Currently the GLAA does not accept cash, credit/debit cards or payments over the phone.
+    </p>
+</div>
+
+<table>
+    <caption class="heading-small">Amount payable</caption>
+    <tbody>
+        <tr>
+            <td>Application Fee</td>
+            <td>&pound; @Model.Eligibility.EligibilitySummary.ApplicationFee</td>
+        </tr>
+        <tr>
+            <td>Inspection Fee</td>
+            <td>&pound; @Model.Eligibility.EligibilitySummary.InspectionFee</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="heading-medium">BACS/CHAPS/Faster Payment Service</h2>
+<p>Make a payment for th amount above to the following bank account</p>
+<table>
+    <caption class="heading-small">Account details</caption>
+    <tbody>
+        <tr>
+            <td>Bank Name</td>
+            <td>Barclays Bank PLC</td>
+        </tr>
+        <tr>
+            <td>Account Name</td>
+            <td>Gangmasters and Labour Abuse Authority</td>
+        </tr>
+        <tr>
+            <td>Sort Code</td>
+            <td>20-99-56</td>
+        </tr>
+        <tr>
+            <td>Account Number</td>
+            <td>60312924</td>
+        </tr>
+        <tr>
+            <td>IBAN</td>
+            <td>GB23 BARC 2099 5660 3129 24</td>
+        </tr>
+        <tr>
+            <td>SWIFTBIC</td>
+            <td>BARCGB22</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<h2 class="heading-medium">Pay by cheque/Bankers Draft</h2>
+
+<table>
+    <caption class="heading-small">Check details</caption>
+    <tbody>
+        <tr>
+            <td>Payable to</td>
+            <td>Gangmasters and Labour Abuse Authority</td>
+        </tr>
+        <tr>
+            <td>Send to</td>
+            <td>
+                Gangmasters and Labour Abuse Authority<br />
+                PO Box 10702<br />
+                Nottingham<br />
+                NG2 9PB
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br />
+
+<div class="panel panel-border-wide">
+    <p>
+        Please ensure you quote your GLAA unique reference number (URN) as the reference on the payment.
+    </p>
+</div>

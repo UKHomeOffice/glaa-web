@@ -20,6 +20,8 @@ namespace GLAA.Services.LicenceApplication
 
         void UpdateShellfishStatus(int licenceId, OperatingIndustriesViewModel model);
 
+        void UpdateUser(int licenceId, string userId);
+
         void Update<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, U model)
             where T : class, IId, new();
 

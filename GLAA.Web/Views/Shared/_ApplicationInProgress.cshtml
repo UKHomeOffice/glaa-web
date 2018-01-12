@@ -1,0 +1,15 @@
+﻿
+@model GLAA.ViewModels.LicenceApplication.LicenceApplicationViewModel
+
+
+<section class="govuk-box-highlight">
+    <h1 class="heading-xlarge">Application In Progress</h1>
+    <p class="font-large">
+        Your reference number is<br />
+        <b>@Model.ApplicationId</b>
+    </p>
+</section>
+
+<h2 class="heading-large">Resume application</h2>
+<p>Your application has not yet been submitted.</p>
+<p>You must @Html.ActionLink("return to the Task List", "TaskList", "Licence") to continue your application.</p>

@@ -238,7 +238,7 @@ namespace GLAA.Web
         private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
             var rm = serviceProvider.GetRequiredService<RoleManager<GLAARole>>();
-            
+
             foreach (var role in Roles)
             {
                 var exists = await rm.RoleExistsAsync(role.Name);

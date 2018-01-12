@@ -361,6 +361,13 @@ namespace GLAA.Services.LicenceApplication
             var licence = licenceRepository.GetById<Licence>(licenceId);
 
             licence.IsShellfish = model.OperatingIndustries.Any(x => x.Id == 4 && x.Checked);
-        } 
+        }
+
+        public void UpdateUser(int licenceId, string userId)
+        {
+            var licence = licenceRepository.GetById(licenceId);
+
+            licence.UserId = userId;
+        }
     }
 }

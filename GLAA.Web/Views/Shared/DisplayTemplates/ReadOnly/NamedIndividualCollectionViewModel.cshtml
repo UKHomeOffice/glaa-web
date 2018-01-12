@@ -1,0 +1,50 @@
+﻿@using GLAA.Domain.Models
+@model GLAA.ViewModels.LicenceApplication.NamedIndividualCollectionViewModel
+
+<table class="check-your-answers">
+    <thead>
+        <tr>
+            <th colspan="2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Selected Type</td>
+            <td>@Html.DisplayFor(x => x.NamedIndividualType)</td>            
+        </tr>
+    </tbody>
+</table>
+@if (Model.NamedIndividualType == NamedIndividualType.PersonalDetails)
+{
+    <table class="check-your-answers">
+        <thead>
+            <tr>
+                <th colspan="2">Current Named Individuals</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in Model.NamedIndividuals)
+            {
+                @Html.DisplayFor(x => person, new { IsSubmitted = true })
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.NamedIndividualType == NamedIndividualType.JobTitles)
+{
+    <table class="check-your-answers">
+        <thead>
+            <tr>
+                <th>Current Job Titles</th>
+                <th colspan="2">Number employed in this capacity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var jobTitle in Model.NamedJobTitles)
+            {
+                @Html.DisplayFor(x => jobTitle, new { IsSubmitted = true })
+            }
+        </tbody>
+    </table>
+}
