@@ -36,7 +36,7 @@ namespace GLAA.Services.LicenceApplication
             if (licence != null)
             {
                 model.Eligibility = mapper.Map<EligibilityViewModel>(licence);
-                model.Declaration = mapper.Map<DeclarationViewModel>(licence);
+                model.Declaration = mapper.Map<DeclarationViewModel>(licence);                
                 model.PrincipalAuthority =
                     mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());
                 model.AlternativeBusinessRepresentatives =
@@ -106,6 +106,13 @@ namespace GLAA.Services.LicenceApplication
             }            
 
             return model;
+        }
+
+        public IList<LicenceApplicationViewModel> BuildLicencesForUser(string userId)
+        {
+            var licences = licenceRepository.GetAllApplications().Where(x => x.UserId == userId);
+
+            return mapper.Map<IList<LicenceApplicationViewModel>>(licences);
         }
     }
 }

@@ -1,8 +1,21 @@
-﻿
+﻿@model GLAA.ViewModels.LicenceApplication.LicenceApplicationViewModel
+
 @{
     ViewData["Title"] = "ViewApplication";
+    var isSubmitted = Html.ViewData["IsSubmitted"] ?? false;
 }
 
-<h2>View Application</h2>
+<h2 class="heading-large">View Application</h2>
+<p class="lede">
+    Your application is now submitted. <br/>
+    If you need to change any responses you have previous provided must complete a change request.
+</p>
 
-Read only licence should go here
+    
+@Html.DisplayFor(m => m.OrganisationDetails, new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.PrincipalAuthority, new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.AlternativeBusinessRepresentatives, "ReadOnly/AlternativeBusinessRepresentativeCollectionViewModel", new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.DirectorOrPartner, "ReadOnly/DirectorOrPartnerCollectionViewModel", new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.NamedIndividuals, "ReadOnly/NamedIndividualCollectionViewModel", new { IsSubmitted = isSubmitted })
+@Html.DisplayFor(m => m.Organisation, new { IsSubmitted = isSubmitted })
+    

@@ -1,5 +1,8 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.NamedJobTitleViewModel
 
+@{
+    var isEditable = !(bool)ViewData["IsSubmitted"];
+}
 <table class="check-your-answers">
     <thead>
         <tr>
@@ -10,12 +13,18 @@
         <tr>
             <td>@Html.LabelFor(m => m.JobTitle)</td>
             <td>@Html.DisplayFor(m => m.JobTitle)</td>
-            <td class="change-answer"><a href="@Url.Action("Part", "JobTitle", new {id = 1})">Change<span class="visually-hidden"> @Html.LabelFor(m => m.JobTitle)</span></a></td>
+            @if (isEditable)
+            {
+              <td class="change-answer"><a href="@Url.Action("Part", "JobTitle", new { id = 1 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.JobTitle)</span></a></td>
+            }
         </tr>
         <tr>
             <td>@Html.LabelFor(m => m.JobTitleNumber)</td>
             <td>@Html.DisplayFor(m => m.JobTitleNumber)</td>
-            <td class="change-answer"><a href="@Url.Action("Part", "JobTitle", new {id = 1})">Change<span class="visually-hidden"> @Html.LabelFor(m => m.JobTitleNumber)</span></a></td>
+            @if (isEditable)
+            {
+              <td class="change-answer"><a href="@Url.Action("Part", "JobTitle", new { id = 1 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.JobTitleNumber)</span></a></td>
+            }
         </tr>
     </tbody>
 </table>

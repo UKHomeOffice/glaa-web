@@ -9,18 +9,23 @@ using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace GLAA.Web.Controllers
 {
     //[SessionTimeout]
     public class LicenceController : LicenceApplicationBaseController
     {
+        private readonly UserManager<GLAAUser> _userManager;
+
         public LicenceController(ISessionHelper session,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
+            IConstantService constantService,
+            UserManager<GLAAUser> _userManager) : base(session, licenceApplicationViewModelBuilder,
             licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
         {
         }
@@ -486,12 +491,12 @@ namespace GLAA.Web.Controllers
                 model.Organisation = dbModel.Organisation;
                 return View("SubmitApplication", model);
             }
-
-            // TODO: A better way
+            
             model.NewLicenceStatus = new LicenceStatusViewModel
             {
                 Id = ConstantService.ApplicationSubmittedOnlineStatusId
             };
+
             LicenceApplicationPostDataHandler.Update(licenceId, model);
 
             return RedirectToAction("Portal");
@@ -505,7 +510,18 @@ namespace GLAA.Web.Controllers
 
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
 
-            return View(model);
+            ViewData["IsSubmitted"] = false;
+
+            model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+            
+            if (model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId 
+                || model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedByPhoneId)
+            {
+                ViewData["IsSubmitted"] = true;
+            } 
+
+            return View("Portal", model);
+
         }
 
         [Authorize]
@@ -516,6 +532,10 @@ namespace GLAA.Web.Controllers
             var licenceId = Session.GetCurrentLicenceId();
 
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
+            model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+            
+            ViewData["IsSubmitted"] = model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
 
             return View(model);
         }
