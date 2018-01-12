@@ -1,15 +1,14 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.ViewModels;
 using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace GLAA.Web.Controllers
 {
+    [Authorize]
     public class UserProfileController : Controller
     {
         private readonly IMapper mapper;
@@ -25,7 +24,6 @@ namespace GLAA.Web.Controllers
 
         // GET: /<controller>/
         [HttpGet]
-        [Authorize]
         public IActionResult Index()
         {
             var login = User.Identity.Name;
