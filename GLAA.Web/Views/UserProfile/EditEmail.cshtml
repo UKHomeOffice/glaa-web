@@ -1,6 +1,6 @@
-﻿@model GLAA.ViewModels.EditNameViewModel
+﻿@model GLAA.ViewModels.EditEmailViewModel
 
-<form asp-action="EditName">
+<form asp-action="EditEmail">
     @Html.HiddenFor(m => m.Current)
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -8,9 +8,10 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Change your name
+                Change your email address
             </h1>
-            <h2 class="heading-medium">Your name is currently @Model.Current</h2>
+            <h2 class="heading-medium">Your email address is currently @Model.Current</h2>
+            <h2 class="heading-medium">For security reasons changing your email address will log you out of the service.</h2>
         </div>
         <div class="column-two-thirds">
             @Html.TextFormGroupFor(x => x.New)

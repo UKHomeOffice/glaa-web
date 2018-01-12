@@ -6,6 +6,7 @@ using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace GLAA.Web.Controllers
 {
@@ -13,11 +14,13 @@ namespace GLAA.Web.Controllers
     {
         private readonly IMapper mapper;
         private readonly UserManager<GLAAUser> userManager;
+        private readonly SignInManager<GLAAUser> signInManager;
 
-        public UserProfileController(IMapper mp, UserManager<GLAAUser> um)
+        public UserProfileController(IMapper mp, UserManager<GLAAUser> um, SignInManager<GLAAUser> sm)
         {
             mapper = mp;
             userManager = um;
+            signInManager = sm;
         }
 
         // GET: /<controller>/
@@ -66,7 +69,40 @@ namespace GLAA.Web.Controllers
         {
             var login = User.Identity.Name;
             var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
-            throw new NotImplementedException();
+            var model = new EditEmailViewModel
+            {
+                Current = user.Email
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditEmail(EditEmailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["doOverride"] = true;
+                return View(model);
+            }
+
+            if (userManager.FindByEmailAsync(model.New).GetAwaiter().GetResult() != null)
+            {
+                ViewData["doOverride"] = true;
+                // TODO: A better error message?
+                ModelState.AddModelError("legend_Email", "That email address is already in use in this service.");
+                return View(model);
+            }
+
+            var login = User.Identity.Name;
+            var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
+            user.Email = model.New;
+            user.UserName = model.New;
+
+            userManager.UpdateAsync(user).GetAwaiter().GetResult();
+
+            signInManager.SignOutAsync().GetAwaiter().GetResult();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
