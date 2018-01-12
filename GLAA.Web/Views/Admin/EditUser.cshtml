@@ -1,0 +1,33 @@
+﻿@model GLAA.ViewModels.Admin.AdminUserViewModel
+
+<h2 class="heading-large admin-page-title">Edit User</h2>
+
+@Html.ActionLink("Back to list", "Users")
+@using (Html.BeginForm())
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.HiddenFor(m => m.Id)
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>@Html.LabelFor(m => m.FullName)</td>
+                    <td>@Html.TextBoxFor(m => m.FullName, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Email)</td>
+                    <td>@Html.TextBoxFor(m => m.Email, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.Role)</td>
+                    <td>@Html.DropDownListFor(m => m.Role, Model.AvailableRoles, new {@class = "form-control"})</td>
+                </tr>
+                </tbody>
+            </table>
+            <p><button type="submit" class="button">Save</button></p>
+        </div>
+    </div>
+}

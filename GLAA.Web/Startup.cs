@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GLAA.Domain;
-using GLAA.Domain.Core;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.Services;
@@ -14,7 +13,6 @@ using GLAA.Services.LicenceApplication;
 using GLAA.Web.Core.Services;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
-using GLAA.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +22,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace GLAA.Web
 {
@@ -32,34 +29,27 @@ namespace GLAA.Web
     {
         private static readonly string[] FirstNames = { "Aaron", "Abdul", "Abe", "Abel", "Abraham", "Adam", "Adan", "Adrian", "Abby", "Abigail", "Adele", "Christina", "Doug", "Chantelle", "Adam", "Luke", "Conrad", "Moray" };
         private static readonly string[] LastNames = { "Abbott", "Acosta", "Adams", "Adkins", "Aguilar", "Aguilara", "McDonald", "MacDonald", "Danson", "Spokes", "Grinnell", "Jackson" };
-        // TODO Actual names
-        // TODO put these in an enum so we can do more with them
-        private static readonly string[] RoleNames = { "Administrator", "LabourProvider", "LabourUser", "OGDUser" };
 
-        private static readonly RoleDescription[] Roles =
+        private static readonly GLAARole[] Roles =
         {
-            new RoleDescription
+            new GLAARole
             {
                 Name = "Administrator",
-                ReadableName = "Administrator",
                 Description = "A role for administrators"
             },
-            new RoleDescription
+            new GLAARole
             {
-                Name = "LabourProvider",
-                ReadableName = "Labour Provider",
+                Name = "Labour Provider",
                 Description = "A role for labour providers"
             },
-            new RoleDescription
+            new GLAARole
             {
-                Name = "LabourUser",
-                ReadableName = "Labour User",
+                Name = "Labour User",
                 Description = "A role for labour users"
             },
-            new RoleDescription
+            new GLAARole
             {
-                Name = "OGDUser",
-                ReadableName = "OGD User",
+                Name = "OGD User",
                 Description = "A role for Other Government Department users"
             },
         };
@@ -124,13 +114,13 @@ namespace GLAA.Web
 
             // admin profile
             services.AddTransient<ILicenceRepository, LicenceRepository>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IAdminHomeViewModelBuilder, AdminHomeViewModelBuilder>();
             services.AddTransient<IAdminLicenceListViewModelBuilder, AdminLicenceListViewModelBuilder>();
             services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
+            services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
 
             // notify
             services.AddTransient<IEmailService, EmailService>();
@@ -248,7 +238,6 @@ namespace GLAA.Web
         private static async Task BuildRoles(IServiceProvider serviceProvider)
         {
             var rm = serviceProvider.GetRequiredService<RoleManager<GLAARole>>();
-            var rr = serviceProvider.GetRequiredService<IRoleRepository>();
             
             foreach (var role in Roles)
             {
@@ -256,7 +245,7 @@ namespace GLAA.Web
 
                 if (!exists)
                 {
-                    await rm.CreateAsync(new GLAARole(role.Name));
+                    await rm.CreateAsync(new GLAARole(role.Name, role.Description));
                 }
             }
         }
@@ -323,7 +312,8 @@ namespace GLAA.Web
                     if (createResult.Succeeded)
                     {
                         user = await um.FindByEmailAsync(un);
-                        var role = RoleNames[rnd.Next(RoleNames.Length)];
+                        var availableNames = Roles.Select(r => r.Name).ToArray();
+                        var role = availableNames[rnd.Next(availableNames.Length)];
 
                         await um.AddToRoleAsync(user, role);
                     }

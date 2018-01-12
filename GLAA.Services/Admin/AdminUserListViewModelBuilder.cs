@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GLAA.Domain.Models;
-using GLAA.Repository;
 using GLAA.ViewModels.Admin;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace GLAA.Services.Admin
 {
     public class AdminUserListViewModelBuilder : IAdminUserListViewModelBuilder
     {
-        private readonly UserManager<GLAAUser> um;
-        private readonly RoleManager<GLAARole> rm;
-        private readonly IRoleRepository roleRepository;
+        private readonly UserManager<GLAAUser> userManager;
+        private readonly RoleManager<GLAARole> roleManager;
         private readonly IMapper mapper;
 
-        public AdminUserListViewModelBuilder(IServiceProvider serviceProvider, IMapper mp, IRoleRepository rr, RoleManager<GLAARole> rm, UserManager<GLAAUser> um)
+        public AdminUserListViewModelBuilder(UserManager<GLAAUser> um, RoleManager<GLAARole> rm, IMapper mp)
         {
-            this.um = um;
-            this.rm = rm;
+            userManager = um;
+            roleManager = rm;
             mapper = mp;
-            roleRepository = rr;
         }
 
         public AdminUserListViewModel New()
@@ -35,13 +30,12 @@ namespace GLAA.Services.Admin
         {
             var result = New();
 
-            var roles = rm.Roles.Select(r => r.Name).OrderBy(role => role);
+            var roles = roleManager.Roles.Select(r => r.Name).OrderBy(role => role);
 
             foreach (var role in roles)
             {
-                var roleDescription = roleRepository.GetByName(role);
-                var users = await um.GetUsersInRoleAsync(role);
-                result.Users.Add(roleDescription.ReadableName, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
+                var users = await userManager.GetUsersInRoleAsync(role);
+                result.Users.Add(role, mapper.Map(users.OrderBy(u => u.FullName), new List<AdminUserViewModel>()));
             }
 
             return result;
