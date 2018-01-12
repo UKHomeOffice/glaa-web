@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GLAA.Domain.Models;
+using GLAA.ViewModels;
 using GLAA.ViewModels.Admin;
 
 namespace GLAA.Services.Automapper
@@ -14,7 +15,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Id, opt => opt.MapFrom(y => y.Id))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<AdminUserViewModel, GLAAUser>()
+            CreateMap<UserViewModel, GLAAUser>()
                 .ForMember(x => x.FullName, opt => opt.MapFrom(y => y.FullName))
                 .ForMember(x => x.Email, opt => opt.MapFrom(y => y.Email))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(y => y.Email))

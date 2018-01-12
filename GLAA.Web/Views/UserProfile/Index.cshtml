@@ -1,0 +1,23 @@
+﻿@model GLAA.ViewModels.UserViewModel
+
+<h2>Account information</h2>
+
+<div class="grid-row">
+    <div class="column-full">
+        <table class="check-your-answers">
+            <tbody>
+            <tr>
+                <td>@Html.LabelFor(m => m.FullName)</td>
+                <td>@Html.DisplayFor(m => m.FullName)</td>
+                <td class="change-answer">@Html.ActionLink("Change", "EditName")</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>@Html.DisplayFor(m => m.Email)</td>
+                <td class="change-answer">@Html.ActionLink("Change", "EditEmail")</td>
+            </tr>
+            </tbody>
+        </table>
+        <p>@Html.ActionLink("Reset password", "ResetPassword", "Account")</p>
+    </div>
+</div>
