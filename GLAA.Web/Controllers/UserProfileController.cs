@@ -35,13 +35,37 @@ namespace GLAA.Web.Controllers
         public IActionResult EditName()
         {
             var login = User.Identity.Name;
-            throw new NotImplementedException();
+            var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
+            var model = new EditNameViewModel
+            {
+                Current = user.FullName
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditName(EditNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["doOverride"] = true;
+                return View(model);
+            }
+
+            var login = User.Identity.Name;
+            var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
+            user.FullName = model.New;
+
+            userManager.UpdateAsync(user).GetAwaiter().GetResult();
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult EditEmail()
         {
             var login = User.Identity.Name;
+            var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
             throw new NotImplementedException();
         }
     }

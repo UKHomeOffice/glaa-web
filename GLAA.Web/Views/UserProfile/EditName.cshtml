@@ -1,0 +1,21 @@
+﻿@model GLAA.ViewModels.EditNameViewModel
+
+<form asp-action="EditName">
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                Your name is currently @Html.DisplayFor(m => m.Current)
+            </h1>
+        </div>
+        <div class="column-two-thirds">
+            @Html.TextFormGroupFor(x => x.New)
+        </div>
+    </div>
+    <button type="submit" class="button">Save and continue</button>
+    <p>
+        <a asp-action="Index">Cancel</a>
+    </p>
+</form>
