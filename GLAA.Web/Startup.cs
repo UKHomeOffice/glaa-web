@@ -29,9 +29,6 @@ namespace GLAA.Web
     {
         private static readonly string[] FirstNames = { "Aaron", "Abdul", "Abe", "Abel", "Abraham", "Adam", "Adan", "Adrian", "Abby", "Abigail", "Adele", "Christina", "Doug", "Chantelle", "Adam", "Luke", "Conrad", "Moray" };
         private static readonly string[] LastNames = { "Abbott", "Acosta", "Adams", "Adkins", "Aguilar", "Aguilara", "McDonald", "MacDonald", "Danson", "Spokes", "Grinnell", "Jackson" };
-        // TODO Actual names
-        // TODO put these in an enum so we can do more with them
-        private static readonly string[] RoleNames = { "Administrator", "LabourProvider", "LabourUser", "OGDUser" };
 
 
         public Startup(IHostingEnvironment env)
@@ -100,6 +97,10 @@ namespace GLAA.Web
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
+            services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
+
+            // notify
+            services.AddTransient<IEmailService, EmailService>();
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
@@ -221,7 +222,7 @@ namespace GLAA.Web
 
                 if (!exists)
                 {
-                    await rm.CreateAsync(new GLAARole(role));
+                    await rm.CreateAsync(new GLAARole(role.Name, role.Description));
                 }
             }
         }
@@ -288,7 +289,8 @@ namespace GLAA.Web
                     if (createResult.Succeeded)
                     {
                         user = await um.FindByEmailAsync(un);
-                        var role = RoleNames[rnd.Next(RoleNames.Length)];
+                        var availableNames = Roles.Select(r => r.Name).ToArray();
+                        var role = availableNames[rnd.Next(availableNames.Length)];
 
                         await um.AddToRoleAsync(user, role);
                     }
