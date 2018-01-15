@@ -4,19 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.Admin
 {
-    public class AdminUserViewModel
+    public class AdminUserViewModel : UserViewModel
     {
-        public string Id { get; set; }
-
-        [Required]
-        [Display(Name = "Full name")]
-        public string FullName { get; set; }
-
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email address")]
-        public string Email { get; set; }
-
         [Required]
         [Display(Name = "Role")]
         public string Role { get; set; }
