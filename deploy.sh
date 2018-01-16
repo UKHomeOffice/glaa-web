@@ -11,4 +11,5 @@ kd --insecure-skip-tls-verify \
   --timeout 10m0s \
   -f kube/deployment.yaml \
   -f kube/ingress.yaml \
-  -f kube/service.yaml
+  -f kube/service.yaml \
+  -f kube-db-setup/deployment.yaml
