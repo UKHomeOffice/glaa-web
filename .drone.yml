@@ -9,7 +9,6 @@ pipeline:
 
     commands:
       - docker build -t glaa-web .
-      - docker build -t glaa-db kubedb/
 
     when:
       branch: master
@@ -30,9 +29,6 @@ pipeline:
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:latest
       - docker push quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
-      - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:$${DRONE_COMMIT_SHA}
-      - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:latest
-      - docker push quay.io/ukhomeofficedigital/glaa-db:$${DRONE_COMMIT_SHA}
 
     when:
       branch: master
