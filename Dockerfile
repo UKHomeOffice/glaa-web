@@ -25,7 +25,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 COPY --from=builder /app/GLAA.Web/out .
-COPY --from=builder /app/kube/db_setup.sql /app/kube/db_setup.sh .
+COPY --from=builder /app/kube/db_setup.sql /app/kube/db_setup.sh ./
 
 USER app
 ENTRYPOINT ["dotnet", "GLAA.Web.dll"]
