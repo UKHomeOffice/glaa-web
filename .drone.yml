@@ -29,6 +29,7 @@ pipeline:
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:latest
       - docker push quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/glaa-web:latest
 
     when:
       branch: master
