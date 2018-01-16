@@ -2,8 +2,6 @@ USE [master]
 
 GO
 
-
-
 IF NOT EXISTS (SELECT [loginname] FROM [master].[dbo].[syslogins] WHERE [name] = '$(DB_USER)')
 
 BEGIN
