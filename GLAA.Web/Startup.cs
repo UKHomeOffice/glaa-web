@@ -73,11 +73,13 @@ namespace GLAA.Web
         {
             var user = Environment.GetEnvironmentVariable("DB_USER");
             var password = Environment.GetEnvironmentVariable("DB_PASS");
+            var server = Environment.GetEnvironmentVariable("DB_SERVER");
+            var port = Environment.GetEnvironmentVariable("DB_PORT");
 
             //TODO: take DataSource intro environment
             var connectionString = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == EnvironmentName.Development ?
                 Configuration["GLAAContext"] :
-                $"Data Source=glaa-db-service.glaa-dev.svc.cluster.local,1433;Initial Catalog=GLAA_Core;Integrated Security=False;User Id={user};Password={password};MultipleActiveResultSets=True";
+                $"Data Source={server},{port};Initial Catalog=GLAA_Core;Integrated Security=False;User Id={user};Password={password};MultipleActiveResultSets=True";
 
             services.AddDbContext<GLAAContext>(options =>
                 options.UseSqlServer(connectionString));

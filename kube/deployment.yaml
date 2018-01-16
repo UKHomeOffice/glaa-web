@@ -19,13 +19,23 @@ spec:
         ports:
           - containerPort: 80
         env:
+          - name: DB_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: glaadev-rds-access
+                key: endpoint   
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: glaadev-rds-access
+                key: port                         
           - name: DB_USER
             valueFrom:
               secretKeyRef:
-                name: db-secret
-                key: db_user          
+                name: glaadev-rds-access
+                key: username          
           - name: DB_PASS
             valueFrom:
               secretKeyRef:
-                name: db-secret
-                key: db_pass                              
+                name: glaadev-rds-access
+                key: password                              
