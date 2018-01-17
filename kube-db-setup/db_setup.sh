@@ -1,2 +1,2 @@
-/opt/mssql-tools/bin/sqlcmd -S localhost -U "sa" -P $SA_PASSWORD -i db_setup.sql
+/opt/mssql-tools/bin/sqlcmd -S $DB_SERVER,$DB_PORT -U $DB_USER -P $DB_PASS -i db_setup.sql
 echo "Done DB Setup"
