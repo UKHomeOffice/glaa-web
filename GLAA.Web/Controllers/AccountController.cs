@@ -457,8 +457,8 @@ namespace GLAA.Web.Controllers
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
 
                 var msg = new NotifyMailMessage(model.Email, new Dictionary<string, dynamic> {
-                    { "full_name", user.FullName },
-                    { "reset_password_link", $"{callbackUrl}" }
+                    { "full_name", user.FullName ?? "User" },
+                    { "reset_password_link", callbackUrl }
                 });
 
                 var template = configuration.GetSection("GOVNotify:EmailTemplates")["ResetPassword"];
