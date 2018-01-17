@@ -127,6 +127,7 @@ namespace GLAA.Web.Controllers
                 }
                 else
                 {
+                    ViewData["doOverride"] = true;
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
@@ -305,11 +306,12 @@ namespace GLAA.Web.Controllers
 
 
                 if (result.Errors.Select(x => x.Description).Contains($"Email '{model.Email}' is already taken."))
-                {
+                {                    
                     model.EmailAlreadyRegistered = true;
                 }
                 else
                 {
+                    ViewData["doOverride"] = true;
                     AddErrors(result);
                 }
             }
@@ -454,20 +456,17 @@ namespace GLAA.Web.Controllers
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
 
                 var msg = new NotifyMailMessage(model.Email, new Dictionary<string, dynamic> {
-                    { "full_name", $"<a href='{callbackUrl}'>link</a>" },
-                    { "reset_password_link", $"<a href='{callbackUrl}'>link</a>" }
+                    { "full_name", user.FullName },
+                    { "reset_password_link", $"{callbackUrl}" }
                 });
 
                 var template = configuration.GetSection("GOVNotify:EmailTemplates")["ResetPassword"];
 
                 var success = emailService.Send(msg, template);
                 
-                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   $"Please reset your password by clicking here: ");
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
