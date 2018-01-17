@@ -6,32 +6,23 @@
 <div class="grid-row">
 
     <div class="column-two-thirds">
-        
+
         @Html.Partial("_GdsValidationSummary")
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         <h2 class="heading-large">Login</h2>
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                
-                <div class="form-group">            
-                    @Html.TextFormGroupFor(m => m.Email)                    
+
+                <div class="form-group">
+                    @Html.TextFormGroupFor(m => m.Email)
                 </div>
                 <div class="form-group">
                     <fieldset>
                         @Html.LabelFor(x => x.Password, new { @class = "form-label" })
-                        @Html.PasswordFor(m => m.Password, new {  @class = "form-control" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                     </fieldset>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <div class="checkbox multiple-choice">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
                 </div>
                 <div class="form-group">
                     <div>

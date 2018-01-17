@@ -87,7 +87,7 @@ namespace GLAA.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -118,7 +118,7 @@ namespace GLAA.Web.Controllers
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
+                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl });
                 }
                 if (result.IsLockedOut)
                 {
