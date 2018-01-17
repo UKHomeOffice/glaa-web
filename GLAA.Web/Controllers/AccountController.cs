@@ -16,6 +16,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ForgotPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ForgotPasswordViewModel;
 using ResetPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ResetPasswordViewModel;
+using GLAA.Services;
+using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using GLAA.ViewModels;
 
 namespace GLAA.Web.Controllers
 {
@@ -27,10 +32,12 @@ namespace GLAA.Web.Controllers
         private readonly SignInManager<GLAAUser> _signInManager;
         private readonly RoleManager<GLAARole> _roleManager;
         private readonly IEmailSender _emailSender;
+        private readonly IEmailService emailService;
         private readonly ILogger _logger;
         private readonly ISessionHelper session;
         private readonly ILicenceApplicationPostDataHandler licencePostDataHandler;
         private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder;
+        private readonly IConfiguration configuration;
 
         public AccountController(
             UserManager<GLAAUser> userManager,
@@ -40,16 +47,20 @@ namespace GLAA.Web.Controllers
             ILogger<AccountController> logger, 
             ILicenceApplicationPostDataHandler licencePostDataHandler,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
-            ISessionHelper session)
+            ISessionHelper session,
+            IEmailService emailService,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _roleManager = roleManager;
             _logger = logger;
+            this.emailService = emailService;
             this.licencePostDataHandler = licencePostDataHandler;
             this.licenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
             this.session = session;
+            this.configuration = configuration;
         }
 
         [TempData]
@@ -76,7 +87,7 @@ namespace GLAA.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -103,11 +114,11 @@ namespace GLAA.Web.Controllers
                         }
                     }
 
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Admin");
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
+                    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl });
                 }
                 if (result.IsLockedOut)
                 {
@@ -116,6 +127,7 @@ namespace GLAA.Web.Controllers
                 }
                 else
                 {
+                    ViewData["doOverride"] = true;
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
@@ -294,11 +306,12 @@ namespace GLAA.Web.Controllers
 
 
                 if (result.Errors.Select(x => x.Description).Contains($"Email '{model.Email}' is already taken."))
-                {
+                {                    
                     model.EmailAlreadyRegistered = true;
                 }
                 else
                 {
+                    ViewData["doOverride"] = true;
                     AddErrors(result);
                 }
             }
@@ -427,9 +440,14 @@ namespace GLAA.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                TempData["Email"] = model.Email;
+
+                //TODO: do we need users to confirm accounts
+                //|| !(await _userManager.IsEmailConfirmedAsync(user))
+
+                if (user == null )
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
+                    // Don't reveal that the user does not exist or is not confirmed                    
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
 
@@ -437,12 +455,19 @@ namespace GLAA.Web.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
+                var msg = new NotifyMailMessage(model.Email, new Dictionary<string, dynamic> {
+                    { "full_name", user.FullName ?? "User" },
+                    { "reset_password_link", callbackUrl }
+                });
+
+                var template = configuration.GetSection("GOVNotify:EmailTemplates")["ResetPassword"];
+
+                var success = emailService.Send(msg, template);
+                
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -450,7 +475,8 @@ namespace GLAA.Web.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            var email = TempData["Email"];
+            return View("ForgotPasswordConfirmation", email);
         }
 
         [HttpGet]

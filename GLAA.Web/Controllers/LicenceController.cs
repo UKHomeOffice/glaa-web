@@ -520,7 +520,7 @@ namespace GLAA.Web.Controllers
                 ViewData["IsSubmitted"] = true;
             } 
 
-            return View("Portal", model);
+            return View(nameof(Portal), model);
 
         }
 
@@ -531,13 +531,21 @@ namespace GLAA.Web.Controllers
         {
             var licenceId = Session.GetCurrentLicenceId();
 
-            var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+            if (licenceId != 0)
+            {
 
-            model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
-            
-            ViewData["IsSubmitted"] = model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
+                var model = LicenceApplicationViewModelBuilder.Build(licenceId);
 
-            return View(model);
+                model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+
+                ViewData["IsSubmitted"] = model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
+
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction(nameof(TaskList));
+            }
         }
 
         [HttpGet]

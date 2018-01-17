@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GLAA.Services\GLAA.Services.csproj" />
     <ProjectReference Include="..\GLAA.ViewModels\GLAA.ViewModels.csproj" />
-    <ProjectReference Include="..\GLAA.Web\GLAA.Web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -78,10 +78,15 @@
                     <nav id="proposition-menu">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            var user = await UserManager.GetUserAsync(User);
+
+                            using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id="logout-form",  @class = "form-horizontal", role = "form" }))
                             {
+                                <a asp-controller="UserProfile" asp-action="Index">@(user.FullName)</a>
+
                                 @Html.AntiForgeryToken()
-                                <button type="submit" style="float:right;">Sign out</button>
+
+                                <a href="javascript:logout(this)">Logout</a>
                             }
                         }
                         <a href="@Url.Action("Index", "Home")" id="proposition-name">
@@ -130,6 +135,11 @@
         </div>
     </footer>
     <script src="~/js/main.min.js"></script>
+    <script>
+        function logout() {          
+            document.getElementById('logout-form').submit();
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

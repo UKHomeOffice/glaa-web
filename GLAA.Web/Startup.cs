@@ -125,7 +125,9 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
 
             // notify
-            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IEmailService>(x => new EmailService(
+                services.BuildServiceProvider().GetService<ILoggerFactory>(),
+                Configuration.GetSection("GOVNotify")["APIKEY"]));
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
