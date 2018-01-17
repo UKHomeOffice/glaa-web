@@ -114,7 +114,7 @@ namespace GLAA.Web.Controllers
                         }
                     }
 
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Admin");
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -440,13 +440,14 @@ namespace GLAA.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
+                TempData["Email"] = model.Email;
 
                 //TODO: do we need users to confirm accounts
                 //|| !(await _userManager.IsEmailConfirmedAsync(user))
 
                 if (user == null )
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
+                    // Don't reveal that the user does not exist or is not confirmed                    
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
 
@@ -474,7 +475,8 @@ namespace GLAA.Web.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            var email = TempData["Email"];
+            return View("ForgotPasswordConfirmation", email);
         }
 
         [HttpGet]
