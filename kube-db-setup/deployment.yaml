@@ -2,19 +2,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: glaa-db-setup
+  name: glaa-db
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: glaa-db-setup
+        name: glaa-db
     spec:  
       containers:
-      - name: glaa-db-setup
+      - name: glaa-db
         securityContext:
           runAsNonRoot: true            
-        image: quay.io/ukhomeofficedigital/glaa-db-setup:latest
+        image: quay.io/ukhomeofficedigital/glaa-db:latest
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 80
