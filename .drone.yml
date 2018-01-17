@@ -9,7 +9,7 @@ pipeline:
 
     commands:
       - docker build -t glaa-web .
-      - docker build -t glaa-db kubedb/
+      - docker build -t glaa-db .
 
     when:
       branch: master
@@ -27,12 +27,14 @@ pipeline:
 
     commands:
       - docker login -u="ukhomeofficedigital+glaa" -p=$${DOCKER_PASSWORD} quay.io
-      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
-      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:latest
-      - docker push quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
       - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:$${DRONE_COMMIT_SHA}
       - docker tag glaa-db quay.io/ukhomeofficedigital/glaa-db:latest
       - docker push quay.io/ukhomeofficedigital/glaa-db:$${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/glaa-db:latest
+      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
+      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:latest
+      - docker push quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/glaa-web:latest
 
     when:
       branch: master
