@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.allow-http: "true"
 spec:
   rules:
-  - host: glaa-web.notprod.glaa.homeoffice.gov.uk
+  - host: dev.glaa-dev.notprod.acp.homeoffice.gov.uk
     http:
       paths:
       - backend:
