@@ -50,7 +50,7 @@ namespace GLAA.ViewModels.LicenceApplication
     public class OrganisationNameViewModel
     {
         [Required]
-        [Display(Name = "Organisation Name", Description = "The name you registered with companies house")]
+        [Display(Name = "Organisation Name", Description = "This is the name of the organisation you control")]
         public string OrganisationName { get; set; }
     }
 
@@ -74,17 +74,17 @@ namespace GLAA.ViewModels.LicenceApplication
             {
                 new CheckboxListItem { Id = 1, Name = "Agriculture"},
                 new CheckboxListItem { Id = 2, Name = "Horticulture"},
-                new CheckboxListItem { Id = 3, Name = "Processing and packaging of all fresh food, drinks and other produce"},
+                new CheckboxListItem { Id = 3, Name = "Food Packaging and Processing"},
                 new CheckboxListItem { Id = 4, Name = "Shellfish gathering"},
                 new CheckboxListItem { Id = 5, Name = "Other"}
             };
         }
 
-        [CheckboxRequired("Please select at least one industry")]
+        [CheckboxRequired("Please select at least one sector")]
         [Display(Name = "Industry", Description = "Select all that apply")]
         public List<CheckboxListItem> OperatingIndustries { get; set; }
 
-        [RequiredIf(ErrorMessage = "You must enter the industry you operate in")]
+        [RequiredIf(ErrorMessage = "You must enter the sectors you intend to operate in")]
         [Display(Name = "Other")]
         public string OtherIndustry { get; set; }
 
@@ -111,7 +111,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         [CheckboxRequired("Please select at least one country")]
-        [Display(Name = "Operating Country", Description = "Select all that apply")]
+        [Display(Name = "Operating Country", Description = "Use the tick boxes to indicate which countries you intend to supply with workers")]
         public List<CheckboxListItem> OperatingCountries { get; set; }
     }
 
@@ -126,7 +126,7 @@ namespace GLAA.ViewModels.LicenceApplication
         };
 
         [Required(ErrorMessage = "Please select a turnover band")]
-        [Display(Name = "Turnover Band", Description = "Only enter the turnover for regulated sectors, not your entire companies turnover")]
+        [Display(Name = "Turnover Band", Description = "Please state what you estimate your annual gross turnover will be in the GLAA regulated sectors in your first year of trading should a licence be granted")]
         public TurnoverBand? TurnoverBand { get; set; }
     }
 
@@ -139,7 +139,7 @@ namespace GLAA.ViewModels.LicenceApplication
         };
 
         [Required]
-        [Display(Name = "Communication Preference", Description = "Choose your preferred channel of communication. If you choose email we will contact you at the email address that you provide on the next page")]
+        [Display(Name = "Communication Preference", Description = "Tick the box that indicates how you would like to receive written communication from the GLAA")]
         public CommunicationPreference? CommunicationPreference { get; set; }
     }
 
@@ -194,7 +194,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public LegalStatusEnum? LegalStatus { get; set; }
 
         // TODO: Check example numbers
-        [RegularExpression(@"\w{2}\d{6}", ErrorMessage = "Please enter a valid Companies House Registration Number")]
+        [RegularExpression(@"\w{2}\d{6}", ErrorMessage = "Companies House registration number")]
         [RequiredIf(ErrorMessage = "The Companies House Registration Number is required")]
         [Display(Name = "Companies House Registration Number", Description = "For example 01234567 or OC012345")]
         public string CompaniesHouseNumber { get; set; }
@@ -219,12 +219,11 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool? HasPAYEERNNumber { get; set; }
 
         // TODO: Check example numbers
-        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE/ERN Number")]
-        [RequiredIf(ErrorMessage = "The PAYE/ERN Number field is required")]
-        [Display(Name = "PAYE/ERN Number", Description = "For example 123/A12345 or 123/AB12345")]
+        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]
+        [RequiredIf(ErrorMessage = "The PAYE Number field is required")]
+        [Display(Name = "PAYE Number", Description = "For example 123/A12345 or 123/AB12345")]
         public string PAYEERNNumber { get; set; }
-
-        [RequiredIf(ErrorMessage = "The Registration Date field is required")]
+        
         [UIHint("_NullableDateTime")]
         [Display(Name = "Employer Registration Date", Description = "Please enter the date you registered as an employer with HMRC.")]
         public DateViewModel PAYEERNRegistrationDate { get; set; }
@@ -240,18 +239,17 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         [Required]
-        [Display(Name = "Do you have an VAT Registration Number?")]
+        [Display(Name = "Do you have an VAT registration number?")]
         public bool? HasVATNumber { get; set; }
 
         // TODO: Check example numbers
         // May match some invalid formats, see below for more... :-/
         // https://en.wikipedia.org/wiki/VAT_identification_number
-        [RegularExpression(@"[a-zA-Z]{2}[a-zA-Z0-9 ]{2,13}", ErrorMessage = "Please enter a valid VAT Number")]
-        [RequiredIf(ErrorMessage = "The VAT Number field is required")]
+        [RegularExpression(@"[a-zA-Z]{2}[a-zA-Z0-9 ]{2,13}", ErrorMessage = "Please enter a valid VAT registration number")]
+        [RequiredIf(ErrorMessage = "The VAT registration number field is required")]
         [Display(Name = "VAT Number", Description = "For example GB999 9999 73")]
         public string VATNumber { get; set; }
 
-        [RequiredIf(ErrorMessage = "The Registration Date field is required")]
         [UIHint("_NullableDateTime")]
         [Display(Name = "VAT Registration Date", Description = "Please enter the date you registered for VAT.")]
         public DateViewModel VATRegistrationDate { get; set; }
