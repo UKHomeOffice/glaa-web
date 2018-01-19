@@ -21,6 +21,7 @@ using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using GLAA.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GLAA.Web.Controllers
 {
@@ -292,8 +293,13 @@ namespace GLAA.Web.Controllers
 
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
 
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    var inDev =  Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == EnvironmentName.Development;
 
+                    if(!inDev)
+                    {
+                        await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    }
+                    
                     // add role
                     await _userManager.AddToRoleAsync(user, "LabourProvider");
 
@@ -317,7 +323,9 @@ namespace GLAA.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            // need to get model back again
+            // TODO: This action needs to be in Eligibility controller
+            return RedirectToAction("Part4", "Eligibility");
         }
 
         [HttpPost]
