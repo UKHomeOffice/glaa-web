@@ -22,7 +22,7 @@ namespace GLAA.Services
         public bool Send(NotifyMailMessage msg, string messageTemplate)
         {
             try
-            {
+            {                
                 client.SendEmail(
                     msg.To,
                     messageTemplate,
