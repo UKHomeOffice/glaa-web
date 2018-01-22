@@ -21,7 +21,7 @@
             @if (!Model.IsShellfish && (Model.TurnoverBand == TurnoverBand.OverTenMillion || Model.TurnoverBand == TurnoverBand.FiveToTenMillion))
             {
                 <div class="column-two-thirds">
-                    @Html.RadioButtonFormGroupFor(x => x.NamedIndividualType, Model.AvailableIndividualTypes)
+                    @Html.RadioButtonFormGroupFor(x => x.NamedIndividualType, Model.AvailableIndividualTypes, "Select an input option")
                 </div>
             }
         </div>

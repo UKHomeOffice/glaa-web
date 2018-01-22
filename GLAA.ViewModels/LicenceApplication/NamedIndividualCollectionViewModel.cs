@@ -12,10 +12,10 @@ namespace GLAA.ViewModels.LicenceApplication
         {
             get
             {
-                var bandA = "Your fee band is 'A'. For applications to supply workers into Agriculture, Horticulture, Food Processing and Packaging sectors only in Turnover Bands A and B may choose between entering named individuals or employee counts by job title.Select an input option";
+                var bandA = "Your fee band is 'A'. For applications to supply workers into Agriculture, Horticulture, Food Processing and Packaging sectors only in Turnover Bands A and B may choose between entering named individuals or employee counts by job title.";
 
                 var bandB =
-                    "Your fee band is 'B'. For applications to supply workers into Agriculture, Horticulture, Food Processing and Packaging sectors only in Turnover Bands A and B may choose between entering named individuals or employee counts by job title.Select an input option";
+                    "Your fee band is 'B'. For applications to supply workers into Agriculture, Horticulture, Food Processing and Packaging sectors only in Turnover Bands A and B may choose between entering named individuals or employee counts by job title.";
 
                 var bandC = "Your fee band is 'C'. You may enter the details of named individuals.";
 

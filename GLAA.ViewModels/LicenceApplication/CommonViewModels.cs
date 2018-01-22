@@ -93,7 +93,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string JobTitle { get; set; }
 
         [Required]
-        [Display(Name = "Number employed is this role")]
+        [Display(Name = "Number of people employed in this capacity")]
         public int? JobTitleNumber { get; set; }
     }
 
