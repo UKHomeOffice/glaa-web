@@ -41,7 +41,24 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         [UIHint("_NullableDateTime")]        
         [DateRequired(ErrorMessage = "The Date of birth field is required.")]
-        [AtLeast18]
+        [Display(Name = "Date of birth", Description = "For example 31 3 1980")]
+        public DateViewModel DateOfBirth { get; set; }
+    }
+
+    public class AtLeast16DateOfBirthViewModel
+    {
+        [UIHint("_NullableDateTime")]
+        [DateRequired(ErrorMessage = "The Date of birth field is required.")]
+        [AtLeast16(ErrorMessage =  "The date of birth must be at least 16")]
+        [Display(Name = "Date of birth", Description = "For example 31 3 1980")]
+        public DateViewModel DateOfBirth { get; set; }
+    }
+
+    public class AtLeast18DateOfBirthViewModel
+    {
+        [UIHint("_NullableDateTime")]
+        [DateRequired(ErrorMessage = "The Date of birth field is required.")]
+        [AtLeast18(ErrorMessage = "The date of birth must be at least 18")]
         [Display(Name = "Date of birth", Description = "For example 31 3 1980")]
         public DateViewModel DateOfBirth { get; set; }
     }
