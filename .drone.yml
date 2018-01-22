@@ -9,7 +9,7 @@ pipeline:
 
     commands:
       - docker build -t glaa-web .
-      - docker build -t glaa-db .
+      - docker build -t glaa-db ./kube-db-setup/
 
     when:
       branch: master
