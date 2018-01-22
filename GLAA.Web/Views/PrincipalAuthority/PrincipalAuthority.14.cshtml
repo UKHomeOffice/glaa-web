@@ -2,7 +2,7 @@
     ViewBag.Title = "Principal Authority - Part 12";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PersonalEmailAddressViewModel
+@model GLAA.ViewModels.LicenceApplication.EmailAddressViewModel
 
 @using (Html.BeginForm("SavePersonalEmailAddress", "PrincipalAuthority"))
 {    
@@ -16,7 +16,7 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.PersonalEmailAddress)
+            @Html.TextFormGroupFor(x => x.EmailAddress)
         </div>
     </div>
     
