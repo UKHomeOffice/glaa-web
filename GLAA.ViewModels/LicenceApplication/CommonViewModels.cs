@@ -39,8 +39,9 @@ namespace GLAA.ViewModels.LicenceApplication
 
     public class DateOfBirthViewModel
     {
-        [UIHint("_NullableDateTime")]
+        [UIHint("_NullableDateTime")]        
         [DateRequired(ErrorMessage = "The Date of birth field is required.")]
+        [AtLeast18]
         [Display(Name = "Date of birth", Description = "For example 31 3 1980")]
         public DateViewModel DateOfBirth { get; set; }
     }
@@ -93,18 +94,18 @@ namespace GLAA.ViewModels.LicenceApplication
         public string BusinessExtension { get; set; }
     }
 
-    public class PersonalMobileNumberViewModel
+    public class MobileNumberViewModel
     {
         [Phone]
-        [Display(Name = "Personal Mobile Number")]
-        public string PersonalMobileNumber { get; set; }
+        [Display(Name = "Mobile Number")]
+        public string MobileNumber { get; set; }
     }
 
-    public class PersonalEmailAddressViewModel 
+    public class EmailAddressViewModel 
     {
         [EmailAddress]
-        [Display(Name = "Personal Email Address")]
-        public string PersonalEmailAddress { get; set; }
+        [Display(Name = "Email Address")]
+        public string EmailAddress { get; set; }
     }
 
     public interface IUkOnly

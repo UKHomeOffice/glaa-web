@@ -30,9 +30,9 @@ namespace GLAA.Domain.Models
 
         public string BusinessExtension { get; set; }
 
-        public string PersonalMobileNumber { get; set; }
+        public string MobileNumber { get; set; }
 
-        public string PersonalEmailAddress { get; set; }
+        public string EmailAddress { get; set; }
 
         public string NationalInsuranceNumber { get; set; }
 

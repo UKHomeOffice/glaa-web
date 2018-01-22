@@ -15,8 +15,8 @@ namespace GLAA.ViewModels.LicenceApplication
             Address = new AddressViewModel();
             BusinessPhoneNumber = new BusinessPhoneNumberViewModel();
             BusinessExtension = new BusinessExtensionViewModel();
-            PersonalEmailAddress = new PersonalEmailAddressViewModel();
-            PersonalMobileNumber = new PersonalMobileNumberViewModel();
+            EmailAddress = new EmailAddressViewModel();
+            MobileNumber = new MobileNumberViewModel();
             NationalInsuranceNumber = new NationalInsuranceNumberViewModel();
             Nationality = new NationalityViewModel();
             PassportViewModel = new PassportViewModel();
@@ -37,8 +37,8 @@ namespace GLAA.ViewModels.LicenceApplication
         public AddressViewModel Address { get; set; }
         public BusinessPhoneNumberViewModel BusinessPhoneNumber { get; set; }
         public BusinessExtensionViewModel BusinessExtension { get; set; }
-        public PersonalEmailAddressViewModel PersonalEmailAddress { get; set; }
-        public PersonalMobileNumberViewModel PersonalMobileNumber { get; set; }
+        public EmailAddressViewModel EmailAddress { get; set; }
+        public MobileNumberViewModel MobileNumber { get; set; }
         public NationalInsuranceNumberViewModel NationalInsuranceNumber { get; set; }
 
         public NationalityViewModel Nationality { get; set; }
