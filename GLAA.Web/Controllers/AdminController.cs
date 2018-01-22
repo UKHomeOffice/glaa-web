@@ -108,7 +108,7 @@ namespace GLAA.Web.Controllers
                 return View("EditUser", model);
             }
 
-            userPostDataHandler.Insert(model);
+            userPostDataHandler.Insert(model, Url, Request.Scheme);
             return RedirectToAction("Users");
         }
 
