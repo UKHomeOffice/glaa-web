@@ -49,11 +49,11 @@ namespace GLAA.Services.Automapper
             CreateMap<string, BusinessExtensionViewModel>()
                 .ForMember(x => x.BusinessExtension, opt => opt.MapFrom(y => y));
 
-            CreateMap<string, PersonalEmailAddressViewModel>()
-                .ForMember(x => x.PersonalEmailAddress, opt => opt.MapFrom(y => y));
+            CreateMap<string, EmailAddressViewModel>()
+                .ForMember(x => x.EmailAddress, opt => opt.MapFrom(y => y));
 
-            CreateMap<string, PersonalMobileNumberViewModel>()
-                .ForMember(x => x.PersonalMobileNumber, opt => opt.MapFrom(y => y));
+            CreateMap<string, MobileNumberViewModel>()
+                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(y => y));
 
             CreateMap<string, NationalityViewModel>()
                 .ForMember(x => x.Nationality, opt => opt.MapFrom(y => y));

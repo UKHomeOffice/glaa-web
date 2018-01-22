@@ -11,8 +11,8 @@
         AddressViewModel Address { get; set; }
         BusinessPhoneNumberViewModel BusinessPhoneNumber { get; set; }
         BusinessExtensionViewModel BusinessExtension { get; set; }
-        PersonalEmailAddressViewModel PersonalEmailAddress { get; set; }
-        PersonalMobileNumberViewModel PersonalMobileNumber { get; set; }
+        EmailAddressViewModel EmailAddress { get; set; }
+        MobileNumberViewModel MobileNumber { get; set; }
         NationalInsuranceNumberViewModel NationalInsuranceNumber { get; set; }
 
         NationalityViewModel Nationality { get; set; }

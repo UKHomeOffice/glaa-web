@@ -92,8 +92,8 @@ namespace GLAA.Services.Tests.AutoMapper
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension = expectedBusExt;
             inputPerson.BusinessPhoneNumber = expectedBusPhoneNo;
-            inputPerson.PersonalEmailAddress = expectedEmail;
-            inputPerson.PersonalMobileNumber = expectedMobile;
+            inputPerson.EmailAddress = expectedEmail;
+            inputPerson.MobileNumber = expectedMobile;
             inputPerson.NationalInsuranceNumber = expectedNatIns;
             inputPerson.Nationality = expectedNationality;
             inputPerson.HasPassport = expectedHasPassport;
@@ -140,8 +140,8 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.JobTitle, actual.JobTitle.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber, actual.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension, actual.BusinessExtension.BusinessExtension);
-            Assert.AreEqual(expected.PersonalEmailAddress, actual.PersonalEmailAddress.PersonalEmailAddress);
-            Assert.AreEqual(expected.PersonalMobileNumber, actual.PersonalMobileNumber.PersonalMobileNumber);
+            Assert.AreEqual(expected.EmailAddress, actual.EmailAddress.EmailAddress);
+            Assert.AreEqual(expected.MobileNumber, actual.MobileNumber.MobileNumber);
             Assert.AreEqual(expected.NationalInsuranceNumber, actual.NationalInsuranceNumber.NationalInsuranceNumber);
 
             AssertAddress(expected.Address, actual.Address);

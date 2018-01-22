@@ -194,8 +194,8 @@ namespace GLAA.Web.FormLogic
             new FormPageDefinition("Address"),
             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
             new FormPageDefinition(nameof(BusinessExtensionViewModel.BusinessExtension)),
-            new FormPageDefinition(nameof(PersonalMobileNumberViewModel.PersonalMobileNumber)),
-            new FormPageDefinition(nameof(PersonalEmailAddressViewModel.PersonalEmailAddress)),
+            new FormPageDefinition(nameof(MobileNumberViewModel.MobileNumber)),
+            new FormPageDefinition(nameof(EmailAddressViewModel.EmailAddress)),
             new FormPageDefinition(nameof(NationalInsuranceNumberViewModel.NationalInsuranceNumber)),
         };
 
