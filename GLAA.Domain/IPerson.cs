@@ -26,9 +26,9 @@ namespace GLAA.Domain
 
         string BusinessExtension { get; set; }
 
-        string PersonalMobileNumber { get; set; }
+        string MobileNumber { get; set; }
 
-        string PersonalEmailAddress { get; set; }
+        string EmailAddress { get; set; }
 
         string NationalInsuranceNumber { get; set; }
 

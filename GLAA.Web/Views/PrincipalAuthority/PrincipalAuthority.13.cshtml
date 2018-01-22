@@ -2,7 +2,7 @@
     ViewBag.Title = "Principal Authority - Part 11";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PersonalMobileNumberViewModel
+@model GLAA.ViewModels.LicenceApplication.MobileNumberViewModel
 
 @using (Html.BeginForm("SavePersonalMobileNumber", "PrincipalAuthority"))
 {
@@ -12,11 +12,11 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your personal mobile phone number?
+                What is your mobile number?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.PersonalMobileNumber)
+            @Html.TextFormGroupFor(x => x.MobileNumber)
         </div>
     </div>
     
