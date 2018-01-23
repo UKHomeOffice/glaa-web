@@ -17,5 +17,5 @@ RUN iconv -f utf-8 -t ascii db_setup.sh > db_setup.sh
 RUN chmod +x ./db_setup.sh
 
 USER app
-ENTRYPOINT ["./db_setup.sh"]
-#CMD /bin/bash 
+#ENTRYPOINT ["./db_setup.sh"]
+CMD /bin/bash 
