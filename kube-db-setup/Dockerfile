@@ -13,7 +13,6 @@ ENV HOME=/home/app
 
 WORKDIR $HOME
 COPY ./db_setup.sql ./db_setup.sh ./
-RUN iconv -f utf-8 -t ascii db_setup.sh > db_setup.sh
 RUN chmod +x ./db_setup.sh
 
 USER app
