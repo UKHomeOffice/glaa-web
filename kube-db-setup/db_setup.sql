@@ -2,6 +2,8 @@ USE [master]
 
 GO
 
+PRINT 'Creating login for $(DB_USER)';
+
 IF NOT EXISTS (SELECT [loginname] FROM [master].[dbo].[syslogins] WHERE [name] = '$(DB_USER)')
 
 BEGIN
