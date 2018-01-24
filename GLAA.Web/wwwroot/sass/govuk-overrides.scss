@@ -21,47 +21,63 @@
     }
 }
 
-.multiple-choice [type=checkbox] ~ label::before {
-    content: "";
-    border: 2px solid;
-    background: transparent;
-    width: 34px;
-    height: 34px;
-    position: absolute;
-    top: 0;
-    left: 0;
+.phase-banner {
+    margin:0;
+    max-width:inherit;
+    width:100%;
 }
 
-.multiple-choice [type=checkbox] ~ label::after {
-    content: "";
-    border: solid;
-    border-width: 0 0 5px 5px;
-    background: transparent;
-    border-top-color: transparent;
-    width: 17px;
-    height: 7px;
-    position: absolute;
-    top: 10px;
-    left: 8px;
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    zoom: 1;
-    filter: alpha(opacity=0);
-    opacity: 0;
+.phase-banner p {
+    margin:0 auto;
+    max-width:990px;
+    width: calc(100% - 25px);
+    padding-left:25px;
 }
 
-.multiple-choice input:checked ~ label::after {
-    zoom: 1;
-    filter: alpha(opacity=100);
-    opacity: 1;
+.phase-banner p span {
+    display:inline-block;
+    padding-right:25px;
 }
 
-/* Override existing GDS image paths to match MVC bundle structure*/
+    .multiple-choice [type=checkbox] ~ label::before {
+        content: "";
+        border: 2px solid;
+        background: transparent;
+        width: 34px;
+        height: 34px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-/*.button-start,
+    .multiple-choice [type=checkbox] ~ label::after {
+        content: "";
+        border: solid;
+        border-width: 0 0 5px 5px;
+        background: transparent;
+        border-top-color: transparent;
+        width: 17px;
+        height: 7px;
+        position: absolute;
+        top: 10px;
+        left: 8px;
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        zoom: 1;
+        filter: alpha(opacity=0);
+        opacity: 0;
+    }
+
+    .multiple-choice input:checked ~ label::after {
+        zoom: 1;
+        filter: alpha(opacity=100);
+        opacity: 1;
+    }
+    /* Override existing GDS image paths to match MVC bundle structure*/
+    /*.button-start,
 .button-get-started {
     background-image: url("../images/icon-pointer.png");
 }
