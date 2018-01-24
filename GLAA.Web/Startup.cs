@@ -71,8 +71,8 @@ namespace GLAA.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var user = Environment.GetEnvironmentVariable("DB_USER");
-            var password = Environment.GetEnvironmentVariable("DB_PASS");
+            var user = Environment.GetEnvironmentVariable("APP_USER");
+            var password = Environment.GetEnvironmentVariable("APP_PASS");
             var server = Environment.GetEnvironmentVariable("DB_SERVER");
             var port = Environment.GetEnvironmentVariable("DB_PORT");
 

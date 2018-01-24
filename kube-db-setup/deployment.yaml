@@ -23,19 +23,29 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: endpoint   
+                key: endpoint
           - name: DB_PORT
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: port                         
+                key: port
           - name: DB_USER
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: username          
+                key: username
           - name: DB_PASS
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: password                              
+                key: password
+          - name: APP_USER
+            valueFrom:
+              secretKeyRef:
+                name: glaa-db-app-user
+                key: username
+          - name: APP_PASS
+            valueFrom:
+              secretKeyRef:
+                name: glaa-db-app-user
+                key: password

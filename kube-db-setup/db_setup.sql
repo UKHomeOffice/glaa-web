@@ -2,13 +2,13 @@ USE [master]
 
 GO
 
-PRINT 'Creating login for $(DB_USER)';
+PRINT 'Creating login for $(APP_USER)';
 
-IF NOT EXISTS (SELECT [loginname] FROM [master].[dbo].[syslogins] WHERE [name] = '$(DB_USER)')
+IF NOT EXISTS (SELECT [loginname] FROM [master].[dbo].[syslogins] WHERE [name] = '$(APP_USER)')
 
 BEGIN
 
-    CREATE LOGIN [$(DB_USER)] WITH PASSWORD = '$(DB_PASS)';
+    CREATE LOGIN [$(APP_USER)] WITH PASSWORD = '$(APP_PASS)';
 
     PRINT 'Login created';
 
@@ -16,17 +16,17 @@ END
 
 
 
-ALTER LOGIN [$(DB_USER)] ENABLE
+ALTER LOGIN [$(APP_USER)] ENABLE
 
 PRINT 'Login enabled';
 
-ALTER LOGIN [$(DB_USER)] WITH PASSWORD=N'$(DB_PASS)'
+ALTER LOGIN [$(APP_USER)] WITH PASSWORD=N'$(APP_PASS)'
 
 PRINT 'Password set';
 
 GO
 
-GRANT CONNECT SQL TO [$(DB_USER)]
+GRANT CONNECT SQL TO [$(APP_USER)]
 
 GO
 
@@ -46,11 +46,11 @@ GO
 
 
 
-IF NOT EXISTS (SELECT [name] FROM [sys].[database_principals] WHERE [type] = 'S' AND [name] = '$(DB_USER)')
+IF NOT EXISTS (SELECT [name] FROM [sys].[database_principals] WHERE [type] = 'S' AND [name] = '$(APP_USER)')
 
 BEGIN
 
-    CREATE USER [$(DB_USER)] FOR LOGIN [$(DB_USER)] WITH DEFAULT_SCHEMA = [dbo];
+    CREATE USER [$(APP_USER)] FOR LOGIN [$(APP_USER)] WITH DEFAULT_SCHEMA = [dbo];
 
     PRINT 'Database user created';
 
@@ -58,27 +58,27 @@ END
 
 
 
-GRANT ALTER ON SCHEMA::dbo TO [$(DB_USER)]
+GRANT ALTER ON SCHEMA::dbo TO [$(APP_USER)]
 
 GO
 
-GRANT CREATE TABLE TO [$(DB_USER)]
+GRANT CREATE TABLE TO [$(APP_USER)]
 
 GO
 
-GRANT INSERT TO [$(DB_USER)]
+GRANT INSERT TO [$(APP_USER)]
 
 GO
 
-GRANT UPDATE TO [$(DB_USER)]
+GRANT UPDATE TO [$(APP_USER)]
 
 GO
 
-GRANT DELETE TO [$(DB_USER)]
+GRANT DELETE TO [$(APP_USER)]
 
 GO
 
-GRANT SELECT ON SCHEMA::dbo TO [$(DB_USER)]
+GRANT SELECT ON SCHEMA::dbo TO [$(APP_USER)]
 
 GO
 
