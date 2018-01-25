@@ -63,6 +63,8 @@ namespace GLAA.Web
                 builder.AddUserSecrets<Startup>();
             }
 
+            builder.AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
