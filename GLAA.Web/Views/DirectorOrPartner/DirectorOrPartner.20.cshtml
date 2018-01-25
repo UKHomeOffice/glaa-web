@@ -6,6 +6,8 @@
     var conjunction = Model.RestraintOrders.Any() ? "another" : "a";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "20" } })
+
 @using (Html.BeginForm("ReviewDirectorOrPartnerRestraintOrders", "DirectorOrPartner", FormMethod.Post))
 {
     <div class="grid-row">
@@ -20,19 +22,19 @@
     </div>
     <table class="check-your-answers" id="RestraintOrders">
         <thead>
-        <tr>
-            <th colspan="3">Restraint or confiscation orders, or civil recoveries</th>
-        </tr>
+            <tr>
+                <th colspan="3">Restraint or confiscation orders, or civil recoveries</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var ro in Model.RestraintOrders)
-        {
-            <tr>
-                <td>@ro.Description</td>
-                <td>@ro.Date.ToString()</td>
-                <td class="change-answer"><a href="@Url.Action("AddRestraintOrder", "Licence", new { section = FormSection.DirectorOrPartner, id = ro.Id })">Change or remove<span class="visually-hidden"> @ro.Description</span></a></td>
-            </tr>
-        }
+            @foreach (var ro in Model.RestraintOrders)
+            {
+                <tr>
+                    <td>@ro.Description</td>
+                    <td>@ro.Date.ToString()</td>
+                    <td class="change-answer"><a href="@Url.Action("AddRestraintOrder", "Licence", new { section = FormSection.DirectorOrPartner, id = ro.Id })">Change or remove<span class="visually-hidden"> @ro.Description</span></a></td>
+                </tr>
+            }
         </tbody>
     </table>
     <div class="grid-row">

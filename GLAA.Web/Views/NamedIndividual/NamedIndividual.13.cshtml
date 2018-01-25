@@ -6,6 +6,8 @@
     var conjunction = Model.OffencesAwaitingTrial.Any() ? "another" : "an";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividual" }, { "submittedPageId", "13" } })
+
 @using (Html.BeginForm("ReviewNamedIndividualOffencesAwaitingTrial", "NamedIndividual", FormMethod.Post))
 {
     <div class="grid-row">
@@ -20,19 +22,19 @@
     </div>
     <table class="check-your-answers" id="OffencesAwaitingTrial">
         <thead>
-        <tr>
-            <th colspan="3">Alleged offences / sanctions / penalties</th>
-        </tr>
+            <tr>
+                <th colspan="3">Alleged offences / sanctions / penalties</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var uc in Model.OffencesAwaitingTrial)
-        {
-            <tr>
-                <td>@uc.Description</td>
-                <td>@uc.Date.ToString()</td>
-                <td class="change-answer"><a href="@Url.Action("AddOffenceAwaitingTrial", "Licence", new { section = FormSection.NamedIndividual, id = uc.Id })">Change or remove<span class="visually-hidden"> @uc.Description</span></a></td>
-            </tr>
-        }
+            @foreach (var uc in Model.OffencesAwaitingTrial)
+            {
+                <tr>
+                    <td>@uc.Description</td>
+                    <td>@uc.Date.ToString()</td>
+                    <td class="change-answer"><a href="@Url.Action("AddOffenceAwaitingTrial", "Licence", new { section = FormSection.NamedIndividual, id = uc.Id })">Change or remove<span class="visually-hidden"> @uc.Description</span></a></td>
+                </tr>
+            }
         </tbody>
     </table>
     <div class="grid-row">

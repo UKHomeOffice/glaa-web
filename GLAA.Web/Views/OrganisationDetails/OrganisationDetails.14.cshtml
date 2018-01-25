@@ -3,6 +3,8 @@
     ViewBag.Title = "Organisation Details - Part 3";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "14" } })
+
 @using (Html.BeginForm("SaveOperatingIndustries", "OrganisationDetails"))
 {
     <div class="grid-row">

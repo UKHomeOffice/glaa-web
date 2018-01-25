@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.IsPreviousPrincipalAuthorityViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "1" } })
+
 @using (Html.BeginForm("SaveIsPreviousPrincipalAuthority", "DirectorOrPartner"))
 {
     <div class="grid-row">
@@ -16,7 +18,7 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            <div class="form-group">                
+            <div class="form-group">
                 @foreach (var option in Model.YesNo)
                 {
                     <div class="multiple-choice">
@@ -27,6 +29,6 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }

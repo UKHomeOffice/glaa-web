@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "9" } })
+
 @using (Html.BeginForm("SaveCommunicationPreference", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -23,5 +25,5 @@
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
+@section Scripts {
 }

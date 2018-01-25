@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.DateOfBirthViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "3" } })
+
 @using (Html.BeginForm("SaveDateOfBirth", "AlternativeBusinessRepresentative"))
 {
     <div class="grid-row">
@@ -26,6 +28,6 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }

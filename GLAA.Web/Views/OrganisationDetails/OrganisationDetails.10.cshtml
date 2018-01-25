@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "10" } })
+
 @using (Html.BeginForm("SaveLegalStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -47,7 +49,7 @@
 }
 
 @section scripts
-{    
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

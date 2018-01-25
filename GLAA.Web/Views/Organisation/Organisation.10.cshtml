@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.WorkerContractViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "10" } })
+
 @using (Html.BeginForm("SaveWorkerContract", "Organisation"))
 {
     <div class="grid-row">
@@ -31,6 +33,6 @@
                 </fieldset>
             </div>
         </div>
-    </div>    
+    </div>
     <button type="submit" class="button">Save and continue</button>
 }

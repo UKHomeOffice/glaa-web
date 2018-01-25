@@ -5,6 +5,10 @@
 
 @model GLAA.ViewModels.LicenceApplication.OrganisationNameViewModel
 
+@*new { section = "OrganisationDetails", submittedPageId = 2 }*@
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData){{"section", "OrganisationDetails"}, {"submittedPageId", "2"}})
+
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -19,10 +23,10 @@
         <div class="column-two-thirds">
             @Html.TextFormGroupFor(x => x.OrganisationName)
         </div>
-    </div>    
+    </div>
 
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
+@section Scripts {
 }

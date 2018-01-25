@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.AlternativeFullNameViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "5" } })
+
 @using (Html.BeginForm("SaveAlternativeFullName", "PrincipalAuthority"))
 {
     <div class="grid-row">
@@ -25,7 +27,7 @@
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasAlternativeName, option.Value, new { id = $"HasAlternativeName_{option.Text}"})
+                            @Html.RadioButtonFor(x => x.HasAlternativeName, option.Value, new { id = $"HasAlternativeName_{option.Text}" })
                             @Html.LabelFor(x => x.HasAlternativeName, option.Text, new { @for = $"HasAlternativeName_{option.Text}" })
                         </div>
 
@@ -42,13 +44,13 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{
-    
+    {
+
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

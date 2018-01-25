@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.RestraintOrdersViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "21" } })
+
 @using (Html.BeginForm("SaveRestraintOrders", "PrincipalAuthority"))
 {
     <div class="grid-row">
