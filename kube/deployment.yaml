@@ -49,3 +49,20 @@ spec:
               secretKeyRef:
                 name: glaa-db-app-user
                 key: password
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Production
+          - name: SuperUser
+            valueFrom:
+              secretKeyRef:
+                name: glaa-app-secrets
+                key: su
+          - name: GOVNotify
+            valueFrom:
+              secretKeyRef:
+                name: glaa-app-secrets
+                key: notify
+          - name: DefaultStatuses
+            valueFrom:
+              secretKeyRef:
+                name: glaa-app-secrets
+                key: statuses
