@@ -49,3 +49,5 @@ spec:
               secretKeyRef:
                 name: glaa-db-app-user
                 key: password
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Production
