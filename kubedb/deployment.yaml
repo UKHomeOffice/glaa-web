@@ -15,7 +15,7 @@ spec:
         securityContext:
           runAsNonRoot: true       
         image: quay.io/ukhomeofficedigital/glaa-db:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
           - containerPort: 1433        
         env:
