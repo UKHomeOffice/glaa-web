@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Organisation Details - Part 12";
-    var switchValue = 0;
+    string switchValue = "";
 }
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
@@ -28,13 +28,15 @@
                     </legend>
                     @foreach (var status in Model.AvailableLegalStatuses)
                     {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.LegalStatus, status.Id)
-                            @Html.Label(status.Name)
-                        </div>
+                    <div class="multiple-choice">
+                        @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name)
+
+                        @Html.Label(status.Name)
+                    </div>
                         if (status.Name == "Limited Company")
                         {
-                            switchValue = status.Id;
+                            //TODO - bit hacky here!  Removing spaces
+                            switchValue = status.Name.Replace(" ", "");
                             <div class="panel panel-border-narrow js-hidden" id="limited-company-info">
                                 @Html.TextFormGroupFor(x => x.CompaniesHouseNumber)
                                 @Html.DateFormGroupFor(x => x.CompanyRegistrationDate)
@@ -53,7 +55,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', '@switchValue');
         });
     </script>
 }

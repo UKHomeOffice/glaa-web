@@ -23,12 +23,29 @@ namespace GLAA.Web.Controllers
             return GetViewPath(section, formDefinition.GetSectionLength(section));
         }
 
+        protected ActionResult GetPreviousView<T>(int id, FormSection section, T model) where T : IValidatable
+        {
+            if (!formDefinition.CanViewNextModel(section, id, model))
+                return RedirectToPreviousPossibleView(id, section, model);
+
+            var viewPath = GetViewPath(section, id);
+            var viewModel = formDefinition.GetViewModel(section, id, model);
+
+            return View(viewPath, viewModel);
+        }
+
+        protected ActionResult RedirectToPreviousPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
+        {
+            while (!formDefinition.CanViewNextModel(section, id, model))
+                id--;
+
+            return RedirectBackToAction(section, id);
+        }
+
         protected ActionResult GetNextView<T>(int id, FormSection section, T model) where T : IValidatable
         {
             if (!formDefinition.CanViewNextModel(section, id, model))
-            {
                 return RedirectToNextPossibleView(id, section, model);
-            }
 
             var viewPath = GetViewPath(section, id);
             var viewModel = formDefinition.GetViewModel(section, id, model);
@@ -39,9 +56,7 @@ namespace GLAA.Web.Controllers
         protected ActionResult RedirectToNextPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
         {
             while (!formDefinition.CanViewNextModel(section, id, model))
-            {
                 id++;
-            }
 
             return RedirectToAction(section, id);
         }
@@ -49,6 +64,11 @@ namespace GLAA.Web.Controllers
         protected ActionResult RedirectToAction(FormSection section, int id)
         {
             return RedirectToAction("Part", section.ToString(), new {id});
+        }
+
+        protected ActionResult RedirectBackToAction(FormSection section, int id)
+        {
+            return RedirectToAction("Part", section.ToString(), new { id, back = true });
         }
 
         protected ActionResult RedirectToLastAction(FormSection section)

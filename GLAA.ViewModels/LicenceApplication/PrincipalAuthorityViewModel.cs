@@ -88,9 +88,10 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool CanView(PrincipalAuthorityViewModel parent)
         {
-            return !parent.LegalStatus.HasValue ||
-                   parent.LegalStatus.Value == LegalStatusEnum.LimitedCompany ||
-                   parent.LegalStatus.Value == LegalStatusEnum.Partnership;
+            return (!parent.LegalStatus.HasValue ||
+                    parent.LegalStatus.Value == LegalStatusEnum.LimitedCompany ||
+                    parent.LegalStatus.Value == LegalStatusEnum.Partnership)
+                   && IsDirector.HasValue && !IsDirector.Value;
         }
 
         public bool IsRequired

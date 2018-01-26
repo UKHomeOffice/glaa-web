@@ -23,28 +23,34 @@ namespace GLAA.Web.Controllers
         {
         }
 
-        [HttpGet]
-        [ImportModelState]
-        public IActionResult Part(int id)
+        private PrincipalAuthorityViewModel SetupGetPart(int id)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var model = LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
                 x => x.PrincipalAuthorities.FirstOrDefault());
 
             if (model.Id.HasValue)
-            {
                 Session.SetCurrentPaStatus(model.Id.Value, model.IsDirector.IsDirector ?? false);
-            }
 
             if (model.DirectorOrPartnerId.HasValue)
-            {
                 Session.SetCurrentDopStatus(model.DirectorOrPartnerId.Value, model.IsDirector.IsDirector ?? false);
-            }
 
             Session.SetLoadedPage(id);
-
-            return GetNextView(id, FormSection.PrincipalAuthority, model);
+            return model;
         }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult Part(int id, bool? back = false)
+        {
+            var model = SetupGetPart(id);
+
+            return
+                back.HasValue && back.Value
+                    ? GetPreviousView(id, FormSection.PrincipalAuthority, model)
+                    : GetNextView(id, FormSection.PrincipalAuthority, model);
+        }
+
 
         private IActionResult PrincipalAuthorityPost<T>(T model, int submittedPageId, bool doDopLinking = true)
         {

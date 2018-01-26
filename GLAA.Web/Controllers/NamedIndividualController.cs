@@ -25,7 +25,16 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back)
+        {
+            var model = SetupGetPart(id);
+
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.NamedIndividual, model)
+                : GetNextView(id, FormSection.NamedIndividual, model);
+        }
+
+        private NamedIndividualViewModel SetupGetPart(int id)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var namedIndividualId = Session.GetCurrentNamedIndividualId();
@@ -35,13 +44,10 @@ namespace GLAA.Web.Controllers
                     x => x.NamedIndividuals.FirstOrDefault(y => y.Id == namedIndividualId));
 
             if (model.Id.HasValue)
-            {
                 Session.SetCurrentNamedIndividualId(model.Id.Value);
-            }
 
             Session.SetLoadedPage(id);
-
-            return GetNextView(id, FormSection.NamedIndividual, model);
+            return model;
         }
 
         [HttpGet]
@@ -57,9 +63,7 @@ namespace GLAA.Web.Controllers
 
             // TODO: A better defence against URL hacking?
             if (models.NamedIndividuals.All(ni => ni.Id != id))
-            {
                 return RedirectToAction(FormSection.NamedIndividuals, 3);
-            }
 
             Session.SetCurrentNamedIndividualId(id);
 

@@ -55,7 +55,7 @@ namespace GLAA.Web.Core.Helpers
 
         public static IHtmlContent DateFormGroupFor<TModel>(this IHtmlHelper<TModel> html,
             Expression<Func<TModel, DateViewModel>> expression)
-        {   
+        {
             return BuildFormGroupForControl(html, expression, html.EditorFor(expression, "_NullableDateTime"));
         }
 
@@ -90,7 +90,7 @@ namespace GLAA.Web.Core.Helpers
                 .AppendHtml("</legend>")
                 .AppendHtml("<div class=\'multiple-choice\'>")
                 .AppendHtml(html.CheckBoxFor(expression))
-                .AppendHtml(html.LabelFor(expression, metadata.Description, new { }))                
+                .AppendHtml(html.LabelFor(expression, metadata.Description, new { }))
                 .AppendHtml("</div>")
                 .AppendHtml("</fieldset>")
                 .AppendHtml("</div>");
@@ -176,7 +176,7 @@ namespace GLAA.Web.Core.Helpers
                 var idHid = html.HiddenFor(idLambda);
                 var nameHid = html.HiddenFor(nameLambda);
                 var cbx = html.CheckBoxFor(checkedLambda);
-                var lbl = html.LabelFor(checkedLambda, values[i].Name);               
+                var lbl = html.LabelFor(checkedLambda, values[i].Name);
 
                 var div = new TagBuilder("div");
                 div.AddCssClass("multiple-choice");
@@ -191,11 +191,27 @@ namespace GLAA.Web.Core.Helpers
 
             return container;
         }
-
-        public static IHtmlContent RadioButtonFormGroupFor<TModel, TValue>(this IHtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> expression, IList<SelectListItem> values, string subHeading = null)
+        private static void GetItemForRadioValues<TModel, TValue>(IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IList<SelectListItem> values,
+            IHtmlContentBuilder builder)
         {
-            var fieldName = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+            foreach (var item in values)
+            {
+                var rbx = html.RadioButtonFor(expression, item.Value);
+                var lbl = html.Label(item.Text);
+                var div = new TagBuilder("div");
+                div.AddCssClass("multiple-choice");
+                div.InnerHtml.AppendHtml(rbx);
+                div.InnerHtml.AppendHtml(lbl);
+
+                builder.AppendHtml(div);
+            }
+        }
+
+        private static IHtmlContentBuilder SetupRadioButtonGroup<TModel, TValue>(IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression,
+            string subHeading)
+        {
+            var fieldName =
+                html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
             var hasErrors = html.ViewData.ModelState[fieldName]?.Errors != null &&
                             html.ViewData.ModelState[fieldName].Errors.Any();
 
@@ -212,11 +228,30 @@ namespace GLAA.Web.Core.Helpers
                 .AppendHtml("<span class=\'error-message\'>")
                 .AppendHtml(html.ValidationMessageFor(expression))
                 .AppendHtml("</span>");
+            return builder;
+        }
 
-            foreach (var item in values)
+        public static IHtmlContent RadioButtonFormGroupFor<TModel, TValue>(this IHtmlHelper<TModel> html,
+            Expression<Func<TModel, TValue>> expression, IList<SelectListItem> values, string subHeading = null)
+        {
+            var builder = SetupRadioButtonGroup(html, expression, subHeading);
+
+            GetItemForRadioValues(html, expression, values, builder);
+
+            return builder.AppendHtml("</fieldset>").AppendHtml("</div>");
+
+        }
+
+        private static void GetItemForRadioValuesEnum<TModel, TValue>(IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IHtmlContentBuilder builder)
+        {
+            //By checking the underlying type, it means we can support nullable and non nullable enum values in the model.
+            var enumType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+
+            // values are extracted directly out of the enum.
+            foreach (var item in Enum.GetValues(enumType))
             {
-                var rbx = html.RadioButtonFor(expression, item.Value);
-                var lbl = html.Label(item.Text);
+                var rbx = html.RadioButtonFor(expression, item.ToString());
+                var lbl = html.Label(item.ToString());
                 var div = new TagBuilder("div");
                 div.AddCssClass("multiple-choice");
                 div.InnerHtml.AppendHtml(rbx);
@@ -224,9 +259,27 @@ namespace GLAA.Web.Core.Helpers
 
                 builder.AppendHtml(div);
             }
+        }
+
+        public static IHtmlContent RadioButtonFormGroupForEnum<TModel, TValue>(this IHtmlHelper<TModel> html,
+            Expression<Func<TModel, TValue>> expression, string subHeading = null)
+        {
+            var builder = SetupRadioButtonGroup(html, expression, subHeading);
+
+            GetItemForRadioValuesEnum(html, expression, builder);
 
             return builder.AppendHtml("</fieldset>").AppendHtml("</div>");
+        }
 
+        public static IHtmlContent RadioButtonForEnum<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string value)
+        {
+            //By checking the underlying type, it means we can support nullable and non nullable enum values in the model.
+            var enumType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+
+            //TODO - this is a bit hacky, we are "assuming" that the mapping between the friendly name and the enum is simply the enum has all spaces removed.
+            //If this gets more complex then we will need to change this.
+            return html.RadioButtonFor(expression, Enum.Parse(enumType, value.Replace(" ", "")));
+            //return html.RadioButtonFor(expression, Convert.ChangeType(Enum.ToObject(enumType, value), enumType));
         }
 
         public static IHtmlContent LabelWithHintFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)

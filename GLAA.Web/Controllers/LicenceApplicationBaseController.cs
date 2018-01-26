@@ -111,7 +111,7 @@ namespace GLAA.Web.Controllers
             var parent = FindParentSection(section, licenceId);
 
             return parent == null && nextPageId > 0
-                ? RedirectToAction(section, nextPageId)
+                ? RedirectBackToAction(section, nextPageId)
                 : ValidateParentAndRedirectBack(parent, section, nextPageId);
         }
 
@@ -120,7 +120,7 @@ namespace GLAA.Web.Controllers
             parent.Validate();
 
             return nextPageId > 0
-                ? (parent.IsValid ? RedirectToLastAction(section) : RedirectToAction(section, nextPageId))
+                ? (parent.IsValid ? RedirectToLastAction(section) : RedirectBackToAction(section, nextPageId))
                 : RedirectToLastAction(section);
         }
 
