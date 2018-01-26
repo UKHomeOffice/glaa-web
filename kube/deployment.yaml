@@ -8,7 +8,7 @@ spec:
   template:
     metadata:
       labels:
-        name: glaa-web
+        app: glaa-web
     spec:  
       containers:
       - name: glaa-web

@@ -4,6 +4,7 @@ kind: Ingress
 metadata:
   name: glaa-web-ingress
   annotations:
+    kubernetes.io/ingress.class: "nginx-internal"
     kubernetes.io/ingress.allow-http: "true"
 spec:
   rules:
