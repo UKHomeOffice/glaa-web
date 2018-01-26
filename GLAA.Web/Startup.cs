@@ -63,7 +63,7 @@ namespace GLAA.Web
                 builder.AddUserSecrets<Startup>();
             }
 
-            builder.AddEnvironmentVariables();
+            //builder.AddEnvironmentVariables();
 
             Configuration = builder.Build();
         }
@@ -148,8 +148,8 @@ namespace GLAA.Web
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile("secrets/appsettings.secrets.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile("secrets/appsettings.secrets.json", optional: true);
+                //.AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
