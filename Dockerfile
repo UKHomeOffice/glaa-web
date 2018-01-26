@@ -1,8 +1,6 @@
 FROM microsoft/dotnet:sdk as builder
 WORKDIR /app
 COPY . .
-RUN chmod +x ./kube/build_secrets.sh
-RUN ./kube/build_secrets.sh
 WORKDIR /app/GLAA.Web
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
@@ -23,9 +21,9 @@ ENV APP_HOME=/home/app/glaa-web
 ## SETTING UP THE APP ##
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
+RUN mkdir secrets
 
 COPY --from=builder /app/GLAA.Web/out .
-COPY --from=builder /app/appsettings.secrets.json ./secrets/.
 
 USER app
 ENTRYPOINT ["dotnet", "GLAA.Web.dll"]
