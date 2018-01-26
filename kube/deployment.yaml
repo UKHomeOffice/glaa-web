@@ -53,7 +53,7 @@ spec:
             value: Production
         volumeMounts:
           - name: secrets
-            mountPath: /home/app/glaa-web/secrets/
+            mountPath: /home/app/glaa-web/secrets
             readOnly: true
       volumes:
       - name: secrets
