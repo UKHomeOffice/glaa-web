@@ -1,8 +1,8 @@
 FROM microsoft/dotnet:sdk as builder
 WORKDIR /app
 COPY . .
-#COPY ./kube/db_setup.sql ./kube/db_setup.sh .
-RUN chmod +x ./kube/db_setup.sh
+RUN chmod +x ./kube/build_secrets.sh
+RUN ./kube/build_secrets.sh
 WORKDIR /app/GLAA.Web
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
@@ -25,7 +25,7 @@ RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 COPY --from=builder /app/GLAA.Web/out .
-COPY --from=builder /app/kube/db_setup.sql /app/kube/db_setup.sh ./
+COPY --from=builder /app/appsettings.secrets.json ./secrets/.
 
 USER app
 ENTRYPOINT ["dotnet", "GLAA.Web.dll"]
