@@ -13,5 +13,5 @@ spec:
       paths:
       - backend:
           serviceName: glaa-web-service
-          servicePort: 80
+          servicePort: 5000
         path: /

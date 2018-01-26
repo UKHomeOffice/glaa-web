@@ -6,7 +6,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: glaa-web
+      {}
   ingress:
     - from:
         - namespaceSelector:
