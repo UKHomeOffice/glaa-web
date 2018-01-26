@@ -153,8 +153,8 @@ namespace GLAA.Web
         {
             var options = new CredentialProfileOptions
             {
-                AccessKey = Environment.GetEnvironmentVariable("ACCESS_KEY_ID"),
-                SecretKey = Environment.GetEnvironmentVariable("SECRET_ACCESS_KEY")
+                AccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
+                SecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY_ID")
             };
 
             var profile = new CredentialProfile("default", options)

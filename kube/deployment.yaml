@@ -9,11 +9,11 @@ spec:
     metadata:
       labels:
         name: glaa-web
-    spec:  
+    spec:
       containers:
       - name: glaa-web
         securityContext:
-          runAsNonRoot: true            
+          runAsNonRoot: true
         image: quay.io/ukhomeofficedigital/glaa-web:latest
         imagePullPolicy: Always
         ports:
@@ -49,3 +49,13 @@ spec:
               secretKeyRef:
                 name: glaa-db-app-user
                 key: password
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: access_key_id
+          - name: AWS_SECRET_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: secret_access_key
