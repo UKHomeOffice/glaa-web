@@ -51,18 +51,11 @@ spec:
                 key: password
           - name: ASPNETCORE_ENVIRONMENT
             value: Production
-          - name: SuperUser
-            valueFrom:
-              secretKeyRef:
-                name: glaa-app-secrets
-                key: su
-          - name: GOVNotify
-            valueFrom:
-              secretKeyRef:
-                name: glaa-app-secrets
-                key: notify
-          - name: DefaultStatuses
-            valueFrom:
-              secretKeyRef:
-                name: glaa-app-secrets
-                key: statuses
+        volumeMounts:
+          - name: secrets
+            mountPath: /home/app/glaa-web/secrets
+            readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName: secret-appsettings
