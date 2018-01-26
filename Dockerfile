@@ -18,7 +18,7 @@ RUN groupadd -r app &&\
 
 # Set the home directory to our app user's home.
 ENV HOME=/home/app
-ENV APP_HOME=/home/app/my-project
+ENV APP_HOME=/home/app/glaa-web
 
 ## SETTING UP THE APP ##
 RUN mkdir $APP_HOME
