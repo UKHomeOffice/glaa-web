@@ -668,7 +668,6 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.PreviousTradingNames.Single().BusinessName, result.BusinessName.PreviousTradingNames.Single().BusinessName);
             Assert.AreEqual(input.PreviousTradingNames.Single().Town, result.BusinessName.PreviousTradingNames.Single().Town);
             Assert.AreEqual(input.PreviousTradingNames.Single().Country, result.BusinessName.PreviousTradingNames.Single().Country);
-            Assert.AreEqual(input.TradingName, result.TradingName.TradingName);
             Assert.AreEqual(input.BusinessPhoneNumber, result.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(input.BusinessMobileNumber, result.BusinessMobileNumber.BusinessMobileNumber);
             Assert.AreEqual(input.BusinessWebsite, result.BusinessWebsite.BusinessWebsite);

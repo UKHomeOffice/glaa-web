@@ -13,7 +13,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public OrganisationDetailsViewModel()
         {
             BusinessName = new BusinessNameViewModel();
-            TradingName = new TradingNameViewModel();
             OperatingIndustries = new OperatingIndustriesViewModel();
             OperatingCountries = new OperatingCountriesViewModel();
             Turnover = new TurnoverViewModel();
@@ -30,7 +29,6 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public BusinessNameViewModel BusinessName { get; set; }
-        public TradingNameViewModel TradingName { get; set; }
         public OperatingIndustriesViewModel OperatingIndustries { get; set; }
         public OperatingCountriesViewModel OperatingCountries { get; set; }
         public TurnoverViewModel Turnover { get; set; }
@@ -110,12 +108,6 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Country")]
         public string Country { get; set; }
-    }
-
-    public class TradingNameViewModel
-    {
-        [Display(Name = "Trading Name", Description = "Enter this if it's different from your organisation name")]
-        public string TradingName { get; set; }
     }
 
     public class OperatingIndustriesViewModel : ICollectionViewModel, IRequiredIf

@@ -105,10 +105,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.CompanyRegistrationDate, opt => opt.MapFrom(y => y.CompanyRegistrationDate))
                 .ForAllOtherMembers(x => x.Ignore());
 
-            CreateMap<TradingNameViewModel, Licence>()
-                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName))
-                .ForAllOtherMembers(x => x.Ignore());
-
             CreateMap<TurnoverViewModel, Licence>()
                 .ForMember(x => x.TurnoverBand, opt => opt.MapFrom(y => y.TurnoverBand))
                 .ForAllOtherMembers(x => x.Ignore());

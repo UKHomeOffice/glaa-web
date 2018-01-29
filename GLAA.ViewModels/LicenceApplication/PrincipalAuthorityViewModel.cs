@@ -14,7 +14,6 @@ namespace GLAA.ViewModels.LicenceApplication
             IsDirector = new IsDirectorViewModel();            
             PreviousExperience = new PreviousExperienceViewModel();
             PrincipalAuthorityConfirmation = new PrincipalAuthorityConfirmationViewModel();
-            PreviousTradingNames = new PreviousTradingNamesViewModel();
             PrincipalAuthorityRightToWorkViewModel = new PrincipalAuthorityRightToWorkViewModel();
         }
         
@@ -25,7 +24,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public IsDirectorViewModel IsDirector { get; set; }
         public PrincipalAuthorityConfirmationViewModel PrincipalAuthorityConfirmation { get; set; }
         public PreviousExperienceViewModel PreviousExperience { get; set; }
-        public PreviousTradingNamesViewModel PreviousTradingNames { get; set; }
         public PrincipalAuthorityRightToWorkViewModel PrincipalAuthorityRightToWorkViewModel { get; set; }
         public LegalStatusEnum? LegalStatus { get; set; }
 
@@ -111,11 +109,6 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Previous Experience", Description = "To assist the GLAA in assessing your competency to perform the role of Principal Authority (Licensing Standard 1.2 - critical), please provide details of your previous experience in managing a relevant business or businesses (preferably within the last 5 years). Please include dates")]
         public string PreviousExperience { get; set; }
-    }
-
-    public class PreviousTradingNamesViewModel : YesNoViewModel
-    {
-        
     }
 
     public class PrincipalAuthorityRightToWorkViewModel : IRequiredIf

@@ -351,14 +351,14 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePreviousTradingNames(PreviousTradingNamesViewModel model)
+        public IActionResult SavePreviousTradingNames(object model)
         {
             return PrincipalAuthorityPost(model, 28, false);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult ReviewPrincipalAuthorityPreviousTradingNames(PreviousTradingNamesViewModel model)
+        public IActionResult ReviewPrincipalAuthorityPreviousTradingNames(object model)
         {
             Session.SetSubmittedPage(FormSection.PrincipalAuthority, 29);
 
@@ -366,7 +366,7 @@ namespace GLAA.Web.Controllers
             var parent =
                 LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
                     l => l.PrincipalAuthorities.Single(p => p.Id == Session.GetCurrentPaId()));
-            model = parent.PreviousTradingNames;
+            //model = parent.PreviousTradingNames;
 
             //if ((model.HasPreviousTradingNames ?? false) && !model.PreviousTradingNames.Any())
             //{

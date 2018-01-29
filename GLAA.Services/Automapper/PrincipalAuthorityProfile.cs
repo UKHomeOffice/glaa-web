@@ -88,7 +88,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.UnspentConvictionsViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.OffencesAwaitingTrialViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
-                .ForMember(x => x.PreviousTradingNames, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PreviousExperience, opt => opt.ResolveUsing(PreviousExperienceResolver));
 
             CreateMap<PrincipalAuthority, IsDirectorViewModel>()
@@ -263,12 +262,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.HasPreviouslyHeldLicence))
                 .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceDescription))
                 .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<PreviousTradingNamesViewModel, PrincipalAuthority>()
-                .ForAllMembers(opt => opt.Ignore());
-
-            CreateMap<PrincipalAuthority, PreviousTradingNamesViewModel>()
-                .ForAllMembers(opt => opt.Ignore());
 
             CreateMap<RightToWorkViewModel, PrincipalAuthority>()
                 .ForAllMembers(opt => opt.Ignore());

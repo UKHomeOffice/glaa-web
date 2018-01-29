@@ -62,7 +62,7 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveTradingName(TradingNameViewModel model)
+        public IActionResult SaveTradingName(object model)
         {
             return OrganisationDetailsPost(model, 3);
         }
