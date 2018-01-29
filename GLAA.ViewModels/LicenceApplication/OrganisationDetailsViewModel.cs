@@ -59,6 +59,9 @@ namespace GLAA.ViewModels.LicenceApplication
 
         [Display(Name = "Current Trading Name")]
         public string TradingName { get; set; }
+
+        [Display(Name = "Has your business traded under any other name in the last 5 years?")]
+        public bool? HasPreviousTradingName { get; set; }
     }
 
     public class TradingNameViewModel

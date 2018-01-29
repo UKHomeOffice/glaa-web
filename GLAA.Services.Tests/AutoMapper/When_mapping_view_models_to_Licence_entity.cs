@@ -387,7 +387,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 {
                     BusinessName = "org name",
                     HasTradingName = true,
-                    TradingName = "trading name"
+                    TradingName = "trading name",
+                    HasPreviousTradingName = true
                 },
                 TradingName = new TradingNameViewModel
                 {
@@ -426,6 +427,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.BusinessName.BusinessName, result.BusinessName);
             Assert.AreEqual(input.BusinessName.HasTradingName, result.HasTradingName);
             Assert.AreEqual(input.BusinessName.TradingName, result.TradingName);
+            Assert.AreEqual(input.BusinessName.HasPreviousTradingName, result.HasPreviousTradingName);
             Assert.AreEqual(input.TradingName.TradingName, result.TradingName);
             Assert.AreEqual(input.BusinessPhoneNumber.BusinessPhoneNumber, result.BusinessPhoneNumber);
             Assert.AreEqual(input.BusinessMobileNumber.BusinessMobileNumber, result.BusinessMobileNumber);
