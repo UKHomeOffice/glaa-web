@@ -20,6 +20,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PAYEERNStatus, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.VATStatus, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.TaxReference, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.BusinessName, opt => opt.ResolveUsing(BusinessNameResolver))
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
 
             CreateMap<Licence, BusinessEmailAddressViewModel>()
@@ -63,8 +64,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
             CreateMap<OrganisationDetailsViewModel, Licence>()
-                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.OrganisationName.BusinessName))
-                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName.TradingName))
+                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName.BusinessName))
+                .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.BusinessName.HasTradingName))
+                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.BusinessName.TradingName))
                 .ForMember(x => x.OperatingIndustries, opt => opt.Ignore())
                 .ForMember(x => x.IsShellfish, opt => opt.ResolveUsing(ShellfishResolver))
                 .ForMember(x => x.OperatingCountries, opt => opt.Ignore())
@@ -90,6 +92,8 @@ namespace GLAA.Services.Automapper
 
             CreateMap<BusinessNameViewModel, Licence>()
                 .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
+                .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.HasTradingName))
+                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName))
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<LegalStatusViewModel, Licence>()
@@ -174,8 +178,7 @@ namespace GLAA.Services.Automapper
 
             return vm;
         }
-
-
+        
         private LegalStatusViewModel LegalStatusResolver(Licence licence)
         {
             return new LegalStatusViewModel
@@ -186,6 +189,16 @@ namespace GLAA.Services.Automapper
                 {
                     Date = licence.CompanyRegistrationDate
                 }                
+            };
+        }
+
+        private BusinessNameViewModel BusinessNameResolver(Licence licence)
+        {
+            return new BusinessNameViewModel
+            {
+                BusinessName = licence.BusinessName,
+                HasTradingName = licence.HasTradingName,
+                TradingName = licence.TradingName
             };
         }
     }

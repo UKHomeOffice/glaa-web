@@ -239,6 +239,7 @@ namespace GLAA.Domain
                     CompanyRegistrationDate = DateTime.Now,
                     HasMultiples = true,
                     HasPAYEERNNumber = true,
+                    HasTradingName = true,
                     HasWrittenAgreementsInPlace = true,
                     HasVATNumber = true,
                     IsPSCControlled = true,

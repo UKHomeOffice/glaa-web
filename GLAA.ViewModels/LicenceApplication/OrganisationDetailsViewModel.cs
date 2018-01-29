@@ -12,7 +12,7 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public OrganisationDetailsViewModel()
         {
-            OrganisationName = new BusinessNameViewModel();
+            BusinessName = new BusinessNameViewModel();
             TradingName = new TradingNameViewModel();
             OperatingIndustries = new OperatingIndustriesViewModel();
             OperatingCountries = new OperatingCountriesViewModel();
@@ -29,7 +29,7 @@ namespace GLAA.ViewModels.LicenceApplication
             TaxReference = new TaxReferenceViewModel();
         }
 
-        public BusinessNameViewModel OrganisationName { get; set; }
+        public BusinessNameViewModel BusinessName { get; set; }
         public TradingNameViewModel TradingName { get; set; }
         public OperatingIndustriesViewModel OperatingIndustries { get; set; }
         public OperatingCountriesViewModel OperatingCountries { get; set; }
@@ -52,6 +52,13 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "", Description = "This is the name of the business you control")]
         public string BusinessName { get; set; }
+
+        [Required]
+        [Display(Name = "Do you have a trading name that is different from the business name?")]
+        public bool? HasTradingName { get; set; }
+
+        [Display(Name = "Current Trading Name")]
+        public string TradingName { get; set; }
     }
 
     public class TradingNameViewModel

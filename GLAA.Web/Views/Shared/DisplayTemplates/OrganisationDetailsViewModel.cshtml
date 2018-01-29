@@ -12,11 +12,11 @@
     </thead>
     <tbody>
         <tr>
-            <td>@Html.LabelFor(m => m.OrganisationName.BusinessName)</td>
-            <td class="@Model.OrganisationName?.BusinessName">@Html.DisplayFor(m => m.OrganisationName.BusinessName, new { @class = "org" })</td>
+            <td>@Html.LabelFor(m => m.BusinessName.BusinessName)</td>
+            <td class="@Model.BusinessName?.BusinessName">@Html.DisplayFor(m => m.BusinessName.BusinessName, new { @class = "org" })</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 2 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OrganisationName.BusinessName)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 2 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessName.BusinessName)</span></a></td>
             }
         </tr>
         <tr>

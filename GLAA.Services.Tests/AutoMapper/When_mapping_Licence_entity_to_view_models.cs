@@ -657,7 +657,7 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<OrganisationDetailsViewModel>(input);
 
-            Assert.AreEqual(input.BusinessName, result.OrganisationName.BusinessName);
+            Assert.AreEqual(input.BusinessName, result.BusinessName.BusinessName);
             Assert.AreEqual(input.TradingName, result.TradingName.TradingName);
             Assert.AreEqual(input.BusinessPhoneNumber, result.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(input.BusinessMobileNumber, result.BusinessMobileNumber.BusinessMobileNumber);

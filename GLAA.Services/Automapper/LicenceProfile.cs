@@ -85,8 +85,10 @@ namespace GLAA.Services.Automapper
                 .ReverseMap();
 
             // organisation details
-            CreateMap<string, BusinessNameViewModel>()
-                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y));
+            //CreateMap<Licence, BusinessNameViewModel>()
+            //    .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
+            //    .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.HasTradingName))
+            //    .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName));
 
             CreateMap<string, TradingNameViewModel>()
                 .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y));
