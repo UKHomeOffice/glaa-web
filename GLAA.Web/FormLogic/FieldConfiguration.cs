@@ -170,7 +170,7 @@ namespace GLAA.Web.FormLogic
                             new FormPageDefinition(nameof(TransportingWorkersViewModel)),
                             new FormPageDefinition(nameof(AccommodatingWorkersViewModel)),
                             new FormPageDefinition(nameof(SourcingWorkersViewModel)),
-                            new FormPageDefinition(nameof(WorkerSupplyMethodViewModel)),
+                            new FormPageDefinition(nameof(WorkerEmploymentStatusViewModel)),
                             new FormPageDefinition(nameof(WorkerContractViewModel)),
                             new FormPageDefinition(nameof(BannedFromTradingViewModel)),
                             new FormPageDefinition(nameof(SubcontractorViewModel)),

@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Organisation - Part 8";
-    var switchValue = "3";
+    var switchValue = "5";
 }
 
-@model GLAA.ViewModels.LicenceApplication.WorkerSupplyMethodViewModel
+@model GLAA.ViewModels.LicenceApplication.WorkerEmploymentStatusViewModel
 
 @using (Html.BeginForm("SaveWorkerSupplyMethod", "Organisation"))
 {
@@ -13,7 +13,7 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                How workers will be supplied to labour users?
+                What is the employment status of the workers that you intend to supply?
             </h1>
         </div>
         <div class="column-two-thirds">
@@ -22,20 +22,10 @@
                     <legend>
                         <span class="body-text"></span>
                     </legend>
-                    @foreach (var option in Model.AvailableSources)
-                    {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.WorkerSupplyMethod, option.Value)
-                            @Html.Label(option.Text)
-                        </div>
-
-                        if (option.Value == switchValue)
-                        {
-                            <div class="panel panel-border-narrow js-hidden" id="accommodates-workers">  
-                                @Html.TextFormGroupFor(x => x.WorkerSupplyOther)
-                            </div>
-                        }
-                    }
+                    @Html.CheckboxListFor(x => x.SelectedStatuses, Model.AvailableStatuses)
+                    <div class="panel panel-border-narrow js-hidden" id="AccommodatesWorkers">
+                        @Html.TextFormGroupFor(x => x.OtherEmploymentStatus)
+                    </div>
                 </fieldset>
             </div>
         </div>
@@ -48,7 +38,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice > input[type="radio"]', '#accommodates-workers', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice > input[type="checkbox"]', '#AccommodatesWorkers', @switchValue);
         });
     </script>
 }

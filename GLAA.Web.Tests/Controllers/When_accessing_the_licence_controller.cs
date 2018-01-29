@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GLAA.Web.Controllers;
+using Microsoft.AspNetCore.Identity;
 using NSubstitute;
 
 namespace GLAA.Web.Tests.Controllers
@@ -21,7 +23,7 @@ namespace GLAA.Web.Tests.Controllers
 
             licenceStatusViewModelBuilder.BuildRandomStatus().Returns(x => new LicenceStatusViewModel());
 
-            controller = new LicenceController(null, licenceViewModelBuilder, null, licenceStatusViewModelBuilder, null, new ConstantService());
+            controller = new LicenceController(null, licenceViewModelBuilder, null, licenceStatusViewModelBuilder, null, new ConstantService(), null);
         }
     }
 }

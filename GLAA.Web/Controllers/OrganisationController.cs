@@ -115,7 +115,7 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveWorkerSupplyMethod(WorkerSupplyMethodViewModel model)
+        public IActionResult SaveWorkerSupplyMethod(WorkerEmploymentStatusViewModel model)
         {
             return OrganisationPost(model, 9);
         }

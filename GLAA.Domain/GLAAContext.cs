@@ -23,6 +23,7 @@ namespace GLAA.Domain
         public DbSet<Country> Countries { get; set; }
         public DbSet<Multiple> Multiples { get; set; }
         public DbSet<Sector> Sectors { get; set; }
+        public DbSet<EmploymentStatus> EmploymentStatuses { get; set; }
         public DbSet<PrincipalAuthority> PrincipalAuthorities { get; set; }
         public DbSet<AlternativeBusinessRepresentative> AlternativeBusinessRepresentatives { get; set; }
         public DbSet<DirectorOrPartner> DirectorOrPartners { get; set; }
@@ -83,6 +84,19 @@ namespace GLAA.Domain
                 .HasOne(x => x.Multiple)
                 .WithMany(x => x.Licences)
                 .HasForeignKey(x => x.MultipleId);
+
+            modelBuilder.Entity<LicenceEmploymentStatus>()
+                .HasKey(x => new { x.LicenceId, x.EmploymentStatusId });
+
+            modelBuilder.Entity<LicenceEmploymentStatus>()
+                .HasOne(x => x.Licence)
+                .WithMany(x => x.SelectedEmploymentStatuses)
+                .HasForeignKey(x => x.LicenceId);
+
+            modelBuilder.Entity<LicenceEmploymentStatus>()
+                .HasOne(x => x.EmploymentStatus)
+                .WithMany(x => x.Licences)
+                .HasForeignKey(x => x.EmploymentStatusId);
 
             modelBuilder.Entity<LicenceSector>()
                 .HasKey(x => new { x.LicenceId, x.SectorId });

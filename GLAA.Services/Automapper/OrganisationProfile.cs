@@ -17,7 +17,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.TransportingWorkersViewModel, opt => opt.ResolveUsing(TransportingWorkersResolver))
                 .ForMember(x => x.AccommodatingWorkersViewModel, opt => opt.ResolveUsing(AccomodatingWorkersResolver))
                 .ForMember(x => x.SourcingWorkersViewModel, opt => opt.ResolveUsing(SourcingWorkersResolver))
-                .ForMember(x => x.WorkerSupplyMethodViewModel, opt => opt.ResolveUsing(SupplyWorkersResolver))
+                .ForMember(x => x.WorkerEmploymentStatusViewModel, opt => opt.ResolveUsing(WorkerEmploymentStatusResolver))
                 .ForMember(x => x.WorkerContractViewModel, opt => opt.ResolveUsing(WorkerContractResolver))
                 .ForMember(x => x.BannedFromTradingViewModel, opt => opt.ResolveUsing(BannedFromTradingResolver))
                 .ForMember(x => x.SubcontractorViewModel, opt => opt.ResolveUsing(SubcontracterResolver))
@@ -106,9 +106,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.WorkerSource, opt => opt.MapFrom(y => y.WorkerSource))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<WorkerSupplyMethodViewModel, Licence>()
-                .ForMember(x => x.WorkerSupplyMethod, opt => opt.MapFrom(y => y.WorkerSupplyMethod))
-                .ForMember(x => x.WorkerSupplyOther, opt => opt.MapFrom(y => y.WorkerSupplyOther))
+            CreateMap<WorkerEmploymentStatusViewModel, Licence>()
+                .ForMember(x => x.OtherEmploymentStatus, opt => opt.MapFrom(y => y.OtherEmploymentStatus))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<WorkerContractViewModel, Licence>()
@@ -167,32 +166,23 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        private WorkerSupplyMethodViewModel SupplyWorkersResolver(Licence licence)
+        private WorkerEmploymentStatusViewModel WorkerEmploymentStatusResolver(Licence licence)
         {
-            return new WorkerSupplyMethodViewModel
+            var result = new WorkerEmploymentStatusViewModel
             {
-                WorkerSupplyMethod = licence.WorkerSupplyMethod,
-                WorkerSupplyOther = licence.WorkerSupplyOther,
-                AvailableSources = new List<SelectListItem>
-                {
-                    new SelectListItem
-                    {
-                        Text = "Employee",
-                        Value = "1"
-                    },
-                    new SelectListItem
-                    {
-                        Text = "Self Employed",
-                        Value = "2"
-                    },
-                    new SelectListItem
-                    {
-                        Text = "Other",
-                        Value = "3"
-                    }
-                }
+                OtherEmploymentStatus = licence.OtherEmploymentStatus
             };
 
+            if (licence.SelectedEmploymentStatuses != null)
+            {
+                foreach (var status in licence.SelectedEmploymentStatuses)
+                {
+                    var match = result.AvailableStatuses.Single(x => x.Id == status.EmploymentStatusId);
+                    match.Checked = true;
+                }
+            }
+
+            return result;
         }
 
         private WorkerContractViewModel WorkerContractResolver(Licence licence)

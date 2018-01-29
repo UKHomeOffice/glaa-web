@@ -123,11 +123,11 @@
             }
         </tr>
         <tr>
-            <td>@Html.LabelFor(m => m.WorkerSupplyMethodViewModel.WorkerSupplyMethod)</td>
-            <td>@Html.DisplayFor(m => m.WorkerSupplyMethodViewModel)</td>
+            <td>@Html.LabelFor(m => m.WorkerEmploymentStatusViewModel.WorkerSupplyMethod)</td>
+            <td>@Html.DisplayFor(m => m.WorkerEmploymentStatusViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "Organisation", new { id = 9 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.WorkerSupplyMethodViewModel.WorkerSupplyMethod)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "Organisation", new { id = 9 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.WorkerEmploymentStatusViewModel.WorkerSupplyMethod)</span></a></td>
             }
         </tr>
         <tr>

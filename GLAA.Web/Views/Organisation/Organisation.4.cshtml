@@ -13,7 +13,7 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Is the business being significantly controlled by another individual who meets the criteria of People with Significant Control (PSC)?
+                Is the business owned or under the direction or control of another individual, business or trust who meet the definition of People with Significant Control (PSC)?
             </h1>
         </div>
         <div class="column-two-thirds">
@@ -31,7 +31,7 @@
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="PSC-controlled">
+                            <div class="panel panel-border-narrow js-hidden" id="PSCControlled">
                                 <div class="form-group">
                                     @Html.LabelWithHintFor(x => x.PSCDetails)
                                     @Html.TextAreaFor(x => x.PSCDetails, new { @class = "form-control", multiline = true, rows = 4 })
@@ -52,7 +52,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#PSC-controlled', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#PSCControlled', @switchValue);
         });
     </script>
 }

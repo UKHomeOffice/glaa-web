@@ -31,8 +31,7 @@
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="transports-workers">                                                         
-                                @Html.TextFormGroupFor(x => x.NumberOfVehicles)   
+                            <div class="panel panel-border-narrow js-hidden" id="transports-workers">
                                 @Html.RadioButtonFormGroupFor(x => x.TransportDeductedFromPay, Model.YesNo)                                
                                 @Html.RadioButtonFormGroupFor(x => x.TransportWorkersChoose, Model.YesNo)
                             </div>

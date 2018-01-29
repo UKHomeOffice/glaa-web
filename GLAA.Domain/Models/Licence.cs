@@ -84,9 +84,9 @@ namespace GLAA.Domain.Models
 
         public WorkerSource WorkerSource { get; set; }
 
-        public WorkerSupplyMethod WorkerSupplyMethod { get; set; }
-
-        public string WorkerSupplyOther { get; set; }
+        public ICollection<LicenceEmploymentStatus> SelectedEmploymentStatuses { get; set; }
+        public string OtherEmploymentStatus { get; set; }
+        
         public WorkerContract WorkerContract { get; set; }
 
         public bool? TransportsWorkersToWorkplace { get; set; }

@@ -1,5 +1,5 @@
 ﻿@using GLAA.Domain.Models
-@model GLAA.ViewModels.LicenceApplication.WorkerSupplyMethodViewModel
+@model GLAA.ViewModels.LicenceApplication.WorkerEmploymentStatusViewModel
     
 @{
     string text;
@@ -14,7 +14,7 @@
     }
     else
     {
-        text = Model.WorkerSupplyOther;
+        text = Model.OtherEmploymentStatus;
     }
 }
 @text

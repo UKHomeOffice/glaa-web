@@ -5,6 +5,7 @@ namespace GLAA.Domain.Models
     {
         ContractOfEmployment = 1,
         ContractForServices = 2,
-        None = 3
+        None = 3,
+        Other = 4
     }
 }

@@ -65,9 +65,17 @@ namespace GLAA.Services.Tests.Core.Validation
                 {
                     SelectedContract = WorkerContract.ContractForServices
                 },
-                WorkerSupplyMethodViewModel = new WorkerSupplyMethodViewModel
+                WorkerEmploymentStatusViewModel = new WorkerEmploymentStatusViewModel
                 {
-                    WorkerSupplyMethod = WorkerSupplyMethod.Employee
+                    SelectedStatuses = new List<CheckboxListItem>
+                    {
+                        new CheckboxListItem
+                        {
+                            Id = 1,
+                            Checked = true,
+                            Name = "Employee"
+                        }
+                    }
                 },
                 WrittenAgreementViewModel = new WrittenAgreementViewModel
                 {
@@ -499,8 +507,16 @@ namespace GLAA.Services.Tests.Core.Validation
         [TestMethod]
         public void a_model_with_other_supply_method_and_no_description_is_invalid()
         {
-            model.WorkerSupplyMethodViewModel.WorkerSupplyMethod = WorkerSupplyMethod.Other;
-            model.WorkerSupplyMethodViewModel.WorkerSupplyOther = null;
+            model.WorkerEmploymentStatusViewModel.SelectedStatuses = new List<CheckboxListItem>
+            {
+                new CheckboxListItem
+                {
+                    Id = 5,
+                    Checked = true,
+                    Name = "Other"
+                }
+            };
+            model.WorkerEmploymentStatusViewModel.OtherEmploymentStatus = null;
 
             model.Validate();
 
@@ -510,8 +526,16 @@ namespace GLAA.Services.Tests.Core.Validation
         [TestMethod]
         public void a_model_with_other_supply_method_is_valid()
         {
-            model.WorkerSupplyMethodViewModel.WorkerSupplyMethod = WorkerSupplyMethod.Other;
-            model.WorkerSupplyMethodViewModel.WorkerSupplyOther = "Other";
+            model.WorkerEmploymentStatusViewModel.SelectedStatuses = new List<CheckboxListItem>
+            {
+                new CheckboxListItem
+                {
+                    Id = 5,
+                    Checked = true,
+                    Name = "Other"
+                }
+            };
+            model.WorkerEmploymentStatusViewModel.OtherEmploymentStatus = "Other";
 
             model.Validate();
 

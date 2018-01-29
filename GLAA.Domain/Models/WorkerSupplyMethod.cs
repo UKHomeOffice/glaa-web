@@ -5,6 +5,8 @@ namespace GLAA.Domain.Models
     {
         Employee = 1,
         SelfEmployed = 2,
-        Other = 3
+        Other = 3,
+        PermanentWorkers = 4,
+        TemporaryWorkers = 5
     }
 }

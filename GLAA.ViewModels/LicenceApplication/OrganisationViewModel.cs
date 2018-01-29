@@ -20,7 +20,7 @@ namespace GLAA.ViewModels.LicenceApplication
             TransportingWorkersViewModel = new TransportingWorkersViewModel();
             AccommodatingWorkersViewModel = new AccommodatingWorkersViewModel();
             SourcingWorkersViewModel = new SourcingWorkersViewModel();
-            WorkerSupplyMethodViewModel = new WorkerSupplyMethodViewModel();
+            WorkerEmploymentStatusViewModel = new WorkerEmploymentStatusViewModel();
             WorkerContractViewModel = new WorkerContractViewModel();
             BannedFromTradingViewModel = new BannedFromTradingViewModel();
             SubcontractorViewModel = new SubcontractorViewModel();
@@ -32,7 +32,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public TransportingWorkersViewModel TransportingWorkersViewModel { get; set; }
         public AccommodatingWorkersViewModel AccommodatingWorkersViewModel { get; set; }
         public SourcingWorkersViewModel SourcingWorkersViewModel { get; set; }
-        public WorkerSupplyMethodViewModel WorkerSupplyMethodViewModel { get; set; }
+        public WorkerEmploymentStatusViewModel WorkerEmploymentStatusViewModel { get; set; }
         public WorkerContractViewModel WorkerContractViewModel { get; set; }
         public BannedFromTradingViewModel BannedFromTradingViewModel { get; set; }
         public SubcontractorViewModel SubcontractorViewModel { get; set; }
@@ -93,15 +93,15 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool? AccommodatesWorkers { get; set; }
         
         [RequiredIf(ErrorMessage = "You must specify whether you deduct accomodation costs from workers pay")]
-        [Display(Name = "Will the charges for accommodation be deducted from workers pay")]
+        [Display(Name = "Will the charges for accommodation be deducted from workers pay?")]
         public bool? AccommodationDeductedFromPay { get; set; }
         
-        [RequiredIf(ErrorMessage = "You must enter the number of properties your workers will be housed in")]
+        //[RequiredIf(ErrorMessage = "You must enter the number of properties your workers will be housed in")]
         [Display(Name = "How many properties will your workers be housed in")]
         public int? NumberOfProperties { get; set; }
         
         [RequiredIf(ErrorMessage = "You must specify whether workers have a choice to use your accomodation")]
-        [Display(Name = "Will workers have a choice about using the transport")]
+        [Display(Name = "Will the workers have a choice about using the accomodation?")]
         public bool? AccommodationWorkersChoose { get; set; }
 
         public bool IsRequired => AccommodatesWorkers ?? false;
@@ -110,19 +110,19 @@ namespace GLAA.ViewModels.LicenceApplication
     public class TransportingWorkersViewModel : YesNoViewModel, IRequiredIf
     {
         [Required]
-        [Display(Name = "Will you be transporting your workers to the workplace")]
+        [Display(Name = "Will you be transporting your workers to the workplace?")]
         public bool? TransportsWorkersToWorkplace { get; set; }
 
-        [RequiredIf(ErrorMessage = "You must enter the number of vehicles you use to transport workers")]
+        //[RequiredIf(ErrorMessage = "You must enter the number of vehicles you use to transport workers")]
         [Display(Name = "Number of vehicles")]
         public int? NumberOfVehicles { get; set; }
 
         [RequiredIf(ErrorMessage = "You must specify whether you deduct transport costs from workers pay")]
-        [Display(Name = "Will any charges for transport be deducted from workers pay")]
+        [Display(Name = "Will any charges for transport be deducted from workers pay?")]
         public bool? TransportDeductedFromPay { get; set; }
 
         [RequiredIf(ErrorMessage = "You must specify whether workers have a choice to use your transport")]
-        [Display(Name = "Will workers have a choice about using the transport")]
+        [Display(Name = "Will workers have a choice about using the transport?")]
         public bool? TransportWorkersChoose { get; set; }
 
         public bool IsRequired => TransportsWorkersToWorkplace ?? false;
@@ -149,36 +149,41 @@ namespace GLAA.ViewModels.LicenceApplication
         };
     }
 
-    public class WorkerSupplyMethodViewModel : IRequiredIf
+    public class WorkerEmploymentStatusViewModel : IRequiredIf
     {
-        [Required]
-        [Display(Name = "What basis on which workers will be supplied to labour users")]
-        public WorkerSupplyMethod? WorkerSupplyMethod { get; set; }
+        [Required(ErrorMessage = "You must enter the employment status of the workers that you intend to supply")]
+        [Display(Name = "What is the employment status of the workers that you intend to supply?")]
+        public List<CheckboxListItem> SelectedStatuses { get; set; }
 
-        public List<SelectListItem> AvailableSources { get; set; } = new List<SelectListItem>
+        public List<CheckboxListItem> AvailableStatuses { get; set; } = new List<CheckboxListItem>
         {
-            new SelectListItem
+            new CheckboxListItem
             {
-                Text = "Employee",
-                Value = "Employee"
+                Id = 1, Name = "Employee", Checked = false
             },
-            new SelectListItem
+            new CheckboxListItem
             {
-                Text = "Self Employed",
-                Value = "SelfEmployed"
+                Id = 2, Name = "Self Employed", Checked = false
             },
-            new SelectListItem
+            new CheckboxListItem
             {
-                Text = "Other",
-                Value = "Other"
+                Id = 3, Name = "Permanent Workers", Checked = false
+            },
+            new CheckboxListItem
+            {
+                Id = 4, Name = "Temporary Workers", Checked = false
+            },
+            new CheckboxListItem
+            {
+                Id = 5, Name = "Other", Checked = false
             }
         };
 
-        [RequiredIf(ErrorMessage = "You must enter the basis on which you will supply workers")]
-        [Display(Name = "Describe how you will provider workers to labour users")]
-        public string WorkerSupplyOther { get; set; }
+        [RequiredIf(ErrorMessage = "You must describe the basis on which workers will be supplied")]
+        [Display(Name = "As you have chosen \"Other\" please describe the basis on which workers will be supplied.")]
+        public string OtherEmploymentStatus { get; set; }
 
-        public bool IsRequired => WorkerSupplyMethod == Domain.Models.WorkerSupplyMethod.Other;
+        public bool IsRequired => SelectedStatuses.Any(m => m.Id == 5);
     }
 
     public class WorkerContractViewModel
@@ -203,6 +208,11 @@ namespace GLAA.ViewModels.LicenceApplication
             {
                 Text = "None",
                 Value = "None"
+            },
+            new SelectListItem
+            {
+                Text = "Other",
+                Value = "Other"
             }
         };
     }
@@ -284,17 +294,18 @@ namespace GLAA.ViewModels.LicenceApplication
     public class WrittenAgreementViewModel : YesNoViewModel
     {
         [Required]
-        [Display(Name = "Will the business have a written agreement, to supply workers, with all its customers in the Regulated Sectors")]
+        [Display(Name = "Will the business have a written agreement to supply workers with all its customers?")]
         public bool? HasWrittenAgreementsInPlace { get; set; }
     }
 
     public class PSCControlledViewModel : YesNoViewModel, IRequiredIf
     {
         [Required]
-        [Display(Name = "Is the business being significantly controlled by another individual who meets the criteria of People with Significant Control (PSC)")]
+        [Display(Name = "Is the business owned or under the direction or control of a PSC?")]
         public bool? IsPSCControlled { get; set; }
         
         [RequiredIf(ErrorMessage = "You must provide details of the PSC")]
+        [Display(Name = "Details of the PSC")]
         public string PSCDetails { get; set; }
 
         public bool IsRequired => IsPSCControlled ?? false;
@@ -309,7 +320,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         [Required]
-        [Display(Name = "Do you have multiple branches, franchises, businesses that are ultimately controlled by the applicant business")]
+        [Display(Name = "Do you have multiple branches, franchises, businesses that are ultimately controlled by the applicant business?")]
         public bool? HasMultiples { get; set; }
         
         [CollectionRequiredIf(ErrorMessage = "You must select a multiple type if you have multiples in your organisation")]
@@ -325,11 +336,11 @@ namespace GLAA.ViewModels.LicenceApplication
             };
         }
         
-        [Display(Name = "Other")]
+        [Display(Name = "If you have selected other please give a brief description of how your business is set up.")]
         [AssertThat("OtherMultipleIsValid", ErrorMessage = "The Other field is required")]//Can't have multiple different conditions for IRequiredIf
         public string OtherMultiple { get; set; }
         
-        [RequiredIf(ErrorMessage = "Number of multiples is required")]
+        [RequiredIf(ErrorMessage = "How many branches, franchises, businesses are within the control of your business?")]
         [Display(Name = "Number of multiples")]
         public int? NumberOfMultiples { get; set; }
 

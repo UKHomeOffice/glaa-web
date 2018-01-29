@@ -212,6 +212,40 @@ namespace GLAA.Domain
                 context.Sectors.AddRange(defaultSectors);
             }
 
+            if (!context.EmploymentStatuses.Any())
+            {
+                var defaultEmploymentStatuses = new List<EmploymentStatus>
+                {
+                    new EmploymentStatus
+                    {
+                        Id = 1,
+                        Name = "Employee"
+                    },
+                    new EmploymentStatus
+                    {
+                        Id = 2,
+                        Name = "Self Employed"
+                    },
+                    new EmploymentStatus
+                    {
+                        Id = 3,
+                        Name = "Permanent Workers"
+                    },
+                    new EmploymentStatus
+                    {
+                        Id = 4,
+                        Name = "Temporary Workers"
+                    },
+                    new EmploymentStatus
+                    {
+                        Id = 5,
+                        Name = "Other"
+                    }
+                };
+
+                context.EmploymentStatuses.AddRange(defaultEmploymentStatuses);
+            }
+
             context.SaveChanges();
 
             if (!context.Licences.Any(x => x.ApplicationId == "FULL-1234"))
@@ -290,8 +324,12 @@ namespace GLAA.Domain
                     HasBeenBanned = true,
                     DateOfBan = DateTime.Now,
                     BanDescription = "Reasons for the ban",
-                    WorkerSupplyMethod = WorkerSupplyMethod.Other,
-                    WorkerSupplyOther = "How I'm supplying workers",
+                    SelectedEmploymentStatuses = new List<LicenceEmploymentStatus>
+                    {
+                        new LicenceEmploymentStatus {EmploymentStatus = context.EmploymentStatuses.Find(1)},
+                        new LicenceEmploymentStatus {EmploymentStatus = context.EmploymentStatuses.Find(5)}
+                    },
+                    OtherEmploymentStatus = "Some other employment status",
                     WorkerContract = WorkerContract.ContractOfEmployment,
                     UsesSubcontractors = true,
                     SubcontractorNames = "The names of subcontractors",
