@@ -311,8 +311,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             input.IsDirector = expectedIsDirector;
             input.PreviousExperience = expectedPreviousExperience;
-            input.HasPreviousTradingNames = expectedHasPreviousTradingNames;
-            input.PreviousTradingNames = new List<PreviousTradingName> { expectedPreviousTradingName };
 
             var result = this.mapper.Map<PrincipalAuthorityViewModel>(input);
 
@@ -320,10 +318,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             Assert.AreEqual(input.IsDirector, result.IsDirector.IsDirector);
             Assert.AreEqual(input.PreviousExperience, result.PreviousExperience.PreviousExperience);
-            Assert.AreEqual(input.HasPreviousTradingNames, result.PreviousTradingNames.HasPreviousTradingNames);
-            Assert.AreEqual(input.PreviousTradingNames.Single().BusinessName, result.PreviousTradingNames.PreviousTradingNames.Single().BusinessName);
-            Assert.AreEqual(input.PreviousTradingNames.Single().Town, result.PreviousTradingNames.PreviousTradingNames.Single().Town);
-            Assert.AreEqual(input.PreviousTradingNames.Single().Country, result.PreviousTradingNames.PreviousTradingNames.Single().Country);
         }
 
         [TestMethod]
@@ -636,7 +630,18 @@ namespace GLAA.Services.Tests.AutoMapper
             var input = new Licence
             {
                 BusinessName = "org name",
+                HasTradingName = true,
                 TradingName = "trading name",
+                HasPreviousTradingName = true,
+                PreviousTradingNames = new[]
+                {
+                    new PreviousTradingName
+                    {
+                        BusinessName = "name",
+                        Town = "town",
+                        Country = "country"
+                    }
+                },
                 BusinessPhoneNumber = "1",
                 BusinessMobileNumber = "2",
                 BusinessWebsite = "www",
@@ -658,6 +663,11 @@ namespace GLAA.Services.Tests.AutoMapper
             var result = this.mapper.Map<OrganisationDetailsViewModel>(input);
 
             Assert.AreEqual(input.BusinessName, result.BusinessName.BusinessName);
+            Assert.AreEqual(input.TradingName, result.BusinessName.TradingName);
+            Assert.AreEqual(input.HasPreviousTradingName, result.BusinessName.HasPreviousTradingName);
+            Assert.AreEqual(input.PreviousTradingNames.Single().BusinessName, result.BusinessName.PreviousTradingNames.Single().BusinessName);
+            Assert.AreEqual(input.PreviousTradingNames.Single().Town, result.BusinessName.PreviousTradingNames.Single().Town);
+            Assert.AreEqual(input.PreviousTradingNames.Single().Country, result.BusinessName.PreviousTradingNames.Single().Country);
             Assert.AreEqual(input.TradingName, result.TradingName.TradingName);
             Assert.AreEqual(input.BusinessPhoneNumber, result.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(input.BusinessMobileNumber, result.BusinessMobileNumber.BusinessMobileNumber);

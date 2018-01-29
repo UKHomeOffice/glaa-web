@@ -47,7 +47,7 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
 
-    public class BusinessNameViewModel
+    public class BusinessNameViewModel : IValidatable
     {
         [Required]
         [Display(Name = "", Description = "This is the name of the business you control")]
@@ -62,6 +62,54 @@ namespace GLAA.ViewModels.LicenceApplication
 
         [Display(Name = "Has your business traded under any other name in the last 5 years?")]
         public bool? HasPreviousTradingName { get; set; }
+
+        public IEnumerable<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
+
+        public void Validate()
+        {
+            if (string.IsNullOrEmpty(BusinessName) || !HasTradingName.HasValue)
+            {
+                IsValid = false;
+                return;
+            }
+
+            if (HasTradingName.Value && (!HasPreviousTradingName.HasValue || string.IsNullOrEmpty(TradingName)))
+            {
+                IsValid = false;
+                return;
+            }
+
+            if ((HasPreviousTradingName ?? false) && !PreviousTradingNames.Any())
+            {
+                IsValid = false;
+                return;
+            }
+
+            foreach (var business in PreviousTradingNames)
+            {
+                business.Validate();
+            }
+            IsValid = PreviousTradingNames.All(b => b.IsValid);
+        }
+
+        public bool IsValid { get; set; }
+    }
+
+    public class PreviousTradingNameViewModel : Validatable
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Business Name")]
+        public string BusinessName { get; set; }
+
+        [Required]
+        [Display(Name = "Town")]
+        public string Town { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
     }
 
     public class TradingNameViewModel

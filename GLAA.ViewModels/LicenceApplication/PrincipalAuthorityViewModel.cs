@@ -113,64 +113,9 @@ namespace GLAA.ViewModels.LicenceApplication
         public string PreviousExperience { get; set; }
     }
 
-    public class PreviousTradingNamesViewModel : YesNoViewModel, IValidatable, ICanView<PrincipalAuthorityViewModel>
+    public class PreviousTradingNamesViewModel : YesNoViewModel
     {
-        [Required]
-        [Display(Name = "Have you or your organisation traded under any other name in the last 5 years?")]
-        public bool? HasPreviousTradingNames { get; set; }
-
-        [Display(Name = "Details of previous trading names")]
-        public IEnumerable<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
-
-        public PreviousTradingNamesViewModel()
-        {
-            PreviousTradingNames = new List<PreviousTradingNameViewModel>();
-        }
-
-        public void Validate()
-        {
-            if (!HasPreviousTradingNames.HasValue)
-            {
-                IsValid = false;
-                return;
-            }
-
-            if (HasPreviousTradingNames.Value && !PreviousTradingNames.Any())
-            {
-                IsValid = false;
-                return;
-            }
-
-            foreach (var business in PreviousTradingNames)
-            {
-                business.Validate();
-            }
-            IsValid = PreviousTradingNames.All(b => b.IsValid);
-        }
-
-        public bool IsValid { get; set; }
-
-        public bool CanView(PrincipalAuthorityViewModel parent)
-        {
-            return parent.PreviousTradingNames.HasPreviousTradingNames ?? false;
-        }
-    }
-
-    public class PreviousTradingNameViewModel : Validatable
-    {
-        public int Id { get; set; }
-
-        [Required]
-        [Display(Name = "Business Name")]
-        public string BusinessName { get; set; }
-
-        [Required]
-        [Display(Name = "Town")]
-        public string Town { get; set; }
-
-        [Required]
-        [Display(Name = "Country")]
-        public string Country { get; set; }
+        
     }
 
     public class PrincipalAuthorityRightToWorkViewModel : IRequiredIf

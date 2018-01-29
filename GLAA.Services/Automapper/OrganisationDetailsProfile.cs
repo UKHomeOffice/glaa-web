@@ -68,6 +68,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.BusinessName.HasTradingName))
                 .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.BusinessName.TradingName))
                 .ForMember(x => x.HasPreviousTradingName, opt => opt.MapFrom(y => y.BusinessName.HasPreviousTradingName))
+                .ForMember(x => x.PreviousTradingNames, opt => opt.Ignore())
                 .ForMember(x => x.OperatingIndustries, opt => opt.Ignore())
                 .ForMember(x => x.IsShellfish, opt => opt.ResolveUsing(ShellfishResolver))
                 .ForMember(x => x.OperatingCountries, opt => opt.Ignore())
@@ -201,7 +202,14 @@ namespace GLAA.Services.Automapper
                 BusinessName = licence.BusinessName,
                 HasTradingName = licence.HasTradingName,
                 TradingName = licence.TradingName,
-                HasPreviousTradingName = licence.HasPreviousTradingName
+                HasPreviousTradingName = licence.HasPreviousTradingName,
+                PreviousTradingNames = licence.PreviousTradingNames?.Select(p => new PreviousTradingNameViewModel
+                {
+                    Id = p.Id,
+                    BusinessName = p.BusinessName,
+                    Country = p.Country,
+                    Town = p.Town
+                })
             };
         }
     }

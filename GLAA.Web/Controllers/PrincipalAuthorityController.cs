@@ -368,12 +368,12 @@ namespace GLAA.Web.Controllers
                     l => l.PrincipalAuthorities.Single(p => p.Id == Session.GetCurrentPaId()));
             model = parent.PreviousTradingNames;
 
-            if ((model.HasPreviousTradingNames ?? false) && !model.PreviousTradingNames.Any())
-            {
-                ModelState.AddModelError(nameof(model.PreviousTradingNames), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
-                ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.PrincipalAuthority, 29), model);
-            }
+            //if ((model.HasPreviousTradingNames ?? false) && !model.PreviousTradingNames.Any())
+            //{
+            //    ModelState.AddModelError(nameof(model.PreviousTradingNames), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
+            //    ViewData.Add("doOverride", true);
+            //    return View(GetViewPath(FormSection.PrincipalAuthority, 29), model);
+            //}
 
             return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, 30);
         }

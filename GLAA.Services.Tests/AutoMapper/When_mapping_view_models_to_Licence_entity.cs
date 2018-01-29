@@ -226,7 +226,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             input.IsDirector.IsDirector = expectedIsDirector;
             input.PreviousExperience.PreviousExperience = expectedPreviousExperience;
-            input.PreviousTradingNames.HasPreviousTradingNames = true;
 
             var result = this.mapper.Map<PrincipalAuthority>(input);
 
@@ -234,7 +233,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             Assert.AreEqual(input.IsDirector.IsDirector, result.IsDirector);
             Assert.AreEqual(input.PreviousExperience.PreviousExperience, result.PreviousExperience);
-            Assert.AreEqual(input.PreviousTradingNames.HasPreviousTradingNames, result.HasPreviousTradingNames);
         }
 
         [TestMethod]

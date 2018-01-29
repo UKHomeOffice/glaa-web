@@ -240,6 +240,16 @@ namespace GLAA.Domain
                     HasMultiples = true,
                     HasPAYEERNNumber = true,
                     HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
                     HasWrittenAgreementsInPlace = true,
                     HasVATNumber = true,
                     IsPSCControlled = true,
@@ -580,16 +590,6 @@ namespace GLAA.Domain
                     },
                     HasPreviouslyHeldLicence = true,
                     PreviousLicenceDescription = "I had a previous licence.",
-                    HasPreviousTradingNames = true,
-                    PreviousTradingNames = new[]
-                    {
-                        new PreviousTradingName
-                        {
-                            BusinessName = "Old business name",
-                            Town = "Slough",
-                            Country = "UK"
-                        }
-                    },
                     DirectorOrPartner = new DirectorOrPartner
                     {
                         Address = new Address

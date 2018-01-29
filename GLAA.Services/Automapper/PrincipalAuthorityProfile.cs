@@ -265,14 +265,10 @@ namespace GLAA.Services.Automapper
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<PreviousTradingNamesViewModel, PrincipalAuthority>()
-                .ForMember(x => x.HasPreviousTradingNames, opt => opt.MapFrom(y => y.HasPreviousTradingNames))
-                .ForMember(x => x.PreviousTradingNames, opt => opt.ResolveUsing(ProfileHelpers.PreviousTradingNamesResolver))
-                .ForAllOtherMembers(opt => opt.Ignore());
+                .ForAllMembers(opt => opt.Ignore());
 
             CreateMap<PrincipalAuthority, PreviousTradingNamesViewModel>()
-                .ForMember(x => x.HasPreviousTradingNames, opt => opt.MapFrom(y => y.HasPreviousTradingNames))
-                .ForMember(x => x.PreviousTradingNames, opt => opt.MapFrom(y => y.PreviousTradingNames))
-                .ForAllOtherMembers(opt => opt.Ignore());
+                .ForAllMembers(opt => opt.Ignore());
 
             CreateMap<RightToWorkViewModel, PrincipalAuthority>()
                 .ForAllMembers(opt => opt.Ignore());
@@ -322,8 +318,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.OffencesAwaitingTrial, opt => opt.Ignore())
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.HasPreviouslyHeldLicence))
                 .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription))
-                .ForMember(x => x.HasPreviousTradingNames, opt => opt.MapFrom(y => y.PreviousTradingNames.HasPreviousTradingNames))
-                .ForMember(x => x.PreviousTradingNames, opt => opt.Ignore())
                 .ForMember(x => x.RequiresVisa, opt => opt.Ignore())
                 .ForMember(x => x.VisaDescription, opt => opt.Ignore());
         }
