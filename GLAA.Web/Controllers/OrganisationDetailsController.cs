@@ -55,7 +55,7 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveOrganisationName(OrganisationNameViewModel model)
+        public IActionResult SaveOrganisationName(BusinessNameViewModel model)
         {
             return OrganisationDetailsPost(model, 2);
         }

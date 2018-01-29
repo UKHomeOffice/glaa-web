@@ -464,7 +464,7 @@ namespace GLAA.Domain.Core.Migrations
 
                     b.Property<int?>("NumberOfVehicles");
 
-                    b.Property<string>("OrganisationName");
+                    b.Property<string>("BusinessName");
 
                     b.Property<string>("OtherMultiple");
 

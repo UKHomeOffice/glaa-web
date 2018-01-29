@@ -35,7 +35,7 @@ namespace GLAA.Web.FormLogic
                         new[]
                         {
                             new FormPageDefinition(),
-                            new FormPageDefinition(nameof(OrganisationNameViewModel.OrganisationName)),
+                            new FormPageDefinition(nameof(BusinessNameViewModel.BusinessName)),
                             new FormPageDefinition(nameof(TradingNameViewModel.TradingName)),
                             new FormPageDefinition("Address"),
                             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),

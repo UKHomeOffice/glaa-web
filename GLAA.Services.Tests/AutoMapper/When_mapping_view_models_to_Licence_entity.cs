@@ -383,9 +383,9 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var input = new OrganisationDetailsViewModel
             {
-                OrganisationName = new OrganisationNameViewModel
+                OrganisationName = new BusinessNameViewModel
                 {
-                    OrganisationName = "org name"
+                    BusinessName = "org name"
                 },
                 TradingName = new TradingNameViewModel
                 {
@@ -421,7 +421,7 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<Licence>(input);
 
-            Assert.AreEqual(input.OrganisationName.OrganisationName, result.OrganisationName);
+            Assert.AreEqual(input.OrganisationName.BusinessName, result.BusinessName);
             Assert.AreEqual(input.TradingName.TradingName, result.TradingName);
             Assert.AreEqual(input.BusinessPhoneNumber.BusinessPhoneNumber, result.BusinessPhoneNumber);
             Assert.AreEqual(input.BusinessMobileNumber.BusinessMobileNumber, result.BusinessMobileNumber);

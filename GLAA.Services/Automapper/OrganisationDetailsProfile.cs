@@ -63,7 +63,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
             CreateMap<OrganisationDetailsViewModel, Licence>()
-                .ForMember(x => x.OrganisationName, opt => opt.MapFrom(y => y.OrganisationName.OrganisationName))
+                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.OrganisationName.BusinessName))
                 .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName.TradingName))
                 .ForMember(x => x.OperatingIndustries, opt => opt.Ignore())
                 .ForMember(x => x.IsShellfish, opt => opt.ResolveUsing(ShellfishResolver))
@@ -88,8 +88,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.TaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<OrganisationNameViewModel, Licence>()
-                .ForMember(x => x.OrganisationName, opt => opt.MapFrom(y => y.OrganisationName))
+            CreateMap<BusinessNameViewModel, Licence>()
+                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<LegalStatusViewModel, Licence>()

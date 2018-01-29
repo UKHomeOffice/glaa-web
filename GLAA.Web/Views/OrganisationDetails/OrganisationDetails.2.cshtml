@@ -3,7 +3,7 @@
     ViewBag.Title = "Organisation Details - Part 1";
 }
 
-@model GLAA.ViewModels.LicenceApplication.OrganisationNameViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessNameViewModel
 
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
 {
@@ -17,7 +17,7 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.OrganisationName)
+            @Html.TextFormGroupFor(x => x.BusinessName)
         </div>
     </div>    
 

@@ -38,15 +38,15 @@ namespace GLAA.Services.Tests.PostDataHandler
         {
             const int expectedId = 1;
             const string expectedName = "Name";
-            var licence = new Licence {Id = expectedId, OrganisationName = string.Empty};
-            var model = new OrganisationNameViewModel {OrganisationName = expectedName};
+            var licence = new Licence {Id = expectedId, BusinessName = string.Empty};
+            var model = new BusinessNameViewModel {BusinessName = expectedName};
 
             licenceRepository.GetById(expectedId).Returns(licence);
 
             var pdh = new LicenceApplicationPostDataHandler(mapper, repository, licenceRepository, statusRepository, dateTimeProvider);
             pdh.Update(expectedId, l => l, model);
 
-            repository.Received(1).Upsert(Arg.Is<Licence>(l => l.OrganisationName == expectedName));
+            repository.Received(1).Upsert(Arg.Is<Licence>(l => l.BusinessName == expectedName));
         }
 
         [TestMethod]
