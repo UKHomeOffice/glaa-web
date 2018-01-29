@@ -8,7 +8,7 @@ spec:
   template:
     metadata:
       labels:
-        name: glaa-web
+        app: glaa-web
     spec:  
       containers:
       - name: glaa-web
@@ -17,7 +17,7 @@ spec:
         image: quay.io/ukhomeofficedigital/glaa-web:latest
         imagePullPolicy: Always
         ports:
-          - containerPort: 80
+          - containerPort: 5000
         env:
           - name: DB_SERVER
             valueFrom:
@@ -53,9 +53,12 @@ spec:
             value: Production
         volumeMounts:
           - name: secrets
-            mountPath: /home/app/glaa-web/secrets
+            mountPath: /home/app/glaa-web/secrets/
             readOnly: true
       volumes:
       - name: secrets
         secret:
           secretName: secret-appsettings
+          items:
+          - key: appsettings.secrets.json
+            path: appsettings.secrets.json
