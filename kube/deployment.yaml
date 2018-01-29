@@ -51,6 +51,24 @@ spec:
                 key: password
           - name: ASPNETCORE_ENVIRONMENT
             value: Production
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: access_key_id
+          - name: AWS_SECRET_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: secret_access_key
+        volumeMounts:
+          - name: secrets
+            mountPath: /home/app/glaa-web/secrets
+            readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName: secret-appsettings
           - name: SuperUser
             valueFrom:
               secretKeyRef:
@@ -67,13 +85,3 @@ spec:
                 name: glaa-app-secrets
                 key: statuses
                 key: password
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: s3-glaa-notprod
-                key: access_key_id
-          - name: AWS_SECRET_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: s3-glaa-notprod
-                key: secret_access_key
