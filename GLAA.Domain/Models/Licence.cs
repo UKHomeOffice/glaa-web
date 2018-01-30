@@ -41,6 +41,7 @@ namespace GLAA.Domain.Models
 
         public LegalStatusEnum? LegalStatus { get; set; }
 
+        public string OtherLegalStatus { get; set; }
         public string BusinessPhoneNumber { get; set; }
         public string BusinessMobileNumber { get; set; }
         public string BusinessEmailAddress { get; set; }

@@ -24,7 +24,7 @@ namespace GLAA.ViewModels.LicenceApplication
             BusinessEmailAddress = new BusinessEmailAddressViewModel();
             BusinessWebsite = new BusinessWebsiteViewModel();
             LegalStatus = new LegalStatusViewModel();
-            PAYEERNStatus = new PAYEERNStatusViewModel();
+            PAYEERNStatus = new PAYEStatusViewModel();
             VATStatus = new VATStatusViewModel();
             TaxReference = new TaxReferenceViewModel();
         }
@@ -41,7 +41,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessEmailAddressViewModel BusinessEmailAddress { get; set; }
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
-        public PAYEERNStatusViewModel PAYEERNStatus { get; set; }
+        public PAYEStatusViewModel PAYEERNStatus { get; set; }
         public VATStatusViewModel VATStatus { get; set; }
         public TaxReferenceViewModel TaxReference { get; set; }
     }
@@ -161,7 +161,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
-        [System.ComponentModel.DataAnnotations.Compare("BusinessEmailAddress")]
+        [Compare("BusinessEmailAddress")]
         [Display(Name = "Confirm Business Email Address")]
         public string BusinessEmailAddressConfirmation { get; set; }
     }
@@ -175,64 +175,87 @@ namespace GLAA.ViewModels.LicenceApplication
 
     public class LegalStatusViewModel : IRequiredIf
     {
-        public LegalStatusViewModel()
-        {
-            CompanyRegistrationDate = new DateViewModel();
-        }
-
         public List<LegalStatus> AvailableLegalStatuses { get; set; } = new List<LegalStatus>
         {
             new LegalStatus { Id = 1, Name = "Sole Trader", Checked = false },
-            new LegalStatus { Id = 2, Name = "Limited Company", Checked = false },
+            new LegalStatus { Id = 2, Name = "Registered Company", Checked = false },
             new LegalStatus { Id = 3, Name = "Partnership", Checked = false },
             new LegalStatus { Id = 4, Name = "Unincorporate Association", Checked = false },
             new LegalStatus { Id = 5, Name = "Other", Checked = false },
         };
 
+        [RequiredIf]
+        [Display(Name = "Other legal status")]
+        public string Other { get; set; }
+
         [Required]
-        [Display(Name = "Legal Status", Description = "What is the legal status of your organisation?")]
+        [Display(Name = "Legal Status", Description = "What is the legal status of your business?")]
         public LegalStatusEnum? LegalStatus { get; set; }
 
-        // TODO: Check example numbers
-        [RegularExpression(@"\w{2}\d{6}", ErrorMessage = "Companies House registration number")]
-        [RequiredIf(ErrorMessage = "The Companies House Registration Number is required")]
-        [Display(Name = "Companies House Registration Number", Description = "For example 01234567 or OC012345")]
-        public string CompaniesHouseNumber { get; set; }
-
-        [RequiredIf(ErrorMessage = "The Registration Date field is required")]
-        [UIHint("_NullableDateTime")]
-        [Display(Name = "Registration Date", Description = "Please enter the date your organisation registered with Companies House.")]
-        public DateViewModel CompanyRegistrationDate { get; set; }
-
-        public bool IsRequired => (LegalStatus ?? LegalStatusEnum.Other) == LegalStatusEnum.LimitedCompany;
+        public bool IsRequired => LegalStatus.HasValue && LegalStatus.Value == LegalStatusEnum.Other;
     }
 
-    public class PAYEERNStatusViewModel : YesNoViewModel, IRequiredIf
+
+    public class PAYEStatusViewModel : YesNoViewModel, IRequiredIf, IValidatable
     {
-        public PAYEERNStatusViewModel()
+        public PAYEStatusViewModel()
         {
-            PAYEERNRegistrationDate = new DateViewModel();
+            PAYERegistrationDate = new DateViewModel();
         }
 
         [Required]
         [Display(Name = "Do you have an ERN/PAYE Registion Number?")]
-        public bool? HasPAYEERNNumber { get; set; }
+        public bool? HasPAYENumber { get; set; }
 
         // TODO: Check example numbers
         [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]
         [RequiredIf(ErrorMessage = "The PAYE Number field is required")]
         [Display(Name = "PAYE Number", Description = "For example 123/A12345 or 123/AB12345")]
-        public string PAYEERNNumber { get; set; }
-        
+        public string PAYENumber { get; set; }
+
         [UIHint("_NullableDateTime")]
         [Display(Name = "Employer Registration Date", Description = "Please enter the date you registered as an employer with HMRC.")]
-        public DateViewModel PAYEERNRegistrationDate { get; set; }
+        public DateViewModel PAYERegistrationDate { get; set; }
 
-        public bool IsRequired => HasPAYEERNNumber ?? false;
+        public bool IsRequired => HasPAYENumber ?? false;
+
+        public bool IsValid { get; set; }
+
+        public void Validate()
+        {
+            var invalidModelFields = new List<string>();
+            foreach (var prop in GetType().GetProperties())
+            {
+                var obj = prop.GetValue(this) ?? string.Empty;
+
+                var validatable = obj as IValidatable;
+
+                bool propertyIsValid;
+
+                if (validatable != null)
+                {
+                    // Use the defined validate method if one is defined
+                    validatable.Validate();
+                    propertyIsValid = validatable.IsValid;
+                }
+                else
+                {
+                    // Use the validation context for properties
+                    var context = new ValidationContext(obj, null);
+                    propertyIsValid = Validator.TryValidateObject(obj, context, null, true);
+                }
+
+                if (!propertyIsValid)
+                {
+                    invalidModelFields.Add(prop.Name);
+                }
+            }
+            IsValid = !invalidModelFields.Any();
+        }
     }
 
-    public class VATStatusViewModel : YesNoViewModel, IRequiredIf
-    {
+    public class VATStatusViewModel : YesNoViewModel, IRequiredIf, IValidatable
+    {        
         public VATStatusViewModel()
         {
             VATRegistrationDate = new DateViewModel();
@@ -255,9 +278,43 @@ namespace GLAA.ViewModels.LicenceApplication
         public DateViewModel VATRegistrationDate { get; set; }
 
         public bool IsRequired => HasVATNumber ?? false;
+
+        public bool IsValid { get; set; }
+
+        public void Validate()
+        {
+            var invalidModelFields = new List<string>();
+            foreach (var prop in GetType().GetProperties())
+            {
+                var obj = prop.GetValue(this) ?? string.Empty;
+
+                var validatable = obj as IValidatable;
+
+                bool propertyIsValid;
+
+                if (validatable != null)
+                {
+                    // Use the defined validate method if one is defined
+                    validatable.Validate();
+                    propertyIsValid = validatable.IsValid;
+                }
+                else
+                {
+                    // Use the validation context for properties
+                    var context = new ValidationContext(obj, null);
+                    propertyIsValid = Validator.TryValidateObject(obj, context, null, true);
+                }
+
+                if (!propertyIsValid)
+                {
+                    invalidModelFields.Add(prop.Name);
+                }
+            }
+            IsValid = !invalidModelFields.Any();
+        }
     }
 
-    public class TaxReferenceViewModel
+    public class TaxReferenceViewModel : Validatable
     {
         // Only GOV.UK format guidance: https://www.gov.uk/find-lost-utr-number
         // X:\04PTW\38500\38548 - GLAA - Government Licensing System\TECHNICAL\HMRC_dummy_data.txt

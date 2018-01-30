@@ -3,7 +3,7 @@
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.PAYEStatusViewModel
 
 @using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
 {
@@ -25,15 +25,15 @@
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
+                            @Html.RadioButtonFor(x => x.HasPAYENumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
                     
                         if (option.Value == switchValue)
                         {
                             <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
-                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
-                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
+                                @Html.TextFormGroupFor(x => x.PAYENumber)
+                                @Html.DateFormGroupFor(x => x.PAYERegistrationDate)
                             </div>
                         }
                     }

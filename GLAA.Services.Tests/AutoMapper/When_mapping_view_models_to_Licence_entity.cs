@@ -410,12 +410,13 @@ namespace GLAA.Services.Tests.AutoMapper
                 Address = expectedAddress,
                 LegalStatus = new LegalStatusViewModel
                 {
-                    LegalStatus = LegalStatusEnum.LimitedCompany,
-                    CompaniesHouseNumber = "6",
-                    CompanyRegistrationDate = new DateViewModel
-                    {
-                        Date = new DateTime(2000, 4, 4)
-                    }
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    Other = "Some other industry"
+                    //CompaniesHouseNumber = "6",
+                    //CompanyRegistrationDate = new DateViewModel
+                    //{
+                    //    Date = new DateTime(2000, 4, 4)
+                    //}
                 }
             };
 
@@ -431,8 +432,8 @@ namespace GLAA.Services.Tests.AutoMapper
             AssertAddress(expectedAddress, result.Address);
 
             Assert.AreEqual(input.LegalStatus.LegalStatus, result.LegalStatus);
-            Assert.AreEqual(input.LegalStatus.CompaniesHouseNumber, result.CompaniesHouseNumber);
-            Assert.AreEqual(input.LegalStatus.CompanyRegistrationDate.Date, result.CompanyRegistrationDate);
+            //Assert.AreEqual(input.LegalStatus.CompaniesHouseNumber, result.CompaniesHouseNumber);
+            //Assert.AreEqual(input.LegalStatus.CompanyRegistrationDate.Date, result.CompanyRegistrationDate);
         }
 
         [TestMethod]

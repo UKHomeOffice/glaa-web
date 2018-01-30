@@ -242,7 +242,7 @@ namespace GLAA.Domain
                     HasWrittenAgreementsInPlace = true,
                     HasVATNumber = true,
                     IsPSCControlled = true,
-                    LegalStatus = LegalStatusEnum.LimitedCompany,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
                     NumberOfMultiples = 3,
                     OperatingCountries =
                         new List<LicenceCountry>
