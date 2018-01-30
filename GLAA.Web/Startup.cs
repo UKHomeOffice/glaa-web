@@ -169,13 +169,13 @@ namespace GLAA.Web
 
             //netSDKFile.RegisterProfile(profile);
 
-            var opts = Configuration.GetAWSOptions();
+            //var opts = Configuration.GetAWSOptions();
 
-            opts.Credentials = new EnvironmentVariablesAWSCredentials();
+            //opts.Credentials = new EnvironmentVariablesAWSCredentials();
 
-            services.AddDefaultAWSOptions(opts);
+            //services.AddDefaultAWSOptions(opts);
 
-            services.AddAWSService<IAmazonS3>();
+            //services.AddAWSService<IAmazonS3>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
