@@ -25,6 +25,7 @@ using Microsoft.Extensions.Logging;
 using Amazon.S3;
 using Amazon.Runtime.CredentialManagement;
 using Amazon;
+using Amazon.Runtime;
 
 namespace GLAA.Web
 {
@@ -153,22 +154,24 @@ namespace GLAA.Web
 
         private void ConfigureAWS(IServiceCollection services)
         {
-            var options = new CredentialProfileOptions
-            {
-                AccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
-                SecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY_ID")
-            };
+            //var options = new CredentialProfileOptions
+            //{
+            //    AccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
+            //    SecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY_ID")
+            //};
 
-            var profile = new CredentialProfile("default", options)
-            {
-                Region = RegionEndpoint.EUWest2
-            };
+            //var profile = new CredentialProfile("default", options)
+            //{
+            //    Region = RegionEndpoint.EUWest2
+            //};
 
-            var netSDKFile = new NetSDKCredentialsFile();
+            //var netSDKFile = new NetSDKCredentialsFile();
 
-            netSDKFile.RegisterProfile(profile);
+            //netSDKFile.RegisterProfile(profile);
 
             var opts = Configuration.GetAWSOptions();
+
+            opts.Credentials = new EnvironmentVariablesAWSCredentials();
 
             services.AddDefaultAWSOptions(opts);
 
