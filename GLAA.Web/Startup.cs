@@ -154,21 +154,6 @@ namespace GLAA.Web
 
         private void ConfigureAWS(IServiceCollection services)
         {
-            //var options = new CredentialProfileOptions
-            //{
-            //    AccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
-            //    SecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY_ID")
-            //};
-
-            //var profile = new CredentialProfile("default", options)
-            //{
-            //    Region = RegionEndpoint.EUWest2
-            //};
-
-            //var netSDKFile = new NetSDKCredentialsFile();
-
-            //netSDKFile.RegisterProfile(profile);
-
             var opts = Configuration.GetAWSOptions();
 
             opts.Credentials = new EnvironmentVariablesAWSCredentials();

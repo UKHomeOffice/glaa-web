@@ -55,12 +55,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: s3-glaa-notprod
-                key: access_key_id
-          - name: AWS_SECRET_ACCESS_KEY_ID
+                key: ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: s3-glaa-notprod
-                key: secret_access_key
+                key: SECRET_ACCESS_KEY
           - name: AWS_REGION
             value: eu-west-2              
         volumeMounts:
