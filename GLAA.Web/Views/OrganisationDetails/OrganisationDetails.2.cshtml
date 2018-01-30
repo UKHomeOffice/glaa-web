@@ -1,9 +1,16 @@
-﻿
-@{
-    ViewBag.Title = "Organisation Details - Part 1";
-}
-
+﻿@using GLAA.ViewModels.LicenceApplication
 @model GLAA.ViewModels.LicenceApplication.BusinessNameViewModel
+
+@{
+    ViewBag.Title = "What is your business' name?";
+    if (!Model.PreviousTradingNames.Any())
+    {
+        Model.PreviousTradingNames = new List<PreviousTradingNameViewModel>()
+        {
+            new PreviousTradingNameViewModel()
+        };
+    }
+}
 
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
 {
@@ -13,16 +20,100 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your organisation's name?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
             @Html.TextFormGroupFor(x => x.BusinessName)
+        </div>
+        <div class="column-full">
+            <fieldset>
+                <legend>
+                    <span class="body-text">@Html.LabelFor(m => m.HasTradingName)</span>
+                </legend>
+                @foreach (var option in Model.YesNo)
+                {
+                    <div class="multiple-choice trading-name-choice">
+                        @Html.RadioButtonFor(x => x.HasTradingName, option.Value)
+                        @Html.Label(option.Text)
+                    </div>
+                }
+                <div class="panel panel-border-narrow js-hidden" id="tradingNameDetails">
+                    @Html.TextFormGroupFor(x => x.TradingName)
+                    <fieldset>
+                        <legend>
+                            <span class="body-text">@Html.LabelFor(m => m.HasPreviousTradingName)</span>
+                        </legend>
+                        @foreach (var prevOption in Model.YesNo)
+                        {
+                            <div class="multiple-choice previous-name-choice">
+                                @Html.RadioButtonFor(x => x.HasPreviousTradingName, prevOption.Value)
+                                @Html.Label(prevOption.Text)
+                            </div>
+                        }
+                    </fieldset>
+                    <div id="previousNameDetails">
+                        @for (var i = 0; i < Model.PreviousTradingNames.Count; i++)
+                        {
+                            @Html.HiddenFor(m => m.PreviousTradingNames[i].Id)
+                            <div class="grid-row">
+                                <div class="form-group-compound list-item-wrapper">
+                                    <h2 class="heading-medium">Previous trading name @(i + 1)</h2>
+                                    <fieldset>
+                                        <div class="column-one-quarter no-padding">
+                                            <div class="form-group list-item">
+                                                @Html.LabelFor(m => m.PreviousTradingNames[i].BusinessName, new{ @class="form-label" })
+                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].BusinessName, new { @class = "form-label" })
+                                            </div>
+                                        </div>
+                                        <div class="column-one-quarter no-padding">
+                                            <div class="form-group list-item">
+                                                @Html.LabelFor(m => m.PreviousTradingNames[i].Town, new{ @class="form-label" })
+                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].Town, new { @class = "form-label" })
+                                            </div>
+                                        </div>
+                                        <div class="column-one-quarter no-padding">
+                                            <div class="form-group list-item">
+                                                @Html.LabelFor(m => m.PreviousTradingNames[i].Country, new{ @class="form-label" })
+                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].Country, new { @class = "form-label" })
+                                            </div>
+                                        </div>
+                                        <div class="column-one-quarter no-padding">
+                                            <div class="list-item">
+                                                @if (Model.PreviousTradingNames.Count > 1)
+                                                {
+                                                    <a asp-controller="OrganisationDetails" asp-action="RemoveOrganisationName" asp-route-index="@i">Remove this</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <hr />
+                                </div>
+                            </div>
+                        }
+                        <div class="grid-row">
+                            <div class="column-two-thirds">
+                                <div class="form-group">
+                                    <button class="button button-add-another" asp-controller="OrganisationDetails" asp-action="AddNewOrganisationName">Add another</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
         </div>
     </div>    
 
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
+@section Scripts
+{   
+    <script>
+        $(document).ready(function () {
+            hiddenContent.hideContent();
+            branchedQuestion.toggleBranch('.trading-name-choice input', '#tradingNameDetails', "true");
+            branchedQuestion.toggleBranch('.previous-name-choice input', '#previousNameDetails', "true");
+        });
+    </script> 
 }

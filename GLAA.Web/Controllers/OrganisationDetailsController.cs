@@ -1,4 +1,6 @@
-﻿using GLAA.Services;
+﻿using System.Collections.Generic;
+using System.Linq;
+using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
@@ -57,7 +59,33 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SaveOrganisationName(BusinessNameViewModel model)
         {
+            // TODO Validation
+
             return OrganisationDetailsPost(model, 2);
+        }
+
+        [HttpPost]
+        [ExportModelState]
+        public IActionResult AddNewOrganisationName(BusinessNameViewModel model)
+        {
+            LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), l => l, model);
+            // TODO Save only if valid?
+            LicenceApplicationPostDataHandler.UpdateAll(Session.GetCurrentLicenceId(), l => l.PreviousTradingNames,
+                model.PreviousTradingNames.AsEnumerable());
+
+            //var newList = new List<PreviousTradingNameViewModel> {new PreviousTradingNameViewModel()};
+            //newList.AddRange(model.PreviousTradingNames);
+            //model.PreviousTradingNames = newList;
+            model.PreviousTradingNames.Insert(0, new PreviousTradingNameViewModel());
+            return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
+        }
+
+        [HttpPost]
+        [ExportModelState]
+        public IActionResult RemoveOrganisationName(BusinessNameViewModel model, int index)
+        {
+            model.PreviousTradingNames.RemoveAt(index);
+            return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
         }
 
         [HttpPost]

@@ -102,26 +102,33 @@ namespace GLAA.Services.LicenceApplication
         }
 
         public void Update<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, U model)
-            where T : class, IId, new()
+            where T : class, IId, new() where U : IId
         {
             var licence = licenceRepository.GetById(licenceId);
 
             var collection = objectSelector(licence);
 
-            foreach (var entity in collection)
-            {
-                // TODO: this maps to EVERY entity, doesn't select the correct one atm
-                mapper.Map(model, entity);
-            }
-
-            if (!collection.Any())
+            if (collection.None(c => c.Id == model.Id))
             {
                 var item = repository.Create<T>();
                 mapper.Map(model, item);
                 collection.Add(item);
             }
+            else
+            {
+                mapper.Map(model, collection.Single(c => c.Id == model.Id));
+            }
 
             repository.Upsert(licence);
+        }
+
+        public void UpdateAll<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, IEnumerable<U> models)
+            where T : class, IId, new() where U : IId
+        {
+            foreach (var model in models)
+            {
+                Update(licenceId, objectSelector, model);
+            }
         }
 
         public int Update<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, U model, int id)

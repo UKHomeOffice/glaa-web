@@ -205,7 +205,7 @@ namespace GLAA.Services.Automapper
                     BusinessName = p.BusinessName,
                     Country = p.Country,
                     Town = p.Town
-                })
+                }).ToList()
             };
         }
     }
