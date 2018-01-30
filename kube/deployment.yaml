@@ -8,8 +8,8 @@ spec:
   template:
     metadata:
       labels:
-        name: glaa-web
-    spec:
+        app: glaa-web
+    spec:  
       containers:
       - name: glaa-web
         securityContext:
