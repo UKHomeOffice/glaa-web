@@ -154,28 +154,13 @@ namespace GLAA.Web
 
         private void ConfigureAWS(IServiceCollection services)
         {
-            //var options = new CredentialProfileOptions
-            //{
-            //    AccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
-            //    SecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY_ID")
-            //};
+            var opts = Configuration.GetAWSOptions();
 
-            //var profile = new CredentialProfile("default", options)
-            //{
-            //    Region = RegionEndpoint.EUWest2
-            //};
+            opts.Credentials = new EnvironmentVariablesAWSCredentials();
 
-            //var netSDKFile = new NetSDKCredentialsFile();
+            services.AddDefaultAWSOptions(opts);
 
-            //netSDKFile.RegisterProfile(profile);
-
-            //var opts = Configuration.GetAWSOptions();
-
-            //opts.Credentials = new EnvironmentVariablesAWSCredentials();
-
-            //services.AddDefaultAWSOptions(opts);
-
-            //services.AddAWSService<IAmazonS3>();
+            services.AddAWSService<IAmazonS3>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
