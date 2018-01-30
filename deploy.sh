@@ -12,4 +12,5 @@ kd --insecure-skip-tls-verify \
   -f kube/deployment.yaml \
   -f kube/ingress.yaml \
   -f kube/service.yaml \
+  -f kube/network-policy.yaml \
   -f kube-db-setup/deployment.yaml
