@@ -101,15 +101,15 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Previous Business Name field is required")]
         [Display(Name = "Business Name")]
         public string BusinessName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Previous Business Town field is required")]
         [Display(Name = "Town")]
         public string Town { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "The Previous Business Country field is required")]
         [Display(Name = "Country")]
         public string Country { get; set; }
     }

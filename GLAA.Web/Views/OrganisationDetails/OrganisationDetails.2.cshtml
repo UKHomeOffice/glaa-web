@@ -30,6 +30,9 @@
     .column-one-quarter.un-fix-width {
         width: auto;
     }
+    .column-one-quarter.un-fix-width input.form-control {
+        width: auto;
+    }
 </style>
 
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
@@ -83,19 +86,19 @@
                                         <div class="column-one-quarter un-fix-width">
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.PreviousTradingNames[i].BusinessName, new{ @class="form-label" })
-                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].BusinessName, new { @class = "form-label" })
+                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].BusinessName, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="column-one-quarter un-fix-width">
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.PreviousTradingNames[i].Town, new{ @class="form-label" })
-                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].Town, new { @class = "form-label" })
+                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].Town, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="column-one-quarter un-fix-width">
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.PreviousTradingNames[i].Country, new{ @class="form-label" })
-                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].Country, new { @class = "form-label" })
+                                                @Html.TextBoxFor(m => m.PreviousTradingNames[i].Country, new { @class = "form-control" })
                                             </div>
                                         </div>
                                         <div class="column-one-quarter un-fix-width">
