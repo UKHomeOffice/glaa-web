@@ -1,6 +1,6 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.OperatingIndustriesViewModel
 @{
-    ViewBag.Title = "Organisation Details - Part 3";
+    ViewBag.Title = "Which GLAA sectors would you like to operate in?";
 }
 
 @using (Html.BeginForm("SaveOperatingIndustries", "OrganisationDetails"))
@@ -11,7 +11,7 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Which GLAA sectors would you like to operate in?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
