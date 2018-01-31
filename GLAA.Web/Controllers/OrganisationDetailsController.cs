@@ -66,25 +66,22 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult AddNewOrganisationName(BusinessNameViewModel model)
+        public IActionResult AddPreviousTradingName(BusinessNameViewModel model)
         {
-            LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), l => l, model);
+            //LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), l => l, model);
             // TODO Save only if valid?
-            LicenceApplicationPostDataHandler.UpdateAll(Session.GetCurrentLicenceId(), l => l.PreviousTradingNames,
-                model.PreviousTradingNames.AsEnumerable());
-
-            //var newList = new List<PreviousTradingNameViewModel> {new PreviousTradingNameViewModel()};
-            //newList.AddRange(model.PreviousTradingNames);
-            //model.PreviousTradingNames = newList;
-            model.PreviousTradingNames.Insert(0, new PreviousTradingNameViewModel());
+            //LicenceApplicationPostDataHandler.UpdateAll(Session.GetCurrentLicenceId(), l => l.PreviousTradingNames,
+            //    model.PreviousTradingNames.AsEnumerable());
+            model.PreviousTradingNames = model.PreviousTradingNames.Concat(new [] { new PreviousTradingNameViewModel() }).ToList();
             return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult RemoveOrganisationName(BusinessNameViewModel model, int index)
+        [Route("Licence/Apply/OrganisationDetails/RemoveOrganisationName/{id}")]
+        public IActionResult RemovePreviousTradingName(int id, BusinessNameViewModel model)
         {
-            model.PreviousTradingNames.RemoveAt(index);
+            model.PreviousTradingNames.RemoveAt(id);
             return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
         }
 

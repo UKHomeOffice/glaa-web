@@ -12,6 +12,23 @@
     }
 }
 
+<style>
+    .link-button {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: #005ea5;
+        text-decoration: underline;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: inherit;
+    }
+        .link-button:hover {
+            color: #2b8cc4;
+        }
+</style>
+
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -80,9 +97,10 @@
                                         </div>
                                         <div class="column-one-quarter no-padding">
                                             <div class="list-item">
+                                                <button class="link-button" asp-controller="OrganisationDetails" asp-action="RemovePreviousTradingName" asp-route-id="@i">Remove this</button>
                                                 @if (Model.PreviousTradingNames.Count > 1)
                                                 {
-                                                    <a asp-controller="OrganisationDetails" asp-action="RemoveOrganisationName" asp-route-index="@i">Remove this</a>
+
                                                 }
                                             </div>
                                         </div>
@@ -94,7 +112,8 @@
                         <div class="grid-row">
                             <div class="column-two-thirds">
                                 <div class="form-group">
-                                    <button class="button button-add-another" asp-controller="OrganisationDetails" asp-action="AddNewOrganisationName">Add another</button>
+                                    <a href="#">This is a link</a>
+                                    <button class="button button-add-another" asp-controller="OrganisationDetails" asp-action="AddPreviousTradingName">Add another</button>
                                 </div>
                             </div>
                         </div>
