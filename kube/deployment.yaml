@@ -8,34 +8,69 @@ spec:
   template:
     metadata:
       labels:
-        name: glaa-web
+        app: glaa-web
     spec:  
       containers:
       - name: glaa-web
         securityContext:
-          runAsNonRoot: true            
+          runAsNonRoot: true
         image: quay.io/ukhomeofficedigital/glaa-web:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
-          - containerPort: 80
+          - containerPort: 5000
         env:
           - name: DB_SERVER
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: endpoint   
+                key: endpoint
           - name: DB_PORT
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: port                         
+                key: port
           - name: DB_USER
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: username          
+                key: username
           - name: DB_PASS
             valueFrom:
               secretKeyRef:
                 name: glaadev-rds-access
-                key: password                              
+                key: password
+          - name: APP_USER
+            valueFrom:
+              secretKeyRef:
+                name: glaa-db-app-user
+                key: username
+          - name: APP_PASS
+            valueFrom:
+              secretKeyRef:
+                name: glaa-db-app-user
+                key: password
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Production
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: access_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: secret_access_key
+          - name: AWS_REGION
+            value: eu-west-2              
+        volumeMounts:
+          - name: secrets
+            mountPath: /home/app/glaa-web/secrets/
+            readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName: secret-appsettings
+          items:
+          - key: appsettings.secrets.json
+            path: appsettings.secrets.json

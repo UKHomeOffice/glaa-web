@@ -1,8 +1,6 @@
 FROM microsoft/dotnet:sdk as builder
 WORKDIR /app
 COPY . .
-#COPY ./kube/db_setup.sql ./kube/db_setup.sh .
-RUN chmod +x ./kube/db_setup.sh
 WORKDIR /app/GLAA.Web
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
@@ -18,14 +16,14 @@ RUN groupadd -r app &&\
 
 # Set the home directory to our app user's home.
 ENV HOME=/home/app
-ENV APP_HOME=/home/app/my-project
+ENV APP_HOME=/home/app/glaa-web
 
 ## SETTING UP THE APP ##
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
+RUN mkdir secrets
 
 COPY --from=builder /app/GLAA.Web/out .
-COPY --from=builder /app/kube/db_setup.sql /app/kube/db_setup.sh ./
 
 USER app
 ENTRYPOINT ["dotnet", "GLAA.Web.dll"]

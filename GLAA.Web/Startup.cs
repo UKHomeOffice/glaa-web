@@ -22,6 +22,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Amazon.S3;
+using Amazon.Runtime.CredentialManagement;
+using Amazon;
+using Amazon.Runtime;
 
 namespace GLAA.Web
 {
@@ -63,6 +67,8 @@ namespace GLAA.Web
                 builder.AddUserSecrets<Startup>();
             }
 
+            //builder.AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -71,8 +77,8 @@ namespace GLAA.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var user = Environment.GetEnvironmentVariable("DB_USER");
-            var password = Environment.GetEnvironmentVariable("DB_PASS");
+            var user = Environment.GetEnvironmentVariable("APP_USER");
+            var password = Environment.GetEnvironmentVariable("APP_PASS");
             var server = Environment.GetEnvironmentVariable("DB_SERVER");
             var port = Environment.GetEnvironmentVariable("DB_PORT");
 
@@ -124,6 +130,8 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
 
+            services.AddTransient<IFileUploadService, FileUploadService>();
+
             // notify
             services.AddTransient<IEmailService>(x => new EmailService(
                 services.BuildServiceProvider().GetService<ILoggerFactory>(),
@@ -140,6 +148,19 @@ namespace GLAA.Web
             });
 
             services.AddMvc().AddSessionStateTempDataProvider();
+
+            ConfigureAWS(services);
+        }
+
+        private void ConfigureAWS(IServiceCollection services)
+        {
+            var opts = Configuration.GetAWSOptions();
+
+            opts.Credentials = new EnvironmentVariablesAWSCredentials();
+
+            services.AddDefaultAWSOptions(opts);
+
+            services.AddAWSService<IAmazonS3>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -148,8 +169,8 @@ namespace GLAA.Web
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile("secrets/appsettings.secrets.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile("secrets/appsettings.secrets.json", optional: true);
+                //.AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
