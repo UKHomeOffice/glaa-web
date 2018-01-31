@@ -125,9 +125,24 @@ namespace GLAA.Services.LicenceApplication
         public void UpdateAll<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, IEnumerable<U> models)
             where T : class, IId, new() where U : IId
         {
-            foreach (var model in models)
+            var licence = licenceRepository.GetById(licenceId);
+
+            var collection = objectSelector(licence);
+
+            var existingIds = collection.Select(x => x.Id);
+            var updateIds = models.Select(x => x.Id);
+            
+            var toDelete = collection.Where(i => existingIds.Except(updateIds).Contains(i.Id)).ToArray();
+            var toUpdate = models.Where(i => !toDelete.Select(d => d.Id).Contains(i.Id)).ToArray();
+
+            foreach (var model in toUpdate)
             {
                 Update(licenceId, objectSelector, model);
+            }
+
+            foreach (var del in toDelete)
+            {
+                Delete<T>(del.Id);
             }
         }
 

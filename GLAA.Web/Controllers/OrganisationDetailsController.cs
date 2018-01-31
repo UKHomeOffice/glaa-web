@@ -59,9 +59,19 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SaveOrganisationName(BusinessNameViewModel model)
         {
-            // TODO Validation
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 2);
 
-            return OrganisationDetailsPost(model, 2);
+            if (!ModelState.IsValid)
+            {
+                return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
+            }
+
+            var licenceId = Session.GetCurrentLicenceId();
+            
+            LicenceApplicationPostDataHandler.Update(licenceId, x => x, model);
+            LicenceApplicationPostDataHandler.UpdateAll(licenceId, x => x.PreviousTradingNames, model.PreviousTradingNames);
+
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 2);
         }
 
         [HttpPost]
