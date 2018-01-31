@@ -1,28 +1,23 @@
-﻿@{
-    ViewBag.Title = "What is your tax reference number?";
+﻿@model GLAA.ViewModels.LicenceApplication.OperatingIndustriesViewModel
+@{
+    ViewBag.Title = "Which GLAA sectors would you like to operate in?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.TaxReferenceViewModel
-
-@using (Html.BeginForm("SaveTaxReference", "OrganisationDetails"))
+@using (Html.BeginForm("SaveOperatingIndustries", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
             @Html.Partial("_GdsValidationSummary")
-        </div>        
+        </div>
         <div class="column-full">
             <h1 class="heading-large">
                 @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
-            <div class="form-group">
-                <div class="form-group">
-                    @Html.LabelWithHintFor(x => x.TaxReferenceNumber)
-                    @Html.TextBoxFor(x => x.TaxReferenceNumber, new {@class = "form-control"})
-                </div>
-            </div>
+            @Html.CheckBoxFormGroupFor(x => x.OperatingIndustries, Model.OperatingIndustries)
         </div>
     </div>
+
     <button type="submit" class="button">Save and continue</button>
 }

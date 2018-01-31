@@ -49,7 +49,6 @@
     <Folder Include="Views\NamedIndividuals\" />
     <Folder Include="Views\PrincipalAuthority\" />
     <Folder Include="Views\Organisation\" />
-    <Folder Include="Views\OrganisationDetails\" />
   </ItemGroup>
 
   <ItemGroup>
