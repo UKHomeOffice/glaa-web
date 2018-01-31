@@ -99,7 +99,7 @@
                                             <div class="list-item">
                                                 @if (Model.PreviousTradingNames.Count > 1)
                                                 {
-                                                    <button class="link-button" asp-controller="OrganisationDetails" asp-action="RemovePreviousTradingName" asp-route-id="@i">Remove this</button>
+                                                    <button class="link-button cancel" asp-controller="OrganisationDetails" asp-action="RemovePreviousTradingName" asp-route-id="@i">Remove this</button>
                                                 }
                                             </div>
                                         </div>
@@ -112,7 +112,7 @@
                             <div class="column-two-thirds">
                                 <div class="form-group">
                                     <a href="#">This is a link</a>
-                                    <button class="button button-add-another" asp-controller="OrganisationDetails" asp-action="AddPreviousTradingName">Add another</button>
+                                    <button class="button button-add-another cancel" asp-controller="OrganisationDetails" asp-action="AddPreviousTradingName">Add another</button>
                                 </div>
                             </div>
                         </div>

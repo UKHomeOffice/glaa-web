@@ -104,15 +104,15 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public int Id { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Business Name")]
         public string BusinessName { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Town")]
         public string Town { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Country")]
         public string Country { get; set; }
     }

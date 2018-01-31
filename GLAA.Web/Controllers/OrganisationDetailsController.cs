@@ -68,10 +68,6 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult AddPreviousTradingName(BusinessNameViewModel model)
         {
-            //LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), l => l, model);
-            // TODO Save only if valid?
-            //LicenceApplicationPostDataHandler.UpdateAll(Session.GetCurrentLicenceId(), l => l.PreviousTradingNames,
-            //    model.PreviousTradingNames.AsEnumerable());
             model.PreviousTradingNames = model.PreviousTradingNames.Concat(new [] { new PreviousTradingNameViewModel() }).ToList();
             return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
         }
