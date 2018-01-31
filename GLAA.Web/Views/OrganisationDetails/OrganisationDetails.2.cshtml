@@ -27,6 +27,9 @@
     .link-button:hover {
         color: #2b8cc4;
     }
+    .column-one-quarter.un-fix-width {
+        width: auto;
+    }
 </style>
 
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
@@ -74,28 +77,28 @@
                         {
                             @Html.HiddenFor(m => m.PreviousTradingNames[i].Id)
                             <div class="grid-row">
-                                <div class="form-group-compound list-item-wrapper">
+                                <div class="form-group-compound">
                                     <h2 class="heading-medium">Previous trading name @(i + 1)</h2>
                                     <fieldset>
-                                        <div class="column-one-quarter no-padding">
-                                            <div class="form-group list-item">
+                                        <div class="column-one-quarter un-fix-width">
+                                            <div class="form-group">
                                                 @Html.LabelFor(m => m.PreviousTradingNames[i].BusinessName, new{ @class="form-label" })
                                                 @Html.TextBoxFor(m => m.PreviousTradingNames[i].BusinessName, new { @class = "form-label" })
                                             </div>
                                         </div>
-                                        <div class="column-one-quarter no-padding">
-                                            <div class="form-group list-item">
+                                        <div class="column-one-quarter un-fix-width">
+                                            <div class="form-group">
                                                 @Html.LabelFor(m => m.PreviousTradingNames[i].Town, new{ @class="form-label" })
                                                 @Html.TextBoxFor(m => m.PreviousTradingNames[i].Town, new { @class = "form-label" })
                                             </div>
                                         </div>
-                                        <div class="column-one-quarter no-padding">
-                                            <div class="form-group list-item">
+                                        <div class="column-one-quarter un-fix-width">
+                                            <div class="form-group">
                                                 @Html.LabelFor(m => m.PreviousTradingNames[i].Country, new{ @class="form-label" })
                                                 @Html.TextBoxFor(m => m.PreviousTradingNames[i].Country, new { @class = "form-label" })
                                             </div>
                                         </div>
-                                        <div class="column-one-quarter no-padding">
+                                        <div class="column-one-quarter un-fix-width">
                                             <div class="list-item">
                                                 @if (Model.PreviousTradingNames.Count > 1)
                                                 {

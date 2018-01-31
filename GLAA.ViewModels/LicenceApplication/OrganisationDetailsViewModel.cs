@@ -45,7 +45,7 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
 
-    public class BusinessNameViewModel : YesNoViewModel, IValidatable
+    public class BusinessNameViewModel : YesNoViewModel, IValidatable, IRequiredIf
     {
         [Required]
         [Display(Name = "Business Name", Description = "This is the name of the business you control")]
@@ -56,19 +56,14 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool? HasTradingName { get; set; }
 
         [Display(Name = "Current Trading Name")]
+        [RequiredIf(ErrorMessage = "The Current Trading Name field is required")]
         public string TradingName { get; set; }
 
         [Display(Name = "Has your business traded under any other name in the last 5 years?")]
+        [RequiredIf(ErrorMessage = "The Has Previous Trading Names field is required")]
         public bool? HasPreviousTradingName { get; set; }
 
         public List<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
-
-        [Display(Name = "Trading name")]
-        public string NewPreviousTradingName { get; set; }
-        [Display(Name = "Town")]
-        public string NewPreviousTradingTown { get; set; }
-        [Display(Name = "Country")]
-        public string NewPreviousTradingCountry { get; set; }
 
         public void Validate()
         {
@@ -98,6 +93,8 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public bool IsValid { get; set; }
+
+        public bool IsRequired => HasTradingName ?? false;
     }
 
     public class PreviousTradingNameViewModel : Validatable, IId
