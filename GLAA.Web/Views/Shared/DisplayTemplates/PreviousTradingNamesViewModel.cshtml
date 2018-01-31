@@ -1,8 +1,8 @@
-﻿@model GLAA.ViewModels.LicenceApplication.PreviousTradingNamesViewModel
+﻿@model List<GLAA.ViewModels.LicenceApplication.PreviousTradingNameViewModel>
 
 <table class="check-your-answers">
     <tbody>
-        @foreach (var name in Model.PreviousTradingNames)
+        @foreach (var name in Model)
         {
             <tr>
                 <td>@name.BusinessName</td>
