@@ -1,8 +1,18 @@
-﻿@model GLAA.ViewModels.LicenceApplication.RestraintOrderViewModel
+﻿@using GLAA.Web.Helpers
+
+@model GLAA.ViewModels.LicenceApplication.RestraintOrderViewModel
+
+@inject ISessionHelper SessionHelper
 
 @{
     ViewBag.Title = "Details of the restraint or confiscation order, or civil recovery";
 }
+
+@*@Html.ActionLink("< Back", "Part", "", new { section = ViewContext.RouteData.Values["Section"], id = SessionHelper.GetLoadedPage() }, new { @class = "details-back-button" })*@
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", ViewContext.RouteData.Values["Section"] }, { "submittedPageId", SessionHelper.GetLoadedPage() }, { "isSecurityPart", true } })
+
+
+@*@Html.ActionLink("< Back", "Back", "LicenceApplicationBase", new { @class = "details-back-button" })*@
 
 @using (Html.BeginForm())
 {

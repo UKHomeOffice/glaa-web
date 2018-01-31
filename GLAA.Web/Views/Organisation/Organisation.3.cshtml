@@ -3,7 +3,9 @@
 }
 
 @model GLAA.ViewModels.LicenceApplication.WrittenAgreementViewModel
-    
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "3" } })
+
 @using (Html.BeginForm("SaveWrittenAgreement", "Organisation"))
 {
     <div class="grid-row">
@@ -32,6 +34,6 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }

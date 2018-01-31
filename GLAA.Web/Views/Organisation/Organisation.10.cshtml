@@ -26,8 +26,8 @@
                     @foreach (var option in Model.AvailableContracts)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.SelectedContract, option.Value)
-                            @Html.Label(option.Text)
+                            @Html.RadioButtonForEnum(x => x.SelectedContract, option.Name, Model.AvailableContracts)
+                            @Html.Label(option.Name)
                         </div>
                     }
                 </fieldset>

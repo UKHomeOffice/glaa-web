@@ -11,13 +11,13 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public PrincipalAuthorityViewModel()
         {
-            IsDirector = new IsDirectorViewModel();            
+            IsDirector = new IsDirectorViewModel();
             PreviousExperience = new PreviousExperienceViewModel();
             PrincipalAuthorityConfirmation = new PrincipalAuthorityConfirmationViewModel();
             PreviousTradingNames = new PreviousTradingNamesViewModel();
             PrincipalAuthorityRightToWorkViewModel = new PrincipalAuthorityRightToWorkViewModel();
         }
-        
+
         public int? Id { get; set; }
 
         public int? DirectorOrPartnerId { get; set; }
@@ -79,7 +79,7 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
     public class PrincipalAuthorityConfirmationViewModel : ICanView<PrincipalAuthorityViewModel>, IRequiredIf
-    {                        
+    {
         public bool? IsDirector { get; set; }
 
         [RequiredIf(ErrorMessage = "You must confirm that you will provide the required confirmation")]
@@ -184,28 +184,28 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public List<PermissionToWork> AvailablePermissionToWork { get; set; } = new List<PermissionToWork>
         {
-            new PermissionToWork { Id = 1, Name = "Yes - I am an EEA citizen", Checked = false },
-            new PermissionToWork { Id = 2, Name = "Yes - I have a visa, work permit or other form of clearance to work", Checked = false },
-            new PermissionToWork { Id = 3, Name = "No - I do not have permission to work in the UK", Checked = false }
+            new PermissionToWork { Id = 1, Name = "Yes - I am an EEA citizen", Checked = false, EnumMappedTo = PermissionToWorkEnum.EEACitizen },
+            new PermissionToWork { Id = 2, Name = "Yes - I have a visa, work permit or other form of clearance to work", Checked = false, EnumMappedTo = PermissionToWorkEnum.HasVisa },
+            new PermissionToWork { Id = 3, Name = "No - I do not have permission to work in the UK", Checked = false, EnumMappedTo = PermissionToWorkEnum.NoPermission }
         };
 
         [Required]
         [Display(Name = "Do you have the right to work in the UK?")]
         public PermissionToWorkEnum? RightToWorkInUk { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Visa/permit number field is required.")]
         [Display(Name = "Visa/permit number")]
         public string VisaNumber { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Immigration Status field is required.")]
         [Display(Name = "Immigration Status")]
         public string ImmigrationStatus { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Date leave to remain is due to expire field is required")]
         [Display(Name = "Date leave to remain is due to expire")]
         [UIHint("_NullableDateTime")]
         public DateViewModel LeaveToRemainTo { get; set; }
-        
+
         [TimeSpanRequiredIf(ErrorMessage = "The How long have you worked in the UK? field is required")]
         [Display(Name = "How long have you worked in the UK?")]
         public TimeSpanViewModel LengthOfUKWork { get; set; }

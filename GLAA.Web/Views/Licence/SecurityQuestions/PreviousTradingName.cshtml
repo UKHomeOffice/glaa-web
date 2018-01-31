@@ -1,8 +1,13 @@
-﻿@model GLAA.ViewModels.LicenceApplication.PreviousTradingNameViewModel
+﻿@using GLAA.Web.Helpers
+@model GLAA.ViewModels.LicenceApplication.PreviousTradingNameViewModel
 
 @{
     ViewBag.Title = "Details of the previous trading name";
 }
+
+@inject ISessionHelper SessionHelper
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", ViewContext.RouteData.Values["Section"] }, { "submittedPageId", SessionHelper.GetLoadedPage() }, { "isSecurityPart", true } })
 
 @using (Html.BeginForm())
 {

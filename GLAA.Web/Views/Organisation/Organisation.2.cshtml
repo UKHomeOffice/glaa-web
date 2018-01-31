@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.OutsideSectorsViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "2" } })
+
 @using (Html.BeginForm("SaveOutsideSectors", "Organisation"))
 {
     <div class="grid-row">

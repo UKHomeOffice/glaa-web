@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
+using GLAA.Web.Attributes;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -125,9 +127,12 @@ namespace GLAA.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Back(FormSection section, int submittedPageId)
+        [ImportModelState]
+        public IActionResult Back(FormSection section, int submittedPageId, bool isSecurityPart = false)
         {
-            return CheckParentValidityAndRedirectBack(section, submittedPageId);
+            return isSecurityPart
+                ? RedirectBackToAction(section, submittedPageId)
+                : CheckParentValidityAndRedirectBack(section, submittedPageId);
         }
     }
 }

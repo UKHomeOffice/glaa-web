@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Principal Authority - Part 18";
-    var switchValue = 2;
+    var switchValue = "";
 }
 
 @model GLAA.ViewModels.LicenceApplication.PrincipalAuthorityRightToWorkViewModel
@@ -29,12 +29,12 @@
                     @foreach (var status in Model.AvailablePermissionToWork)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.RightToWorkInUk, status.Id)
+                            @Html.RadioButtonForEnum(x => x.RightToWorkInUk, status.Name, Model.AvailablePermissionToWork)
                             @Html.Label(status.Name)
                         </div>
                         if (status.Name == "Yes - I have a visa, work permit or other form of clearance to work")
                         {
-                            switchValue = status.Id;
+                            switchValue = status.EnumMappedTo.HasValue ? status.EnumMappedTo.Value.ToString() : string.Empty;
                             <div class="panel panel-border-narrow js-hidden" id="visa-info">
                                 @Html.TextFormGroupFor(x => x.VisaNumber)
                                 @Html.TimeSpanFormGroupFor(x => x.LengthOfUKWork)
@@ -56,7 +56,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#visa-info', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#visa-info', '@switchValue');
         });
     </script>
 }

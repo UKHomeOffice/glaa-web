@@ -271,15 +271,13 @@ namespace GLAA.Web.Core.Helpers
             return builder.AppendHtml("</fieldset>").AppendHtml("</div>");
         }
 
-        public static IHtmlContent RadioButtonForEnum<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string value)
+        public static IHtmlContent RadioButtonForEnum<TModel, TEnumValue, TListValue>(this IHtmlHelper<TModel> html,
+            Expression<Func<TModel, TEnumValue>> expression, string value, List<TListValue> checkBoxListItems)
+            where TListValue : ICheckboxList<TEnumValue>
         {
-            //By checking the underlying type, it means we can support nullable and non nullable enum values in the model.
-            var enumType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+            var checkBoxListItem = checkBoxListItems.SingleOrDefault(x => x.Name == value);
 
-            //TODO - this is a bit hacky, we are "assuming" that the mapping between the friendly name and the enum is simply the enum has all spaces removed.
-            //If this gets more complex then we will need to change this.
-            return html.RadioButtonFor(expression, Enum.Parse(enumType, value.Replace(" ", "")));
-            //return html.RadioButtonFor(expression, Convert.ChangeType(Enum.ToObject(enumType, value), enumType));
+            return checkBoxListItem != null ? html.RadioButtonFor(expression, checkBoxListItem.EnumMappedTo) : null;
         }
 
         public static IHtmlContent LabelWithHintFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)

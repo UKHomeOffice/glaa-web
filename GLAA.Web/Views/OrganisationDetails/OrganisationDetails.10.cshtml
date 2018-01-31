@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Organisation Details - Part 12";
-    string switchValue = "";
+    var switchValue = "";
 }
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
@@ -29,14 +29,13 @@
                     @foreach (var status in Model.AvailableLegalStatuses)
                     {
                     <div class="multiple-choice">
-                        @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name)
+                        @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name, Model.AvailableLegalStatuses)
 
                         @Html.Label(status.Name)
                     </div>
                         if (status.Name == "Limited Company")
                         {
-                            //TODO - bit hacky here!  Removing spaces
-                            switchValue = status.Name.Replace(" ", "");
+                            switchValue = status.EnumMappedTo.HasValue ? status.EnumMappedTo.Value.ToString() : string.Empty;
                             <div class="panel panel-border-narrow js-hidden" id="limited-company-info">
                                 @Html.TextFormGroupFor(x => x.CompaniesHouseNumber)
                                 @Html.DateFormGroupFor(x => x.CompanyRegistrationDate)
