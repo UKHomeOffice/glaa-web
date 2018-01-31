@@ -24,9 +24,9 @@
         font-family: inherit;
         font-size: inherit;
     }
-        .link-button:hover {
-            color: #2b8cc4;
-        }
+    .link-button:hover {
+        color: #2b8cc4;
+    }
 </style>
 
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
@@ -97,10 +97,9 @@
                                         </div>
                                         <div class="column-one-quarter no-padding">
                                             <div class="list-item">
-                                                <button class="link-button" asp-controller="OrganisationDetails" asp-action="RemovePreviousTradingName" asp-route-id="@i">Remove this</button>
                                                 @if (Model.PreviousTradingNames.Count > 1)
                                                 {
-
+                                                    <button class="link-button" asp-controller="OrganisationDetails" asp-action="RemovePreviousTradingName" asp-route-id="@i">Remove this</button>
                                                 }
                                             </div>
                                         </div>
