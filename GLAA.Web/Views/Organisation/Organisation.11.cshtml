@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.BannedFromTradingViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "11" } })
+
 @using (Html.BeginForm("SaveBannedFromTrading", "Organisation"))
 {
     <div class="grid-row">
@@ -31,21 +33,21 @@
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="ban-details">  
-                                @Html.DateFormGroupFor(x => x.DateOfBan)                          
-                                @Html.TextFormGroupFor(x => x.BanDescription)   
+                            <div class="panel panel-border-narrow js-hidden" id="ban-details">
+                                @Html.DateFormGroupFor(x => x.DateOfBan)
+                                @Html.TextFormGroupFor(x => x.BanDescription)
                             </div>
                         }
                     }
                 </fieldset>
             </div>
         </div>
-    </div>    
+    </div>
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

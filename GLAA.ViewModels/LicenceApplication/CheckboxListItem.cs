@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GLAA.ViewModels.LicenceApplication
+﻿namespace GLAA.ViewModels.LicenceApplication
 {
+    public class CheckboxListItem<T> : ICheckboxList<T>
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool Checked { get; set; }
+        public T EnumMappedTo { get; set; }
+    }
+
     public class CheckboxListItem : ICheckboxList
     {
         public int Id { get; set; }

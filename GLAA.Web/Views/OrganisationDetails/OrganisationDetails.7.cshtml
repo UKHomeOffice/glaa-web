@@ -4,12 +4,14 @@
 
 @model GLAA.ViewModels.LicenceApplication.BusinessEmailAddressViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "7" } })
+
 @using (Html.BeginForm("SaveBusinessEmailAddress", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
             @Html.Partial("_GdsValidationSummary")
-        </div>        
+        </div>
         <div class="column-full">
             <h1 class="heading-large">
                 What is your business email address?
@@ -18,11 +20,11 @@
         <div class="column-two-thirds">
             <div class="form-group">
                 @Html.LabelWithHintFor(x => x.BusinessEmailAddress)
-                @Html.TextBoxFor(x => x.BusinessEmailAddress, new {@class = "form-control", size = 100})
+                @Html.TextBoxFor(x => x.BusinessEmailAddress, new { @class = "form-control", size = 100 })
             </div>
             <div class="form-group">
                 @Html.LabelWithHintFor(x => x.BusinessEmailAddressConfirmation)
-                @Html.TextBoxFor(x => x.BusinessEmailAddressConfirmation, new {@class = "form-control"})
+                @Html.TextBoxFor(x => x.BusinessEmailAddressConfirmation, new { @class = "form-control" })
             </div>
         </div>
     </div>

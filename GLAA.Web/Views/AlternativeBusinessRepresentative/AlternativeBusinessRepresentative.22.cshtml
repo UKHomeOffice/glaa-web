@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.OffencesAwaitingTrialViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "22" } })
+
 @using (Html.BeginForm("SaveOffencesAwaitingTrial", "AlternativeBusinessRepresentative"))
 {
     <div class="grid-row">

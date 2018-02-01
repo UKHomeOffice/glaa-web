@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.UndischargedBankruptViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "19" } })
+
 @using (Html.BeginForm("SaveUndischargedBankrupt", "PrincipalAuthority"))
 {
     <div class="grid-row">
@@ -46,7 +48,7 @@
 }
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

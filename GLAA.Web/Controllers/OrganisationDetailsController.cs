@@ -22,12 +22,15 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back = false)
         {
             Session.SetLoadedPage(id);
             var licenceId = Session.GetCurrentLicenceId();
             var model = LicenceApplicationViewModelBuilder.Build<OrganisationDetailsViewModel>(licenceId);
-            return GetNextView(id, FormSection.OrganisationDetails, model);
+
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.OrganisationDetails, model)
+                : GetNextView(id, FormSection.OrganisationDetails, model);
         }
 
         private IActionResult OrganisationDetailsPost<T>(T model, int submittedPageId)

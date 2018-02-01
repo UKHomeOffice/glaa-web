@@ -5,6 +5,8 @@
     ViewBag.Title = "Named Individuals";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividuals" }, { "submittedPageId", "2" } })
+
 @using (Html.BeginForm("SaveNamedIndividuals", "NamedIndividuals"))
 {
     <main id="content" role="main">
@@ -13,7 +15,7 @@
                 @Html.Partial("_GdsValidationSummary")
             </div>
             <div class="column-full">
-                <h1 class="heading-large">             
+                <h1 class="heading-large">
                     Named Individuals
                 </h1>
                 <p class="lede">@Html.DisplayFor(x => x.IntroText)</p>

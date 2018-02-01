@@ -102,7 +102,7 @@ namespace GLAA.Services.Automapper
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<CountryOfBirthViewModel, AlternativeBusinessRepresentative>()
-                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.CountryOfBirth))
+                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.CountryOfBirth))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<JobTitleViewModel, AlternativeBusinessRepresentative>()

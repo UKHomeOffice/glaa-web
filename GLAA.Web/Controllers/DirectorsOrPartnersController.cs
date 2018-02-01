@@ -22,7 +22,7 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ExportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back)
         {
             Session.ClearCurrentDopStatus();
             Session.ClearCurrentPaStatus();
@@ -31,7 +31,9 @@ namespace GLAA.Web.Controllers
 
             var model = LicenceApplicationViewModelBuilder.Build<DirectorOrPartnerCollectionViewModel>(licenceId);
 
-            return GetNextView(id, FormSection.DirectorsOrPartners, model);
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.DirectorsOrPartners, model)
+                : GetNextView(id, FormSection.DirectorsOrPartners, model);
         }
 
         [HttpPost]

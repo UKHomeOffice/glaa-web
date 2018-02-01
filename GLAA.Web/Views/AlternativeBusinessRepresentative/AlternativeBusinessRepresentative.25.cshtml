@@ -4,6 +4,8 @@
     ViewBag.Title = "Alternative Business Representative Summary";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "25" } })
+
 @using (Html.BeginForm("DeleteAlternativeBusinessRepresentative", "AlternativeBusinessRepresentative"))
 {
     <main id="content" role="main">

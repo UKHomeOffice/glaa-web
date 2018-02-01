@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.BusinessPhoneNumberViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "8" } })
+
 @using (Html.BeginForm("SaveBusinessPhoneNumber", "AlternativeBusinessRepresentative"))
 {
     <div class="grid-row">
@@ -19,6 +21,6 @@
             @Html.TextFormGroupFor(x => x.BusinessPhoneNumber)
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }

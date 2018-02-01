@@ -13,7 +13,7 @@
         <h1 class="heading-xlarge">Does your business supply workers?</h1>
     </div>
 
-    <div class="column-two-thirds">     
+    <div class="column-two-thirds">
         <div class="form-group">
             <fieldset>
                 <legend>
@@ -22,7 +22,7 @@
                 @foreach (var option in Model.YesNo)
                 {
                     <div class="multiple-choice">
-                        @Html.RadioButtonFor(x => x.SuppliesWorkers, option.Value, new { id = $"SuppliesWorkers_{option.Text}"})
+                        @Html.RadioButtonFor(x => x.SuppliesWorkers, option.Value, new { id = $"SuppliesWorkers_{option.Text}" })
                         @Html.LabelFor(x => x.SuppliesWorkers, option.Text, new { @for = $"SuppliesWorkers_{option.Text}" })
                     </div>
                 }

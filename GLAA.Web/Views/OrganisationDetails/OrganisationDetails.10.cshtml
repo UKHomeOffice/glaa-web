@@ -1,9 +1,11 @@
 ﻿@{
     ViewBag.Title = "Organisation Details - Part 12";
-    var switchValue = 0;
+    var switchValue = "";
 }
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "10" } })
 
 @using (Html.BeginForm("SaveLegalStatus", "OrganisationDetails"))
 {
@@ -26,13 +28,14 @@
                     </legend>
                     @foreach (var status in Model.AvailableLegalStatuses)
                     {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.LegalStatus, status.Id)
-                            @Html.Label(status.Name)
-                        </div>
+                    <div class="multiple-choice">
+                        @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name, Model.AvailableLegalStatuses)
+
+                        @Html.Label(status.Name)
+                    </div>
                         if (status.Name == "Limited Company")
                         {
-                            switchValue = status.Id;
+                            switchValue = status.EnumMappedTo.HasValue ? status.EnumMappedTo.Value.ToString() : string.Empty;
                             <div class="panel panel-border-narrow js-hidden" id="limited-company-info">
                                 @Html.TextFormGroupFor(x => x.CompaniesHouseNumber)
                                 @Html.DateFormGroupFor(x => x.CompanyRegistrationDate)
@@ -47,11 +50,11 @@
 }
 
 @section scripts
-{    
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', '@switchValue');
         });
     </script>
 }

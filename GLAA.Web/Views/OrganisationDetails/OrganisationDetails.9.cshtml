@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "9" } })
+
 @using (Html.BeginForm("SaveCommunicationPreference", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -16,12 +18,12 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.RadioButtonFormGroupFor(x => x.CommunicationPreference, Model.AvailableCommunicationPreferences)
+            @Html.RadioButtonFormGroupForEnum(x => x.CommunicationPreference)
         </div>
     </div>
 
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
+@section Scripts {
 }
