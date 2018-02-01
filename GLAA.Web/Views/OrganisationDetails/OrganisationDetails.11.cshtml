@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Do you have a VAT registration number?";
+    ViewBag.Title = "Do you have a PAYE number?";
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.VATStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
 
-@using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -19,20 +19,21 @@
         <div class="column-two-thirds">
             <div class="form-group">
                 <fieldset>
-                    <legend>                        
+                    <legend>
+                        <span class="body-text"></span>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasVATNumber, option.Value)
+                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
                     
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="VAT-details">
-                                @Html.TextFormGroupFor(x => x.VATNumber)
-                                @Html.DateFormGroupFor(x => x.VATRegistrationDate)
+                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
+                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
+                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
                             </div>
                         }
                     }
@@ -48,7 +49,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#VAT-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
         });
     </script>
 }

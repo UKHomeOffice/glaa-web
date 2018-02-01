@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "What is your preferred channel of communication?";
+    ViewBag.Title = "What is your business website?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessWebsiteViewModel
 
-@using (Html.BeginForm("SaveCommunicationPreference", "OrganisationDetails"))
+@using (Html.BeginForm("SaveBusinessWebsite", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,13 +15,16 @@
                 @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">
-            @Html.RadioButtonFormGroupFor(x => x.CommunicationPreference, Model.AvailableCommunicationPreferences)
+        <div class="column-two-thirds">            
+            <div class="form-group">
+                @Html.LabelWithHintFor(x => x.BusinessWebsite)
+                @Html.TextBoxFor(x => x.BusinessWebsite, new { @class = "form-control"})
+            </div>
         </div>
     </div>
-
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
+@section scripts
+{        
 }

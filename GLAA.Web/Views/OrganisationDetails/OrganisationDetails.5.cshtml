@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "What is your business mobile number?";
+    ViewBag.Title = "What is your business phone number?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.BusinessMobileNumberViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessPhoneNumberViewModel
 
-@using (Html.BeginForm("SaveBusinessMobileNumber", "OrganisationDetails"))
+@using (Html.BeginForm("SaveBusinessPhoneNumber", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,11 +15,8 @@
                 @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">            
-            <div class="form-group">
-                @Html.LabelWithHintFor(x => x.BusinessMobileNumber)
-                @Html.TextBoxFor(x => x.BusinessMobileNumber, new { @class = "form-control" })
-            </div>
+        <div class="column-two-thirds">  
+            @Html.TextFormGroupFor(x => x.BusinessPhoneNumber)
         </div>
     </div>
     <button type="submit" class="button">Save and continue</button>

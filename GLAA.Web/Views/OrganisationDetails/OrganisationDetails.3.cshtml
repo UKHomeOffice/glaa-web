@@ -1,26 +1,24 @@
-﻿@{
-    ViewBag.Title = "What is the address of your main place of business?";
+﻿
+@{
+    ViewBag.Title = "Organisation Details - Part 2";
 }
 
-@model GLAA.ViewModels.LicenceApplication.AddressViewModel
+@model GLAA.ViewModels.LicenceApplication.TradingNameViewModel
 
-@using (Html.BeginForm("SaveAddress", "OrganisationDetails"))
+
+@using (Html.BeginForm("SaveTradingName", "OrganisationDetails"))
 {
     <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
-        </div>
         <div class="column-full">
             <h1 class="heading-large">
-                @ViewBag.Title
+                What is your trading name?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.EditorFor(x => x)
+            @Html.TextFormGroupFor(x => x.TradingName)
         </div>
     </div>
+
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
-}

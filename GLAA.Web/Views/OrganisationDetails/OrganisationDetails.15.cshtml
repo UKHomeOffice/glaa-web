@@ -1,11 +1,10 @@
 ﻿@{
-
-    ViewBag.Title = "Please indicate which of these countries your workers will be working in?";
+    ViewBag.Title = "What is your estimated business turnover?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.OperatingCountriesViewModel
+@model GLAA.ViewModels.LicenceApplication.TurnoverViewModel
 
-@using (Html.BeginForm("SaveOperatingCountries", "OrganisationDetails"))
+@using (Html.BeginForm("SaveTurnover", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -16,9 +15,12 @@
                 @ViewBag.Title
             </h1>
         </div>
+
         <div class="column-two-thirds">
-            @Html.CheckBoxFormGroupFor(x => x.OperatingCountries, Model.OperatingCountries)
+            @Html.RadioButtonFormGroupFor(x => x.TurnoverBand, Model.AvailableTurnoverBands, "Select the item which matches most closely your turnover")
         </div>
     </div>
+
     <button type="submit" class="button">Save and continue</button>
 }
+

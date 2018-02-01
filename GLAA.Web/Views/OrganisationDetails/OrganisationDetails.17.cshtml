@@ -1,0 +1,36 @@
+﻿@using GLAA.Web.Helpers
+@model GLAA.ViewModels.LicenceApplication.OrganisationDetailsViewModel
+
+@{
+    ViewBag.Title = "Business Details Summary";
+}
+
+<main id="content" role="main">
+    <div class="grid-row">
+        <div class="column-full">
+            <br />
+            @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
+            {
+                <p>
+                    @Html.ActionLink("Return to Task List", "TaskList", "Licence")
+                </p>
+            }
+            else
+            {
+                <p>
+                    @Html.ActionLink("Return to overview", "Licence", "Admin", new { id = SessionHelper.GetCurrentLicenceId(Context.Session) }, new { })
+                </p>
+            }
+            <h1 class="heading-large">
+                Check your answers for this section
+            </h1>
+            @Html.DisplayFor(m => m)
+            @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
+            {
+                <p>
+                    @Html.ActionLink("Go to next section", "Part", "PrincipalAuthority", new {id = 1}, new {@class = "button"})
+                </p>
+            }
+        </div>
+    </div>
+</main>

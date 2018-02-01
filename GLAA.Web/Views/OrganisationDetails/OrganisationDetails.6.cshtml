@@ -1,30 +1,29 @@
 ﻿@{
-    ViewBag.Title = "What is your business email address?";
+    ViewBag.Title = "What is your business mobile number?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.BusinessEmailAddressViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessMobileNumberViewModel
 
-@using (Html.BeginForm("SaveBusinessEmailAddress", "OrganisationDetails"))
+@using (Html.BeginForm("SaveBusinessMobileNumber", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
             @Html.Partial("_GdsValidationSummary")
-        </div>        
+        </div>
         <div class="column-full">
             <h1 class="heading-large">
                 @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">
+        <div class="column-two-thirds">            
             <div class="form-group">
-                @Html.LabelWithHintFor(x => x.BusinessEmailAddress)
-                @Html.TextBoxFor(x => x.BusinessEmailAddress, new {@class = "form-control", size = 100})
-            </div>
-            <div class="form-group">
-                @Html.LabelWithHintFor(x => x.BusinessEmailAddressConfirmation)
-                @Html.TextBoxFor(x => x.BusinessEmailAddressConfirmation, new {@class = "form-control"})
+                @Html.LabelWithHintFor(x => x.BusinessMobileNumber)
+                @Html.TextBoxFor(x => x.BusinessMobileNumber, new { @class = "form-control" })
             </div>
         </div>
     </div>
     <button type="submit" class="button">Save and continue</button>
+}
+
+@section Scripts {    
 }

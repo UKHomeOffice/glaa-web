@@ -93,83 +93,90 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveAddress(AddressViewModel model)
+        public IActionResult SaveTradingName(object model)
         {
             return OrganisationDetailsPost(model, 3);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBusinessPhoneNumber(BusinessPhoneNumberViewModel model)
+        public IActionResult SaveAddress(AddressViewModel model)
         {
             return OrganisationDetailsPost(model, 4);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBusinessMobileNumber(BusinessMobileNumberViewModel model)
+        public IActionResult SaveBusinessPhoneNumber(BusinessPhoneNumberViewModel model)
         {
             return OrganisationDetailsPost(model, 5);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBusinessEmailAddress(BusinessEmailAddressViewModel model)
+        public IActionResult SaveBusinessMobileNumber(BusinessMobileNumberViewModel model)
         {
             return OrganisationDetailsPost(model, 6);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBusinessWebsite(BusinessWebsiteViewModel model)
+        public IActionResult SaveBusinessEmailAddress(BusinessEmailAddressViewModel model)
         {
             return OrganisationDetailsPost(model, 7);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
+        public IActionResult SaveBusinessWebsite(BusinessWebsiteViewModel model)
         {
             return OrganisationDetailsPost(model, 8);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveLegalStatus(LegalStatusViewModel model)
+        public IActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
         {
             return OrganisationDetailsPost(model, 9);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePAYEERNStatus(PAYEERNStatusViewModel model)
+        public IActionResult SaveLegalStatus(LegalStatusViewModel model)
         {
             return OrganisationDetailsPost(model, 10);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveVATStatus(VATStatusViewModel model)
+        public IActionResult SavePAYEERNStatus(PAYEERNStatusViewModel model)
         {
             return OrganisationDetailsPost(model, 11);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveTaxReference(TaxReferenceViewModel model)
+        public IActionResult SaveVATStatus(VATStatusViewModel model)
         {
             return OrganisationDetailsPost(model, 12);
         }
 
         [HttpPost]
         [ExportModelState]
+        public IActionResult SaveTaxReference(TaxReferenceViewModel model)
+        {
+            return OrganisationDetailsPost(model, 13);
+        }
+
+        [HttpPost]
+        [ExportModelState]
         public IActionResult SaveOperatingIndustries(OperatingIndustriesViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.OrganisationDetails, 13);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 14);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.OrganisationDetails, 13), model);
+                return View(GetViewPath(FormSection.OrganisationDetails, 14), model);
             }
 
             var licenceId = Session.GetCurrentLicenceId();
@@ -180,31 +187,31 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.Update(licenceId, x => x.OperatingIndustries,
                 model.OperatingIndustries);
 
-            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 13);
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 14);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveTurnover(TurnoverViewModel model)
         {
-            return OrganisationDetailsPost(model, 14);
+            return OrganisationDetailsPost(model, 15);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveOperatingCountries(OperatingCountriesViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.OrganisationDetails, 15);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 16);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.OrganisationDetails, 15), model);
+                return View(GetViewPath(FormSection.OrganisationDetails, 16), model);
             }
 
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x.OperatingCountries,
                 model.OperatingCountries);
 
-            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 15);
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 16);
         }
     }
 }

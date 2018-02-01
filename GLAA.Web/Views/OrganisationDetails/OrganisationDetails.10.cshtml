@@ -1,11 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Do you have a PAYE number?";
-    var switchValue = "true";
+    ViewBag.Title = "What is the legal status of your organisation?";
+    var switchValue = 0;
 }
 
-@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
 
-@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SaveLegalStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -20,20 +20,22 @@
             <div class="form-group">
                 <fieldset>
                     <legend>
-                        <span class="body-text"></span>
+                        <span class="error-message">
+                            <span class="field-validation-valid" data-valmsg-for="radio_list" data-valmsg-replace="true"></span>
+                        </span>
                     </legend>
-                    @foreach (var option in Model.YesNo)
+                    @foreach (var status in Model.AvailableLegalStatuses)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
-                            @Html.Label(option.Text)
+                            @Html.RadioButtonFor(x => x.LegalStatus, status.Id)
+                            @Html.Label(status.Name)
                         </div>
-                    
-                        if (option.Value == switchValue)
+                        if (status.Name == "Limited Company")
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
-                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
-                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
+                            switchValue = status.Id;
+                            <div class="panel panel-border-narrow js-hidden" id="limited-company-info">
+                                @Html.TextFormGroupFor(x => x.CompaniesHouseNumber)
+                                @Html.DateFormGroupFor(x => x.CompanyRegistrationDate)
                             </div>
                         }
                     }
@@ -49,7 +51,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', @switchValue);
         });
     </script>
 }
