@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.TransportingWorkersViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "6" } })
+
 @using (Html.BeginForm("SaveTransportingWorkers", "Organisation"))
 {
     <div class="grid-row">
@@ -31,9 +33,9 @@
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="transports-workers">                                                         
-                                @Html.TextFormGroupFor(x => x.NumberOfVehicles)   
-                                @Html.RadioButtonFormGroupFor(x => x.TransportDeductedFromPay, Model.YesNo)                                
+                            <div class="panel panel-border-narrow js-hidden" id="transports-workers">
+                                @Html.TextFormGroupFor(x => x.NumberOfVehicles)
+                                @Html.RadioButtonFormGroupFor(x => x.TransportDeductedFromPay, Model.YesNo)
                                 @Html.RadioButtonFormGroupFor(x => x.TransportWorkersChoose, Model.YesNo)
                             </div>
                         }
@@ -41,12 +43,12 @@
                 </fieldset>
             </div>
         </div>
-    </div>    
+    </div>
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

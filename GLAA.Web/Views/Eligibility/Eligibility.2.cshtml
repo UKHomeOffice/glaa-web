@@ -16,7 +16,7 @@
                 Does your business operate in any of these sectors?
             </h1>
         </div>
-        <div class="column-two-thirds">            
+        <div class="column-two-thirds">
             @Html.CheckBoxFormGroupFor(x => x.OperatingIndustries, Model.OperatingIndustries)
             <div class="panel panel-border-narrow js-hidden" id="other-industry">
                 @Html.TextFormGroupFor(x => x.OtherIndustry)
@@ -29,7 +29,7 @@
 
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

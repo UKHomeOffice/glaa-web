@@ -1,9 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Organisation - Part 3" ;
+    ViewBag.Title = "Organisation - Part 3";
     var switchValue = "true";
 }
 
 @model GLAA.ViewModels.LicenceApplication.PSCControlledViewModel
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "4" } })
 
 @using (Html.BeginForm("SavePscControlled", "Organisation"))
 {
@@ -43,12 +45,12 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{    
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

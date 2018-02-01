@@ -35,6 +35,10 @@
     }
 </style>
 
+@*new { section = "OrganisationDetails", submittedPageId = 2 }*@
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData){{"section", "OrganisationDetails"}, {"submittedPageId", "2"}})
+
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -125,7 +129,7 @@
                 </div>
             </fieldset>
         </div>
-    </div>    
+    </div>
 
     <button type="submit" class="button">Save and continue</button>
 }

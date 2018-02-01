@@ -8,8 +8,8 @@ metadata:
 spec:
   ports:
   - name: exposed-port
-    port: 80
+    port: 5000
     protocol: TCP
     targetPort: 5000
   selector:
-    name: glaa-web
+    app: glaa-web

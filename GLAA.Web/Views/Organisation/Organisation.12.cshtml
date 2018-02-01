@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.SubcontractorViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "12" } })
+
 @using (Html.BeginForm("SaveSubcontractor", "Organisation"))
 {
     <div class="grid-row">
@@ -31,20 +33,20 @@
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="subcontractor-details">                                                         
-                                @Html.TextFormGroupFor(x => x.SubcontractorNames)   
+                            <div class="panel panel-border-narrow js-hidden" id="subcontractor-details">
+                                @Html.TextFormGroupFor(x => x.SubcontractorNames)
                             </div>
                         }
                     }
                 </fieldset>
             </div>
         </div>
-    </div>    
+    </div>
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

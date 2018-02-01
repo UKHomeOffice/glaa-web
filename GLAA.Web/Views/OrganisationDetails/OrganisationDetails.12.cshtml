@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.VATStatusViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "12" } })
+
 @using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -19,7 +21,7 @@
         <div class="column-two-thirds">
             <div class="form-group">
                 <fieldset>
-                    <legend>                        
+                    <legend>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
@@ -27,7 +29,7 @@
                             @Html.RadioButtonFor(x => x.HasVATNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
-                    
+
                         if (option.Value == switchValue)
                         {
                             <div class="panel panel-border-narrow js-hidden" id="VAT-details">
@@ -44,7 +46,7 @@
 }
 
 @section scripts
-{    
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

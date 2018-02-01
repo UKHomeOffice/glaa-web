@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.NationalityViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "16" } })
+
 @using (Html.BeginForm("SaveNationality", "PrincipalAuthority"))
 {
     <div class="grid-row">
@@ -19,7 +21,7 @@
             @Html.TextFormGroupFor(x => x.Nationality)
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 

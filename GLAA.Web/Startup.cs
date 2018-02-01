@@ -22,6 +22,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Amazon.S3;
+using Amazon.Runtime.CredentialManagement;
+using Amazon;
+using Amazon.Runtime;
 
 namespace GLAA.Web
 {
@@ -126,6 +130,8 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
 
+            services.AddTransient<IFileUploadService, FileUploadService>();
+
             // notify
             services.AddTransient<IEmailService>(x => new EmailService(
                 services.BuildServiceProvider().GetService<ILoggerFactory>(),
@@ -142,6 +148,19 @@ namespace GLAA.Web
             });
 
             services.AddMvc().AddSessionStateTempDataProvider();
+
+            ConfigureAWS(services);
+        }
+
+        private void ConfigureAWS(IServiceCollection services)
+        {
+            var opts = Configuration.GetAWSOptions();
+
+            opts.Credentials = new EnvironmentVariablesAWSCredentials();
+
+            services.AddDefaultAWSOptions(opts);
+
+            services.AddAWSService<IAmazonS3>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

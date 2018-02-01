@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.RightToWorkViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "16" } })
+
 @using (Html.BeginForm("SaveRightToWork", "DirectorOrPartner"))
 {
     <div class="grid-row">

@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.ShellfishWorkerNumberViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "13" } })
+
 @using (Html.BeginForm("SaveShellfishWorkerNumber", "Organisation"))
 {
     <div class="grid-row">
@@ -18,12 +20,12 @@
         <div class="column-two-thirds">
             @Html.TextFormGroupFor(x => x.NumberOfWorkers)
         </div>
-    </div>    
+    </div>
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{
+    {
     <script>
     </script>
 }

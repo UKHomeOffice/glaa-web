@@ -65,7 +65,16 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back)
+        {
+            var model = SetupGetPart(id);
+
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.DirectorOrPartner, model)
+                : GetNextView(id, FormSection.DirectorOrPartner, model);
+        }
+
+        private DirectorOrPartnerViewModel SetupGetPart(int id)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var dopId = Session.GetCurrentDopId();
@@ -75,17 +84,18 @@ namespace GLAA.Web.Controllers
 
             if (model.Id.HasValue)
             {
-                Session.SetCurrentDopStatus(model.Id.Value, model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false);
+                Session.SetCurrentDopStatus(model.Id.Value,
+                    model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false);
             }
 
             if (model.PrincipalAuthorityId.HasValue)
             {
-                Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value, model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false);
+                Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value,
+                    model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false);
             }
 
             Session.SetLoadedPage(id);
-
-            return GetNextView(id, FormSection.DirectorOrPartner, model);
+            return model;
         }
 
         private IActionResult DirectorOrPartnerPost<T>(T model, int submittedPageId, bool doPaLinking = true)

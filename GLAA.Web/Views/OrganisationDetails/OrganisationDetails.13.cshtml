@@ -4,12 +4,14 @@
 
 @model GLAA.ViewModels.LicenceApplication.TaxReferenceViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "13" } })
+
 @using (Html.BeginForm("SaveTaxReference", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
             @Html.Partial("_GdsValidationSummary")
-        </div>        
+        </div>
         <div class="column-full">
             <h1 class="heading-large">
                 @ViewBag.Title
@@ -19,7 +21,7 @@
             <div class="form-group">
                 <div class="form-group">
                     @Html.LabelWithHintFor(x => x.TaxReferenceNumber)
-                    @Html.TextBoxFor(x => x.TaxReferenceNumber, new {@class = "form-control"})
+                    @Html.TextBoxFor(x => x.TaxReferenceNumber, new { @class = "form-control" })
                 </div>
             </div>
         </div>

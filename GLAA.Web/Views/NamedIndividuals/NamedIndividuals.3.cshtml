@@ -5,6 +5,8 @@
     ViewBag.Title = "Named Individuals";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividuals" }, { "submittedPageId", "3" } })
+
 <main id="content" role="main">
     <div class="grid-row">
         <div class="column-full">
@@ -26,16 +28,16 @@
             </h1>
         </div>
     </div>
-        @Html.DisplayFor(m => m)
-        @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
-        {
-            <div class="grid-row">
-                <div class="column-full">
-                    <p>
-                        @Html.ActionLink("Go to next section", "Part", "Organisation", new {id = 1}, new { @class = "button" })
-                    </p>
-                </div>
+    @Html.DisplayFor(m => m)
+    @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
+    {
+        <div class="grid-row">
+            <div class="column-full">
+                <p>
+                    @Html.ActionLink("Go to next section", "Part", "Organisation", new { id = 1 }, new { @class = "button" })
+                </p>
             </div>
-        }
+        </div>
+    }
 </main>
 

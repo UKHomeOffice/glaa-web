@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.PreviousTradingNamesViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "28" } })
+
 @using (Html.BeginForm("SavePreviousTradingNames", "PrincipalAuthority"))
 {
     <div class="grid-row">

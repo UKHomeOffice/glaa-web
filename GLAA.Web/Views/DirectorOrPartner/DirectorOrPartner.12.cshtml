@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.PersonalEmailAddressViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "12" } })
+
 @using (Html.BeginForm("SavePersonalEmailAddress", "DirectorOrPartner"))
 {
     <div class="grid-row">

@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.PreviousExperienceViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "30" } })
+
 @using (Html.BeginForm("SavePreviousExperience", "PrincipalAuthority"))
 {
     <div class="grid-row">
@@ -17,7 +19,7 @@
         </div>
         <div class="column-two-thirds">
             <div class="form-group">
-                @Html.TextAreaFor(x => x.PreviousExperience, new {@class = "form-control"})
+                @Html.TextAreaFor(x => x.PreviousExperience, new { @class = "form-control" })
             </div>
         </div>
     </div>

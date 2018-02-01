@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
+
 @using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
@@ -28,7 +30,7 @@
                             @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
-                    
+
                         if (option.Value == switchValue)
                         {
                             <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
@@ -45,7 +47,7 @@
 }
 
 @section scripts
-{    
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

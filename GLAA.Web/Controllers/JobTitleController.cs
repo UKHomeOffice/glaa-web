@@ -24,17 +24,17 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back)
         {
             var licenceId = Session.GetCurrentLicenceId();
-
             var namedIndividualId = Session.GetCurrentNamedIndividualId();
-
             var model = LicenceApplicationViewModelBuilder
                 .Build<NamedJobTitleViewModel, NamedJobTitle>(licenceId,
                     x => x.NamedJobTitles.FirstOrDefault(y => y.Id == namedIndividualId));
 
-            return GetNextView(id, FormSection.JobTitle, model);
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.JobTitle, model)
+                : GetNextView(id, FormSection.JobTitle, model);
         }
 
         [HttpGet]

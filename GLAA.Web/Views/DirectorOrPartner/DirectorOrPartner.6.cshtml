@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.CountryOfBirthViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "6" } })
+
 @using (Html.BeginForm("SaveCountryOfBirth", "DirectorOrPartner"))
 {
     <div class="grid-row">
