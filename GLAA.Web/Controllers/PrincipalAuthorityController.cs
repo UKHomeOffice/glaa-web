@@ -357,38 +357,9 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePreviousTradingNames(object model)
-        {
-            return PrincipalAuthorityPost(model, 28, false);
-        }
-
-        [HttpPost]
-        [ExportModelState]
-        public IActionResult ReviewPrincipalAuthorityPreviousTradingNames(object model)
-        {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 29);
-
-            var licenceId = Session.GetCurrentLicenceId();
-            var parent =
-                LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
-                    l => l.PrincipalAuthorities.Single(p => p.Id == Session.GetCurrentPaId()));
-            //model = parent.PreviousTradingNames;
-
-            //if ((model.HasPreviousTradingNames ?? false) && !model.PreviousTradingNames.Any())
-            //{
-            //    ModelState.AddModelError(nameof(model.PreviousTradingNames), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
-            //    ViewData.Add("doOverride", true);
-            //    return View(GetViewPath(FormSection.PrincipalAuthority, 29), model);
-            //}
-
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, 30);
-        }
-
-        [HttpPost]
-        [ExportModelState]
         public IActionResult SavePreviousExperience(PreviousExperienceViewModel model)
         {
-            return PrincipalAuthorityPost(model, 30, false);
+            return PrincipalAuthorityPost(model, 28, false);
         }
     }
 }

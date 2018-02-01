@@ -75,8 +75,6 @@ namespace GLAA.Web.FormLogic
                             new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel), true),
                             new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel)),
                             new FormPageDefinition(nameof(PreviousLicenceViewModel)),
-                            new FormPageDefinition("PreviousTradingNames", true),
-                            new FormPageDefinition("PreviousTradingNames"),
                             new FormPageDefinition(nameof(PreviousExperienceViewModel.PreviousExperience)),
                             new FormPageDefinition()
                         }).ToArray()
