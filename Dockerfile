@@ -11,7 +11,6 @@ WORKDIR /app/GLAA.Web
 RUN npm install webpack -g
 RUN npm install
 RUN webpack
-RUN dotnet ef database update
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
 
@@ -37,5 +36,6 @@ RUN mkdir secrets
 COPY --from=builder /app/GLAA.Web/out .
 
 USER app
+RUN dotnet ef database update
 ENTRYPOINT ["dotnet", "GLAA.Web.dll"]
 
