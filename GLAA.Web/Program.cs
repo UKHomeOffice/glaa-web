@@ -19,6 +19,8 @@ namespace GLAA.Web.Core
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .CaptureStartupErrors(true)
+                .UseSetting(WebHostDefaults.DetailedErrorsKey, "true")
                 .UseUrls("http://*:5000")
                 .UseStartup<Startup>()                
                 .Build();
