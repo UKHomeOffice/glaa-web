@@ -1,13 +1,13 @@
 ﻿@{
-    ViewBag.Title = "What is the legal status of your organisation?";
-    var switchValue = "";
+    ViewBag.Title = "Do you have a PAYE number?";
+    var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "10" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
 
-@using (Html.BeginForm("SaveLegalStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -22,23 +22,20 @@
             <div class="form-group">
                 <fieldset>
                     <legend>
-                        <span class="error-message">
-                            <span class="field-validation-valid" data-valmsg-for="radio_list" data-valmsg-replace="true"></span>
-                        </span>
+                        <span class="body-text"></span>
                     </legend>
-                    @foreach (var status in Model.AvailableLegalStatuses)
+                    @foreach (var option in Model.YesNo)
                     {
-                    <div class="multiple-choice">
-                        @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name, Model.AvailableLegalStatuses)
+                        <div class="multiple-choice">
+                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
 
-                        @Html.Label(status.Name)
-                    </div>
-                        if (status.Name == "Limited Company")
+                        if (option.Value == switchValue)
                         {
-                            switchValue = status.EnumMappedTo.HasValue ? status.EnumMappedTo.Value.ToString() : string.Empty;
-                            <div class="panel panel-border-narrow js-hidden" id="limited-company-info">
-                                @Html.TextFormGroupFor(x => x.CompaniesHouseNumber)
-                                @Html.DateFormGroupFor(x => x.CompanyRegistrationDate)
+                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
+                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
+                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
                             </div>
                         }
                     }
@@ -54,7 +51,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', '@switchValue');
+            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
         });
     </script>
 }

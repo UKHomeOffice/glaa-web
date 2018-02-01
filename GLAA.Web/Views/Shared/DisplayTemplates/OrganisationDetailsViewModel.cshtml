@@ -136,7 +136,7 @@
             <td>@Html.DisplayFor(m => m.OperatingCountries.OperatingCountries, "ListCheckboxListItem")</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 15 }, "Licence")">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OperatingCountries.OperatingCountries)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 15 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OperatingCountries.OperatingCountries)</span></a></td>
             }
         </tr>
     </tbody>
