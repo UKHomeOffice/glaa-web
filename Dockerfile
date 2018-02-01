@@ -13,8 +13,8 @@ RUN npm install
 RUN webpack
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
-# FROM microsoft/dotnet:latest
-# ## CREATE APP USER ##
+FROM microsoft/dotnet:latest
+## CREATE APP USER ##
 
 # Create the home directory for the new app user.
 RUN mkdir -p /home/app
