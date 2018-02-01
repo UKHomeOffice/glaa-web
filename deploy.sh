@@ -12,8 +12,8 @@ export KUBE_TOKEN=${KUBE_TOKEN_ACP_NOTPROD}
 
 kd --debug --insecure-skip-tls-verify \
   --timeout 10m0s \
+  -f kube-db-setup/deployment.yaml \
   -f kube/deployment.yaml \
   -f kube/ingress.yaml \
   -f kube/service.yaml \
   -f kube/network-policy.yaml \
-  -f kube-db-setup/deployment.yaml

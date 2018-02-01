@@ -206,10 +206,6 @@ namespace GLAA.Web
 
                 logger.LogInformation("Running db seed...");
 
-                var dbContext = serviceScope.ServiceProvider.GetService<GLAAContext>();
-
-                dbContext.Database.Migrate();
-
                 serviceScope.ServiceProvider.GetService<GLAAContext>().Seed(defaultStatuses);
 
                 logger.LogInformation("Completed db seed");
