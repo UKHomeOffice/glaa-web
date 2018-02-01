@@ -1,13 +1,18 @@
-﻿using GLAA.Web.FormLogic;
+﻿using GLAA.Services;
+using GLAA.Web.FormLogic;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GLAA.Web.Controllers
 {
     public class HomeController : DefaultController
     {
-        public HomeController(IFormDefinition formDefinition)
+        private readonly IFileUploadService fileUploadService;
+
+        public HomeController(IFormDefinition formDefinition, IFileUploadService fileUploadService)
             : base(formDefinition)
         {
+            this.fileUploadService = fileUploadService;
         }
 
         public IActionResult Index()
@@ -32,6 +37,14 @@ namespace GLAA.Web.Controllers
         public IActionResult SessionTimeout()
         {
             return View("SessionTimeout");
+        }
+
+        public async Task UploadFile()
+        {
+            using (var file = System.IO.File.OpenRead("wwwroot/images/robot-hand.png"))
+            {
+                await fileUploadService.UploadFile(file);
+            }                            
         }
     }
 }

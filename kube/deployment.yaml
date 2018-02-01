@@ -51,6 +51,18 @@ spec:
                 key: password
           - name: ASPNETCORE_ENVIRONMENT
             value: Production
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: access_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: secret_access_key
+          - name: AWS_REGION
+            value: eu-west-2              
         volumeMounts:
           - name: secrets
             mountPath: /home/app/glaa-web/secrets/

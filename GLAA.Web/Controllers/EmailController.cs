@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GLAA.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GLAA.ViewModels;
 
 namespace GLAA.Web.Controllers
 {
@@ -21,11 +22,9 @@ namespace GLAA.Web.Controllers
         }
 
         [Route("api/Notify/SendEmail")]
-        public bool SendEmail(string to, string from)
+        public bool SendEmail(NotifyMailMessage msg, string template)
         {
-            var msg = new MailMessage(from, to);
-
-            return emailService.Send(msg);
+            return emailService.Send(msg, template);
         }
     }
 }

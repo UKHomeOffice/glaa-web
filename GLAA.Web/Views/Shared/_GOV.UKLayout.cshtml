@@ -67,7 +67,7 @@
             <div class="header-global">
                 <div class="header-logo">
                     <a href="https://www.gov.uk" title="Go to the GOV.UK homepage" id="logo" class="content">
-                        <img src="@Url.Content("~/images/gov.uk_logotype_crown_invert_trans.png?0.22.1")" width="36" height="32" alt=""> GOV.UK
+                        <img src="@Url.Content("~/images/glaa-logo-small.jpg?0.22.1")" alt="">
                     </a>
                 </div>
             </div>
@@ -78,10 +78,15 @@
                     <nav id="proposition-menu">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            var user = await UserManager.GetUserAsync(User);
+
+                            using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id="logout-form",  @class = "form-horizontal", role = "form" }))
                             {
+                                <a asp-controller="UserProfile" asp-action="Index">@(user.FullName)</a>
+
                                 @Html.AntiForgeryToken()
-                                <button type="submit" style="float:right;">Sign out</button>
+
+                                <a href="javascript:logout(this)">Logout</a>
                             }
                         }
                         <a href="@Url.Action("Index", "Home")" id="proposition-name">
@@ -104,7 +109,8 @@
     <div class="phase-banner">
         <p>
             <strong class="phase-tag">ALPHA</strong>
-            <span>This is a new service – your <a href="#">feedback</a> will help us to improve it.</span>
+            @*<span>This is a new service – your <a href="#">feedback</a> will help us to improve it.</span>*@
+            This is a new service – your <a href="#">feedback</a> will help us to improve it.
         </p>
     </div>
     <main id="content" role="main">
@@ -130,6 +136,11 @@
         </div>
     </footer>
     <script src="~/js/main.min.js"></script>
+    <script>
+        function logout() {          
+            document.getElementById('logout-form').submit();
+        }
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

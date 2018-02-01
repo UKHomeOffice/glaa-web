@@ -1,37 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mail;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Notify.Client;
 using Notify.Exceptions;
+using GLAA.ViewModels;
 
 namespace GLAA.Services
 {
     public class EmailService : IEmailService
     {
-        private const string APIKEY = "";
-
         private readonly NotificationClient client;
         private readonly ILogger logger;
 
-        public EmailService(ILoggerFactory loggerFactory)
+        public EmailService(ILoggerFactory loggerFactory, string apiKey)
         {
-            client = new NotificationClient(APIKEY);
-            logger = loggerFactory.CreateLogger("Email Log");
+            client = new NotificationClient(apiKey);
+            logger = loggerFactory.CreateLogger("Email Log");            
         }
 
-        public bool Send(MailMessage msg)
+        public bool Send(NotifyMailMessage msg, string messageTemplate)
         {
             try
-            {
+            {                
                 client.SendEmail(
-                    msg.To.ToString(),
-                    "",
-                    new Dictionary<string, dynamic>
-                    {
-                        { "first_name", "Doug" }
-                    },
+                    msg.To,
+                    messageTemplate,
+                    msg.Personalisation,
                     null,
                     null);
 

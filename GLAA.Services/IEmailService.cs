@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Mail;
-using System.Text;
+﻿using GLAA.ViewModels;
 
 namespace GLAA.Services
 {
     public interface IEmailService
     {
-        bool Send(MailMessage msg);
+        bool Send(NotifyMailMessage msg, string template);
     }
 }
