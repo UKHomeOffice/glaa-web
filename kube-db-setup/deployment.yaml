@@ -14,7 +14,7 @@ spec:
       - name: glaa-db-setup
         securityContext:
           runAsNonRoot: true            
-        image: quay.io/ukhomeofficedigital/glaa-db-setup:latest
+        image: quay.io/ukhomeofficedigital/glaa-db-setup:v0_1
         imagePullPolicy: Always
         ports:
           - containerPort: 80

@@ -14,7 +14,7 @@ spec:
       - name: glaa-web
         securityContext:
           runAsNonRoot: true
-        image: quay.io/ukhomeofficedigital/glaa-web:latest
+        image: quay.io/ukhomeofficedigital/glaa-web:v0_1
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
