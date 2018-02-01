@@ -271,3 +271,29 @@ button:focus {
 body{
     min-width:330px;
 }
+
+/*add another*/
+.link-button {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	color: #005ea5;
+	text-decoration: underline;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+.link-button:hover {
+	color: #2b8cc4;
+}
+
+.column-one-quarter.un-fix-width {
+	width: auto;
+	padding: 0 15px 0 0;
+}
+
+.column-one-quarter.un-fix-width input.form-control {
+	width: auto;
+}

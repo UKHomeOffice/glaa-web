@@ -12,29 +12,6 @@
     }
 }
 
-<style>
-    .link-button {
-        background: none;
-        border: none;
-        padding: 0;
-        margin: 0;
-        color: #005ea5;
-        text-decoration: underline;
-        cursor: pointer;
-        font-family: inherit;
-        font-size: inherit;
-    }
-    .link-button:hover {
-        color: #2b8cc4;
-    }
-    .column-one-quarter.un-fix-width {
-        width: auto;
-    }
-    .column-one-quarter.un-fix-width input.form-control {
-        width: auto;
-    }
-</style>
-
 @*new { section = "OrganisationDetails", submittedPageId = 2 }*@
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData){{"section", "OrganisationDetails"}, {"submittedPageId", "2"}})
