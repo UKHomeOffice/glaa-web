@@ -36,7 +36,6 @@ namespace GLAA.Web.FormLogic
                         {
                             new FormPageDefinition(),
                             new FormPageDefinition(nameof(BusinessNameViewModel.BusinessName)),
-                            new FormPageDefinition(),
                             new FormPageDefinition("Address"),
                             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
                             new FormPageDefinition(nameof(BusinessMobileNumberViewModel.BusinessMobileNumber)),
