@@ -12,6 +12,7 @@ RUN npm install webpack -g
 RUN npm install
 RUN webpack
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
+RUN dotnet ef database update
 
 FROM microsoft/dotnet:latest
 ## CREATE APP USER ##
