@@ -36,6 +36,5 @@ RUN mkdir secrets
 COPY --from=builder /app/GLAA.Web/out .
 
 USER app
-RUN dotnet ef database update
 ENTRYPOINT ["dotnet", "GLAA.Web.dll"]
 
