@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.ViewModels.LicenceApplication;
@@ -31,20 +30,23 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasPAYENumber, opt => opt.MapFrom(y => y.HasPAYEERNNumber))
                 .ForMember(x => x.PAYENumber, opt => opt.MapFrom(y => y.PAYEERNNumber))
                 .ForMember(x => x.PAYERegistrationDate, opt => opt.MapFrom(y => y.PAYEERNRegistrationDate))
-                .ForMember(x => x.YesNo, opt => opt.UseValue(ProfileHelpers.YesNoList));
+                .ForMember(x => x.YesNo, opt => opt.UseValue(ProfileHelpers.YesNoList))
+                .ForMember(x => x.IsValid, opt => opt.Ignore());
 
             CreateMap<Licence, VATStatusViewModel>()
                 .ForMember(x => x.HasVATNumber, opt => opt.MapFrom(y => y.HasVATNumber))
                 .ForMember(x => x.VATNumber, opt => opt.MapFrom(y => y.VATNumber))
                 .ForMember(x => x.VATRegistrationDate, opt => opt.MapFrom(y => y.VATRegistrationDate))
-                .ForMember(x => x.YesNo, opt => opt.UseValue(ProfileHelpers.YesNoList));
+                .ForMember(x => x.YesNo, opt => opt.UseValue(ProfileHelpers.YesNoList))
+                .ForMember(x => x.IsValid, opt => opt.Ignore());
 
             CreateMap<Licence, CommunicationPreferenceViewModel>()
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y.CommunicationPreference))
                 .ForMember(x => x.AvailableCommunicationPreferences, opt => opt.Ignore());
 
             CreateMap<Licence, TaxReferenceViewModel>()
-                .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceNumber));
+                .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceNumber))
+                .ForMember(x => x.IsValid, opt => opt.Ignore());
 
             CreateMap<Licence, TurnoverViewModel>()
                 .ForMember(x => x.TurnoverBand, opt => opt.MapFrom(y => y.TurnoverBand))
