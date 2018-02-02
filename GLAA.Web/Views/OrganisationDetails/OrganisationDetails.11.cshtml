@@ -1,13 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Organisation Details - Part 13";
+    ViewBag.Title = "Do you have a VAT registration number?";
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.VATStatusViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "12" } })
 
-@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,27 +15,26 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Do you have a PAYE number?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
             <div class="form-group">
                 <fieldset>
                     <legend>
-                        <span class="body-text"></span>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
+                            @Html.RadioButtonFor(x => x.HasVATNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
-                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
-                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
+                            <div class="panel panel-border-narrow js-hidden" id="VAT-details">
+                                @Html.TextFormGroupFor(x => x.VATNumber)
+                                @Html.DateFormGroupFor(x => x.VATRegistrationDate)
                             </div>
                         }
                     }
@@ -51,7 +50,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#VAT-details', @switchValue);
         });
     </script>
 }

@@ -1,56 +1,23 @@
-﻿@using GLAA.Web.FormLogic
-@model GLAA.ViewModels.LicenceApplication.PreviousTradingNamesViewModel
+﻿@model GLAA.ViewModels.LicenceApplication.PrincipalAuthorityViewModel
 
 @{
-    ViewBag.Title = "Previous trading names";
-    var conjunction = Model.PreviousTradingNames.Any() ? "another" : "a";
+    ViewBag.Title = "Principal Authority Summary";
 }
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "29" } })
-
-@using (Html.BeginForm("ReviewPrincipalAuthorityPreviousTradingNames", "PrincipalAuthority", FormMethod.Post))
-{
+<main id="content" role="main">
     <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
-        </div>
         <div class="column-full">
+            <br />
+            <p>
+                @Html.ActionLink("Return to Task List", "TaskList", "Licence")
+            </p>
             <h1 class="heading-large">
-                @ViewBag.Title
+                Check your answers for this section
             </h1>
-        </div>
-    </div>
-    <table class="check-your-answers" id="PreviousTradingNames">
-        <thead>
-            <tr>
-                <th colspan="3">Previous trading names</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var business in Model.PreviousTradingNames)
-            {
-                var adr = $"{business.Town}, {business.Country}";
-                <tr>
-                    <td>@business.BusinessName</td>
-                    <td>@adr</td>
-                    <td class="change-answer"><a href="@Url.Action("AddPreviousTradingName", "Licence", new { section = FormSection.PrincipalAuthority, id = business.Id })">Change or remove<span class="visually-hidden"> @business.BusinessName</span></a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="grid-row">
-        <div class="column-full">
+            @Html.DisplayFor(m => m)
             <p>
-                <a class="button button-add-another" href="@Url.Action("AddPreviousTradingName", "Licence", new { section = FormSection.PrincipalAuthority, id = 0 })">Add @conjunction previous trading name</a>
+                @Html.ActionLink("Go to next section", "Part", "AlternativeBusinessRepresentatives", 1, new { @class = "button" })
             </p>
         </div>
     </div>
-    <div class="grid-row">
-        <div class="column-full">
-            <p>
-                <button type="submit" class="button">Save and continue</button>
-            </p>
-        </div>
-    </div>
-    @Html.HiddenFor(m => m.HasPreviousTradingNames)
-}
+</main>

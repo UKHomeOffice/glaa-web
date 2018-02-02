@@ -14,7 +14,6 @@ namespace GLAA.ViewModels.LicenceApplication
             IsDirector = new IsDirectorViewModel();
             PreviousExperience = new PreviousExperienceViewModel();
             PrincipalAuthorityConfirmation = new PrincipalAuthorityConfirmationViewModel();
-            PreviousTradingNames = new PreviousTradingNamesViewModel();
             PrincipalAuthorityRightToWorkViewModel = new PrincipalAuthorityRightToWorkViewModel();
         }
 
@@ -25,7 +24,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public IsDirectorViewModel IsDirector { get; set; }
         public PrincipalAuthorityConfirmationViewModel PrincipalAuthorityConfirmation { get; set; }
         public PreviousExperienceViewModel PreviousExperience { get; set; }
-        public PreviousTradingNamesViewModel PreviousTradingNames { get; set; }
         public PrincipalAuthorityRightToWorkViewModel PrincipalAuthorityRightToWorkViewModel { get; set; }
         public LegalStatusEnum? LegalStatus { get; set; }
 
@@ -112,66 +110,6 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Previous Experience", Description = "To assist the GLAA in assessing your competency to perform the role of Principal Authority (Licensing Standard 1.2 - critical), please provide details of your previous experience in managing a relevant business or businesses (preferably within the last 5 years). Please include dates")]
         public string PreviousExperience { get; set; }
-    }
-
-    public class PreviousTradingNamesViewModel : YesNoViewModel, IValidatable, ICanView<PrincipalAuthorityViewModel>
-    {
-        [Required]
-        [Display(Name = "Have you or your organisation traded under any other name in the last 5 years?")]
-        public bool? HasPreviousTradingNames { get; set; }
-
-        [Display(Name = "Details of previous trading names")]
-        public IEnumerable<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
-
-        public PreviousTradingNamesViewModel()
-        {
-            PreviousTradingNames = new List<PreviousTradingNameViewModel>();
-        }
-
-        public void Validate()
-        {
-            if (!HasPreviousTradingNames.HasValue)
-            {
-                IsValid = false;
-                return;
-            }
-
-            if (HasPreviousTradingNames.Value && !PreviousTradingNames.Any())
-            {
-                IsValid = false;
-                return;
-            }
-
-            foreach (var business in PreviousTradingNames)
-            {
-                business.Validate();
-            }
-            IsValid = PreviousTradingNames.All(b => b.IsValid);
-        }
-
-        public bool IsValid { get; set; }
-
-        public bool CanView(PrincipalAuthorityViewModel parent)
-        {
-            return parent.PreviousTradingNames.HasPreviousTradingNames ?? false;
-        }
-    }
-
-    public class PreviousTradingNameViewModel : Validatable
-    {
-        public int Id { get; set; }
-
-        [Required]
-        [Display(Name = "Business Name")]
-        public string BusinessName { get; set; }
-
-        [Required]
-        [Display(Name = "Town")]
-        public string Town { get; set; }
-
-        [Required]
-        [Display(Name = "Country")]
-        public string Country { get; set; }
     }
 
     public class PrincipalAuthorityRightToWorkViewModel : IRequiredIf

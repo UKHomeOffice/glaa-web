@@ -32,8 +32,11 @@ namespace GLAA.Domain.Models
 
         #region OrganisationDetails
 
-        public string OrganisationName { get; set; }
+        public string BusinessName { get; set; }
+        public bool? HasTradingName { get; set; }
         public string TradingName { get; set; }
+        public bool? HasPreviousTradingName { get; set; }
+        public virtual ICollection<PreviousTradingName> PreviousTradingNames { get; set; }
 
         public TurnoverBand? TurnoverBand { get; set; }
 

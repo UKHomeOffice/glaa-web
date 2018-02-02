@@ -23,7 +23,10 @@ namespace GLAA.Services.LicenceApplication
         void UpdateUser(int licenceId, string userId);
 
         void Update<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, U model)
-            where T : class, IId, new();
+            where T : class, IId, new() where U : IId;
+
+        void UpdateAll<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, IEnumerable<U> models)
+            where T : class, IId, new() where U : IId;
 
         int Update<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, U model, int id)
             where T : class, IId, ILinkedToLicence, new();

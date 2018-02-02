@@ -85,7 +85,7 @@ namespace GLAA.Domain
                     licences.Add(new Licence
                     {
                         ApplicationId = $"DRAFT-{1234 + i}",
-                        OrganisationName = $"Demo Organisation {i + 1}",
+                        BusinessName = $"Demo Organisation {i + 1}",
                         TradingName =
                             $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
                         LicenceStatusHistory = new List<LicenceStatusChange>
@@ -239,6 +239,17 @@ namespace GLAA.Domain
                     CompanyRegistrationDate = DateTime.Now,
                     HasMultiples = true,
                     HasPAYEERNNumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
                     HasWrittenAgreementsInPlace = true,
                     HasVATNumber = true,
                     IsPSCControlled = true,
@@ -257,7 +268,7 @@ namespace GLAA.Domain
                                 Industry = context.Industries.Find(1)
                             }
                         },
-                    OrganisationName = "Fully Populated Company",
+                    BusinessName = "Fully Populated Company",
                     OtherMultiple = "Some other Multiple",
                     OtherSector = "Some other Sector",
                     PAYEERNNumber = "123/A12345",
@@ -579,16 +590,6 @@ namespace GLAA.Domain
                     },
                     HasPreviouslyHeldLicence = true,
                     PreviousLicenceDescription = "I had a previous licence.",
-                    HasPreviousTradingNames = true,
-                    PreviousTradingNames = new[]
-                    {
-                        new PreviousTradingName
-                        {
-                            BusinessName = "Old business name",
-                            Town = "Slough",
-                            Country = "UK"
-                        }
-                    },
                     DirectorOrPartner = new DirectorOrPartner
                     {
                         Address = new Address

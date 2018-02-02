@@ -1,13 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Organisation Details - Part 14";
-    var switchValue = "true";
+    ViewBag.Title = "What is your tax reference number?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.VATStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.TaxReferenceViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "12" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "13" } })
 
-@using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SaveTaxReference", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,42 +14,17 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Do you have a VAT registration number?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
             <div class="form-group">
-                <fieldset>
-                    <legend>
-                    </legend>
-                    @foreach (var option in Model.YesNo)
-                    {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasVATNumber, option.Value)
-                            @Html.Label(option.Text)
-                        </div>
-
-                        if (option.Value == switchValue)
-                        {
-                            <div class="panel panel-border-narrow js-hidden" id="VAT-details">
-                                @Html.TextFormGroupFor(x => x.VATNumber)
-                                @Html.DateFormGroupFor(x => x.VATRegistrationDate)
-                            </div>
-                        }
-                    }
-                </fieldset>
+                <div class="form-group">
+                    @Html.LabelWithHintFor(x => x.TaxReferenceNumber)
+                    @Html.TextBoxFor(x => x.TaxReferenceNumber, new { @class = "form-control" })
+                </div>
             </div>
         </div>
     </div>
     <button type="submit" class="button">Save and continue</button>
-}
-
-@section scripts
-    {
-    <script>
-        $(document).ready(function () {
-            hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#VAT-details', @switchValue);
-        });
-    </script>
 }

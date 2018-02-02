@@ -1,4 +1,6 @@
-﻿using GLAA.Services;
+﻿using System.Collections.Generic;
+using System.Linq;
+using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
@@ -58,97 +60,119 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveOrganisationName(OrganisationNameViewModel model)
+        public IActionResult SaveOrganisationName(BusinessNameViewModel model)
         {
-            return OrganisationDetailsPost(model, 2);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 2);
+
+            if (!ModelState.IsValid)
+            {
+                return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
+            }
+
+            var licenceId = Session.GetCurrentLicenceId();
+            
+            LicenceApplicationPostDataHandler.Update(licenceId, x => x, model);
+            LicenceApplicationPostDataHandler.UpdateAll(licenceId, x => x.PreviousTradingNames, model.PreviousTradingNames);
+
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 2);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveTradingName(TradingNameViewModel model)
+        public IActionResult AddPreviousTradingName(BusinessNameViewModel model)
         {
-            return OrganisationDetailsPost(model, 3);
+            model.PreviousTradingNames = model.PreviousTradingNames.Concat(new [] { new PreviousTradingNameViewModel() }).ToList();
+            return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
+        }
+
+        [HttpPost]
+        [ExportModelState]
+        [Route("Licence/Apply/OrganisationDetails/RemoveOrganisationName/{id}")]
+        public IActionResult RemovePreviousTradingName(int id, BusinessNameViewModel model)
+        {
+            model.PreviousTradingNames.RemoveAt(id);
+            return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveAddress(AddressViewModel model)
         {
-            return OrganisationDetailsPost(model, 4);
+            return OrganisationDetailsPost(model, 3);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveBusinessPhoneNumber(BusinessPhoneNumberViewModel model)
         {
-            return OrganisationDetailsPost(model, 5);
+            return OrganisationDetailsPost(model, 4);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveBusinessMobileNumber(BusinessMobileNumberViewModel model)
         {
-            return OrganisationDetailsPost(model, 6);
+            return OrganisationDetailsPost(model, 5);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveBusinessEmailAddress(BusinessEmailAddressViewModel model)
         {
-            return OrganisationDetailsPost(model, 7);
+            return OrganisationDetailsPost(model, 6);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveBusinessWebsite(BusinessWebsiteViewModel model)
         {
-            return OrganisationDetailsPost(model, 8);
+            return OrganisationDetailsPost(model, 7);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
         {
-            return OrganisationDetailsPost(model, 9);
+            return OrganisationDetailsPost(model, 8);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveLegalStatus(LegalStatusViewModel model)
         {
-            return OrganisationDetailsPost(model, 10);
+            return OrganisationDetailsPost(model, 9);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SavePAYEERNStatus(PAYEERNStatusViewModel model)
         {
-            return OrganisationDetailsPost(model, 11);
+            return OrganisationDetailsPost(model, 10);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveVATStatus(VATStatusViewModel model)
         {
-            return OrganisationDetailsPost(model, 12);
+            return OrganisationDetailsPost(model, 11);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveTaxReference(TaxReferenceViewModel model)
         {
-            return OrganisationDetailsPost(model, 13);
+            return OrganisationDetailsPost(model, 12);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveOperatingIndustries(OperatingIndustriesViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.OrganisationDetails, 14);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 13);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.OrganisationDetails, 14), model);
+                return View(GetViewPath(FormSection.OrganisationDetails, 13), model);
             }
 
             var licenceId = Session.GetCurrentLicenceId();
@@ -159,31 +183,31 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.Update(licenceId, x => x.OperatingIndustries,
                 model.OperatingIndustries);
 
-            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 14);
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 13);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveTurnover(TurnoverViewModel model)
         {
-            return OrganisationDetailsPost(model, 15);
+            return OrganisationDetailsPost(model, 14);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveOperatingCountries(OperatingCountriesViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.OrganisationDetails, 16);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 15);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.OrganisationDetails, 16), model);
+                return View(GetViewPath(FormSection.OrganisationDetails, 15), model);
             }
 
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x.OperatingCountries,
                 model.OperatingCountries);
 
-            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 16);
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 15);
         }
     }
 }

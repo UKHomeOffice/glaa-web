@@ -1,11 +1,12 @@
-﻿@model GLAA.ViewModels.LicenceApplication.OperatingIndustriesViewModel
-@{
-    ViewBag.Title = "Organisation Details - Part 3";
+﻿@{
+    ViewBag.Title = "What is your estimated business turnover?";
 }
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "14" } })
+@model GLAA.ViewModels.LicenceApplication.TurnoverViewModel
 
-@using (Html.BeginForm("SaveOperatingIndustries", "OrganisationDetails"))
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "15" } })
+
+@using (Html.BeginForm("SaveTurnover", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -13,13 +14,15 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Which GLAA sectors would you like to operate in?
+                @ViewBag.Title
             </h1>
         </div>
+
         <div class="column-two-thirds">
-            @Html.CheckBoxFormGroupFor(x => x.OperatingIndustries, Model.OperatingIndustries)
+            @Html.RadioButtonFormGroupFor(x => x.TurnoverBand, Model.AvailableTurnoverBands, "Select the item which matches most closely your turnover")
         </div>
     </div>
 
     <button type="submit" class="button">Save and continue</button>
 }
+
