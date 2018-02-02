@@ -19,7 +19,7 @@ namespace GLAA.Web.Controllers
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
             IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, FormSection.PrincipalAuthority)
         {
         }
 
@@ -77,7 +77,7 @@ namespace GLAA.Web.Controllers
 
             Session.SetCurrentPaStatus(paId, doDopLinking);
 
-            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, submittedPageId);
+            return CheckParentValidityAndRedirectForController(FormSection.PrincipalAuthority, submittedPageId);
         }
 
         [HttpPost]
@@ -116,7 +116,7 @@ namespace GLAA.Web.Controllers
 
             LicenceApplicationPostDataHandler.UnlinkDirectorOrPartnerFromPrincipalAuthority(Session.GetCurrentPaId());
 
-            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, 2);
+            return CheckParentValidityAndRedirectForController(FormSection.PrincipalAuthority, 2);
         }
 
         [HttpPost]
@@ -188,7 +188,7 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.UpdateAddress(Session.GetCurrentLicenceId(),
                 x => x.PrincipalAuthorities.SingleOrDefault(pa => pa.Id == Session.GetCurrentPaId()), model);
 
-            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, 10);
+            return CheckParentValidityAndRedirectForController(FormSection.PrincipalAuthority, 10);
         }
 
         [HttpPost]

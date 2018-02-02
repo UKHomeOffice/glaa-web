@@ -18,7 +18,7 @@ namespace GLAA.Web.Controllers
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
             IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, FormSection.JobTitle)
         {
         }
 

@@ -47,20 +47,20 @@ namespace GLAA.Web.Helpers
             return bool.Parse(session.GetString(key));
         }
 
-        public void SetSubmittedPage(FormSection section, int id)
+        public void SetSubmittedPage(FormSection section, string viewName)
         {
             SetString("LastSubmittedPageSection", section.ToString());
-            SetInt("LastSubmittedPageId", id);
+            SetString("LastSubmittedPageId", viewName);
         }
 
-        public void SetLoadedPage(int id)
+        public void SetLoadedPage(string viewName)
         {
-            SetInt("LastLoadedPageId", id);
+            SetString("LastLoadedPageId", viewName);
         }
 
-        public int GetLoadedPage()
+        public string GetLoadedPage()
         {
-            return GetInt("LastLoadedPageId");
+            return GetString("LastLoadedPageId");
         }
 
         public int GetCurrentPaId()

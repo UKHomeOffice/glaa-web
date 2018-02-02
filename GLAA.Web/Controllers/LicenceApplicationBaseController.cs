@@ -21,12 +21,15 @@ namespace GLAA.Web.Controllers
         protected readonly IFormDefinition FormDefinition;
         protected readonly IConstantService ConstantService;
 
+        protected readonly FormSection Section;
+
         public LicenceApplicationBaseController(ISessionHelper session,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(formDefinition)
+            IConstantService constantService,
+            FormSection section) : base(formDefinition)
         {
             Session = session;
             LicenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
@@ -34,24 +37,28 @@ namespace GLAA.Web.Controllers
             LicenceStatusViewModelBuilder = licenceStatusViewModelBuilder;
             FormDefinition = formDefinition;
             ConstantService = constantService;
+            Section = section;
         }
 
-        protected IActionResult CheckParentValidityAndRedirect(FormSection section, int submittedPageId)
+        protected IActionResult CheckParentValidityAndRedirectForController(string submittedViewName)
+        {
+            return CheckParentValidityAndRedirect(Section, submittedViewName);
+        }
+
+        private IActionResult CheckParentValidityAndRedirect(FormSection section, string submittedViewName)
         {
             var licenceId = Session.GetCurrentLicenceId();
-            var sectionLength = FormDefinition.GetSectionLength(section);
-            var nextPageId = submittedPageId + 1;
 
-            if (submittedPageId + 1 != sectionLength)
+            if (FormDefinition.NextViewIsFinalView(section, submittedViewName))
             {
-                var parent = FindParentSection(section, licenceId);
-
-                return parent == null
-                    ? RedirectToAction("TaskList", "Licence")
-                    : ValidateParentAndRedirect(parent, section, nextPageId);
+                return RedirectToLastAction(section);
             }
+            
+            var parent = FindParentSection(section, licenceId);
 
-            return RedirectToLastAction(section);
+            return parent == null
+                ? RedirectToAction("TaskList", "Licence")
+                : ValidateParentAndRedirect(parent, section, submittedViewName);
         }
 
         private IValidatable FindParentSection(FormSection section, int licenceId)
@@ -99,11 +106,13 @@ namespace GLAA.Web.Controllers
             return parent;
         }
 
-        protected IActionResult ValidateParentAndRedirect(IValidatable parent, FormSection section, int nextPageId)
+        protected IActionResult ValidateParentAndRedirect(IValidatable parent, FormSection section, string submittedViewName)
         {
             parent.Validate();
 
-            return parent.IsValid ? RedirectToLastAction(section) : RedirectToAction(section, nextPageId);
+            return parent.IsValid
+                ? RedirectToLastAction(section)
+                : RedirectToAction(section, FormDefinition.GetNextViewNumber(section, submittedViewName));
         }
 
         protected IActionResult CheckParentValidityAndRedirectBack(FormSection section, int submittedPageId)
@@ -124,6 +133,26 @@ namespace GLAA.Web.Controllers
             return nextPageId > 0
                 ? (parent.IsValid ? RedirectToLastAction(section) : RedirectBackToAction(section, nextPageId))
                 : RedirectToLastAction(section);
+        }
+
+        protected ActionResult GetNextViewForController<T>(int id, T model) where T : IValidatable
+        {
+            return GetNextView(id, Section, model);
+        }
+
+        protected ActionResult GetPreviousViewForController<T>(int id, T model) where T : IValidatable
+        {
+            return GetPreviousView(id, Section, model);
+        }
+
+        protected string GetViewNameForController(int id)
+        {
+            return GetViewName(Section, id);
+        }
+
+        protected void SetSubmittedPageForController(string viewName)
+        {
+            Session.SetSubmittedPage(Section, viewName);
         }
 
         [HttpGet]

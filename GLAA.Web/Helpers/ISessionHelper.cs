@@ -9,9 +9,9 @@ namespace GLAA.Web.Helpers
         void SetInt(string key, int value);
         int GetInt(string key);
         bool GetBool(string key);
-        void SetSubmittedPage(FormSection section, int id);
-        void SetLoadedPage(int id);
-        int GetLoadedPage();
+        void SetSubmittedPage(FormSection section, string viewName);
+        void SetLoadedPage(string viewName);
+        string GetLoadedPage();
         int GetCurrentPaId();
         bool GetCurrentPaIsDirector();
         void SetCurrentPaStatus(int id, bool isDirector);

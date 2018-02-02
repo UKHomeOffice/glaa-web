@@ -16,7 +16,7 @@ namespace GLAA.Web.Controllers
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
             IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, FormSection.Organisation)
         {
         }
 
@@ -43,7 +43,7 @@ namespace GLAA.Web.Controllers
 
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x, model);
 
-            return CheckParentValidityAndRedirect(FormSection.Organisation, submittedPageId);
+            return CheckParentValidityAndRedirectForController(FormSection.Organisation, submittedPageId);
         }
 
         [HttpPost]
@@ -61,7 +61,7 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x, model);
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x.SelectedSectors, model.SelectedSectors);
 
-            return CheckParentValidityAndRedirect(FormSection.Organisation, 2);
+            return CheckParentValidityAndRedirectForController(FormSection.Organisation, 2);
         }
 
         [HttpPost]
@@ -92,7 +92,7 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x, model);
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x.SelectedMultiples, model.SelectedMultiples);
 
-            return CheckParentValidityAndRedirect(FormSection.Organisation, 5);
+            return CheckParentValidityAndRedirectForController(FormSection.Organisation, 5);
         }
 
         [HttpPost]

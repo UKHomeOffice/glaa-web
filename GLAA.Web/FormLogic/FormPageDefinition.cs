@@ -1,34 +1,35 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace GLAA.Web.FormLogic
 {
     public class FormPageDefinition
     {
-        public FormPageDefinition()
-        {
-            SubModelName = string.Empty;
-            OverrideViewCondition = false;
-        }
 
-        public FormPageDefinition(string subModelName, bool overrideViewCondition = false)
+        public FormPageDefinition(string viewName, Type viewModelType, bool overrideViewCondition = false)
         {
-            SubModelName = subModelName;
+            ViewName = viewName;
+            ViewModelType = viewModelType;
             OverrideViewCondition = overrideViewCondition;
         }
 
-        public string SubModelName { get; }
-
         public bool OverrideViewCondition { get; }
 
-        public object GetViewModelExpressionForPage<TParent>(TParent parent)
+        public Type ViewModelType { get; }
+
+        public string ViewName { get; }
+
+        public object GetViewModelForPage<TParent>(TParent parent)
         {
-            if (string.IsNullOrEmpty(SubModelName))
+            if (ViewModelType == null)
             {
                 return parent;
             }
 
-            var propExpression = Expression.Property(Expression.Constant(parent), SubModelName);
+            var prop = typeof(TParent).GetProperties().Single(p => p.PropertyType == ViewModelType);
+
+            var propExpression = Expression.Property(Expression.Constant(parent), prop);
             var lambda = Expression.Lambda<Func<object>>(propExpression);
             return lambda.Compile()();
         }

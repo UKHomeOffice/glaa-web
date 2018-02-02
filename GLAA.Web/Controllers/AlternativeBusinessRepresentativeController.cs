@@ -19,7 +19,7 @@ namespace GLAA.Web.Controllers
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
             IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, FormSection.AlternativeBusinessRepresentative)
         {
         }
 
@@ -108,7 +108,7 @@ namespace GLAA.Web.Controllers
                 model, Session.GetCurrentAbrId());
             Session.SetCurrentAbrId(id);
 
-            return CheckParentValidityAndRedirect(FormSection.AlternativeBusinessRepresentative, submittedPageId);
+            return CheckParentValidityAndRedirectForController(FormSection.AlternativeBusinessRepresentative, submittedPageId);
         }
 
         [HttpPost]
@@ -167,7 +167,7 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.UpdateAddress(Session.GetCurrentLicenceId(),
                 x => x.AlternativeBusinessRepresentatives.Single(abr => abr.Id == Session.GetCurrentAbrId()), model);
 
-            return CheckParentValidityAndRedirect(FormSection.AlternativeBusinessRepresentative, 7);
+            return CheckParentValidityAndRedirectForController(FormSection.AlternativeBusinessRepresentative, 7);
         }
 
         [HttpPost]

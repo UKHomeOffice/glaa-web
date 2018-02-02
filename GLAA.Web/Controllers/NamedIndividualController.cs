@@ -19,7 +19,7 @@ namespace GLAA.Web.Controllers
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
             IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, FormSection.NamedIndividual)
         {
         }
 
@@ -100,7 +100,7 @@ namespace GLAA.Web.Controllers
             var id = LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x.NamedIndividuals, model, Session.GetCurrentNamedIndividualId());
             Session.SetCurrentNamedIndividualId(id);
 
-            return CheckParentValidityAndRedirect(FormSection.NamedIndividual, submittedPageId);
+            return CheckParentValidityAndRedirectForController(FormSection.NamedIndividual, submittedPageId);
         }
 
         [HttpPost]

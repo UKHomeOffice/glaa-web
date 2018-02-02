@@ -23,6 +23,11 @@ namespace GLAA.Web.Controllers
             return GetViewPath(section, formDefinition.GetSectionLength(section));
         }
 
+        protected string GetViewName(FormSection section, int id)
+        {
+            return formDefinition.GetViewName(section, id);
+        }
+
         protected ActionResult GetPreviousView<T>(int id, FormSection section, T model) where T : IValidatable
         {
             if (!formDefinition.CanViewNextModel(section, id, model))

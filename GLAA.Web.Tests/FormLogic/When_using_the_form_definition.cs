@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.FormLogic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -28,7 +29,7 @@ namespace GLAA.Web.Tests.FormLogic
                     section,
                     new[]
                     {
-                        new FormPageDefinition()
+                        new FormPageDefinition(string.Empty, null)
                     }
                 }
             };
@@ -48,7 +49,7 @@ namespace GLAA.Web.Tests.FormLogic
                     emptySection,
                     new[]
                     {
-                        new FormPageDefinition()
+                        new FormPageDefinition(string.Empty, null)
                     }
                 }
             };
@@ -59,21 +60,21 @@ namespace GLAA.Web.Tests.FormLogic
         [TestMethod]
         public void it_returns_the_correct_view_model_if_a_valid_view_model_is_requested()
         {
-            var emptySection = FormSection.OrganisationDetails;
+            var validSection = FormSection.OrganisationDetails;
             var validFormPageIndex = 1;
 
             config.Fields = new Dictionary<FormSection, FormPageDefinition[]>
             {
                 {
-                    emptySection,
+                    validSection,
                     new[]
                     {
-                        new FormPageDefinition()
+                        new FormPageDefinition("BusinessName", typeof(BusinessNameViewModel))
                     }
                 }
             };
 
-            Assert.IsNotNull(form.GetViewModel(emptySection, validFormPageIndex, emptySection));
+            Assert.IsNotNull(form.GetViewModel(validSection, validFormPageIndex, validSection));
 
         }
     }
