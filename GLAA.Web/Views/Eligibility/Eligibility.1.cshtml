@@ -1,33 +1,20 @@
 ﻿@{
-    ViewBag.Title = "Does your business supply workers?";
+    ViewBag.Title = "Principal Authority's email address";
 }
 
-@model GLAA.ViewModels.LicenceApplication.SuppliesWorkersViewModel
+@model GLAA.ViewModels.LicenceApplication.PrincipalAuthorityEmailAddressViewModel
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("SaveEmailAddress", "Eligibility"))
 {
     <div class="column-two-thirds">
         @Html.Partial("_GdsValidationSummary")
     </div>
     <div class="column-full">
-        <h1 class="heading-xlarge">Does your business supply workers?</h1>
+        <h1 class="heading-xlarge">@ViewBag.Title</h1>
     </div>
 
     <div class="column-two-thirds">
-        <div class="form-group">
-            <fieldset>
-                <legend>
-                    <span class="body-text"></span>
-                </legend>
-                @foreach (var option in Model.YesNo)
-                {
-                    <div class="multiple-choice">
-                        @Html.RadioButtonFor(x => x.SuppliesWorkers, option.Value, new { id = $"SuppliesWorkers_{option.Text}" })
-                        @Html.LabelFor(x => x.SuppliesWorkers, option.Text, new { @for = $"SuppliesWorkers_{option.Text}" })
-                    </div>
-                }
-            </fieldset>
-        </div>
+        @Html.TextFormGroupFor(m => m.EmailAddress)
         <button type="submit" class="button">Continue</button>
     </div>
 

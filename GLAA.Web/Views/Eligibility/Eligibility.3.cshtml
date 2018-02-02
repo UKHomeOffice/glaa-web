@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "What is your business turnover?";
+    ViewBag.Title = "What is the address of your main place of business?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.TurnoverViewModel
+@model GLAA.ViewModels.LicenceApplication.AddressViewModel
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("SaveAddress", "Eligibility"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -12,12 +12,12 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your business turnover?
+                @ViewBag.Title
             </h1>
         </div>
 
         <div class="column-two-thirds">
-            @Html.RadioButtonFormGroupFor(x => x.TurnoverBand, Model.AvailableTurnoverBands, "Select the item which matches most closely your turnover")
+            @Html.EditorFor(x => x)
         </div>
     </div>
 

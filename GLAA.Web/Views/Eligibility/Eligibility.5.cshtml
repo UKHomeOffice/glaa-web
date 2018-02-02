@@ -1,23 +1,27 @@
 ﻿@{
-    ViewBag.Title = "Summary of whether you need a licence";
+    ViewBag.Title = "Set a password";
 }
 
-@model GLAA.ViewModels.LicenceApplication.EligibilityViewModel
+@model GLAA.ViewModels.LicenceApplication.PasswordViewModel
 
-<main id="content" role="main">
+@using (Html.BeginForm("SavePassword", "Eligibility"))
+{
     <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
         <div class="column-full">
-            <br />
-            <p>
-                <a href="@Url.Action("TaskList", "Licence")">Return to Task List</a>
-            </p>
             <h1 class="heading-large">
-                Check your answers for this section
+                @ViewBag.Title
             </h1>
-            @Html.DisplayFor(m => m)
-            <p>
-                <a class="button" href="@Url.Action("Index", "Declaration")">Go to next section</a>
-            </p>
+        </div>
+        <div class="column-two-thirds">
+            @Html.TextFormGroupFor(x => x.Password)
+        </div>
+        <div class="column-two-thirds">
+            @Html.TextFormGroupFor(x => x.ConfirmPassword)
         </div>
     </div>
-</main>
+
+    <button type="submit" class="button">Continue</button>
+}

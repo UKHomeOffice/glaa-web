@@ -1,6 +1,4 @@
-﻿using GLAA.Services;
-using GLAA.Services.AccountCreation;
-using GLAA.Services.LicenceApplication;
+﻿using GLAA.Services.AccountCreation;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
 using GLAA.Web.FormLogic;
