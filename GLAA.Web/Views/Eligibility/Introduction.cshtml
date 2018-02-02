@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Information and costs";
+    ViewBag.Title = "Create an account to start";
 }
 
 @model GLAA.ViewModels.LicenceApplication.LicenceApplicationViewModel
@@ -8,27 +8,26 @@
 {
     <div class="grid-row">
         <div class="column-full">
-            <h1 class="heading-xlarge">Information and costs</h1>
+            <h1 class="heading-xlarge">@ViewBag.Title</h1>
 
             <p class="lede">
-                In this task you'll be asked a series of questions to work out if you fall under the GLAA licence.
+                This will help you keep track of your application and allow access at any point to review your license, amend and renew your license.
             </p>
 
             <p>
-                Complete this task to find out:
+                The Principal Authority of the licence being issued should create the account. If this is incorrect it could delay the process or even void the application form.
+            </p>
+            <p>
+                We will also be sharing your information with other government departments as part of our checks. For more information <a href="#">please read our privacy policy.</a>
             </p>
 
-            <ul class="list list-bullet">
-                <li>
-                    Whether you fall under the GLAA licensing requirements
-                </li>
-                <li>How much it will cost to apply for a licence</li>
-                <li>How long the application process will take</li>
-                <li>What tasks are involved in applying for a licence</li>
-            </ul>
-
             <br />
-            <button class="button" type="submit" role="button">Continue</button>
+            <button class="button" type="submit" role="button">Create Account</button>
+            
+            <a href="#">&gt; What is a Principal Authority?</a>
+            <p>
+                Principal Authority (PA) is a term that we use to describe the person responsible for the day to day management of the business.  In the case of a company the PA will normally be the managing director.  If there is a person in your company that meets this definition, that person should be named as the PA on the application rather than yourself.  If you are responsible for the day-to-day management of the business, then we will require written confirmation by letter or email from a director of your company providing confirmation that you meet the definition of a PA.
+            </p>
         </div>
     </div>
 }
