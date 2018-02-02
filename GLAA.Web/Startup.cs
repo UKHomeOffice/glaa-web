@@ -315,20 +315,21 @@ namespace GLAA.Web
                 for (var i = 0; i < 50; i++)
                 {
                     string un;
-                    string fn;
+                    string f;
+                    string l;
                     do
                     {
-                        var f = FirstNames[rnd.Next(FirstNames.Length)];
-                        var l = LastNames[rnd.Next(LastNames.Length)];
+                        f = FirstNames[rnd.Next(FirstNames.Length)];
+                        l = LastNames[rnd.Next(LastNames.Length)];
                         un = $"{f}.{l}@example.com";
-                        fn = $"{f} {l}";
                     } while (await um.FindByEmailAsync(un) != null);
 
                     var user = new GLAAUser
                     {
                         UserName = un,
                         Email = un,
-                        FullName = fn
+                        FirstName = f,
+                        LastName = l
                     };
                     var pw = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 

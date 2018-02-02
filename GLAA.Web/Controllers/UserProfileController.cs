@@ -39,7 +39,14 @@ namespace GLAA.Web.Controllers
             var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
             var model = new EditNameViewModel
             {
-                Current = user.FullName
+                CurrentTitle = user.Title,
+                CurrentFirstName = user.FirstName,
+                CurrentMiddleName = user.MiddleName,
+                CurrentLastName = user.LastName,
+                NewTitle = user.Title,
+                NewFirstName = user.FirstName,
+                NewMiddleName = user.MiddleName,
+                NewLastName = user.LastName
             };
             return View(model);
         }
@@ -55,7 +62,10 @@ namespace GLAA.Web.Controllers
 
             var login = User.Identity.Name;
             var user = userManager.FindByEmailAsync(login).GetAwaiter().GetResult();
-            user.FullName = model.New;
+            user.Title = model.NewTitle;
+            user.FirstName = model.NewFirstName;
+            user.MiddleName = model.NewMiddleName;
+            user.LastName = model.NewLastName;
 
             userManager.UpdateAsync(user).GetAwaiter().GetResult();
 

@@ -779,39 +779,6 @@ namespace GLAA.Services.Tests.AutoMapper
         }
 
         [TestMethod]
-        public void it_should_map_the_licence_entity_to_the_eligibility_view_model()
-        {
-            var selectedIndustry = 1;
-            var licenceId = 1;
-            var input = new Licence
-            {
-                Id = licenceId,
-                TurnoverBand = TurnoverBand.OneToFiveMillion,
-                SuppliesWorkers = true,
-                OperatingIndustries = new List<LicenceIndustry>
-                {
-                    new LicenceIndustry
-                    {
-                        LicenceId = licenceId,
-                        IndustryId = selectedIndustry,
-                        Industry = new Industry
-                        {
-                            Id = selectedIndustry,
-                            Name = "An industry"
-                        }
-                    }                    
-                }
-            };
-
-            var result = this.mapper.Map<EligibilityViewModel>(input);
-
-            Assert.AreEqual(input.TurnoverBand, result.Turnover.TurnoverBand);
-            Assert.AreEqual(input.SuppliesWorkers, result.SuppliesWorkers.SuppliesWorkers);
-            Assert.AreEqual(true, result.OperatingIndustries.OperatingIndustries.Single(x => x.Id == selectedIndustry).Checked);
-            Assert.AreEqual(input.ContinueApplication, result.EligibilitySummary.ContinueApplication);
-        }
-
-        [TestMethod]
         public void it_should_map_the_licence_entity_to_the_declaration_view_model()
         {
             var input = new Licence

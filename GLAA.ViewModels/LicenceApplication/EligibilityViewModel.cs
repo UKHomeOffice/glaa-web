@@ -6,6 +6,15 @@ namespace GLAA.ViewModels.LicenceApplication
 {
     public class EligibilityViewModel : Validatable
     {
+        public EligibilityViewModel()
+        {
+            FullName = new PrincipalAuthorityFullNameViewModel();
+            EmailAddress = new PrincipalAuthorityEmailAddressViewModel();
+            Address = new AddressViewModel();
+            CommunicationPreference = new CommunicationPreferenceViewModel();
+            Password = new PasswordViewModel();
+        }
+
         public PrincipalAuthorityFullNameViewModel FullName { get; set; }
         public PrincipalAuthorityEmailAddressViewModel EmailAddress { get; set; }
         public AddressViewModel Address { get; set; }
@@ -14,7 +23,7 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
     //TODO Replace FullNameViewModel with this
-    public class PrincipalAuthorityFullNameViewModel : Validatable
+    public class PrincipalAuthorityFullNameViewModel
     {
         [Display(Name = "Title")]
         public string Title { get; set; }
@@ -31,7 +40,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string LastName { get; set; }
     }
 
-    public class PrincipalAuthorityEmailAddressViewModel : Validatable
+    public class PrincipalAuthorityEmailAddressViewModel
     {
         [Required]
         [EmailAddress]
@@ -39,7 +48,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string EmailAddress { get; set; }
     }
 
-    public class PasswordViewModel : Validatable
+    public class PasswordViewModel
     {
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
