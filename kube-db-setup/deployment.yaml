@@ -49,8 +49,8 @@ spec:
               secretKeyRef:
                 name: glaa-db-app-user
                 key: password
-                resources:
-        limits:
-          memory: "4096Mi"
-        requests:
-          memory: "2048Mi"
+        resources:
+          limits:
+            memory: "4096Mi"
+          requests:
+            memory: "2048Mi"
