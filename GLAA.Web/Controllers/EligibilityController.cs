@@ -44,24 +44,6 @@ namespace GLAA.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult WhatDoINeed()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult WhatIsCovered()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult OverseasBusiness()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public ActionResult Introduction()
         {
             var licenceApplicationModel = licenceApplicationViewModelBuilder.New();
