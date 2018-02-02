@@ -1,12 +1,21 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
     public class GLAAUser : IdentityUser
     {
-        public string FullName { get; set; }
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+
+        public int? AddressId { get; set; }
+        [ForeignKey(nameof(AddressId))]
+        public virtual Address Address { get; set; }
+
+        public CommunicationPreference? CommunicationPreference { get; set; }
 
         public virtual ICollection<Licence> Licences { get; set; }
 

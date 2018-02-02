@@ -23,8 +23,8 @@ namespace GLAA.Web.FormLogic
                         FormSection.Eligibility,
                         new []
                         {
-                            new FormPageDefinition("FullName"), 
-                            new FormPageDefinition("EmailAddress"), 
+                            new FormPageDefinition("EmailAddress"),
+                            new FormPageDefinition("FullName"),
                             new FormPageDefinition("Address"),
                             new FormPageDefinition("CommunicationPreference"),
                             new FormPageDefinition("Password"),
