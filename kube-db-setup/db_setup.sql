@@ -62,7 +62,7 @@ GRANT ALTER ON SCHEMA::dbo TO [$(APP_USER)]
 
 GO
 
-GRANT CREATE DATABASE TO [$(APP_USER)]
+EXEC master..sp_addsrvrolemember @loginame = [$(APP_USER)], @rolename = N'dbcreator'
 
 GO
 
