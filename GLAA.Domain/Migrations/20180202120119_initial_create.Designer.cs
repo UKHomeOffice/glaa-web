@@ -9,12 +9,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace GLAA.Domain.Core.Migrations
+namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    partial class GLAAContextModelSnapshot : ModelSnapshot
+    [Migration("20180202120119_initial_create")]
+    partial class initial_create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
