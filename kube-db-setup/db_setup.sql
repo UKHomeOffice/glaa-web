@@ -62,7 +62,7 @@ GRANT ALTER ON SCHEMA::dbo TO [$(APP_USER)]
 
 GO
 
-EXEC master..sp_addsrvrolemember @loginame = [$(APP_USER)], @rolename = N'dbcreator'
+ALTER SERVER ROLE [dbcreator] ADD MEMBER [$(APP_USER)]
 
 GO
 
