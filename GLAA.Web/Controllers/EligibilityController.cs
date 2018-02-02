@@ -70,7 +70,7 @@ namespace GLAA.Web.Controllers
         [HttpPost]
         [ExportModelState]
         [Route("Eligibility/Part/1")]
-        public ActionResult Part1(SuppliesWorkersViewModel model)
+        public ActionResult Part1(PrincipalAuthorityFullNameViewModel model)
         {
             session.SetString("LastSubmittedPageSection", "Part1");
             session.SetInt("LastSubmittedPageId", 1);

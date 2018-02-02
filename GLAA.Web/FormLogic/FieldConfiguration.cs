@@ -23,10 +23,11 @@ namespace GLAA.Web.FormLogic
                         FormSection.Eligibility,
                         new []
                         {
-                            new FormPageDefinition(nameof(EligibilityViewModel.SuppliesWorkers)), 
-                            new FormPageDefinition(nameof(EligibilityViewModel.OperatingIndustries)), 
-                            new FormPageDefinition(nameof(EligibilityViewModel.Turnover)),
-                            new FormPageDefinition(nameof(EligibilityViewModel.EligibilitySummary)),
+                            new FormPageDefinition("FullName"), 
+                            new FormPageDefinition("EmailAddress"), 
+                            new FormPageDefinition("Address"),
+                            new FormPageDefinition("CommunicationPreference"),
+                            new FormPageDefinition("Password"),
                             new FormPageDefinition()
                         }
                     },

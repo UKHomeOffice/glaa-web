@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -7,14 +6,51 @@ namespace GLAA.ViewModels.LicenceApplication
 {
     public class EligibilityViewModel : Validatable
     {
-        public SuppliesWorkersViewModel SuppliesWorkers { get; set; } = new SuppliesWorkersViewModel();
+        public PrincipalAuthorityFullNameViewModel FullName { get; set; }
+        public PrincipalAuthorityEmailAddressViewModel EmailAddress { get; set; }
+        public AddressViewModel Address { get; set; }
+        public CommunicationPreferenceViewModel CommunicationPreference { get; set; }
+        public PasswordViewModel Password { get; set; }
+    }
 
-        public OperatingIndustriesViewModel OperatingIndustries { get; set; } = new OperatingIndustriesViewModel();
+    //TODO Replace FullNameViewModel with this
+    public class PrincipalAuthorityFullNameViewModel : Validatable
+    {
+        [Display(Name = "Title")]
+        public string Title { get; set; }
 
-        public TurnoverViewModel Turnover { get; set; } = new TurnoverViewModel();
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
 
-        public EligibilitySummaryViewModel EligibilitySummary { get; set; }
+        [Display(Name = "Middle name")]
+        public string MiddleName { get; set; }
 
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+    }
+
+    public class PrincipalAuthorityEmailAddressViewModel : Validatable
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "This will be the email address you use to log in to the system once it has been verified.")]
+        public string EmailAddress { get; set; }
+    }
+
+    public class PasswordViewModel : Validatable
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Re-type password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 
     public class EligibilitySummaryViewModel : RegistrationViewModel, IValidatable
@@ -79,11 +115,5 @@ namespace GLAA.ViewModels.LicenceApplication
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public class SuppliesWorkersViewModel : YesNoViewModel
-    {
-        [Required]
-        public bool? SuppliesWorkers { get; set; }
     }
 }
