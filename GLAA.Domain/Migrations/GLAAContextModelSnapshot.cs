@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace GLAA.Domain.Core.Migrations
+namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
     partial class GLAAContextModelSnapshot : ModelSnapshot
