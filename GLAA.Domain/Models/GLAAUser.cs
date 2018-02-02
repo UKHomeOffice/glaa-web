@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
-    public class GLAAUser : IdentityUser
+    public class GLAAUser : IdentityUser, IAddressable
     {
         public string Title { get; set; }
         public string FirstName { get; set; }

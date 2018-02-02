@@ -26,6 +26,7 @@ using Amazon.S3;
 using Amazon.Runtime.CredentialManagement;
 using Amazon;
 using Amazon.Runtime;
+using GLAA.Services.AccountCreation;
 
 namespace GLAA.Web
 {
@@ -107,6 +108,10 @@ namespace GLAA.Web
 
             // http session
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // account creation
+            services.AddTransient<IAccountCreationPostDataHandler, AccountCreationPostDataHandler>();
+            services.AddTransient<IAccountCreationViewModelBuilder, AccountCreationViewModelBuilder>();
 
             // licence profile
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();

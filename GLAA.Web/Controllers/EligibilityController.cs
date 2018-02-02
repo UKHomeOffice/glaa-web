@@ -1,4 +1,5 @@
 ﻿using GLAA.Services;
+using GLAA.Services.AccountCreation;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
@@ -13,19 +14,17 @@ namespace GLAA.Web.Controllers
         private const string CurrentPaEmail = "CURRENT_PA_EMAIL";
 
         private readonly ISessionHelper session;
-        private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder;
-        private readonly ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler;
-        private readonly IConstantService constantService;
+        private readonly IAccountCreationViewModelBuilder accountCreationViewModelBuilder;
+        private readonly IAccountCreationPostDataHandler accountCreationPostDataHandler;
 
         public EligibilityController(ISessionHelper session,
-            ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder, IFormDefinition formDefinition,
-            ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler, IConstantService constantService)
+            IAccountCreationViewModelBuilder accountCreationViewModelBuilder, IFormDefinition formDefinition,
+            IAccountCreationPostDataHandler accountCreationPostDataHandler)
             : base(formDefinition)
         {
             this.session = session;
-            this.licenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
-            this.licenceApplicationPostDataHandler = licenceApplicationPostDataHandler;
-            this.constantService = constantService;
+            this.accountCreationViewModelBuilder = accountCreationViewModelBuilder;
+            this.accountCreationPostDataHandler = accountCreationPostDataHandler;
         }
 
         protected override string GetViewPath(FormSection section, int id)
@@ -38,9 +37,9 @@ namespace GLAA.Web.Controllers
         [Route("Eligibility/Part/{id}")]
         public ActionResult Eligibility(int id)
         {
-            var licenceId = session.GetCurrentLicenceId();
+            var email = session.GetString(CurrentPaEmail);
 
-            var model = licenceApplicationViewModelBuilder.Build<EligibilityViewModel>(licenceId);
+            var model = accountCreationViewModelBuilder.Build(email);
 
             return GetNextView(id, FormSection.Eligibility, model);            
         }
@@ -62,15 +61,16 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public ActionResult SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
         {
-            session.SetString("LastSubmittedPageSection", "Part1");
-            session.SetInt("LastSubmittedPageId", 1);
+            session.SetSubmittedPage(FormSection.Eligibility, 1);
 
             if (!ModelState.IsValid)
             {
                 return View("Eligibility.1", model);
             }
 
-            licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
+            session.SetString(CurrentPaEmail, model.EmailAddress);
+
+            accountCreationPostDataHandler.Update(model.EmailAddress, model);
 
             return RedirectToAction("Eligibility", 2);
         }
@@ -79,17 +79,14 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public ActionResult SaveFullName(PrincipalAuthorityFullNameViewModel model)
         {
-            session.SetString("LastSubmittedPageSection", "Part2");
-            session.SetInt("LastSubmittedPageId", 2);
+            session.SetSubmittedPage(FormSection.Eligibility, 2);
 
             if (!ModelState.IsValid)
             {
                 return View("Eligibility.2", model);
             }
 
-            var licenceId = session.GetCurrentLicenceId();
-
-            licenceApplicationPostDataHandler.Update(licenceId, x => x, model);
+            accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
 
             return RedirectToAction("Eligibility", 3);
         }
@@ -98,15 +95,14 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public ActionResult SaveAddress(AddressViewModel model)
         {
-            session.SetString("LastSubmittedPageSection", "Part3");
-            session.SetInt("LastSubmittedPageId", 3);
+            session.SetSubmittedPage(FormSection.Eligibility, 3);
 
             if (!ModelState.IsValid)
             {
                 return View("Eligibility.3", model);
             }
 
-            licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
+            accountCreationPostDataHandler.UpdateAddress(session.GetString(CurrentPaEmail), model);
 
             return RedirectToAction("Eligibility", 4);
         }
@@ -115,15 +111,14 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public ActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
         {
-            session.SetString("LastSubmittedPageSection", "Part4");
-            session.SetInt("LastSubmittedPageId", 4);
+            session.SetSubmittedPage(FormSection.Eligibility, 4);
 
             if (!ModelState.IsValid)
             {
                 return View("Eligibility.4", model);
             }
 
-            licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
+            accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
 
             return RedirectToAction("Eligibility", 5);
         }
@@ -132,15 +127,14 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public ActionResult SavePassword(PasswordViewModel model)
         {
-            session.SetString("LastSubmittedPageSection", "Part4");
-            session.SetInt("LastSubmittedPageId", 5);
+            session.SetSubmittedPage(FormSection.Eligibility, 5);
 
             if (!ModelState.IsValid)
             {
                 return View("Eligibility.5", model);
             }
 
-            licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
+            accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
 
             return RedirectToAction("Eligibility", 6);
         }
