@@ -10,6 +10,8 @@ namespace GLAA.Web.Controllers
 {
     public class EligibilityController : DefaultController
     {
+        private const string CurrentPaEmail = "CURRENT_PA_EMAIL";
+
         private readonly ISessionHelper session;
         private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder;
         private readonly ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler;
@@ -46,31 +48,19 @@ namespace GLAA.Web.Controllers
         [HttpGet]
         public ActionResult Introduction()
         {
-            var licenceApplicationModel = licenceApplicationViewModelBuilder.New();
-
-            return View("Introduction", licenceApplicationModel);
+            return View("Introduction");
         }
 
         [HttpPost]
         [ExportModelState]
         public ActionResult Introduction(LicenceApplicationViewModel model)
         {
-            model.NewLicenceStatus = new LicenceStatusViewModel
-            {
-                Id = constantService.NewApplicationStatusId
-            };
-
-            var licenceId = licenceApplicationPostDataHandler.Insert(model);
-
-            session.SetCurrentLicenceId(licenceId);
-
-            return RedirectToAction("Part1");
+            return RedirectToAction("Eligibility", 1);
         }
 
         [HttpPost]
         [ExportModelState]
-        [Route("Eligibility/Part/1")]
-        public ActionResult Part1(PrincipalAuthorityFullNameViewModel model)
+        public ActionResult SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
         {
             session.SetString("LastSubmittedPageSection", "Part1");
             session.SetInt("LastSubmittedPageId", 1);
@@ -82,13 +72,12 @@ namespace GLAA.Web.Controllers
 
             licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
 
-            return RedirectToAction("Part2");            
+            return RedirectToAction("Eligibility", 2);
         }
 
         [HttpPost]
         [ExportModelState]
-        [Route("Eligibility/Part/2")]
-        public ActionResult Part2(OperatingIndustriesViewModel model)
+        public ActionResult SaveFullName(PrincipalAuthorityFullNameViewModel model)
         {
             session.SetString("LastSubmittedPageSection", "Part2");
             session.SetInt("LastSubmittedPageId", 2);
@@ -99,19 +88,15 @@ namespace GLAA.Web.Controllers
             }
 
             var licenceId = session.GetCurrentLicenceId();
-            
-            licenceApplicationPostDataHandler.UpdateShellfishStatus(licenceId, model);
 
-            licenceApplicationPostDataHandler.Update(licenceId, x => x.OperatingIndustries,
-                model.OperatingIndustries);
+            licenceApplicationPostDataHandler.Update(licenceId, x => x, model);
 
-            return RedirectToAction("Part3");
+            return RedirectToAction("Eligibility", 3);
         }
 
         [HttpPost]
         [ExportModelState]
-        [Route("Eligibility/Part/3")]
-        public ActionResult Part3(TurnoverViewModel model)
+        public ActionResult SaveAddress(AddressViewModel model)
         {
             session.SetString("LastSubmittedPageSection", "Part3");
             session.SetInt("LastSubmittedPageId", 3);
@@ -123,26 +108,41 @@ namespace GLAA.Web.Controllers
 
             licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
 
-            return RedirectToAction("Part4");
+            return RedirectToAction("Eligibility", 4);
         }
 
         [HttpPost]
         [ExportModelState]
-        [Route("Eligibility/Part/4")]
-        public ActionResult Part4()
+        public ActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
         {
             session.SetString("LastSubmittedPageSection", "Part4");
             session.SetInt("LastSubmittedPageId", 4);
 
+            if (!ModelState.IsValid)
+            {
+                return View("Eligibility.4", model);
+            }
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return View("Eligibility.3", model);
-            //}
+            licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
 
-            //licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
+            return RedirectToAction("Eligibility", 5);
+        }
 
-            return RedirectToAction("TaskList", "Licence");
+        [HttpPost]
+        [ExportModelState]
+        public ActionResult SavePassword(PasswordViewModel model)
+        {
+            session.SetString("LastSubmittedPageSection", "Part4");
+            session.SetInt("LastSubmittedPageId", 5);
+
+            if (!ModelState.IsValid)
+            {
+                return View("Eligibility.5", model);
+            }
+
+            licenceApplicationPostDataHandler.Update(session.GetCurrentLicenceId(), x => x, model);
+
+            return RedirectToAction("Eligibility", 6);
         }
     }
 }
