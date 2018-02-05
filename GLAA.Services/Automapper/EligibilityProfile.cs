@@ -38,6 +38,22 @@ namespace GLAA.Services.Automapper
             CreateMap<GLAAUser, CommunicationPreferenceViewModel>()
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y.CommunicationPreference))
                 .ForAllOtherMembers(opt => opt.Ignore());
+
+            CreateMap<PrincipalAuthorityEmailAddressViewModel, GLAAUser>()
+                .ForMember(x => x.Email, opt => opt.MapFrom(y => y.EmailAddress))
+                .ForMember(x => x.UserName, opt => opt.MapFrom(y => y.EmailAddress))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            CreateMap<PrincipalAuthorityFullNameViewModel, GLAAUser>()
+                .ForMember(x => x.Title, opt => opt.MapFrom(y => y.Title))
+                .ForMember(x => x.FirstName, opt => opt.MapFrom(y => y.FirstName))
+                .ForMember(x => x.MiddleName, opt => opt.MapFrom(y => y.MiddleName))
+                .ForMember(x => x.LastName, opt => opt.MapFrom(y => y.LastName))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            CreateMap<CommunicationPreferenceViewModel, GLAAUser>()
+                .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y.CommunicationPreference))
+                .ForAllOtherMembers(opt => opt.Ignore());
         }
 
         private int GetApplicationFee(TurnoverBand? turnover)
