@@ -4,6 +4,7 @@ using System.Linq;
 using GLAA.Domain.Core.Models;
 using GLAA.Domain.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace GLAA.Domain
 {
@@ -11,7 +12,7 @@ namespace GLAA.Domain
     {
         public static void Seed(this GLAAContext context, List<LicenceStatus> defaultStatuses)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             var rnd = new Random();
 

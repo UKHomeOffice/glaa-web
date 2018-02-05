@@ -34,15 +34,15 @@ DROP DATABASE IF EXISTS GLAA_Core
 
 GO
 
--- CREATE DATABASE GLAA_Core
+CREATE DATABASE GLAA_Core
 
--- GO
+GO
 
--- PRINT 'Database created';
+PRINT 'Database created';
 
--- USE [GLAA_Core]
+USE [GLAA_Core]
 
--- GO
+GO
 
 
 
@@ -59,10 +59,6 @@ END
 
 
 GRANT ALTER ON SCHEMA::dbo TO [$(APP_USER)]
-
-GO
-
-ALTER SERVER ROLE [dbcreator] ADD MEMBER [$(APP_USER)]
 
 GO
 
