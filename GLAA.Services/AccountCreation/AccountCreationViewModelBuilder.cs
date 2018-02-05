@@ -24,6 +24,11 @@ namespace GLAA.Services.AccountCreation
 
         public T Build<T>(string email) where T : new()
         {
+            if (string.IsNullOrEmpty(email))
+            {
+                return new T();
+            }
+
             var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
             var model = mapper.Map<T>(user);
             return model;
