@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace GLAA.Services.AccountCreation
 {
@@ -27,14 +29,8 @@ namespace GLAA.Services.AccountCreation
                 return new EligibilityViewModel();
             }
 
-            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var user = userManager.FindCompleteUserByEmail(email);
             var model = mapper.Map<EligibilityViewModel>(user);
-
-            if (user.AddressId != null)
-            {
-                var adr = repository.GetById<Address>(user.AddressId.Value);
-                model.Address = mapper.Map<AddressViewModel>(adr);
-            }
 
             return model;
         }
