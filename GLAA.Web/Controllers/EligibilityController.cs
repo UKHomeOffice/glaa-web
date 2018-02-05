@@ -50,27 +50,20 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public ActionResult Introduction(LicenceApplicationViewModel model)
-        {
-            return RedirectToAction("Eligibility", 1);
-        }
-
-        [HttpPost]
-        [ExportModelState]
         public ActionResult SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
         {
             session.SetSubmittedPage(FormSection.Eligibility, 1);
 
             if (!ModelState.IsValid)
             {
-                return View("Eligibility.1", model);
+                return View(GetViewPath(FormSection.Eligibility, 1), model);
             }
 
             session.SetString(CurrentPaEmail, model.EmailAddress);
 
             accountCreationPostDataHandler.Update(model.EmailAddress, model);
 
-            return RedirectToAction("Eligibility", 2);
+            return RedirectToAction("Eligibility", new {id = 2});
         }
 
         [HttpPost]
@@ -81,12 +74,12 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("Eligibility.2", model);
+                return View(GetViewPath(FormSection.Eligibility, 2), model);
             }
 
             accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
 
-            return RedirectToAction("Eligibility", 3);
+            return RedirectToAction("Eligibility", new {id = 3});
         }
 
         [HttpPost]
@@ -97,12 +90,12 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("Eligibility.3", model);
+                return View(GetViewPath(FormSection.Eligibility, 3), model);
             }
 
             accountCreationPostDataHandler.UpdateAddress(session.GetString(CurrentPaEmail), model);
 
-            return RedirectToAction("Eligibility", 4);
+            return RedirectToAction("Eligibility", new { id = 4 });
         }
 
         [HttpPost]
@@ -113,12 +106,12 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("Eligibility.4", model);
+                return View(GetViewPath(FormSection.Eligibility, 4), model);
             }
 
             accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
 
-            return RedirectToAction("Eligibility", 5);
+            return RedirectToAction("Eligibility", new { id = 5 });
         }
 
         [HttpPost]
@@ -129,12 +122,12 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("Eligibility.5", model);
+                return View(GetViewPath(FormSection.Eligibility, 5), model);
             }
 
             accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
 
-            return RedirectToAction("Eligibility", 6);
+            return RedirectToAction("Eligibility", new { id = 6 });
         }
     }
 }
