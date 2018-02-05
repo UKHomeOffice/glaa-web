@@ -10,6 +10,56 @@ spec:
       labels:
         app: glaa-web
     spec:  
+      initContainers:
+      - name: glaa-db-init
+        securityContext:
+          runAsNonRoot: true            
+        image: quay.io/ukhomeofficedigital/glaa-db-setup:v0_1
+        imagePullPolicy: Always
+        command: 
+          - "/bin/sh"
+          - "-c"
+          - "/opt/mssql-tools/bin/sqlcmd -S $DB_SERVER,$DB_PORT -U $DB_USER -P $DB_PASS -i db_setup.sql -r1"
+        ports:
+          - containerPort: 80
+        env:
+          - name: DB_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: glaadev-rds-access
+                key: endpoint
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: glaadev-rds-access
+                key: port
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: glaadev-rds-access
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: glaadev-rds-access
+                key: password
+          - name: APP_USER
+            valueFrom:
+              secretKeyRef:
+                name: glaa-db-app-user
+                key: username
+          - name: APP_PASS
+            valueFrom:
+              secretKeyRef:
+                name: glaa-db-app-user
+                key: password
+        resources:
+          limits:
+            cpu: 2000m
+            memory: "4096Mi"
+          requests:
+            cpu: 1000m
+            memory: "2048Mi"    
       containers:
       - name: glaa-web
         securityContext:
@@ -67,10 +117,17 @@ spec:
           - name: secrets
             mountPath: /home/app/glaa-web/secrets/
             readOnly: true
+        resources:
+          limits:
+            cpu: 2000m
+            memory: "4096Mi"
+          requests:
+            cpu: 1000m
+            memory: "2048Mi"                 
       volumes:
       - name: secrets
         secret:
           secretName: secret-appsettings
           items:
           - key: appsettings.secrets.json
-            path: appsettings.secrets.json
+            path: appsettings.secrets.json          
