@@ -1,0 +1,84 @@
+﻿@model GLAA.ViewModels.PublicRegister.PublicRegisterLicenceListViewModel
+
+@{
+    ViewBag.Title = "GLAA - Public Register";
+}
+
+@*<div>
+    <p style="padding-top: 25px;">
+        <input type="text" style="margin-top: 6px;" /><a class="button button-start" href="" role="button" style="margin-left:25px">Search</a>
+    </p>
+</div>*@
+
+
+@using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                Do you have a VAT registration number?
+            </h1>
+        </div>
+        <div class="column-two-thirds">
+            <div class="form-group">
+                <fieldset>
+                    @Html.LabelFor(x => x.PublicRegisterSearchViewModel.OrganisationName)
+                    
+                    
+
+                    <legend>
+                    </legend>
+                    @foreach (var option in Model.YesNo)
+                    {
+                        <div class="multiple-choice">
+                            @Html.RadioButtonFor(x => x.HasVATNumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
+
+                        if (option.Value == switchValue)
+                        {
+                            <div class="panel panel-border-narrow js-hidden" id="VAT-details">
+                                @Html.TextFormGroupFor(x => x.VATNumber)
+                                @Html.DateFormGroupFor(x => x.VATRegistrationDate)
+                            </div>
+                        }
+                    }
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="button">Search</button>
+}
+
+
+
+<table class="table publicregister">
+    <thead>
+        <tr>
+            <th>Unique Ref No.</th>
+            <th>Organisation Name</th>
+            <th>Trading Name</th>
+            <th>Country</th>
+            <th>County</th>
+            <th>Status</th>
+            <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var licence in Model.Licences)
+        {
+            <tr>
+                <td>@licence.ApplicationId</td>
+                <td>@licence.OrganisationName</td>
+                <td>@licence.TradingName</td>
+                <td>@licence.Country</td>
+                <td>@licence.County</td>
+                <td>Licensed</td>
+                <td><a href="@Url.Action("Licence", new { id = licence.Id })" class="link">view</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

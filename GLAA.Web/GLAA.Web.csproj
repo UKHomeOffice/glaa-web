@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\sass\NewFolder\**" />
+    <Content Remove="wwwroot\sass\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\sass\NewFolder\**" />
+    <None Remove="wwwroot\sass\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Helpers\HtmlHelpers.cs" />
   </ItemGroup>
 
