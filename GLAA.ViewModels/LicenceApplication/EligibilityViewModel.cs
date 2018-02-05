@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using GLAA.ViewModels.Attributes;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
@@ -32,6 +33,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
+        [HiddenOptional]
         [Display(Name = "Middle name")]
         public string MiddleName { get; set; }
 

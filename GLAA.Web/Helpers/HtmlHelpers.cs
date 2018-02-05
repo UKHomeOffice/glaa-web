@@ -294,6 +294,7 @@ namespace GLAA.Web.Core.Helpers
             var resolvedLabelText = metadata.DisplayName ?? metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             var optionalText = metadata.IsRequired ||
                 IsCompared(expression) ||
+                IsHiddenOptional(expression) ||
                 IsDateRequired(expression) ||
                 IsRequiredIf(expression) ||
                 IsAssertThat(expression) ||
@@ -427,6 +428,17 @@ namespace GLAA.Web.Core.Helpers
             }
 
             return memberExpression.Member.GetCustomAttribute<CompareAttribute>() != null;
+        }
+
+        private static bool IsHiddenOptional<TModel, TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            var memberExpression = expression.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                throw new InvalidOperationException("Expression must be a member expression");
+            }
+
+            return memberExpression.Member.GetCustomAttribute<HiddenOptionalAttribute>() != null;
         }
 
         private static bool HasUIHint<TModel, TValue>(Expression<Func<TModel, TValue>> expression)
