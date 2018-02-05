@@ -371,6 +371,7 @@ namespace GLAA.Domain.Migrations
                     NumberOfProperties = table.Column<int>(nullable: true),
                     NumberOfShellfishWorkers = table.Column<int>(nullable: true),
                     NumberOfVehicles = table.Column<int>(nullable: true),
+                    OtherLegalStatus = table.Column<string>(nullable: true),
                     OtherMultiple = table.Column<string>(nullable: true),
                     OtherOperatingIndustry = table.Column<string>(nullable: true),
                     OtherSector = table.Column<string>(nullable: true),

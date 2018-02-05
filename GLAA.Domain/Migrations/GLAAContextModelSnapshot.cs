@@ -481,6 +481,8 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("NumberOfVehicles");
 
+                    b.Property<string>("OtherLegalStatus");
+
                     b.Property<string>("OtherMultiple");
 
                     b.Property<string>("OtherOperatingIndustry");

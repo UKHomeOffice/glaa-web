@@ -231,11 +231,11 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public List<LegalStatus> AvailableLegalStatuses { get; set; } = new List<LegalStatus>
         {
-            new LegalStatus { Id = 1, Name = "Sole Trader", Checked = false },
-            new LegalStatus { Id = 2, Name = "Registered Company", Checked = false },
-            new LegalStatus { Id = 3, Name = "Partnership", Checked = false },
-            new LegalStatus { Id = 4, Name = "Unincorporate Association", Checked = false },
-            new LegalStatus { Id = 5, Name = "Other", Checked = false },
+            new LegalStatus { Id = 1, Name = "Sole Trader", Checked = false, EnumMappedTo = LegalStatusEnum.SoleTrader },
+            new LegalStatus { Id = 2, Name = "Registered Company", Checked = false, EnumMappedTo = LegalStatusEnum.RegisteredCompany },
+            new LegalStatus { Id = 3, Name = "Partnership", Checked = false, EnumMappedTo = LegalStatusEnum.Partnership },
+            new LegalStatus { Id = 4, Name = "Unincorporate Association", Checked = false, EnumMappedTo = LegalStatusEnum.UnincorporateAssociation },
+            new LegalStatus { Id = 5, Name = "Other", Checked = false, EnumMappedTo = LegalStatusEnum.Other }
         };
 
         [RequiredIf]

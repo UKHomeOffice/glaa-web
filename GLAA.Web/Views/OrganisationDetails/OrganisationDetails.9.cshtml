@@ -1,6 +1,6 @@
 ﻿@{
-    ViewBag.Title = "What is the legal status of your organisation?";
-    var switchValue = "";
+    ViewBag.Title = "What is the legal status of your business?";
+    var switchValue = 5;
 }
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
@@ -28,20 +28,22 @@
                     </legend>
                     @foreach (var status in Model.AvailableLegalStatuses)
                     {
-                    <div class="multiple-choice">
-                        @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name, Model.AvailableLegalStatuses)
+                        <div class="multiple-choice">
+                            @Html.RadioButtonForEnum(x => x.LegalStatus, status.Name, Model.AvailableLegalStatuses)
+                            @Html.Label(status.Name)
+                        </div>
 
-                        @Html.Label(status.Name)
-                    </div>
-                        if (status.Name == "Limited Company")
+
+                        if (status.Name == "Other legal status")
                         {
-                            switchValue = status.EnumMappedTo.HasValue ? status.EnumMappedTo.Value.ToString() : string.Empty;
-                            <div class="panel panel-border-narrow js-hidden" id="limited-company-info">
-                                @Html.TextFormGroupFor(x => x.CompaniesHouseNumber)
-                                @Html.DateFormGroupFor(x => x.CompanyRegistrationDate)
+                            switchValue = status.Id;
+                            <div class="panel panel-border-narrow js-hidden" id="alternative-name-detail">
+                                @Html.LabelWithHintFor(x => x.Other)
+                                @Html.TextBoxFor(x => x.Other, new { @class = "form-control" })
                             </div>
                         }
                     }
+
                 </fieldset>
             </div>
         </div>
@@ -50,11 +52,11 @@
 }
 
 @section scripts
-    {
+{
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', '@switchValue');
+            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', @switchValue);
         });
     </script>
 }
