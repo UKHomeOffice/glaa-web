@@ -7,5 +7,7 @@ namespace GLAA.Services.AccountCreation
         void Update<T>(string email, T model);
 
         void UpdateAddress(string email, AddressViewModel model);
+
+        void SetPassword(string email, string password);
     }
 }

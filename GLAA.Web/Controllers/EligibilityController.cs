@@ -125,7 +125,7 @@ namespace GLAA.Web.Controllers
                 return View(GetViewPath(FormSection.Eligibility, 5), model);
             }
 
-            accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
+            accountCreationPostDataHandler.SetPassword(session.GetString(CurrentPaEmail), model.Password);
 
             return RedirectToAction("Eligibility", new { id = 6 });
         }

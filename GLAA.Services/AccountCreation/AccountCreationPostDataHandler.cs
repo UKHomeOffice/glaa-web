@@ -49,5 +49,12 @@ namespace GLAA.Services.AccountCreation
 
             userManager.UpdateAsync(user).GetAwaiter().GetResult();
         }
+
+        public void SetPassword(string email, string password)
+        {
+            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+
+            userManager.AddPasswordAsync(user, password).GetAwaiter().GetResult();
+        }
     }
 }
