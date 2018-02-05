@@ -42,8 +42,8 @@ namespace GLAA.ViewModels.LicenceApplication
 
     public class PrincipalAuthorityEmailAddressViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "The Email Address field is required")]
+        [EmailAddress(ErrorMessage = "The Email Address field is not a valid e-mail address.")]
         [Display(Name = "This will be the email address you use to log in to the system once it has been verified.")]
         public string EmailAddress { get; set; }
     }
