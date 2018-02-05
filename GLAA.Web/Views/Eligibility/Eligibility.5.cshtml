@@ -16,12 +16,11 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.Password)
+            @Html.PasswordFormGroupFor(x => x.Password)
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.ConfirmPassword)
+            @Html.PasswordFormGroupFor(x => x.ConfirmPassword)
+            <button type="submit" class="button">Continue</button>
         </div>
     </div>
-
-    <button type="submit" class="button">Continue</button>
 }
