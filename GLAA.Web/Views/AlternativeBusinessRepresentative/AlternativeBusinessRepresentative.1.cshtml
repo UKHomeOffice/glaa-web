@@ -1,8 +1,14 @@
-﻿@{
+﻿@using GLAA.Web.Helpers
+@model GLAA.ViewModels.LicenceApplication.FullNameViewModel
+
+@inject ISessionHelper SessionHelper
+
+@{
     ViewBag.Title = "Alternative Business Representative - Part 1";
 }
 
-@model GLAA.ViewModels.LicenceApplication.FullNameViewModel
+@*TODO - bit of hack to go back*@
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentatives" }, { "submittedPageId", "4" } })
 
 @using (Html.BeginForm("SaveFullName", "AlternativeBusinessRepresentative"))
 {
@@ -19,6 +25,6 @@
             @Html.TextFormGroupFor(x => x.FullName)
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }

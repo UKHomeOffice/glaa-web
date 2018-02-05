@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.PrincipalAuthorityConfirmationViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "3" } })
+
 @using (Html.BeginForm("SavePrincipalAuthorityConfirmation", "PrincipalAuthority"))
 {
     <div class="grid-row">
@@ -29,7 +31,7 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 

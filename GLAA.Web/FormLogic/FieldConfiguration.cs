@@ -35,8 +35,7 @@ namespace GLAA.Web.FormLogic
                         new[]
                         {
                             new FormPageDefinition(),
-                            new FormPageDefinition(nameof(OrganisationNameViewModel.OrganisationName)),
-                            new FormPageDefinition(nameof(TradingNameViewModel.TradingName)),
+                            new FormPageDefinition(nameof(BusinessNameViewModel.BusinessName)),
                             new FormPageDefinition("Address"),
                             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
                             new FormPageDefinition(nameof(BusinessMobileNumberViewModel.BusinessMobileNumber)),
@@ -76,8 +75,6 @@ namespace GLAA.Web.FormLogic
                             new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel), true),
                             new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel)),
                             new FormPageDefinition(nameof(PreviousLicenceViewModel)),
-                            new FormPageDefinition("PreviousTradingNames", true),
-                            new FormPageDefinition("PreviousTradingNames"),
                             new FormPageDefinition(nameof(PreviousExperienceViewModel.PreviousExperience)),
                             new FormPageDefinition()
                         }).ToArray()

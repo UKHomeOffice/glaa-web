@@ -57,7 +57,7 @@ namespace GLAA.Services.Admin
                 Id = licence.Id,
                 ApplicationId = licence.ApplicationId,
                 MostRecentStatus = mapper.Map(latestStatus, statusModel),
-                OrganisationName = licence.OrganisationName,
+                OrganisationName = licence.BusinessName,
                 PrincipalAuthorityName = licence.PrincipalAuthorities.FirstOrDefault() != null ? licence.PrincipalAuthorities.First().FullName : "Not Set",
                 IsApplication = latestStatus.Status.IsApplication
             };

@@ -81,14 +81,14 @@
             </div>
 
             <div class="panel panel-border-narrow js-hidden" id="continue-application">
-                
+
                 @if (Model.EmailAlreadyRegistered)
                 {
                     <p>The email address entered is already registered, you can login to retrieve you process using the link below.</p>
                     <p>
                         @Html.ActionLink("Resume application", "Resume", "Licence")
                     </p>
-                    <br/>
+                    <br />
                     <br />
                 }
                 else
@@ -143,7 +143,7 @@
 
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

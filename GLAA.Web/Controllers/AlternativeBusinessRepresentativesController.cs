@@ -22,7 +22,7 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ExportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back)
         {
             Session.ClearCurrentAbrId();
 
@@ -32,7 +32,9 @@ namespace GLAA.Web.Controllers
                 LicenceApplicationViewModelBuilder
                     .Build<AlternativeBusinessRepresentativeCollectionViewModel>(licenceId);
 
-            return GetNextView(id, FormSection.AlternativeBusinessRepresentatives, model);
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.AlternativeBusinessRepresentatives, model)
+                : GetNextView(id, FormSection.AlternativeBusinessRepresentatives, model);
         }
 
         [HttpPost]

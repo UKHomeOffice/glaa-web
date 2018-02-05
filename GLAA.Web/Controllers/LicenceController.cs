@@ -408,8 +408,7 @@ namespace GLAA.Web.Controllers
         {
             var model = LicenceApplicationViewModelBuilder.Build<PreviousTradingNameViewModel, PreviousTradingName>(
                             Session.GetCurrentLicenceId(),
-                            l => l.PrincipalAuthorities.Single(p => p.Id == Session.GetCurrentPaId()).PreviousTradingNames
-                                .SingleOrDefault(p => p.Id == id)) ?? new PreviousTradingNameViewModel();
+                            l => l.PreviousTradingNames.SingleOrDefault(p => p.Id == id)) ?? new PreviousTradingNameViewModel();
 
             return View("SecurityQuestions/PreviousTradingName", model);
         }
@@ -423,10 +422,7 @@ namespace GLAA.Web.Controllers
                 return RedirectToAction("AddPreviousTradingName", new { section, id });
             }
 
-            LicenceApplicationPostDataHandler
-                .UpsertSecurityAnswerAndLinkToParent<PreviousTradingNameViewModel, PreviousTradingName,
-                    PrincipalAuthority>(
-                    Session.GetCurrentPaId(), id, model, pa => pa.PreviousTradingNames, p => p.PrincipalAuthority);
+            LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), l => l.PreviousTradingNames, model, model.Id);
 
             var lastLoaded = Session.GetLoadedPage();
 

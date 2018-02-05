@@ -3,6 +3,8 @@
 }
 
 @model GLAA.ViewModels.LicenceApplication.NamedJobTitleViewModel
+    
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "FormSection" }, { "submittedPageId", "1" } })
 
 @using (Html.BeginForm("SaveJobTitle", "JobTitle"))
 {

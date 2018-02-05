@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.DisqualifiedDirectorViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividual" }, { "submittedPageId", "7" } })
+
 @using (Html.BeginForm("SaveDisqualifiedDirector", "NamedIndividual"))
 {
     <div class="grid-row">
@@ -45,7 +47,7 @@
 }
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

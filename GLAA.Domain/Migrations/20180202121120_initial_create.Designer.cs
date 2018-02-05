@@ -12,9 +12,10 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    partial class GLAAContextModelSnapshot : ModelSnapshot
+    [Migration("20180202121120_initial_create")]
+    partial class initial_create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

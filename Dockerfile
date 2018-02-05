@@ -13,6 +13,7 @@ RUN npm install
 RUN webpack
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
+
 FROM microsoft/dotnet:latest
 ## CREATE APP USER ##
 

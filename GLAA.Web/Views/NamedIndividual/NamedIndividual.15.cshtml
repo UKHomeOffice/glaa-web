@@ -4,6 +4,8 @@
     ViewBag.Title = "Named Individual Summary";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividual" }, { "submittedPageId", "15" } }))
+
 @using (Html.BeginForm("DeleteNamedIndividual", "NamedIndividual"))
 {
     <main id="content" role="main">

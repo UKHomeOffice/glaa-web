@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.AddressViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "10" } })
+
 @using (Html.BeginForm("SaveAddress", "PrincipalAuthority"))
 {
     <div class="grid-row">
@@ -19,7 +21,7 @@
             @Html.EditorFor(x => x)
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 

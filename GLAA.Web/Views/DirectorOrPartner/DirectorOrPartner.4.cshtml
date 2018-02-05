@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.DateOfBirthViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "4" } })
+
 @using (Html.BeginForm("SaveDateOfBirth", "DirectorOrPartner"))
 {
     <div class="grid-row">

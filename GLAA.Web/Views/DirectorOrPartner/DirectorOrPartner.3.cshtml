@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.AlternativeFullNameViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "3" } })
+
 @using (Html.BeginForm("SaveAlternativeFullName", "DirectorOrPartner"))
 {
     <div class="grid-row">
@@ -42,13 +44,13 @@
             </div>
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

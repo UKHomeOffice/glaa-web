@@ -29,12 +29,16 @@ pipeline:
       - docker login -u="ukhomeofficedigital+glaa" -p=$${DOCKER_PASSWORD} quay.io
       - docker tag glaa-db-setup quay.io/ukhomeofficedigital/glaa-db-setup:$${DRONE_COMMIT_SHA}
       - docker tag glaa-db-setup quay.io/ukhomeofficedigital/glaa-db-setup:latest
+      - docker tag glaa-db-setup quay.io/ukhomeofficedigital/glaa-db-setup:v0_1
       - docker push quay.io/ukhomeofficedigital/glaa-db-setup:$${DRONE_COMMIT_SHA}
       - docker push quay.io/ukhomeofficedigital/glaa-db-setup:latest
+      - docker push quay.io/ukhomeofficedigital/glaa-db-setup:v0_1
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
       - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:latest
+      - docker tag glaa-web quay.io/ukhomeofficedigital/glaa-web:v0_1
       - docker push quay.io/ukhomeofficedigital/glaa-web:$${DRONE_COMMIT_SHA}
       - docker push quay.io/ukhomeofficedigital/glaa-web:latest
+      - docker push quay.io/ukhomeofficedigital/glaa-web:v0_1
 
     when:
       branch: master

@@ -23,28 +23,34 @@ namespace GLAA.Web.Controllers
         {
         }
 
-        [HttpGet]
-        [ImportModelState]
-        public IActionResult Part(int id)
+        private PrincipalAuthorityViewModel SetupGetPart(int id)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var model = LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
                 x => x.PrincipalAuthorities.FirstOrDefault());
 
             if (model.Id.HasValue)
-            {
                 Session.SetCurrentPaStatus(model.Id.Value, model.IsDirector.IsDirector ?? false);
-            }
 
             if (model.DirectorOrPartnerId.HasValue)
-            {
                 Session.SetCurrentDopStatus(model.DirectorOrPartnerId.Value, model.IsDirector.IsDirector ?? false);
-            }
 
             Session.SetLoadedPage(id);
-
-            return GetNextView(id, FormSection.PrincipalAuthority, model);
+            return model;
         }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult Part(int id, bool? back = false)
+        {
+            var model = SetupGetPart(id);
+
+            return
+                back.HasValue && back.Value
+                    ? GetPreviousView(id, FormSection.PrincipalAuthority, model)
+                    : GetNextView(id, FormSection.PrincipalAuthority, model);
+        }
+
 
         private IActionResult PrincipalAuthorityPost<T>(T model, int submittedPageId, bool doDopLinking = true)
         {
@@ -351,38 +357,9 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePreviousTradingNames(PreviousTradingNamesViewModel model)
-        {
-            return PrincipalAuthorityPost(model, 28, false);
-        }
-
-        [HttpPost]
-        [ExportModelState]
-        public IActionResult ReviewPrincipalAuthorityPreviousTradingNames(PreviousTradingNamesViewModel model)
-        {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 29);
-
-            var licenceId = Session.GetCurrentLicenceId();
-            var parent =
-                LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
-                    l => l.PrincipalAuthorities.Single(p => p.Id == Session.GetCurrentPaId()));
-            model = parent.PreviousTradingNames;
-
-            if ((model.HasPreviousTradingNames ?? false) && !model.PreviousTradingNames.Any())
-            {
-                ModelState.AddModelError(nameof(model.PreviousTradingNames), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
-                ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.PrincipalAuthority, 29), model);
-            }
-
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, 30);
-        }
-
-        [HttpPost]
-        [ExportModelState]
         public IActionResult SavePreviousExperience(PreviousExperienceViewModel model)
         {
-            return PrincipalAuthorityPost(model, 30, false);
+            return PrincipalAuthorityPost(model, 28, false);
         }
     }
 }

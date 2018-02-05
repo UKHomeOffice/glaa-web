@@ -153,19 +153,6 @@ namespace GLAA.Services.Tests.Validation
                 {
                     HasPreviouslyHeldLicence = true,
                     PreviousLicenceDescription = "description"
-                },
-                PreviousTradingNames = new PreviousTradingNamesViewModel
-                {
-                    HasPreviousTradingNames = true,
-                    PreviousTradingNames = new[]
-                    {
-                        new PreviousTradingNameViewModel
-                        {
-                            BusinessName = "name",
-                            Town = "town",
-                            Country = "country"
-                        }
-                    }
                 }
             };
         }
@@ -343,17 +330,6 @@ namespace GLAA.Services.Tests.Validation
         {
             model.PreviousLicenceViewModel.HasPreviouslyHeldLicence = true;
             model.PreviousLicenceViewModel.PreviousLicenceDescription = null;
-
-            model.Validate();
-
-            Assert.IsFalse(model.IsValid);
-        }
-
-        [TestMethod]
-        public void a_model_that_has_previous_trading_names_but_no_details_is_invalid()
-        {
-            model.PreviousTradingNames.HasPreviousTradingNames = true;
-            model.PreviousTradingNames.PreviousTradingNames = new List<PreviousTradingNameViewModel>();
 
             model.Validate();
 

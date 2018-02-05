@@ -1,10 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Have you or your organisation traded under any other name in the last 5 years?";
+    ViewBag.Title = "Principal Authority - Part 29";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PreviousTradingNamesViewModel
+@model GLAA.ViewModels.LicenceApplication.PreviousExperienceViewModel
 
-@using (Html.BeginForm("SavePreviousTradingNames", "PrincipalAuthority"))
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "30" } })
+
+@using (Html.BeginForm("SavePreviousExperience", "PrincipalAuthority"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -12,26 +14,17 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                @ViewBag.Title
+                Previous experience?
             </h1>
         </div>
         <div class="column-two-thirds">
             <div class="form-group">
-                <fieldset>
-                    <legend>
-                        <span class="body-text"></span>
-                    </legend>
-                    @foreach (var option in Model.YesNo)
-                    {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPreviousTradingNames, option.Value, new { id = $"HasPreviousTradingNames{option.Text}" })
-                            @Html.LabelFor(x => x.HasPreviousTradingNames, option.Text, new { @for = $"HasPreviousTradingNames_{option.Text}" })
-                        </div>
-                    }
-                </fieldset>
+                @Html.TextAreaFor(x => x.PreviousExperience, new { @class = "form-control" })
             </div>
         </div>
     </div>
 
     <button type="submit" class="button">Save and continue</button>
 }
+
+

@@ -12,8 +12,7 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public OrganisationDetailsViewModel()
         {
-            OrganisationName = new OrganisationNameViewModel();
-            TradingName = new TradingNameViewModel();
+            BusinessName = new BusinessNameViewModel();
             OperatingIndustries = new OperatingIndustriesViewModel();
             OperatingCountries = new OperatingCountriesViewModel();
             Turnover = new TurnoverViewModel();
@@ -29,8 +28,7 @@ namespace GLAA.ViewModels.LicenceApplication
             TaxReference = new TaxReferenceViewModel();
         }
 
-        public OrganisationNameViewModel OrganisationName { get; set; }
-        public TradingNameViewModel TradingName { get; set; }
+        public BusinessNameViewModel BusinessName { get; set; }
         public OperatingIndustriesViewModel OperatingIndustries { get; set; }
         public OperatingCountriesViewModel OperatingCountries { get; set; }
         public TurnoverViewModel Turnover { get; set; }
@@ -47,17 +45,73 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
 
-    public class OrganisationNameViewModel
+    public class BusinessNameViewModel : YesNoViewModel, IValidatable, IRequiredIf
     {
         [Required]
-        [Display(Name = "Organisation Name", Description = "This is the name of the organisation you control")]
-        public string OrganisationName { get; set; }
+        [Display(Name = "Business Name", Description = "This is the name of the business you control")]
+        public string BusinessName { get; set; }
+
+        [Required]
+        [Display(Name = "Do you have a trading name that is different from the business name?")]
+        public bool? HasTradingName { get; set; }
+
+        [Display(Name = "Current Trading Name")]
+        [RequiredIf(ErrorMessage = "The Current Trading Name field is required")]
+        public string TradingName { get; set; }
+
+        [Display(Name = "Has your business traded under any other name in the last 5 years?")]
+        [RequiredIf(ErrorMessage = "The Has Previous Trading Names field is required")]
+        public bool? HasPreviousTradingName { get; set; }
+
+        public List<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
+
+        public void Validate()
+        {
+            if (string.IsNullOrEmpty(BusinessName) || !HasTradingName.HasValue)
+            {
+                IsValid = false;
+                return;
+            }
+
+            if (HasTradingName.Value && (!HasPreviousTradingName.HasValue || string.IsNullOrEmpty(TradingName)))
+            {
+                IsValid = false;
+                return;
+            }
+
+            if ((HasPreviousTradingName ?? false) && !PreviousTradingNames.Any())
+            {
+                IsValid = false;
+                return;
+            }
+
+            foreach (var business in PreviousTradingNames)
+            {
+                business.Validate();
+            }
+            IsValid = PreviousTradingNames.All(b => b.IsValid);
+        }
+
+        public bool IsValid { get; set; }
+
+        public bool IsRequired => HasTradingName ?? false;
     }
 
-    public class TradingNameViewModel
+    public class PreviousTradingNameViewModel : Validatable, IId
     {
-        [Display(Name = "Trading Name", Description = "Enter this if it's different from your organisation name")]
-        public string TradingName { get; set; }
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "The Previous Business Name field is required")]
+        [Display(Name = "Business Name")]
+        public string BusinessName { get; set; }
+
+        [Required(ErrorMessage = "The Previous Business Town field is required")]
+        [Display(Name = "Town")]
+        public string Town { get; set; }
+
+        [Required(ErrorMessage = "The Previous Business Country field is required")]
+        [Display(Name = "Country")]
+        public string Country { get; set; }
     }
 
     public class OperatingIndustriesViewModel : ICollectionViewModel, IRequiredIf

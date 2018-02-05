@@ -55,9 +55,7 @@
     <Folder Include="Views\JobTitle\" />
     <Folder Include="Views\NamedIndividual\" />
     <Folder Include="Views\NamedIndividuals\" />
-    <Folder Include="Views\PrincipalAuthority\" />
     <Folder Include="Views\Organisation\" />
-    <Folder Include="Views\OrganisationDetails\" />
   </ItemGroup>
 
   <ItemGroup>

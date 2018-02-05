@@ -4,8 +4,10 @@
 
 @model GLAA.ViewModels.LicenceApplication.PersonalEmailAddressViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "14" } })
+
 @using (Html.BeginForm("SavePersonalEmailAddress", "PrincipalAuthority"))
-{    
+{
     <div class="grid-row">
         <div class="column-two-thirds">
             @Html.Partial("_GdsValidationSummary")
@@ -19,7 +21,7 @@
             @Html.TextFormGroupFor(x => x.PersonalEmailAddress)
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }
 

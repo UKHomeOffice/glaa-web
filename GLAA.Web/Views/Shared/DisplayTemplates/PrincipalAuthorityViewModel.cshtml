@@ -224,30 +224,11 @@
         }
     </tr>
     <tr>
-        <td>@Html.LabelFor(m => m.PreviousTradingNames.HasPreviousTradingNames)</td>
-        <td>@Html.DisplayFor(m => m.PreviousTradingNames.HasPreviousTradingNames, "NullableBoolean")</td>
-        @if (isEditable)
-        {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 28 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
-        }
-    </tr>
-    @if (Model.PreviousTradingNames.CanView(Model))
-    {
-        <tr>
-            <td>@Html.LabelFor(m => m.PreviousTradingNames.PreviousTradingNames)</td>
-            <td>@Html.DisplayFor(m => m.PreviousTradingNames)</td>
-            @if (isEditable)
-            {
-              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 29 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
-            }
-        </tr>
-    }
-    <tr>
         <td>@Html.LabelFor(m => m.PreviousExperience.PreviousExperience)</td>
         <td>@Html.DisplayFor(m => m.PreviousExperience.PreviousExperience)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 30 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PreviousExperience.PreviousExperience)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 28 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PreviousExperience.PreviousExperience)</span></a></td>
         }
     </tr>
     </tbody>

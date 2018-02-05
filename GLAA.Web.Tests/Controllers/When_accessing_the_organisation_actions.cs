@@ -42,12 +42,12 @@ namespace GLAA.Web.Tests.Controllers
             licenceViewModelBuilder.Build<OrganisationDetailsViewModel>(Arg.Any<int>())
                 .Returns(new OrganisationDetailsViewModel());
 
-            var result = controller.SaveOrganisationName(new OrganisationNameViewModel {OrganisationName = "Org Name"}) as RedirectToActionResult;
+            var result = controller.SaveOrganisationName(new BusinessNameViewModel {BusinessName = "Org Name"}) as RedirectToActionResult;
 
             licencePostDataHandler.Received(1).Update(
                 Arg.Any<int>(), 
                 Arg.Any<Func<Licence, Licence>>(), 
-                Arg.Any<OrganisationNameViewModel>());
+                Arg.Any<BusinessNameViewModel>());
 
             Assert.IsNotNull(result);
             Assert.AreEqual("Part", result.ActionName);
