@@ -18,7 +18,7 @@ spec:
           runAsNonRoot: true            
         image: quay.io/ukhomeofficedigital/glaa-db-setup:v0_1
         imagePullPolicy: Always
-        command: ['sh', '-c', 'echo "Starting DB"; #!/bin/bash; /opt/mssql-tools/bin/sqlcmd -S $DB_SERVER,$DB_PORT -U $DB_USER -P $DB_PASS -i db_setup.sql -r1; echo "Completed DB Setup";']
+        command: ['sh', '-c', '/opt/mssql-tools/bin/sqlcmd -S $DB_SERVER,$DB_PORT -U $DB_USER -P $DB_PASS -i db_setup.sql -r1']
         ports:
           - containerPort: 80
         env:
