@@ -3,8 +3,9 @@
 }
 
 @model GLAA.ViewModels.LicenceApplication.EligibilityViewModel
-
-<main id="content" role="main">
+    
+@using (Html.BeginForm("SendVerification", "Eligibility"))
+{
     <div class="grid-row">
         <div class="column-full">
             <h1 class="heading-large">
@@ -13,8 +14,9 @@
             @Html.DisplayFor(m => m)
         </div>
         <div class="column-full">
-            <p>We will be sharing and checking your information with other Government Departments and their agencies. For more information <a href="#">please read our privacy policy.</a></p>
-            <p><a class="button button-start" href="@Url.Action("Index", "Declaration")">Complete account set up</a></p>
+            <p>We will be sharing and checking your information with other Government Departments and their agencies. For more information <a href="#">please read our privacy policy.</a>
+            </p>
+            <p><button class="button button-start" type="submit">Complete account set up</button></p>
         </div>
     </div>
-</main>
+}

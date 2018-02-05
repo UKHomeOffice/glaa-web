@@ -48,6 +48,12 @@ namespace GLAA.Web.Controllers
             return View("Introduction");
         }
 
+        [HttpGet]
+        public ActionResult VerificationSent()
+        {
+            return View("VerificationSent");
+        }
+
         [HttpPost]
         [ExportModelState]
         public ActionResult SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
@@ -128,6 +134,13 @@ namespace GLAA.Web.Controllers
             accountCreationPostDataHandler.SetPassword(session.GetString(CurrentPaEmail), model.Password);
 
             return RedirectToAction("Eligibility", new { id = 6 });
+        }
+        
+        [HttpPost]
+        [ExportModelState]
+        public ActionResult SendVerification(EligibilityViewModel model)
+        {
+            return RedirectToAction("VerificationSent");
         }
     }
 }
