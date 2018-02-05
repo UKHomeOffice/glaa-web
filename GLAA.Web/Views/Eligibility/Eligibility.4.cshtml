@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
 
+@Html.ActionLink("< Back", "Back", "Eligibility", new { submittedPageId = 4 }, new { @class = "details-back-button" })
+
 @using (Html.BeginForm("SaveCommunicationPreference", "Eligibility"))
 {
     <div class="grid-row">

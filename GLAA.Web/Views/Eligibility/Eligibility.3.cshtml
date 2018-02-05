@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.AddressViewModel
 
+@Html.ActionLink("< Back", "Back", "Eligibility", new { submittedPageId = 3 }, new { @class = "details-back-button" })
+
 @using (Html.BeginForm("SaveAddress", "Eligibility"))
 {
     <div class="grid-row">

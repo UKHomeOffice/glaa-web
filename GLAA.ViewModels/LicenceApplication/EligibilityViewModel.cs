@@ -54,7 +54,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string EmailAddress { get; set; }
     }
 
-    public class PasswordViewModel
+    public class PasswordViewModel : IValidatable
     {
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -66,6 +66,16 @@ namespace GLAA.ViewModels.LicenceApplication
         [Display(Name = "Re-type password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        // Does the user have a password set in the DB?
+        public bool HasPassword { get; set; }
+
+        public void Validate()
+        {
+            IsValid = HasPassword;
+        }
+
+        public bool IsValid { get; set; }
     }
 
     public class EligibilitySummaryViewModel : RegistrationViewModel, IValidatable

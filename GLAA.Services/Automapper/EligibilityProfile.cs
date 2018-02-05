@@ -13,6 +13,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.EmailAddress, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.Password, opt => opt.MapFrom(y => y))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<EligibilityViewModel, GLAAUser>()
@@ -37,6 +38,10 @@ namespace GLAA.Services.Automapper
 
             CreateMap<GLAAUser, CommunicationPreferenceViewModel>()
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y.CommunicationPreference))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            CreateMap<GLAAUser, PasswordViewModel>()
+                .ForMember(x => x.HasPassword, opt => opt.MapFrom(y => !string.IsNullOrEmpty(y.PasswordHash)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<PrincipalAuthorityEmailAddressViewModel, GLAAUser>()

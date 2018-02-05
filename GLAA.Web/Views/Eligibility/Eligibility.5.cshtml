@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.PasswordViewModel
 
+@Html.ActionLink("< Back", "Back", "Eligibility", new { submittedPageId = 5 }, new { @class = "details-back-button" })
+
 @using (Html.BeginForm("SavePassword", "Eligibility"))
 {
     <div class="grid-row">
