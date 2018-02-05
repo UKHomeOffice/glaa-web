@@ -1,10 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Organisation Details - Part 12";    
+    ViewBag.Title = "Do you have a PAYE number?";
+    var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
 
-@using (Html.BeginForm("SaveLegalStatus", "OrganisationDetails"))
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
+
+@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -12,27 +15,43 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is the legal status of your business?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
             <div class="form-group">
                 <fieldset>
                     <legend>
-                        <span class="error-message">
-                            <span class="field-validation-valid" data-valmsg-for="radio_list" data-valmsg-replace="true"></span>
-                        </span>
+                        <span class="body-text"></span>
                     </legend>
-                    @foreach (var status in Model.AvailableLegalStatuses)
+                    @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.LegalStatus, status.Id)
-                            @Html.Label(status.Name)
+                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
+                            @Html.Label(option.Text)
                         </div>
+
+                        if (option.Value == switchValue)
+                        {
+                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
+                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
+                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
+                            </div>
+                        }
                     }
                 </fieldset>
             </div>
         </div>
     </div>
     <button type="submit" class="button">Save and continue</button>
+}
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            hiddenContent.hideContent();
+            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
+        });
+    </script>
 }

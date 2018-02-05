@@ -1,10 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Organisation Details - Part 11";
+    ViewBag.Title = "What is your preferred channel of communication?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.BusinessWebsiteViewModel
+@model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
 
-@using (Html.BeginForm("SaveBusinessWebsite", "OrganisationDetails"))
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "9" } })
+
+@using (Html.BeginForm("SaveCommunicationPreference", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -12,19 +14,16 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your business website?
+                @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">            
-            <div class="form-group">
-                @Html.LabelWithHintFor(x => x.BusinessWebsite)
-                @Html.TextBoxFor(x => x.BusinessWebsite, new { @class = "form-control"})
-            </div>
+        <div class="column-two-thirds">
+            @Html.RadioButtonFormGroupForEnum(x => x.CommunicationPreference)
         </div>
     </div>
+
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section scripts
-{        
+@section Scripts {
 }

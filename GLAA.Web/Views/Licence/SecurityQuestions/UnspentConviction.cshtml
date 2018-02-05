@@ -1,8 +1,13 @@
-﻿@model GLAA.ViewModels.LicenceApplication.UnspentConvictionViewModel
+﻿@using GLAA.Web.Helpers
+@model GLAA.ViewModels.LicenceApplication.UnspentConvictionViewModel
+
+@inject ISessionHelper SessionHelper
 
 @{
     ViewBag.Title = "Details of the unspent criminal conviction or alternative sanctions or penalties for proven offences";
 }
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", ViewContext.RouteData.Values["Section"] }, { "submittedPageId", SessionHelper.GetLoadedPage() }, { "isSecurityPart", true } })
 
 @using (Html.BeginForm())
 {

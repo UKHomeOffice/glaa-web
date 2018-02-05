@@ -19,6 +19,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PAYEERNStatus, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.VATStatus, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.TaxReference, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.BusinessName, opt => opt.ResolveUsing(BusinessNameResolver))
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
 
             CreateMap<Licence, BusinessEmailAddressViewModel>()
@@ -64,8 +65,11 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
             CreateMap<OrganisationDetailsViewModel, Licence>()
-                .ForMember(x => x.OrganisationName, opt => opt.MapFrom(y => y.OrganisationName.OrganisationName))
-                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName.TradingName))
+                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName.BusinessName))
+                .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.BusinessName.HasTradingName))
+                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.BusinessName.TradingName))
+                .ForMember(x => x.HasPreviousTradingName, opt => opt.MapFrom(y => y.BusinessName.HasPreviousTradingName))
+                .ForMember(x => x.PreviousTradingNames, opt => opt.Ignore())
                 .ForMember(x => x.OperatingIndustries, opt => opt.Ignore())
                 .ForMember(x => x.IsShellfish, opt => opt.ResolveUsing(ShellfishResolver))
                 .ForMember(x => x.OperatingCountries, opt => opt.Ignore())
@@ -87,8 +91,11 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.TaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<OrganisationNameViewModel, Licence>()
-                .ForMember(x => x.OrganisationName, opt => opt.MapFrom(y => y.OrganisationName))
+            CreateMap<BusinessNameViewModel, Licence>()
+                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
+                .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.HasTradingName))
+                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName))
+                .ForMember(x => x.HasPreviousTradingName, opt => opt.MapFrom(y => y.HasPreviousTradingName))
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<LegalStatusViewModel, Licence>()
@@ -96,10 +103,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.OtherLegalStatus, opt => opt.MapFrom(y => y.Other))
                 //.ForMember(x => x.CompaniesHouseNumber, opt => opt.MapFrom(y => y.CompaniesHouseNumber))
                 //.ForMember(x => x.CompanyRegistrationDate, opt => opt.MapFrom(y => y.CompanyRegistrationDate))
-                .ForAllOtherMembers(x => x.Ignore());
-
-            CreateMap<TradingNameViewModel, Licence>()
-                .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName))
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<TurnoverViewModel, Licence>()
@@ -174,14 +177,31 @@ namespace GLAA.Services.Automapper
 
             return vm;
         }
-
-
+        
         private LegalStatusViewModel LegalStatusResolver(Licence licence)
         {
             return new LegalStatusViewModel
             {
                 LegalStatus = licence.LegalStatus,
                 Other = licence.OtherLegalStatus
+            };
+        }
+
+        private BusinessNameViewModel BusinessNameResolver(Licence licence)
+        {
+            return new BusinessNameViewModel
+            {
+                BusinessName = licence.BusinessName,
+                HasTradingName = licence.HasTradingName,
+                TradingName = licence.TradingName,
+                HasPreviousTradingName = licence.HasPreviousTradingName,
+                PreviousTradingNames = licence.PreviousTradingNames?.Select(p => new PreviousTradingNameViewModel
+                {
+                    Id = p.Id,
+                    BusinessName = p.BusinessName,
+                    Country = p.Country,
+                    Town = p.Town
+                }).ToList()
             };
         }
     }

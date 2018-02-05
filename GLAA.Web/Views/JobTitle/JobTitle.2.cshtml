@@ -5,6 +5,8 @@
 @using GLAA.Web.Helpers
 @model GLAA.ViewModels.LicenceApplication.NamedJobTitleViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "FormSection" }, { "submittedPageId", "2" } })
+
 @using (Html.BeginForm("DeleteNamedJobTitle", "JobTitle"))
 {
     <div class="grid-row">
@@ -24,8 +26,8 @@
             <div class="form-group">
                 <a class="button" href="@Url.Action("Part", "NamedIndividuals", new { id = 2 })">Save and review</a>
             </div>
-            <br/>
-            <br/>
+            <br />
+            <br />
             @if (!SessionHelper.GetBool(Context.Session, SessionHelper.CurrentUserIsAdmin))
             {
                 <p>
@@ -39,6 +41,6 @@
                 </p>
             }
         </div>
-    </div>   
+    </div>
 }
 

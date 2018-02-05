@@ -1,10 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Organisation Details - Part 8";
+    ViewBag.Title = "What is your business mobile number?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.BusinessPhoneNumberViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessMobileNumberViewModel
 
-@using (Html.BeginForm("SaveBusinessPhoneNumber", "OrganisationDetails"))
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "6" } })
+
+@using (Html.BeginForm("SaveBusinessMobileNumber", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -12,15 +14,18 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your business phone number?
+                @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">  
-            @Html.TextFormGroupFor(x => x.BusinessPhoneNumber)
+        <div class="column-two-thirds">
+            <div class="form-group">
+                @Html.LabelWithHintFor(x => x.BusinessMobileNumber)
+                @Html.TextBoxFor(x => x.BusinessMobileNumber, new { @class = "form-control" })
+            </div>
         </div>
     </div>
     <button type="submit" class="button">Save and continue</button>
 }
 
-@section Scripts {    
+@section Scripts {
 }

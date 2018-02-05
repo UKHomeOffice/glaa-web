@@ -286,7 +286,7 @@ namespace GLAA.Services.Automapper
             }) as ICollection<OffenceAwaitingTrial>;
         }
 
-        public static ICollection<PreviousTradingName> PreviousTradingNamesResolver(PreviousTradingNamesViewModel uc)
+        public static ICollection<PreviousTradingName> PreviousTradingNamesResolver(BusinessNameViewModel uc)
         {
             return uc.PreviousTradingNames.Select(p => new PreviousTradingName
             {

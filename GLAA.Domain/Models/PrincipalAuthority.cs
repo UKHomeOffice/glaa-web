@@ -35,9 +35,5 @@ namespace GLAA.Domain.Models
         public string ImmigrationStatus { get; set; }
 
         public DateTime? LeaveToRemainTo { get; set; }
-
-        public bool? HasPreviousTradingNames { get; set; }
-
-        public virtual ICollection<PreviousTradingName> PreviousTradingNames { get; set; }
     }
 }

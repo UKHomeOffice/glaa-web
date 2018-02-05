@@ -200,22 +200,28 @@ namespace GLAA.Services.Automapper
             return new WorkerContractViewModel
             {
                 SelectedContract = licence.WorkerContract,
-                AvailableContracts = new List<SelectListItem>
+                AvailableContracts = new List<AvailableContract>
                 {
-                    new SelectListItem
+                    new AvailableContract
                     {
-                        Text = "Contract of employment",
-                        Value = "1"
+                        Id = 1,
+                        Name = "Contract of employment",
+                        Checked = false,
+                        EnumMappedTo =  WorkerContract.ContractOfEmployment
                     },
-                    new SelectListItem
+                    new AvailableContract
                     {
-                        Text = "Contract for Services",
-                        Value = "2"
+                        Id = 2,
+                        Name = "Contract for Services",
+                        Checked = false,
+                        EnumMappedTo = WorkerContract.ContractForServices
                     },
-                    new SelectListItem
+                    new AvailableContract
                     {
-                        Text = "None",
-                        Value = "3"
+                        Id = 3,
+                        Name = "None",
+                        Checked = false,
+                        EnumMappedTo = WorkerContract.None
                     }
                 }
             };

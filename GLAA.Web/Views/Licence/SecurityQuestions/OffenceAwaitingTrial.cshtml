@@ -1,8 +1,13 @@
-﻿@model GLAA.ViewModels.LicenceApplication.OffenceAwaitingTrialViewModel
+﻿@using GLAA.Web.Helpers
+@model GLAA.ViewModels.LicenceApplication.OffenceAwaitingTrialViewModel
 
 @{
     ViewBag.Title = "Details of the alleged offence / sanction / penalty that is awaiting trial";
 }
+
+@inject ISessionHelper SessionHelper
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", ViewContext.RouteData.Values["Section"] }, { "submittedPageId", SessionHelper.GetLoadedPage() }, { "isSecurityPart", true } })
 
 @using (Html.BeginForm())
 {
@@ -23,9 +28,11 @@
     if (Model.Id != 0)
     {
         <!--TODO Putting the remove first is more consistent with the rest of the application but also makes it the default action for <ENTER> which might be confusing-->
-        <p><button type="submit" class="button button-add-another" formaction="@Url.Action("RemoveOffenceAwaitingTrial", "Licence", Url.ActionContext.RouteData.Values)">Remove</button>
+        <p>
+            <button type="submit" class="button button-add-another" formaction="@Url.Action("RemoveOffenceAwaitingTrial", "Licence", Url.ActionContext.RouteData.Values)">Remove</button>
         </p>
     }
-    <p><button type="submit" class="button" formaction="@Url.Action("AddOffenceAwaitingTrial", "Licence", Url.ActionContext.RouteData.Values)">Save and continue</button>
+    <p>
+        <button type="submit" class="button" formaction="@Url.Action("AddOffenceAwaitingTrial", "Licence", Url.ActionContext.RouteData.Values)">Save and continue</button>
     </p>
 }

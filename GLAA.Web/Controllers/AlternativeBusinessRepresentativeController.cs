@@ -25,7 +25,16 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Part(int id)
+        public IActionResult Part(int id, bool? back)
+        {
+            var model = SetupGetPart(id);
+
+            return back.HasValue && back.Value
+                ? GetPreviousView(id, FormSection.AlternativeBusinessRepresentative, model)
+                : GetNextView(id, FormSection.AlternativeBusinessRepresentative, model);
+        }
+
+        private AlternativeBusinessRepresentativeViewModel SetupGetPart(int id)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var abrId = Session.GetCurrentAbrId();
@@ -42,8 +51,7 @@ namespace GLAA.Web.Controllers
             }
 
             Session.SetLoadedPage(id);
-
-            return GetNextView(id, FormSection.AlternativeBusinessRepresentative, model);
+            return model;
         }
 
         [HttpGet]

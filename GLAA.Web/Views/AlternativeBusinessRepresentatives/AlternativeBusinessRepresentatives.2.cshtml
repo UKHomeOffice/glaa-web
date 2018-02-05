@@ -4,6 +4,8 @@
     ViewBag.Title = "Alternative Business Representatives";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentatives" }, { "submittedPageId", "2" } })
+
 @using (Html.BeginForm("SaveAlternativeBusinessRepresentatives", "AlternativeBusinessRepresentatives"))
 {
     <main id="content" role="main">
@@ -23,7 +25,7 @@
                         <legend>
                             <span class="body-text"></span>
                         </legend>
-                    
+
                         @foreach (var option in Model.YesNo)
                         {
                             <div class="multiple-choice">

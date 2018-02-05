@@ -28,7 +28,7 @@ namespace GLAA.ViewModels.LicenceApplication
             ShellfishWorkerNationalityViewModel = new ShellfishWorkerNationalityViewModel();
             PreviouslyWorkedInShellfishViewModel = new PreviouslyWorkedInShellfishViewModel();
         }
-        
+
         public TransportingWorkersViewModel TransportingWorkersViewModel { get; set; }
         public AccommodatingWorkersViewModel AccommodatingWorkersViewModel { get; set; }
         public SourcingWorkersViewModel SourcingWorkersViewModel { get; set; }
@@ -69,10 +69,10 @@ namespace GLAA.ViewModels.LicenceApplication
         [RequiredForShellfish]
         [Display(Name = "Has your business previously worked in shellfish gathering?")]
         public bool? PreviouslyWorkedInShellfish { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "You must enter the location in which you have previously gathered shellfish")]
         public string GatheringLocation { get; set; }
-        
+
         [UIHint("_NullableDateTime")]
         [RequiredIf(ErrorMessage = "You must enter the date when you have previously gathered shellfish")]
         public DateViewModel GatheringDate { get; set; }
@@ -91,15 +91,15 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Will your workers be provided with accommodation?")]
         public bool? AccommodatesWorkers { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "You must specify whether you deduct accomodation costs from workers pay")]
         [Display(Name = "Will the charges for accommodation be deducted from workers pay")]
         public bool? AccommodationDeductedFromPay { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "You must enter the number of properties your workers will be housed in")]
         [Display(Name = "How many properties will your workers be housed in")]
         public int? NumberOfProperties { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "You must specify whether workers have a choice to use your accomodation")]
         [Display(Name = "Will workers have a choice about using the transport")]
         public bool? AccommodationWorkersChoose { get; set; }
@@ -187,22 +187,28 @@ namespace GLAA.ViewModels.LicenceApplication
         [Display(Name = "What type of contract do you intend to issue to your workers")]
         public WorkerContract? SelectedContract { get; set; }
 
-        public List<SelectListItem> AvailableContracts { get; set; } = new List<SelectListItem>
+        public List<AvailableContract> AvailableContracts { get; set; } = new List<AvailableContract>
         {
-            new SelectListItem
+            new AvailableContract
             {
-                Text = "Contract of employment",
-                Value = "ContractOfEmployment"
+                Id = 1,
+                Name = "Contract of employment",
+                Checked = false,
+                EnumMappedTo =  WorkerContract.ContractOfEmployment
             },
-            new SelectListItem
+            new AvailableContract
             {
-                Text = "Contract for Services",
-                Value = "ContractForServices"
+                Id = 2,
+                Name = "Contract for Services",
+                Checked = false,
+                EnumMappedTo = WorkerContract.ContractForServices
             },
-            new SelectListItem
+            new AvailableContract
             {
-                Text = "None",
-                Value = "None"
+                Id = 3,
+                Name = "None",
+                Checked = false,
+                EnumMappedTo = WorkerContract.None
             }
         };
     }
@@ -212,12 +218,12 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Has your organisation ever been banned from trading")]
         public bool? HasBeenBanned { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The date of the ban must be provided")]
         [UIHint("_NullableDateTime")]
         [Display(Name = "Date of ban", Description = "For example 31 3 1980")]
         public DateViewModel DateOfBan { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The reason for the ban must be provided")]
         [Display(Name = "Description of the reason for the ban")]
         public string BanDescription { get; set; }
@@ -230,7 +236,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Has the organisation used subcontractors in the last 12 months")]
         public bool? UsesSubcontractors { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "Subcontractor names are required if you have used them in the last 12 months")]
         public string SubcontractorNames { get; set; }
 
@@ -242,7 +248,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Do you supply workers to industries outside the licensable sectors")]
         public bool? SuppliesWorkersOutsideLicensableAreas { get; set; }
-        
+
         [CollectionRequiredIf(ErrorMessage = "You must select a sector if you supply workers outside of the valid sectors")]
         public List<CheckboxListItem> SelectedSectors { get; set; }
 
@@ -293,7 +299,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Is the business being significantly controlled by another individual who meets the criteria of People with Significant Control (PSC)")]
         public bool? IsPSCControlled { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "You must provide details of the PSC")]
         public string PSCDetails { get; set; }
 
@@ -311,7 +317,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Do you have multiple branches, franchises, businesses that are ultimately controlled by the applicant business")]
         public bool? HasMultiples { get; set; }
-        
+
         [CollectionRequiredIf(ErrorMessage = "You must select a multiple type if you have multiples in your organisation")]
         public List<CheckboxListItem> SelectedMultiples { get; set; }
 
@@ -324,11 +330,11 @@ namespace GLAA.ViewModels.LicenceApplication
                 new CheckboxListItem {Id = 3, Name = "Other", Checked = false}
             };
         }
-        
+
         [Display(Name = "Other")]
         [AssertThat("OtherMultipleIsValid", ErrorMessage = "The Other field is required")]//Can't have multiple different conditions for IRequiredIf
         public string OtherMultiple { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "Number of multiples is required")]
         [Display(Name = "Number of multiples")]
         public int? NumberOfMultiples { get; set; }

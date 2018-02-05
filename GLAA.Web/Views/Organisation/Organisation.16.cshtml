@@ -5,6 +5,8 @@
 @using GLAA.Web.Helpers
 @model GLAA.ViewModels.LicenceApplication.OrganisationViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "16" } })
+
 <main id="content" role="main">
     <div class="grid-row">
         <div class="column-full">
@@ -28,7 +30,7 @@
             @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
             {
                 <p>
-                    @Html.ActionLink("Go to next section", "SubmitApplication", "Licence", null, new {@class = "button"})
+                    @Html.ActionLink("Go to next section", "SubmitApplication", "Licence", null, new { @class = "button" })
                 </p>
             }
         </div>

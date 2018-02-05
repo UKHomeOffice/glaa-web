@@ -4,6 +4,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.NationalInsuranceNumberViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "12" } })
+
 @using (Html.BeginForm("SaveNationalInsuranceNumber", "AlternativeBusinessRepresentative"))
 {
     @Html.HiddenFor(x => x.IsUk)
@@ -20,6 +22,6 @@
             @Html.TextFormGroupFor(x => x.NationalInsuranceNumber)
         </div>
     </div>
-    
+
     <button type="submit" class="button">Save and continue</button>
 }

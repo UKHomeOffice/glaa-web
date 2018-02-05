@@ -22,16 +22,18 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ExportModelState]
-        public IActionResult Part(int id)
-        {
+        public IActionResult Part(int id, bool? back = false)
+    {
             var licenceId = Session.GetCurrentLicenceId();
 
             Session.ClearCurrentNamedIndividualId();
 
             var model = LicenceApplicationViewModelBuilder.Build<NamedIndividualCollectionViewModel>(licenceId);
 
-            return GetNextView(id, FormSection.NamedIndividuals, model);
-        }
+        return back.HasValue && back.Value
+        ? GetPreviousView(id, FormSection.NamedIndividuals, model)
+        : GetNextView(id, FormSection.NamedIndividuals, model);
+    }
 
         [HttpPost]
         [ExportModelState]

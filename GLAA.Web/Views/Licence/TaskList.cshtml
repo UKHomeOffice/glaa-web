@@ -55,22 +55,22 @@
 
                                 @if (Model.OrganisationDetails.IsValid)
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "OrganisationDetails", new { id = 17})" aria-describedby="company-information-completed">
-                                        Organisation details
+                                    <a class="task-name" href="@Url.Action("Part", "OrganisationDetails", new { id = 16})" aria-describedby="company-information-completed">
+                                        Business details
                                     </a>
                                     <strong class="task-completed" id="company-information-completed">Completed</strong>
                                 }
                                 else
                                 {
                                     <a class="task-name" href="@Url.Action("Part", "OrganisationDetails", new { id = 1 })" aria-describedby="company-information-completed">
-                                        Organisation details
+                                        Business details
                                     </a>
                                 }
                             </li>
                             <li class="task-list-item">
                                 @if (Model.PrincipalAuthority != null && Model.PrincipalAuthority.IsValid)
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "PrincipalAuthority", new { id = 31 })">
+                                    <a class="task-name" href="@Url.Action("Part", "PrincipalAuthority", new { id = 29 })">
                                         Your Principal Authority details
                                     </a>
                                     <strong class="task-completed" id="principal-authority-details-completed">Completed</strong>

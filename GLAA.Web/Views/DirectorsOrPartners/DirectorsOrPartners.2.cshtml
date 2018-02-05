@@ -4,6 +4,8 @@
     ViewBag.Title = "Directors Or Partners";
 }
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorsOrPartners" }, { "submittedPageId", "2" } })
+
 @using (Html.BeginForm("SaveDirectorsOrPartners", "DirectorsOrPartners"))
 {
     <main id="content" role="main">

@@ -226,7 +226,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             input.IsDirector.IsDirector = expectedIsDirector;
             input.PreviousExperience.PreviousExperience = expectedPreviousExperience;
-            input.PreviousTradingNames.HasPreviousTradingNames = true;
 
             var result = this.mapper.Map<PrincipalAuthority>(input);
 
@@ -234,7 +233,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             Assert.AreEqual(input.IsDirector.IsDirector, result.IsDirector);
             Assert.AreEqual(input.PreviousExperience.PreviousExperience, result.PreviousExperience);
-            Assert.AreEqual(input.PreviousTradingNames.HasPreviousTradingNames, result.HasPreviousTradingNames);
         }
 
         [TestMethod]
@@ -383,13 +381,12 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var input = new OrganisationDetailsViewModel
             {
-                OrganisationName = new OrganisationNameViewModel
+                BusinessName = new BusinessNameViewModel
                 {
-                    OrganisationName = "org name"
-                },
-                TradingName = new TradingNameViewModel
-                {
-                    TradingName = "trading name"
+                    BusinessName = "org name",
+                    HasTradingName = true,
+                    TradingName = "trading name",
+                    HasPreviousTradingName = true
                 },
                 BusinessPhoneNumber = new BusinessPhoneNumberViewModel
                 {
@@ -422,8 +419,10 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<Licence>(input);
 
-            Assert.AreEqual(input.OrganisationName.OrganisationName, result.OrganisationName);
-            Assert.AreEqual(input.TradingName.TradingName, result.TradingName);
+            Assert.AreEqual(input.BusinessName.BusinessName, result.BusinessName);
+            Assert.AreEqual(input.BusinessName.HasTradingName, result.HasTradingName);
+            Assert.AreEqual(input.BusinessName.TradingName, result.TradingName);
+            Assert.AreEqual(input.BusinessName.HasPreviousTradingName, result.HasPreviousTradingName);
             Assert.AreEqual(input.BusinessPhoneNumber.BusinessPhoneNumber, result.BusinessPhoneNumber);
             Assert.AreEqual(input.BusinessMobileNumber.BusinessMobileNumber, result.BusinessMobileNumber);
             Assert.AreEqual(input.BusinessWebsite.BusinessWebsite, result.BusinessWebsite);

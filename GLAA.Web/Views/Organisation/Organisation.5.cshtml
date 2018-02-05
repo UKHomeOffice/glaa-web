@@ -5,6 +5,8 @@
 
 @model GLAA.ViewModels.LicenceApplication.MultipleBranchViewModel
 
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "Organisation" }, { "submittedPageId", "5" } })
+
 @using (Html.BeginForm("SaveMultipleBranch", "Organisation"))
 {
     <div class="grid-row">
@@ -53,13 +55,13 @@
             </div>
         </div>
     </div>
-    
+
     //TODO, need to set the formaction here based on whether there is shellfish selected in the industies collection
     <button type="submit" class="button">Save and continue</button>
 }
 
 @section scripts
-{    
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();

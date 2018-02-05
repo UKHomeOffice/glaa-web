@@ -1,9 +1,11 @@
-﻿"", "DirectorOrPartner"@{
-    ViewBag.Title = "Principal Authority - Part 17";
+﻿@{
+    ViewBag.Title = "Do you have a passport?";
     var switchValue = "true";
 }
 
 @model GLAA.ViewModels.LicenceApplication.PassportViewModel
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "15" } })
 
 @using (Html.BeginForm("SavePassport", "DirectorOrPartner"))
 {
@@ -46,7 +48,7 @@
 }
 
 @section scripts
-{
+    {
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
