@@ -5,31 +5,51 @@
 }
 
 @*<div>
-    <p style="padding-top: 25px;">
-        <input type="text" style="margin-top: 6px;" /><a class="button button-start" href="" role="button" style="margin-left:25px">Search</a>
-    </p>
-</div>*@
+        <p style="padding-top: 25px;">
+            <input type="text" style="margin-top: 6px;" /><a class="button button-start" href="" role="button" style="margin-left:25px">Search</a>
+        </p>
+    </div>*@
 
 
-@using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
+@using (Html.BeginForm("Index", "PublicRegister"))
 {
     <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
-        </div>
-        <div class="column-full">
-            <h1 class="heading-large">
-                Do you have a VAT registration number?
-            </h1>
-        </div>
-        <div class="column-two-thirds">
-            <div class="form-group">
-                <fieldset>
-                    @Html.LabelFor(x => x.PublicRegisterSearchViewModel.OrganisationName)
-                    
-                    
+        @*<div class="column-two-thirds">
+                @Html.Partial("_GdsValidationSummary")
+            </div>
+            <div class="column-full">
+                <h1 class="heading-large">
+                    Do you have a VAT registration number?
+                </h1>
+            </div>*@
+        @*<div class="column-two-thirds">*@
+        <div class="form-group">
+            <fieldset>
+                <div>Suppliers who</div>
+                <div>
+                    @Html.DropDownListFor(x => x.PublicRegisterSearchViewModel.SupplierWho, Model.PublicRegisterSearchViewModel.AvailableSuppliersWho)
+                    in
+                    @Html.DropDownListFor(x => x.PublicRegisterSearchViewModel.CountryAdded, Model.PublicRegisterSearchViewModel.AvailableCountries)
+                    <button type="submit" class="button" name="submit" value="add">Add Country</button>
+                    @Html.HiddenFor(x => x.PublicRegisterSearchViewModel.CountriesSelected)
+                    @foreach (var country in Model.PublicRegisterSearchViewModel.CountriesSelected)
+                    {
+                        @*<input type="hidden" id="CountryRemoved" value="@country.Value" />*@
 
-                    <legend>
+                        <button type="submit" class="button" name="submit" value="remove">@country.Value</button>
+                    }
+                </div>
+                <div>
+                    Search suppliers
+                </div>
+                <div>
+                    @Html.TextBoxFor(x => x.PublicRegisterSearchViewModel.BusinessName)
+                </div>
+
+                <button type="submit" class="button" name="submit" value="search">Search</button>
+
+
+                @*<legend>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
@@ -45,12 +65,16 @@
                                 @Html.DateFormGroupFor(x => x.VATRegistrationDate)
                             </div>
                         }
-                    }
-                </fieldset>
-            </div>
+                    }*@
+
+
+
+
+            </fieldset>
         </div>
+        @*</div>*@
     </div>
-    <button type="submit" class="button">Search</button>
+    @*<button type="submit" class="button">Search</button>*@
 }
 
 
@@ -59,7 +83,7 @@
     <thead>
         <tr>
             <th>Unique Ref No.</th>
-            <th>Organisation Name</th>
+            <th>Business Name</th>
             <th>Trading Name</th>
             <th>Country</th>
             <th>County</th>
@@ -68,17 +92,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var licence in Model.Licences)
+        @if (Model.Licences != null)
         {
-            <tr>
-                <td>@licence.ApplicationId</td>
-                <td>@licence.OrganisationName</td>
-                <td>@licence.TradingName</td>
-                <td>@licence.Country</td>
-                <td>@licence.County</td>
-                <td>Licensed</td>
-                <td><a href="@Url.Action("Licence", new { id = licence.Id })" class="link">view</a></td>
-            </tr>
+            foreach (var licence in Model.Licences)
+            {
+                <tr>
+                    <td>@licence.ApplicationId</td>
+                    <td>@licence.BusinessName</td>
+                    <td>@licence.TradingName</td>
+                    <td>@licence.Country</td>
+                    <td>@licence.County</td>
+                    <td>Licensed</td>
+                    <td><a href="@Url.Action("Licence", new {id = licence.Id})" class="link">view</a></td>
+                </tr>
+            }
         }
     </tbody>
 </table>

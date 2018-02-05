@@ -7,7 +7,7 @@ namespace GLAA.ViewModels.PublicRegister
     {
         public int Id { get; set; }
         public string ApplicationId { get; set; }
-        public string OrganisationName { get; set; }
+        public string BusinessName { get; set; }
         public string TradingName { get; set; }
         public string Country { get; set; }
         public string County { get; set; }

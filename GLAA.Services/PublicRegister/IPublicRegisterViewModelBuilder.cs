@@ -1,4 +1,6 @@
-﻿using GLAA.ViewModels.PublicRegister;
+﻿using System.Collections.Generic;
+using GLAA.ViewModels.PublicRegister;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.Services.PublicRegister
 {
@@ -6,5 +8,7 @@ namespace GLAA.Services.PublicRegister
     {
         PublicRegisterLicenceListViewModel BuildAllLicences();
         PublicRegisterLicenceSummaryViewModel BuildLicence(int id);
+        PublicRegisterLicenceListViewModel BuildSearchForLicences(PublicRegisterSearchViewModel publicRegisterSearchViewModel);
+        List<SelectListItem> BuildAvailableCountries();
     }
 }

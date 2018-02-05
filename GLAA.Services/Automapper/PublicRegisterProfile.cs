@@ -13,7 +13,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Id, opt => opt.MapFrom(y => y.Id))
                 .ForMember(x => x.ApplicationId, opt => opt.MapFrom(y => y.ApplicationId))
                 .ForMember(x => x.MostRecentStatus, opt => opt.MapFrom(y => StatusProfile.MapLicenceStatusViewModel(PublicRegisterViewModelBuilder.GetLatestStatus(y))))
-                .ForMember(x => x.OrganisationName, opt => opt.MapFrom(y => y.OrganisationName))
+                .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
                 .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName))
                 .ForMember(x => x.Country, opt => opt.MapFrom(y => y.Address.Country))
                 .ForMember(x => x.County, opt => opt.MapFrom(y => y.Address.County))
