@@ -186,14 +186,14 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePersonalMobileNumber(PersonalMobileNumberViewModel model)
+        public IActionResult SavePersonalMobileNumber(MobileNumberViewModel model)
         {
             return AlternativeBusinessRepresentativePost(model, 10);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePersonalEmailAddress(PersonalEmailAddressViewModel model)
+        public IActionResult SavePersonalEmailAddress(EmailAddressViewModel model)
         {
             return AlternativeBusinessRepresentativePost(model, 11);
         }

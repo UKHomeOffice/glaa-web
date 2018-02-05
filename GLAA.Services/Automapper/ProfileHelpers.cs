@@ -97,19 +97,19 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static PersonalEmailAddressViewModel PersonalEmailAddressResolver(Person person)
+        public static EmailAddressViewModel EmailAddressResolver(Person person)
         {
-            return new PersonalEmailAddressViewModel
+            return new EmailAddressViewModel
             {
-                PersonalEmailAddress = person.PersonalEmailAddress
+                EmailAddress = person.EmailAddress
             };
         }
 
-        public static PersonalMobileNumberViewModel PersonalMobileNumberResolver(Person person)
+        public static MobileNumberViewModel MobileNumberResolver(Person person)
         {
-            return new PersonalMobileNumberViewModel
+            return new MobileNumberViewModel
             {
-                PersonalMobileNumber = person.PersonalMobileNumber
+                MobileNumber = person.MobileNumber
             };
         }
 

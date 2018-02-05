@@ -76,8 +76,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.JobTitle, opt => opt.ResolveUsing(ProfileHelpers.JobTitleResolver))
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.ResolveUsing(ProfileHelpers.BusinessPhoneNumberResolver))
                 .ForMember(x => x.BusinessExtension, opt => opt.ResolveUsing(ProfileHelpers.BusinessExtensionResolver))
-                .ForMember(x => x.PersonalMobileNumber, opt => opt.ResolveUsing(ProfileHelpers.PersonalMobileNumberResolver))
-                .ForMember(x => x.PersonalEmailAddress, opt => opt.ResolveUsing(ProfileHelpers.PersonalEmailAddressResolver))
+                .ForMember(x => x.MobileNumber, opt => opt.ResolveUsing(ProfileHelpers.MobileNumberResolver))
+                .ForMember(x => x.EmailAddress, opt => opt.ResolveUsing(ProfileHelpers.EmailAddressResolver))
                 .ForMember(x => x.Nationality, opt => opt.ResolveUsing(ProfileHelpers.NationalityResolver))
                 .ForMember(x => x.LegalStatus, opt => opt.MapFrom(y => y.Licence.LegalStatus))
                 .ForMember(x => x.PassportViewModel, opt => opt.ResolveUsing(ProfileHelpers.PassportViewModel))
@@ -152,12 +152,12 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.MapFrom(y => y.BusinessPhoneNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<PersonalMobileNumberViewModel, PrincipalAuthority>()
-                .ForMember(x => x.PersonalMobileNumber, opt => opt.MapFrom(y => y.PersonalMobileNumber))
+            CreateMap<MobileNumberViewModel, PrincipalAuthority>()
+                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(y => y.MobileNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<PersonalEmailAddressViewModel, PrincipalAuthority>()
-                .ForMember(x => x.PersonalEmailAddress, opt => opt.MapFrom(y => y.PersonalEmailAddress))
+            CreateMap<EmailAddressViewModel, PrincipalAuthority>()
+                .ForMember(x => x.EmailAddress, opt => opt.MapFrom(y => y.EmailAddress))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<BusinessExtensionViewModel, PrincipalAuthority>()
@@ -284,8 +284,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.MapFrom(y => y.BusinessPhoneNumber.BusinessPhoneNumber))
                 .ForMember(x => x.BusinessExtension, opt => opt.MapFrom(y => y.BusinessExtension.BusinessExtension))
-                .ForMember(x => x.PersonalEmailAddress, opt => opt.MapFrom(y => y.PersonalEmailAddress.PersonalEmailAddress))
-                .ForMember(x => x.PersonalMobileNumber, opt => opt.MapFrom(y => y.PersonalMobileNumber.PersonalMobileNumber))
+                .ForMember(x => x.EmailAddress, opt => opt.MapFrom(y => y.EmailAddress.EmailAddress))
+                .ForMember(x => x.MobileNumber, opt => opt.MapFrom(y => y.MobileNumber.MobileNumber))
                 .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumber.NationalInsuranceNumber))
                 .ForMember(x => x.IsDirector, opt => opt.MapFrom(y => y.IsDirector.IsDirector))
                 .ForMember(x => x.WillProvideConfirmation, opt => opt.MapFrom(y => y.PrincipalAuthorityConfirmation.WillProvideConfirmation))

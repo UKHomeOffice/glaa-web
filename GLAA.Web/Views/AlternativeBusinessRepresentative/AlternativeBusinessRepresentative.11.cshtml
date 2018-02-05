@@ -2,7 +2,7 @@
     ViewBag.Title = "Alternative Business Representative - Part 11";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PersonalEmailAddressViewModel
+@model GLAA.ViewModels.LicenceApplication.EmailAddressViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "11" } })
 
@@ -14,11 +14,11 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your personal email address?
+                What is their business e-mail address?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.PersonalEmailAddress)
+            @Html.TextFormGroupFor(x => x.EmailAddress)
         </div>
     </div>
 
