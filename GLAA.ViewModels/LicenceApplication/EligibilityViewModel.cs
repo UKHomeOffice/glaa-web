@@ -38,6 +38,12 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
+
+        [Display(Name = "Full name")]
+        public string FullName => (string.IsNullOrEmpty(Title) ? string.Empty : $"{Title} ") +
+                                  (string.IsNullOrEmpty(FirstName) ? string.Empty : $"{FirstName} ") +
+                                  (string.IsNullOrEmpty(MiddleName) ? string.Empty : $"{MiddleName} ") +
+                                  (string.IsNullOrEmpty(LastName) ? string.Empty : $"{LastName} ");
     }
 
     public class PrincipalAuthorityEmailAddressViewModel

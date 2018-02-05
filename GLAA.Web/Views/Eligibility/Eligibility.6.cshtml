@@ -7,17 +7,14 @@
 <main id="content" role="main">
     <div class="grid-row">
         <div class="column-full">
-            <br />
-            <p>
-                <a href="@Url.Action("TaskList", "Licence")">Return to Task List</a>
-            </p>
             <h1 class="heading-large">
-                Check your answers for this section
+                Check your account details
             </h1>
             @Html.DisplayFor(m => m)
-            <p>
-                <a class="button" href="@Url.Action("Index", "Declaration")">Go to next section</a>
-            </p>
+        </div>
+        <div class="column-full">
+            <p>We will be sharing and checking your information with other Government Departments and their agencies. For more information <a href="#">please read our privacy policy.</a></p>
+            <p><a class="button button-start" href="@Url.Action("Index", "Declaration")">Complete account set up</a></p>
         </div>
     </div>
 </main>
