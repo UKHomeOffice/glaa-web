@@ -32,14 +32,14 @@
         <td>@Html.LabelFor(m => m.CommunicationPreference.CommunicationPreference)</td>
         <td class="@Model.CommunicationPreference?.CommunicationPreference">@Html.DisplayFor(m => m.CommunicationPreference.CommunicationPreference)</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="5">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CommunicationPreference.CommunicationPreference)</span></a>
+            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="4">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CommunicationPreference.CommunicationPreference)</span></a>
         </td>
     </tr>
     <tr>
         <td>@Html.LabelFor(m => m.Password.Password)</td>
         <td class="@Model.Password?.Password">******</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="6">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Password.Password)</span></a>
+            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="5">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Password.Password)</span></a>
         </td>
     </tr>
     </tbody>
