@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "What is the legal status of your business?";
-    var switchValue = 5;
+    var switchValue = "Other";
 }
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
@@ -33,15 +33,15 @@
                             @Html.Label(status.Name)
                         </div>
 
-
-                        if (status.Name == "Other legal status")
+                        @if (status.Name == "Other")
                         {
-                            switchValue = status.Id;
-                            <div class="panel panel-border-narrow js-hidden" id="alternative-name-detail">
+                            switchValue = status.Name;
+                            <div class="panel panel-border-narrow js-hidden" id="other-legal-status-detail">
                                 @Html.LabelWithHintFor(x => x.Other)
                                 @Html.TextBoxFor(x => x.Other, new { @class = "form-control" })
                             </div>
                         }
+
                     }
 
                 </fieldset>
@@ -56,7 +56,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#limited-company-info', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#other-legal-status-detail', "@switchValue");
         });
     </script>
 }
