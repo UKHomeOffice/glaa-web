@@ -7,6 +7,8 @@ namespace GLAA.Services.AccountCreation
     {
         bool Exists(string email);
 
+        void DeleteIfUnconfirmed(string email);
+
         void Update<T>(string email, T model);
 
         void UpdateAddress(string email, AddressViewModel model);

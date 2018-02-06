@@ -1,4 +1,5 @@
-﻿using GLAA.Services.AccountCreation;
+﻿using System;
+using GLAA.Services.AccountCreation;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
 using GLAA.Web.FormLogic;
@@ -142,6 +143,13 @@ namespace GLAA.Web.Controllers
             if (!ModelState.IsValid)
             {
                 return View(GetViewPath(FormSection.Eligibility, 1), model);
+            }
+
+            // Don't overwrite an unconfirmed user if we're currently editing that user
+            if (!model.EmailAddress.Equals(session.GetString(CurrentPaEmail),
+                StringComparison.InvariantCultureIgnoreCase))
+            {
+                accountCreationPostDataHandler.DeleteIfUnconfirmed(model.EmailAddress);
             }
 
             session.SetString(CurrentPaEmail, model.EmailAddress);

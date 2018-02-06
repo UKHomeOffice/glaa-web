@@ -31,7 +31,21 @@ namespace GLAA.Services.AccountCreation
         public bool Exists(string email)
         {
             var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
-            return user != null;
+            return user?.EmailConfirmed ?? false;
+        }
+
+        public void DeleteIfUnconfirmed(string email)
+        {
+            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            if (!user.EmailConfirmed)
+            {
+                if (user.AddressId != null)
+                {
+                    repository.Delete<Address>(user.AddressId.Value);
+                }
+
+                userManager.DeleteAsync(user).GetAwaiter().GetResult();
+            }
         }
 
         public void Update<T>(string email, T model)
