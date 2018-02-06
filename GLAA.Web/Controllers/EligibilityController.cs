@@ -206,6 +206,7 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public ActionResult SendVerification(EligibilityViewModel model)
         {
+            accountCreationPostDataHandler.SendConfirmation(model.EmailAddress.EmailAddress, Url);
             return RedirectToAction("VerificationSent");
         }
     }

@@ -1,4 +1,5 @@
 ﻿using GLAA.ViewModels.LicenceApplication;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GLAA.Services.AccountCreation
 {
@@ -9,5 +10,7 @@ namespace GLAA.Services.AccountCreation
         void UpdateAddress(string email, AddressViewModel model);
 
         void SetPassword(string email, string password);
+
+        void SendConfirmation(string email, IUrlHelper url);
     }
 }
