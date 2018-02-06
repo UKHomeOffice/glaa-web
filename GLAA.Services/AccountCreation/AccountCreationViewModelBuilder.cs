@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using GLAA.Domain.Models;
-using GLAA.Repository;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace GLAA.Services.AccountCreation
 {
@@ -13,13 +9,11 @@ namespace GLAA.Services.AccountCreation
     {
         private readonly IMapper mapper;
         private readonly UserManager<GLAAUser> userManager;
-        private readonly IEntityFrameworkRepository repository;
 
-        public AccountCreationViewModelBuilder(IMapper mp, UserManager<GLAAUser> um, IEntityFrameworkRepository repo)
+        public AccountCreationViewModelBuilder(IMapper mp, UserManager<GLAAUser> um)
         {
             mapper = mp;
             userManager = um;
-            repository = repo;
         }
 
         public EligibilityViewModel Build(string email)
