@@ -126,6 +126,12 @@ namespace GLAA.Web.Controllers
         {
             session.SetSubmittedPage(FormSection.Eligibility, 1);
 
+            if (accountCreationPostDataHandler.Exists(model.EmailAddress))
+            {
+                ViewData["doOverride"] = true;
+                ModelState.AddModelError("EmailAddress", "A user with this email address already exists in the system.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(GetViewPath(FormSection.Eligibility, 1), model);

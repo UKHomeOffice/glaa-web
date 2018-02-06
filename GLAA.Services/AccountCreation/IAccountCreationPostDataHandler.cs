@@ -5,6 +5,8 @@ namespace GLAA.Services.AccountCreation
 {
     public interface IAccountCreationPostDataHandler
     {
+        bool Exists(string email);
+
         void Update<T>(string email, T model);
 
         void UpdateAddress(string email, AddressViewModel model);

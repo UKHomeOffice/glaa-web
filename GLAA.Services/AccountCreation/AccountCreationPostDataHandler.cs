@@ -28,6 +28,12 @@ namespace GLAA.Services.AccountCreation
             configuration = cs;
         }
 
+        public bool Exists(string email)
+        {
+            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            return user != null;
+        }
+
         public void Update<T>(string email, T model)
         {
             var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
