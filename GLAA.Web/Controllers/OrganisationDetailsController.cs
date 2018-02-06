@@ -145,7 +145,7 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePAYEERNStatus(PAYEStatusViewModel model)
+        public IActionResult SaveBusinessCredentials(BusinessCredentialsViewModel model)
         {
             return OrganisationDetailsPost(model, 10);
         }

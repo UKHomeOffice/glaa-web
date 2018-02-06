@@ -358,6 +358,7 @@ namespace GLAA.Domain.Migrations
                     HasNamedIndividuals = table.Column<bool>(nullable: true),
                     HasPAYEERNNumber = table.Column<bool>(nullable: true),
                     HasPreviousTradingName = table.Column<bool>(nullable: true),
+                    HasTaxReferenceNumber = table.Column<bool>(nullable: true),
                     HasTradingName = table.Column<bool>(nullable: true),
                     HasVATNumber = table.Column<bool>(nullable: true),
                     HasWrittenAgreementsInPlace = table.Column<bool>(nullable: true),

@@ -59,6 +59,7 @@ namespace GLAA.Domain.Models
         public bool? HasVATNumber { get; set; }
         public string VATNumber { get; set; }
         public DateTime? VATRegistrationDate { get; set; }
+        public bool? HasTaxReferenceNumber { get; set; }
         public string TaxReferenceNumber { get; set; }
 
         public virtual ICollection<LicenceIndustry> OperatingIndustries { get; set; } = new Collection<LicenceIndustry>();

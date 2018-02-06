@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180205160446_initial_create")]
+    [Migration("20180206122405_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -455,6 +455,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<bool?>("HasPAYEERNNumber");
 
                     b.Property<bool?>("HasPreviousTradingName");
+
+                    b.Property<bool?>("HasTaxReferenceNumber");
 
                     b.Property<bool?>("HasTradingName");
 

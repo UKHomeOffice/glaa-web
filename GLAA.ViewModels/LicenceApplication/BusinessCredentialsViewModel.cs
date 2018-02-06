@@ -18,6 +18,8 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public LegalStatusEnum LegalStatus { get; set; }
 
+        public string LegalStatusOther { get; set; }
+
         public CompaniesHouseRegistrationViewModel CompaniesHouseRegistrationViewModel { get; set; }
 
         public VATStatusViewModel VATStatusViewModel { get; set; }

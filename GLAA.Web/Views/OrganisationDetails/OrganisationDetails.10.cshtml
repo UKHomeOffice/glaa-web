@@ -1,13 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Do you have a PAYE number?";
+    ViewBag.Title = "Business credentials for your company";
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessCredentialsViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
 
-@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SaveBusinessCredentials", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -19,25 +19,80 @@
             </h1>
         </div>
         <div class="column-two-thirds">
+            @if (Model.LegalStatus == GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany)
+            {
+                <div class="form-group">
+                    @Html.LabelWithHintFor(x => x.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber)
+                    @Html.TextBoxFor(x => x.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber, new { @class = "form-control" })
+
+                    @Html.DateFormGroupFor(x => x.CompaniesHouseRegistrationViewModel.CompanyRegistrationDate)
+                </div>
+            }
+            <hr />
             <div class="form-group">
-                <fieldset>
+                <fieldset class="inline">
                     <legend>
-                        <span class="body-text"></span>
+                        Do you have a VAT number?
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
+                        <div class="multiple-choice vat">
+                            @Html.RadioButtonFor(x => x.VATStatusViewModel.HasVATNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
+                    }
 
-                        if (option.Value == switchValue)
-                        {
-                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
-                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
-                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
-                            </div>
-                        }
+                    @if (Model.VATStatusViewModel.HasVATNumber.HasValue && Model.VATStatusViewModel.HasVATNumber.Value)
+                    {
+                        <div class="js-hidden" id="VAT-details">
+                            @Html.TextFormGroupFor(x => x.VATStatusViewModel.VATNumber)
+                            @Html.DateFormGroupFor(x => x.VATStatusViewModel.VATRegistrationDate)
+                        </div>
+                    }
+                </fieldset>
+            </div>
+            <hr />
+            <div class="form-group">
+                <fieldset class="inline">
+                    <legend>
+                        Do you have a PAYE number?
+                    </legend>
+                    @foreach (var option in Model.YesNo)
+                    {
+                        <div class="multiple-choice paye">
+                            @Html.RadioButtonFor(x => x.PAYEStatusViewModel.HasPAYENumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
+                    }
+
+                    @if (Model.PAYEStatusViewModel.HasPAYENumber.HasValue && Model.PAYEStatusViewModel.HasPAYENumber.Value)
+                    {
+                        <div class="js-hidden" id="PAYE-details">
+                            @Html.TextFormGroupFor(x => x.PAYEStatusViewModel.PAYENumber)
+                            @Html.DateFormGroupFor(x => x.PAYEStatusViewModel.PAYERegistrationDate)
+                        </div>
+                    }
+                </fieldset>
+            </div>
+            <hr />
+            <div class="form-group">
+                <fieldset class="inline">
+                    <legend>
+                        Do you have a unique Tax reference number?
+                    </legend>
+                    @foreach (var option in Model.YesNo)
+                    {
+                        <div class="multiple-choice tax">
+                            @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
+                    }
+
+                    @if (Model.TaxReferenceViewModel.HasTaxReferenceNumber.HasValue && Model.TaxReferenceViewModel.HasTaxReferenceNumber.Value)
+                    {
+                        <div class="panel panel-border-narrow js-hidden" id="TAX-details">
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber)
+                        </div>
                     }
                 </fieldset>
             </div>
@@ -51,7 +106,9 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice.paye input', '#PAYE-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice.vat input', '#VAT-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice.tax input', '#TAX-details', @switchValue);
         });
     </script>
 }

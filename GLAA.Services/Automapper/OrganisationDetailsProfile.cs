@@ -14,6 +14,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.OperatingIndustries, opt => opt.ResolveUsing(ProfileHelpers.OperatingIndustriesResolver))
                 .ForMember(x => x.OperatingCountries, opt => opt.ResolveUsing(OperatingCountriesResolver))
                 .ForMember(x => x.LegalStatus, opt => opt.ResolveUsing(LegalStatusResolver))
+                .ForMember(x => x.BusinessCredentialsViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Turnover, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PAYEERNStatus, opt => opt.MapFrom(y => y))
@@ -26,6 +27,15 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.BusinessEmailAddress, opt => opt.MapFrom(y => y.BusinessEmailAddress))
                 .ForMember(x => x.BusinessEmailAddressConfirmation,
                     opt => opt.MapFrom(y => y.BusinessEmailAddressConfirmation));
+
+            CreateMap<Licence, BusinessCredentialsViewModel>()
+                .ForMember(x => x.CompaniesHouseRegistrationViewModel, opt => opt.ResolveUsing(CompaniesHouseRegistrationResolver))
+                .ForMember(x => x.LegalStatus, opt => opt.MapFrom(y => y.LegalStatus))
+                .ForMember(x => x.LegalStatusOther, opt => opt.MapFrom(y => y.OtherLegalStatus))
+                .ForMember(x => x.PAYEStatusViewModel, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.VATStatusViewModel, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.TaxReferenceViewModel, opt => opt.MapFrom(y => y))
+                .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<Licence, PAYEStatusViewModel>()
                 .ForMember(x => x.HasPAYENumber, opt => opt.MapFrom(y => y.HasPAYEERNNumber))
@@ -47,6 +57,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<Licence, TaxReferenceViewModel>()
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceNumber))
+                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.HasTaxReferenceNumber))
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
 
             CreateMap<Licence, TurnoverViewModel>()
@@ -89,6 +100,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.VATNumber, opt => opt.MapFrom(y => y.VATStatus.VATNumber))
                 .ForMember(x => x.VATRegistrationDate, opt => opt.MapFrom(y => y.VATStatus.VATRegistrationDate))
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.TaxReferenceNumber))
+                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.HasTaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<BusinessNameViewModel, Licence>()
@@ -101,8 +113,6 @@ namespace GLAA.Services.Automapper
             CreateMap<LegalStatusViewModel, Licence>()
                 .ForMember(x => x.LegalStatus, opt => opt.MapFrom(y => y.LegalStatus))
                 .ForMember(x => x.OtherLegalStatus, opt => opt.MapFrom(y => y.Other))
-                //.ForMember(x => x.CompaniesHouseNumber, opt => opt.MapFrom(y => y.CompaniesHouseNumber))
-                //.ForMember(x => x.CompanyRegistrationDate, opt => opt.MapFrom(y => y.CompanyRegistrationDate))
                 .ForAllOtherMembers(x => x.Ignore());
 
             CreateMap<TurnoverViewModel, Licence>()
@@ -144,8 +154,21 @@ namespace GLAA.Services.Automapper
 
             CreateMap<TaxReferenceViewModel, Licence>()
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceNumber))
+                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.HasTaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
+        }
+
+        private CompaniesHouseRegistrationViewModel CompaniesHouseRegistrationResolver(Licence licence)
+        {
+            return new CompaniesHouseRegistrationViewModel
+            {
+                CompaniesHouseNumber = licence.CompaniesHouseNumber,
+                CompanyRegistrationDate = new DateViewModel
+                {
+                    Date = licence.CompanyRegistrationDate
+                }
+            };
         }
 
         private bool ShellfishResolver(OrganisationDetailsViewModel model)

@@ -455,6 +455,8 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool?>("HasPreviousTradingName");
 
+                    b.Property<bool?>("HasTaxReferenceNumber");
+
                     b.Property<bool?>("HasTradingName");
 
                     b.Property<bool?>("HasVATNumber");

@@ -23,6 +23,7 @@ namespace GLAA.ViewModels.LicenceApplication
             BusinessEmailAddress = new BusinessEmailAddressViewModel();
             BusinessWebsite = new BusinessWebsiteViewModel();
             LegalStatus = new LegalStatusViewModel();
+            BusinessCredentialsViewModel = new BusinessCredentialsViewModel();
             PAYEERNStatus = new PAYEStatusViewModel();
             VATStatus = new VATStatusViewModel();
             TaxReference = new TaxReferenceViewModel();
@@ -39,6 +40,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessEmailAddressViewModel BusinessEmailAddress { get; set; }
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
+        public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }        
         public PAYEStatusViewModel PAYEERNStatus { get; set; }
         public VATStatusViewModel VATStatus { get; set; }
         public TaxReferenceViewModel TaxReference { get; set; }
@@ -258,7 +260,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         [Required]
-        [Display(Name = "Do you have an ERN/PAYE Registion Number?")]
+        [Display(Name = "Do you have an PAYE Registion Number?")]
         public bool? HasPAYENumber { get; set; }
 
         // TODO: Check example numbers
@@ -370,6 +372,8 @@ namespace GLAA.ViewModels.LicenceApplication
 
     public class TaxReferenceViewModel : Validatable
     {
+        public bool? HasTaxReferenceNumber { get; set; }
+
         // Only GOV.UK format guidance: https://www.gov.uk/find-lost-utr-number
         // X:\04PTW\38500\38548 - GLAA - Government Licensing System\TECHNICAL\HMRC_dummy_data.txt
         [Required]
