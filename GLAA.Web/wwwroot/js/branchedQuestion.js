@@ -28,7 +28,6 @@ var branchedQuestion = (function ($) {
     }
 
     function toggleBranch(controlSelector, branchContainerSelector, value) {
-        debugger;
         $(controlSelector).change(function () {
 
             var control = $(this);
