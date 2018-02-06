@@ -2,18 +2,19 @@
     ViewBag.Title = "Verification email sent";
 }
 
+@model string
 <div class="grid-row">
     <div class="column-full">
         <section class="govuk-box-highlight">
             <h1 class="heading-xlarge">We have sent you an email</h1>
             <p class="font-medium">
-                Please check your emails and verify your account is set up.
+                Please check the inbox for @Model to verify your email address and finish account set up.
             </p>
         </section>
     </div>
     <div class="column-full">
         <h2 class="heading-large">What happens next?</h2>
-        <p>If you have received an email from us please click through to create a new password for your account. This will complete the sign up process. This can take a few minutes to come through so allow a short delay.</p>
+        <p>If you have received an email from us please click through to create a new password for your account. This will complete the sign up process. This can take a few minutes to come through so allow a short delay. If you do not receive an email, please check your spam folder, or <a href="@Url.Action("ResendVerification")">click here to resend the email.</a></p>
     </div>
     <div class="column-full">
         <a class="button button-start" href="#">Sign in to continue</a>

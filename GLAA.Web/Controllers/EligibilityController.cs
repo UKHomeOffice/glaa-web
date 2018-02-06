@@ -117,7 +117,14 @@ namespace GLAA.Web.Controllers
         [HttpGet]
         public ActionResult VerificationSent()
         {
-            return View("VerificationSent");
+            return View("VerificationSent", session.GetString(CurrentPaEmail));
+        }
+
+        [HttpGet]
+        public IActionResult ResendVerification()
+        {
+            accountCreationPostDataHandler.SendConfirmation(session.GetString(CurrentPaEmail), Url);
+            return RedirectToAction("VerificationSent");
         }
 
         [HttpPost]
@@ -210,9 +217,9 @@ namespace GLAA.Web.Controllers
         
         [HttpPost]
         [ExportModelState]
-        public ActionResult SendVerification(EligibilityViewModel model)
+        public ActionResult SendVerification()
         {
-            accountCreationPostDataHandler.SendConfirmation(model.EmailAddress.EmailAddress, Url);
+            accountCreationPostDataHandler.SendConfirmation(session.GetString(CurrentPaEmail), Url);
             return RedirectToAction("VerificationSent");
         }
     }
