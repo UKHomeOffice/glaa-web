@@ -674,7 +674,6 @@ namespace GLAA.Domain
 
                 for (var i = 0; i < 50; i++)
                 {
-                    //var newStatus = defaultStatuses[rnd.Next(defaultStatuses.Count)];
                     var licensedStatus =
                         context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
                     var country = string.Empty;

@@ -143,15 +143,6 @@ namespace GLAA.Web.Controllers
 
         private PublicRegisterLicenceListViewModel RemoveCountry(PublicRegisterLicenceListViewModel publicRegisterLicenceListViewModel, string countryToRemove)
         {
-            ////Remove the country from the list of currently selected countries.
-            //publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected = RemoveFromList(
-            //    publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected,
-            //    x => x == countryToRemove);
-
-            ////Add the item back in to the list of available countries.
-            //publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.AvailableCountries.Add(
-            //    publicRegisterViewModelBuilder.BuildAvailableCountries().FirstOrDefault(x => x.Value == countryToRemove));
-
             RemoveSelectedCountry(publicRegisterLicenceListViewModel, new SelectListItem { Text = countryToRemove, Value = countryToRemove });
 
             return publicRegisterLicenceListViewModel;
