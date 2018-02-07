@@ -34,7 +34,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string FirstName { get; set; }
 
         [HiddenOptional]
-        [Display(Name = "Middle name")]
+        [Display(Name = "Middle names")]
         public string MiddleName { get; set; }
 
         [Required]

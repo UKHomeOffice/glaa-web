@@ -18,11 +18,11 @@ namespace GLAA.ViewModels
         [Display(Name = "New first name")]
         public string NewFirstName { get; set; }
 
-        [Display(Name = "Current middle name")]
+        [Display(Name = "Current middle names")]
         public string CurrentMiddleName { get; set; }
 
         [Required]
-        [Display(Name = "New middle name")]
+        [Display(Name = "New middle names")]
         public string NewMiddleName { get; set; }
 
         [Display(Name = "Current last name")]
