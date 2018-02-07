@@ -15,7 +15,8 @@ namespace GLAA.Services.PublicRegister
         private readonly ILicenceRepository licenceRepository;
         private readonly IMapper mapper;
 
-        private List<SelectListItem> UkCountries { get; }
+        private List<SelectListItem> _ukCountries;
+        public List<SelectListItem> UkCountries => new List<SelectListItem>(_ukCountries);
 
         public PublicRegisterViewModelBuilder(
             IMapper mapper,
@@ -26,7 +27,7 @@ namespace GLAA.Services.PublicRegister
             this.repository = repository;
             this.licenceRepository = licenceRepository;
 
-            UkCountries = repository.GetAll<Country>().Select(x =>
+            _ukCountries = repository.GetAll<Country>().Select(x =>
                 new SelectListItem { Value = x.Name, Text = x.Name }).ToList();
         }
 
@@ -43,6 +44,16 @@ namespace GLAA.Services.PublicRegister
             };
         }
 
+        public PublicRegisterLicenceListViewModel BuildEmptySearch()
+        {
+            return new PublicRegisterLicenceListViewModel
+            {
+                Title = "Public Register",
+                Licences = new List<PublicRegisterLicenceSummaryViewModel>(),
+                PublicRegisterSearchViewModel = BuildPublicRegisterSearchViewModel()
+            };
+        }
+
         public PublicRegisterLicenceListViewModel BuildSearchForLicences(
             PublicRegisterSearchViewModel publicRegisterSearchViewModel)
         {
@@ -50,31 +61,30 @@ namespace GLAA.Services.PublicRegister
 
             var licences = licenceRepository.GetAllLicences()
                 .Where(x => GetLatestStatus(x).Status.ShowInPublicRegister
-                            && (x.BusinessName.Contains(publicRegisterSearchViewModel.BusinessName) ||
-                                string.IsNullOrWhiteSpace(publicRegisterSearchViewModel.BusinessName)));
+                            && (string.IsNullOrWhiteSpace(publicRegisterSearchViewModel.BusinessName) ||
+                                x.BusinessName.Contains(publicRegisterSearchViewModel.BusinessName)));
 
-            switch (publicRegisterSearchViewModel.SupplierWho.Value)
+            switch (publicRegisterSearchViewModel.SupplierWho)
             {
                 case "supply":
-                    if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x.Value == "UK"))
+                    if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x == "UK"))
                         licences = licences.Where(x =>
                             ukCountryNames.Any(y => x.OperatingCountries.Any(z => z.Country.Name == y)));
-                    else if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x.Value == "Outside UK"))
+                    else if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x == "Outside UK"))
                         licences = licences.Where(x =>
                             ukCountryNames.Any(y => x.OperatingCountries.All(z => z.Country.Name != y)));
                     else
                         licences = licences.Where(x => x.OperatingCountries.Any(y =>
-                            publicRegisterSearchViewModel.CountriesSelected.Any(z => y.Country.Name.Contains(z.Text))));
+                            publicRegisterSearchViewModel.CountriesSelected.Any(z => y.Country.Name.Contains(z))));
 
                     break;
                 case "arelocated":
-                    if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x.Value == "UK"))
-                        licences = licences.Where(x => ukCountryNames.Any(y => x.Address.Country.Contains(y)));
-                    else if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x.Value == "Outside UK"))
-                        licences = licences.Where(x => ukCountryNames.Any(y => x.Address.NonUK));
+                    if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x == "UK"))
+                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.Country.Contains(y)));
+                    else if (publicRegisterSearchViewModel.CountriesSelected.Any(x => x == "Outside UK"))
+                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.NonUK));
                     else
-                        licences = licences.Where(x => x.OperatingCountries.Any(y =>
-                            publicRegisterSearchViewModel.CountriesSelected.Any(z => y.Country.Name.Contains(z.Text))));
+                        licences = licences.Where(x => x.Address != null && publicRegisterSearchViewModel.CountriesSelected.Any(y => y == x.Address.Country));
 
                     break;
                 default:
@@ -84,23 +94,9 @@ namespace GLAA.Services.PublicRegister
             return new PublicRegisterLicenceListViewModel
             {
                 Title = "Public Register",
-                Licences = licences.Select(BuildSummary)
+                Licences = licences.Distinct().Select(BuildSummary),
+                PublicRegisterSearchViewModel = publicRegisterSearchViewModel
             };
-            //return new PublicRegisterLicenceListViewModel
-            //{
-            //    Title = "Public Register",
-            //    //We only want licences with status that are allowed to be shown using the "ShowInPublicRegister" field.
-            //    Licences = licenceRepository.GetAllLicences()
-            //        .Where(x => GetLatestStatus(x).Status.ShowInPublicRegister
-            //                    && (x.BusinessName.Contains(publicRegisterSearchViewModel.BusinessName) ||
-            //                        string.IsNullOrWhiteSpace(publicRegisterSearchViewModel.BusinessName))
-            //                    && (x.OperatingCountries.Any(y =>
-            //                            y.Country.Name.Contains(publicRegisterSearchViewModel.)) ||
-            //                        string.IsNullOrWhiteSpace(publicRegisterSearchViewModel.LicenceCountry))
-            //                    && (x.Address.Country.Contains(publicRegisterSearchViewModel.OrganisationCountry) ||
-            //                        string.IsNullOrWhiteSpace(publicRegisterSearchViewModel.OrganisationCountry)))
-            //        .Select(BuildSummary)
-            //};
         }
 
         public PublicRegisterLicenceSummaryViewModel BuildLicence(int id)
@@ -125,9 +121,9 @@ namespace GLAA.Services.PublicRegister
             return new PublicRegisterSearchViewModel(BuildAvailableCountries())
             {
                 CountryAdded = "",
-                SupplierWho = new SelectListItem { Value = "supply", Text = "Supply" },
+                SupplierWho = "Supply",
                 BusinessName = "",
-                CountriesSelected = new List<SelectListItem>(),
+                CountriesSelected = new List<string>(),
                 CountryRemoved = "",
             };
         }

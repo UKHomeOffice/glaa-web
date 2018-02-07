@@ -664,6 +664,97 @@ namespace GLAA.Domain
 
                 context.SaveChanges();
             }
+
+
+            //Public Register Test Licenses
+            if (!context.Licences.Any(x => x.ApplicationId == "ORG-1234"))
+            {
+                //completed application licenses
+                var completedLicences = new List<Licence>();
+
+                for (var i = 0; i < 50; i++)
+                {
+                    //var newStatus = defaultStatuses[rnd.Next(defaultStatuses.Count)];
+                    var licensedStatus =
+                        context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
+                    var country = string.Empty;
+                    var operatingCountries = new List<Country>();
+
+                    switch (i % 4)
+                    {
+                        case 0:
+                            country = "England";
+                            break;
+                        case 1:
+                            country = "Northern Ireland";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                        case 2:
+                            country = "Wales";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                        case 3:
+                            country = "Scotland";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                    }
+
+                    operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == country));
+
+                    completedLicences.Add(new Licence
+                    {
+                        ApplicationId = $"ORG-{1234 + i}",
+                        BusinessName = $"Licensed Organisation {i + 1}",
+                        TradingName =
+                            $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
+                        LicenceStatusHistory = new List<LicenceStatusChange>
+                        {
+                            new LicenceStatusChange
+                            {
+                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                                Status = licensedStatus
+                            }
+                        },
+                        PrincipalAuthorities = new List<PrincipalAuthority>
+                        {
+                            new PrincipalAuthority
+                            {
+                                FullName =
+                                    $"{_firstNames[rnd.Next(_firstNames.Length)]} {_lastNames[rnd.Next(_lastNames.Length)]}",
+                                IsCurrent = true
+                            }
+                        },
+                        Address = new Address
+                        {
+                            Country = country
+                        }
+                        //User = adminUser
+                    });
+
+                    foreach (var operatingCountry in operatingCountries)
+                    {
+                        var completedLicence = completedLicences.LastOrDefault();
+
+                        if (completedLicence != null)
+                        {
+                            completedLicence.OperatingCountries = new List<LicenceCountry>
+                            {
+                                new LicenceCountry
+                                {
+                                    Country = operatingCountry,
+                                    CountryId = operatingCountry.Id,
+                                    Licence = completedLicences.LastOrDefault(),
+                                    LicenceId = completedLicence.Id
+                                }
+                            };
+                        }
+                    }
+                }
+
+                context.Licences.AddRange(completedLicences);
+
+                context.SaveChanges();
+            }
         }
 
         private static void LinkNextStatuses(this GLAAContext context, IEnumerable<LicenceStatus> _defaultStatuses)
