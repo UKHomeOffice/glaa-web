@@ -60,7 +60,7 @@ namespace GLAA.ViewModels
     public class PasswordViewModel : IValidatable
     {
         [Required]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$", ErrorMessage = "Your password must be at least 8 characters long and contain at least one upper-case letter and at least one number.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{9,}$", ErrorMessage = "Your password must be at least 9 characters long and contain at least one lower-case letter, at least one upper-case letter and at least one number.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
