@@ -6,11 +6,11 @@ namespace GLAA.Web.Controllers
 {
     public class DefaultController : Controller
     {
-        private readonly IFormDefinition formDefinition;
+        protected readonly IFormDefinition FormDefinition;
 
         public DefaultController(IFormDefinition formDefinition)
         {
-            this.formDefinition = formDefinition;
+            FormDefinition = formDefinition;
         }
 
         protected virtual string GetViewPath(FormSection section, int id)
@@ -20,23 +20,23 @@ namespace GLAA.Web.Controllers
 
         protected virtual string GetLastViewPath(FormSection section)
         {
-            return GetViewPath(section, formDefinition.GetSectionLength(section));
+            return GetViewPath(section, FormDefinition.GetSectionLength(section));
         }
 
         protected ActionResult GetPreviousView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            if (!formDefinition.CanViewNextModel(section, id, model))
+            if (!FormDefinition.CanViewNextModel(section, id, model))
                 return RedirectToPreviousPossibleView(id, section, model);
 
             var viewPath = GetViewPath(section, id);
-            var viewModel = formDefinition.GetViewModel(section, id, model);
+            var viewModel = FormDefinition.GetViewModel(section, id, model);
 
             return View(viewPath, viewModel);
         }
 
         protected ActionResult RedirectToPreviousPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            while (!formDefinition.CanViewNextModel(section, id, model))
+            while (!FormDefinition.CanViewNextModel(section, id, model))
                 id--;
 
             return RedirectBackToAction(section, id);
@@ -44,36 +44,36 @@ namespace GLAA.Web.Controllers
 
         protected ActionResult GetNextView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            if (!formDefinition.CanViewNextModel(section, id, model))
+            if (!FormDefinition.CanViewNextModel(section, id, model))
                 return RedirectToNextPossibleView(id, section, model);
 
             var viewPath = GetViewPath(section, id);
-            var viewModel = formDefinition.GetViewModel(section, id, model);
+            var viewModel = FormDefinition.GetViewModel(section, id, model);
 
             return View(viewPath, viewModel);
         }
 
         protected ActionResult RedirectToNextPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            while (!formDefinition.CanViewNextModel(section, id, model))
+            while (!FormDefinition.CanViewNextModel(section, id, model))
                 id++;
 
             return RedirectToAction(section, id);
         }
 
-        protected ActionResult RedirectToAction(FormSection section, int id)
+        protected virtual ActionResult RedirectToAction(FormSection section, int id)
         {
             return RedirectToAction("Part", section.ToString(), new {id});
         }
 
-        protected ActionResult RedirectBackToAction(FormSection section, int id)
+        protected virtual ActionResult RedirectBackToAction(FormSection section, int id)
         {
             return RedirectToAction("Part", section.ToString(), new { id, back = true });
         }
 
-        protected ActionResult RedirectToLastAction(FormSection section)
+        protected virtual ActionResult RedirectToLastAction(FormSection section)
         {
-            return RedirectToAction("Part", section.ToString(), new {id = formDefinition.GetSectionLength(section)});
+            return RedirectToAction("Part", section.ToString(), new {id = FormDefinition.GetSectionLength(section)});
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿@model GLAA.ViewModels.EditNameViewModel
 
 <form asp-action="EditName">
-    @Html.HiddenFor(m => m.Current)
+    @Html.HiddenFor(m => m.CurrentTitle)
+    @Html.HiddenFor(m => m.CurrentFirstName)
+    @Html.HiddenFor(m => m.CurrentMiddleName)
+    @Html.HiddenFor(m => m.CurrentLastName)
     <div class="grid-row">
         <div class="column-two-thirds">
             @Html.Partial("_GdsValidationSummary")
@@ -10,10 +13,13 @@
             <h1 class="heading-large">
                 Change your name
             </h1>
-            <h2 class="heading-medium">Your name is currently @Model.Current</h2>
+            <h2 class="heading-medium">Your name is currently @Model.FullName</h2>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.New)
+            @Html.TextFormGroupFor(x => x.NewTitle)
+            @Html.TextFormGroupFor(x => x.NewFirstName)
+            @Html.TextFormGroupFor(x => x.NewMiddleName)
+            @Html.TextFormGroupFor(x => x.NewLastName)
         </div>
     </div>
     <button type="submit" class="button">Save changes</button>

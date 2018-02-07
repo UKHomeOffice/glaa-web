@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Set a password";
+}
+
+@model GLAA.ViewModels.PasswordViewModel
+
+@Html.ActionLink("< Back", "Back", "SignUp", new { submittedPageId = 5 }, new { @class = "details-back-button" })
+
+@using (Html.BeginForm("SavePassword", "SignUp"))
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                @ViewBag.Title
+            </h1>
+        </div>
+        <div class="column-two-thirds">
+            @Html.PasswordFormGroupFor(x => x.Password)
+        </div>
+        <div class="column-two-thirds">
+            @Html.PasswordFormGroupFor(x => x.ConfirmPassword)
+            <button type="submit" class="button">Continue</button>
+        </div>
+    </div>
+}

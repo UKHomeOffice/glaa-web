@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "What is the address of your main place of business?";
+}
+
+@model GLAA.ViewModels.LicenceApplication.AddressViewModel
+
+@Html.ActionLink("< Back", "Back", "SignUp", new { submittedPageId = 3 }, new { @class = "details-back-button" })
+
+@using (Html.BeginForm("SaveAddress", "SignUp"))
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                @ViewBag.Title
+            </h1>
+        </div>
+
+        <div class="column-two-thirds">
+            @Html.EditorFor(x => x)
+            <button type="submit" class="button">Continue</button>
+        </div>
+    </div>
+}

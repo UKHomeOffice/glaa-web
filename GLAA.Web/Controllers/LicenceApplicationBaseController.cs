@@ -18,7 +18,6 @@ namespace GLAA.Web.Controllers
         protected readonly ILicenceApplicationViewModelBuilder LicenceApplicationViewModelBuilder;
         protected readonly ILicenceApplicationPostDataHandler LicenceApplicationPostDataHandler;
         protected readonly ILicenceStatusViewModelBuilder LicenceStatusViewModelBuilder;
-        protected readonly IFormDefinition FormDefinition;
         protected readonly IConstantService ConstantService;
 
         public LicenceApplicationBaseController(ISessionHelper session,
@@ -32,7 +31,6 @@ namespace GLAA.Web.Controllers
             LicenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
             LicenceApplicationPostDataHandler = licenceApplicationPostDataHandler;
             LicenceStatusViewModelBuilder = licenceStatusViewModelBuilder;
-            FormDefinition = formDefinition;
             ConstantService = constantService;
         }
 

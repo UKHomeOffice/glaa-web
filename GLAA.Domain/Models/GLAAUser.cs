@@ -1,12 +1,27 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
-    public class GLAAUser : IdentityUser
+    public class GLAAUser : IdentityUser, IAddressable
     {
-        public string FullName { get; set; }
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+
+        public string FullName => (string.IsNullOrEmpty(Title) ? string.Empty : $"{Title} ") +
+                                  (string.IsNullOrEmpty(FirstName) ? string.Empty : $"{FirstName} ") +
+                                  (string.IsNullOrEmpty(MiddleName) ? string.Empty : $"{MiddleName} ") +
+                                  (string.IsNullOrEmpty(LastName) ? string.Empty : $"{LastName} ");
+
+        public int? AddressId { get; set; }
+        [ForeignKey(nameof(AddressId))]
+        public virtual Address Address { get; set; }
+
+        public CommunicationPreference? CommunicationPreference { get; set; }
 
         public virtual ICollection<Licence> Licences { get; set; }
 

@@ -44,7 +44,7 @@ namespace GLAA.Web.Controllers
             //TODO: It's feasible we could access this page with no licenceId where the model will be null
             //TODO: how should we handle this
             model.Declaration?.Validate();
-            model.Eligibility?.Validate();
+            model.SignUp?.Validate();
             model.OrganisationDetails?.Validate();
             model.PrincipalAuthority?.Validate();
             model.AlternativeBusinessRepresentatives?.Validate();
