@@ -3,7 +3,7 @@
     public enum FormSection
     {
         Declaration,
-        Eligibility,
+        SignUp,
         OrganisationDetails,
         PrincipalAuthority,
         AlternativeBusinessRepresentative,

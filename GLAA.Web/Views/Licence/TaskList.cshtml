@@ -23,14 +23,14 @@
 
                                 @if (Model.SignUp.IsValid)
                                 {
-                                    <a class="task-name" href="@Url.Action("Eligibility", "Eligibility", new { id = 5 })" aria-describedby="eligibility-completed">
+                                    <a class="task-name" href="@Url.Action("SignUp", "SignUp", new { id = 5 })" aria-describedby="eligibility-completed">
                                         Check eligibility
                                     </a>
                                     <strong class="task-completed" id="eligibility-completed">Completed</strong>
                                 }
                                 else
                                 {
-                                    <a class="task-name" href="@Url.Action("Eligibility", "Eligibility", new { id = 1 })" aria-describedby="eligibility-completed">
+                                    <a class="task-name" href="@Url.Action("SignUp", "SignUp", new { id = 1 })" aria-describedby="eligibility-completed">
                                         Check eligibility
                                     </a>
                                 }

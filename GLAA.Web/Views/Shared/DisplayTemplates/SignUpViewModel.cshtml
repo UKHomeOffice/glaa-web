@@ -1,4 +1,4 @@
-﻿@model GLAA.ViewModels.LicenceApplication.EligibilityViewModel
+﻿@model GLAA.ViewModels.SignUpViewModel
 
 <table class="check-your-answers">
     <thead>
@@ -11,35 +11,35 @@
         <td>Principal Authority's email address</td>
         <td class="@Model.EmailAddress?.EmailAddress">@Html.DisplayFor(m => m.EmailAddress.EmailAddress)</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="1">Change<span class="visually-hidden"> Principal Authority's email address</span></a>
+            <a asp-controller="SignUp" asp-action="SignUp" asp-route-id="1">Change<span class="visually-hidden"> Principal Authority's email address</span></a>
         </td>
     </tr>
     <tr>
         <td>@Html.LabelFor(m => m.FullName.FullName)</td>
         <td class="@Model.FullName?.FullName">@Html.DisplayFor(m => m.FullName.FullName)</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="2">Change<span class="visually-hidden"> @Html.LabelFor(m => m.FullName.FullName)</span></a>
+            <a asp-controller="SignUp" asp-action="SignUp" asp-route-id="2">Change<span class="visually-hidden"> @Html.LabelFor(m => m.FullName.FullName)</span></a>
         </td>
     </tr>
     <tr>
         <td>Business address</td>
         <td>@Html.DisplayFor(m => m.Address)</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="3">Change<span class="visually-hidden"> Business address</span></a>
+            <a asp-controller="SignUp" asp-action="SignUp" asp-route-id="3">Change<span class="visually-hidden"> Business address</span></a>
         </td>
     </tr>
     <tr>
         <td>@Html.LabelFor(m => m.CommunicationPreference.CommunicationPreference)</td>
         <td class="@Model.CommunicationPreference?.CommunicationPreference">@Html.DisplayFor(m => m.CommunicationPreference.CommunicationPreference)</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="4">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CommunicationPreference.CommunicationPreference)</span></a>
+            <a asp-controller="SignUp" asp-action="SignUp" asp-route-id="4">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CommunicationPreference.CommunicationPreference)</span></a>
         </td>
     </tr>
     <tr>
         <td>@Html.LabelFor(m => m.Password.Password)</td>
         <td class="@Model.Password?.Password">******</td>
         <td class="change-answer">
-            <a asp-controller="Eligibility" asp-action="Eligibility" asp-route-id="5">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Password.Password)</span></a>
+            <a asp-controller="SignUp" asp-action="SignUp" asp-route-id="5">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Password.Password)</span></a>
         </td>
     </tr>
     </tbody>

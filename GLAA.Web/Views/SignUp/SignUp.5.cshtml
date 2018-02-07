@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "How would you like to be contacted by the GLAA?";
+    ViewBag.Title = "Set a password";
 }
 
-@model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
+@model GLAA.ViewModels.PasswordViewModel
 
-@Html.ActionLink("< Back", "Back", "Eligibility", new { submittedPageId = 4 }, new { @class = "details-back-button" })
+@Html.ActionLink("< Back", "Back", "SignUp", new { submittedPageId = 5 }, new { @class = "details-back-button" })
 
-@using (Html.BeginForm("SaveCommunicationPreference", "Eligibility"))
+@using (Html.BeginForm("SavePassword", "SignUp"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -17,9 +17,11 @@
                 @ViewBag.Title
             </h1>
         </div>
-
         <div class="column-two-thirds">
-            @Html.RadioButtonFormGroupForEnum(x => x.CommunicationPreference)
+            @Html.PasswordFormGroupFor(x => x.Password)
+        </div>
+        <div class="column-two-thirds">
+            @Html.PasswordFormGroupFor(x => x.ConfirmPassword)
             <button type="submit" class="button">Continue</button>
         </div>
     </div>

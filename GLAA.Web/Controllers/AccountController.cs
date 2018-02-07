@@ -325,7 +325,7 @@ namespace GLAA.Web.Controllers
             // If we got this far, something failed, redisplay form
             // need to get model back again
             // TODO: This action needs to be in Eligibility controller
-            return RedirectToAction("Part4", "Eligibility");
+            return RedirectToAction("Part4", "SignUp");
         }
 
         [HttpPost]
