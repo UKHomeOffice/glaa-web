@@ -42,7 +42,8 @@ namespace GLAA.Services.Tests.Validation
                 Password = new PasswordViewModel
                 {
                     Password = "hunter2",
-                    ConfirmPassword = "hunter2"
+                    ConfirmPassword = "hunter2",
+                    HasPassword = true
                 }
             };
         }
