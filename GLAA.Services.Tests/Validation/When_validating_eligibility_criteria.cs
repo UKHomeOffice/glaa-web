@@ -1,4 +1,5 @@
 ﻿using GLAA.Domain.Models;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,13 +8,13 @@ namespace GLAA.Services.Tests.Validation
     [TestClass]
     public class When_validating_eligibility_criteria
     {
-        private EligibilityViewModel validModel;
+        private SignUpViewModel validModel;
 
         [TestInitialize]
         public void Setup()
         {
             // valid model
-            validModel = new EligibilityViewModel
+            validModel = new SignUpViewModel
             {
                 FullName = new PrincipalAuthorityFullNameViewModel
                 {
@@ -51,7 +52,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_blank_model_is_invalid()
         {
-            var vm = new EligibilityViewModel();
+            var vm = new SignUpViewModel();
 
             vm.Validate();
 

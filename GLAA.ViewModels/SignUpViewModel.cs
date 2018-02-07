@@ -2,12 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using GLAA.ViewModels.Attributes;
+using GLAA.ViewModels.LicenceApplication;
 
-namespace GLAA.ViewModels.LicenceApplication
+namespace GLAA.ViewModels
 {
-    public class EligibilityViewModel : Validatable
+    public class SignUpViewModel : Validatable
     {
-        public EligibilityViewModel()
+        public SignUpViewModel()
         {
             FullName = new PrincipalAuthorityFullNameViewModel();
             EmailAddress = new PrincipalAuthorityEmailAddressViewModel();

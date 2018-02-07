@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GLAA.Domain.Models;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Services.Automapper
@@ -8,7 +9,7 @@ namespace GLAA.Services.Automapper
     {
         public EligibilityProfile()
         {
-            CreateMap<GLAAUser, EligibilityViewModel>()
+            CreateMap<GLAAUser, SignUpViewModel>()
                 .ForMember(x => x.FullName, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.EmailAddress, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
@@ -16,7 +17,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Password, opt => opt.MapFrom(y => y))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<EligibilityViewModel, GLAAUser>()
+            CreateMap<SignUpViewModel, GLAAUser>()
                 .ForMember(x => x.Title, opt => opt.MapFrom(y => y.FullName.Title))
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(y => y.FullName.FirstName))
                 .ForMember(x => x.MiddleName, opt => opt.MapFrom(y => y.FullName.MiddleName))

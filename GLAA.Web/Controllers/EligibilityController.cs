@@ -1,5 +1,6 @@
 ﻿using System;
 using GLAA.Services.AccountCreation;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
 using GLAA.Web.FormLogic;
@@ -70,7 +71,7 @@ namespace GLAA.Web.Controllers
                 : ValidateParentAndRedirectBack(parent, nextPageId);
         }
 
-        protected IActionResult ValidateParentAndRedirect(EligibilityViewModel parent, int nextPageId)
+        protected IActionResult ValidateParentAndRedirect(SignUpViewModel parent, int nextPageId)
         {
             parent.Validate();
             return parent.IsValid
@@ -78,7 +79,7 @@ namespace GLAA.Web.Controllers
                 : RedirectToAction(FormSection.Eligibility, nextPageId);
         }
 
-        protected IActionResult ValidateParentAndRedirectBack(EligibilityViewModel parent, int nextPageId)
+        protected IActionResult ValidateParentAndRedirectBack(SignUpViewModel parent, int nextPageId)
         {
             parent.Validate();
 

@@ -21,7 +21,7 @@
                         <ul class="task-list-items">
                             <li class="task-list-item">
 
-                                @if (Model.Eligibility.IsValid)
+                                @if (Model.SignUp.IsValid)
                                 {
                                     <a class="task-name" href="@Url.Action("Eligibility", "Eligibility", new { id = 5 })" aria-describedby="eligibility-completed">
                                         Check eligibility
