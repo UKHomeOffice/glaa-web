@@ -23,6 +23,11 @@ namespace GLAA.Repository
             return GetAllEntriesWithStatusesAndAddress().First(l => l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));            
         }
 
+        public IEnumerable<Licence> GetAllLicencesForPublicRegister()
+        {
+            return GetAllLicences().Where(x => GetLatestStatus(x).Status.ShowInPublicRegister);
+        }
+
         public IEnumerable<Licence> GetAllLicences()
         {
             return GetAllEntriesWithStatusesAndAddress().Where(l =>
@@ -65,6 +70,11 @@ namespace GLAA.Repository
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.UnspentConvictions)
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.OffencesAwaitingTrial)
                 .Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
+        }
+
+        public LicenceStatusChange GetLatestStatus(Licence licence)
+        {
+            return licence.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).First();
         }
     }
 }

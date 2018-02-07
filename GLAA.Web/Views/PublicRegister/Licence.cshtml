@@ -6,8 +6,17 @@
 
 
 <div>
-    <div>@Model.Id</div>
-    <div>@Model.BusinessName</div>
-    <div>@Model.PrincipalAuthorityName</div>
-    <div>Licensed</div>
+    <div>@Html.LabelFor(x => x.ApplicationId) @Model.ApplicationId</div>
+    <div>Public Register Status Licensed</div>
+    <div>@Html.LabelFor(x => x.BusinessName) @Model.BusinessName</div>
+    <div>@Html.LabelFor(x => x.TradingName) @Model.TradingName</div>
+    @*<div>@Html.LabelFor(x => x.) @Model.</div>Principle Authority*@
+    @*<div>@Html.LabelFor(x => x.ApplicationId) @Model.</div>BusinessType*@
+    @*<div>@Html.LabelFor(x => x.ApplicationId) @Model.</div>AuthorisedSectors*@
+    <div>@Html.LabelFor(x => x.ApplicationDate) @Model.ApplicationDate</div>
+    @*<div>@Html.LabelFor(x => x.ApplicationId) @Model.</div>LicenceCommencement*@
+    @*<div>@Html.LabelFor(x => x.ApplicationId) @Model.Address</div>Address*@
+    <div>@Html.LabelFor(x => x.ApplicationId) @Model.Country</div>
+    @*<div>@Html.LabelFor(x => x.ApplicationId) @Model.</div>Phone*@
+    @*<div>@Html.LabelFor(x => x.ApplicationId) @Model.</div>AuthorisedPersonOrPostholder.*@
 </div>

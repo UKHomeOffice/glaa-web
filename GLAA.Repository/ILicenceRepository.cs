@@ -10,5 +10,6 @@ namespace GLAA.Repository
         IEnumerable<Licence> GetAllLicences();
         IEnumerable<Licence> GetAllApplications();
         IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress();
+        LicenceStatusChange GetLatestStatus(Licence licence);
     }
 }

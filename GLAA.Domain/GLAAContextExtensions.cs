@@ -667,9 +667,8 @@ namespace GLAA.Domain
 
 
             //Public Register Test Licenses
-            if (!context.Licences.Any(x => x.ApplicationId == "ORG-1234"))
+            if (!context.Licences.Any(x => x.ApplicationId == "LINC-1234"))
             {
-                //completed application licenses
                 var completedLicences = new List<Licence>();
 
                 for (var i = 0; i < 50; i++)
@@ -681,6 +680,8 @@ namespace GLAA.Domain
 
                     switch (i % 4)
                     {
+                        //we set the country variable for the address
+                        //the operatingCountries.Add is a seperate country than the address.
                         case 0:
                             country = "England";
                             break;
@@ -698,11 +699,12 @@ namespace GLAA.Domain
                             break;
                     }
 
+                    //This adds another country into the operating countries address, so we have two to filter on.
                     operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == country));
 
                     completedLicences.Add(new Licence
                     {
-                        ApplicationId = $"ORG-{1234 + i}",
+                        ApplicationId = $"LINC-{1234 + i}",
                         BusinessName = $"Licensed Organisation {i + 1}",
                         TradingName =
                             $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",

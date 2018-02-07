@@ -30,5 +30,7 @@ namespace GLAA.Web.Helpers
         void ClearCurrentDopStatus();
         void SetCurrentUserIsAdmin(bool isAdmin);
         bool GetCurrentUserIsAdmin();
+        T Get<T>(string key) where T : new();
+        void Set<T>(string key, T instance);
     }
 }

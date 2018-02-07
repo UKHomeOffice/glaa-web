@@ -10,7 +10,7 @@ namespace GLAA.Services.PublicRegister
         PublicRegisterLicenceListViewModel BuildAllLicences();
         PublicRegisterLicenceListViewModel BuildEmptySearch();
         PublicRegisterLicenceSummaryViewModel BuildLicence(int id);
-        PublicRegisterLicenceListViewModel BuildSearchForLicences(PublicRegisterSearchViewModel publicRegisterSearchViewModel);
+        PublicRegisterLicenceListViewModel BuildSearchForLicences(PublicRegisterSearchCriteria publicRegisterSearchCriteria);
         List<SelectListItem> BuildAvailableCountries();
     }
 }

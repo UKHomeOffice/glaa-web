@@ -3,43 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using GLAA.Services.PublicRegister;
 using GLAA.ViewModels.PublicRegister;
+using GLAA.Web.Attributes;
+using GLAA.Web.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace GLAA.Web.Controllers
 {
     public class PublicRegisterController : Controller
     {
+        private readonly ISessionHelper SessionHelper;
         private readonly IPublicRegisterViewModelBuilder publicRegisterViewModelBuilder;
-        private static PublicRegisterSearchViewModel currentSearchViewModel;
+        private static PublicRegisterSearchCriteria _currentPublicRegisterSearchCriteria;
 
-        public PublicRegisterController(IPublicRegisterViewModelBuilder publicRegisterViewModelBuilder)
+        public PublicRegisterController(IPublicRegisterViewModelBuilder publicRegisterViewModelBuilder, ISessionHelper sessionHelper)
         {
             this.publicRegisterViewModelBuilder = publicRegisterViewModelBuilder;
+            SessionHelper = sessionHelper;
         }
 
         [HttpPost]
-        public IActionResult Index(PublicRegisterLicenceListViewModel publicRegisterLicenceListViewModel, string submit)
+        public IActionResult Index(PublicRegisterLicenceListViewModel publicRegisterLicenceListViewModel, string submitButtonType)
         {
-            PublicRegisterSearchViewModel newSearchViewModel = null;
-            var searchViewModel = publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel;
+            SessionHelper.Set("publicRegisterSearchCriteria",publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria);
+            SessionHelper.SetString("publicRegisterSearchCriteria_submitButtonType", submitButtonType);
 
-            if (searchViewModel.AvailableCountries == null)
-                searchViewModel.AvailableCountries =
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var publicRegisterSearchCriteria = SessionHelper.Get<PublicRegisterSearchCriteria>("publicRegisterSearchCriteria");
+            var submitButtonType = SessionHelper.GetString("publicRegisterSearchCriteria_submitButtonType");
+
+            if (publicRegisterSearchCriteria != null && submitButtonType != null)
+            {
+                var publicRegisterLicenceListViewModel = publicRegisterViewModelBuilder.BuildEmptySearch();
+                publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria = publicRegisterSearchCriteria;
+
+                publicRegisterLicenceListViewModel = HandlePostActions(publicRegisterLicenceListViewModel, submitButtonType);
+
+                return View(publicRegisterLicenceListViewModel);
+            }
+            else
+            {
+                var licences = publicRegisterViewModelBuilder.BuildEmptySearch();
+
+                return View(licences);
+            }
+        }
+
+        private PublicRegisterLicenceListViewModel HandlePostActions(
+            PublicRegisterLicenceListViewModel publicRegisterLicenceListViewModel, string submit)
+        {
+            PublicRegisterSearchCriteria newPublicRegisterSearchCriteria = null;
+            var searchViewModel = publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria;
+
+            if (publicRegisterLicenceListViewModel.AvailableCountries == null)
+                publicRegisterLicenceListViewModel.AvailableCountries =
                     publicRegisterViewModelBuilder.BuildAvailableCountries();
 
             switch (submit)
             {
                 case "add":
-                    newSearchViewModel = AddCountry(publicRegisterLicenceListViewModel).PublicRegisterSearchViewModel;
+                    newPublicRegisterSearchCriteria = AddCountry(publicRegisterLicenceListViewModel).PublicRegisterSearchCriteria;
                     break;
                 case "search":
                     // we want to update teh 
-                    currentSearchViewModel = searchViewModel;
+                    _currentPublicRegisterSearchCriteria = searchViewModel;
                     searchViewModel.SearchActive = true;
                     break;
                 default:
-                    newSearchViewModel = RemoveCountry(publicRegisterLicenceListViewModel, submit).PublicRegisterSearchViewModel;
+                    newPublicRegisterSearchCriteria =
+                        RemoveCountry(publicRegisterLicenceListViewModel, submit).PublicRegisterSearchCriteria;
                     break;
             }
 
@@ -48,30 +87,21 @@ namespace GLAA.Web.Controllers
                  !string.IsNullOrWhiteSpace(searchViewModel.BusinessName)))
             {
                 publicRegisterLicenceListViewModel =
-                    publicRegisterViewModelBuilder.BuildSearchForLicences(currentSearchViewModel);
+                    publicRegisterViewModelBuilder.BuildSearchForLicences(_currentPublicRegisterSearchCriteria);
 
-                publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel =
-                    newSearchViewModel ?? searchViewModel;
+                publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria =
+                    newPublicRegisterSearchCriteria ?? searchViewModel;
             }
             else
                 searchViewModel.SearchActive = false;
 
             //Ensure we remove any countries that are selected, from the list than are selectable.
             if (searchViewModel.CountriesSelected != null)
-                searchViewModel.AvailableCountries = searchViewModel.AvailableCountries
+                publicRegisterLicenceListViewModel.AvailableCountries = publicRegisterLicenceListViewModel.AvailableCountries
                     .Where(x => !searchViewModel.CountriesSelected.Contains(x.Value)).ToList();
             else
-                searchViewModel.AvailableCountries = searchViewModel.AvailableCountries.ToList();
-
-            return View(publicRegisterLicenceListViewModel);
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var licences = publicRegisterViewModelBuilder.BuildEmptySearch();
-
-            return View(licences);
+                publicRegisterLicenceListViewModel.AvailableCountries = publicRegisterLicenceListViewModel.AvailableCountries.ToList();
+            return publicRegisterLicenceListViewModel;
         }
 
         [HttpGet]
@@ -85,23 +115,21 @@ namespace GLAA.Web.Controllers
 
         private PublicRegisterLicenceListViewModel AddCountry(PublicRegisterLicenceListViewModel publicRegisterLicenceListViewModel)
         {
-            if (publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected == null)
-                publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected =
+            if (publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected == null)
+                publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected =
                     new List<string>();
 
-            var countryAdded = publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountryAdded;
+            var countryAdded = publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountryAdded;
 
             //add the country into the list of selected countries
-            publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected.Add(
-                publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.AvailableCountries
-                    .FirstOrDefault(x => x.Value == countryAdded)?.Value);
+            publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected.Add(
+                publicRegisterLicenceListViewModel.AvailableCountries.FirstOrDefault(x => x.Value == countryAdded)?.Value);
 
             //remove them from the list of selectable countries
-            foreach (var country in publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected.ToList())
+            foreach (var country in publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected.ToList())
             {
-                publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.AvailableCountries = RemoveFromList(
-                    publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.AvailableCountries,
-                    x => x.Value == country);
+                publicRegisterLicenceListViewModel.AvailableCountries = RemoveFromList(
+                    publicRegisterLicenceListViewModel.AvailableCountries, x => x.Value == country);
             }
 
             publicRegisterLicenceListViewModel = HandleUkSelected(publicRegisterLicenceListViewModel, countryAdded);
@@ -120,7 +148,7 @@ namespace GLAA.Web.Controllers
             else if (countryAdded != "Outside UK")
             {
                 //if any other country than the UK, or Outside UK is added, then we want to remove the "UK" from the selected countries.
-                if (publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected.Contains("UK"))
+                if (publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected.Contains("UK"))
                     RemoveSelectedCountry(publicRegisterLicenceListViewModel, new SelectListItem { Text = "UK", Value = "UK" });
             }
 
@@ -131,14 +159,14 @@ namespace GLAA.Web.Controllers
             SelectListItem ukCountry)
         {
             //remove selected country
-            publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected =
+            publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected =
                 RemoveFromList(
-                    publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.CountriesSelected,
+                    publicRegisterLicenceListViewModel.PublicRegisterSearchCriteria.CountriesSelected,
                     x => x == ukCountry.Value);
 
             //add selectable country
-            if (publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.AvailableCountries.All(x => x.Value != ukCountry.Value))
-                publicRegisterLicenceListViewModel.PublicRegisterSearchViewModel.AvailableCountries.Add(ukCountry);
+            if (publicRegisterLicenceListViewModel.AvailableCountries.All(x => x.Value != ukCountry.Value))
+                publicRegisterLicenceListViewModel.AvailableCountries.Add(ukCountry);
         }
 
         private PublicRegisterLicenceListViewModel RemoveCountry(PublicRegisterLicenceListViewModel publicRegisterLicenceListViewModel, string countryToRemove)
