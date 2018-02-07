@@ -648,9 +648,16 @@ namespace GLAA.Services.Tests.AutoMapper
                 BusinessEmailAddress = "e@mail",
                 BusinessEmailAddressConfirmation = "e@mail",
                 Address = expectedAddress,
-                PAYEERNNumber = "3",
-                PAYEERNRegistrationDate = new DateTime(2000, 2, 2),
-                HasPAYEERNNumber = true,
+                PAYENumbers = new List<PAYENumber>
+                {
+                    new PAYENumber
+                    {
+                        Id = 1,
+                        Number = "3",
+                        RegistrationDate = new DateTime(2000, 2, 2)
+                    }
+                },
+                HasPAYENumber = true,
                 VATNumber = "4",
                 VATRegistrationDate = new DateTime(2000, 3, 3),
                 HasVATNumber = true,
@@ -677,9 +684,10 @@ namespace GLAA.Services.Tests.AutoMapper
 
             AssertAddress(expectedAddress, result.Address);
 
-            Assert.AreEqual(input.PAYEERNNumber, result.PAYEERNStatus.PAYENumber);
-            Assert.AreEqual(input.PAYEERNRegistrationDate, result.PAYEERNStatus.PAYERegistrationDate.Date);
-            Assert.AreEqual(input.HasPAYEERNNumber, result.PAYEERNStatus.HasPAYENumber);
+            Assert.AreEqual(input.PAYENumbers.First().Id, result.PAYEStatus.PAYENumbers.First().Id);
+            Assert.AreEqual(input.PAYENumbers.First().Number, result.PAYEStatus.PAYENumbers.First().PAYENumber);
+            Assert.AreEqual(input.PAYENumbers.First().RegistrationDate, result.PAYEStatus.PAYENumbers.First().PAYERegistrationDate);            
+            Assert.AreEqual(input.HasPAYENumber, result.PAYEStatus.HasPAYENumber);
 
             Assert.AreEqual(input.VATNumber, result.VATStatus.VATNumber);
             Assert.AreEqual(input.VATRegistrationDate, result.VATStatus.VATRegistrationDate.Date);

@@ -239,7 +239,7 @@ namespace GLAA.Domain
                     CompaniesHouseNumber = "12341234",
                     CompanyRegistrationDate = DateTime.Now,
                     HasMultiples = true,
-                    HasPAYEERNNumber = true,
+                    HasPAYENumber = true,
                     HasTradingName = true,
                     HasPreviousTradingName = true,
                     PreviousTradingNames = new[]
@@ -272,8 +272,13 @@ namespace GLAA.Domain
                     BusinessName = "Fully Populated Company",
                     OtherMultiple = "Some other Multiple",
                     OtherSector = "Some other Sector",
-                    PAYEERNNumber = "123/A12345",
-                    PAYEERNRegistrationDate = DateTime.Now,
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
                     PSCDetails = "Here are some details about the PSC. And some more. And some more.",
                     SelectedMultiples = new List<LicenceMultiple>
                     {

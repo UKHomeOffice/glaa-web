@@ -10,7 +10,7 @@
 @using (Html.BeginForm("SaveBusinessCredentials", "OrganisationDetails"))
 {
     <div class="grid-row">
-        <div class="column-two-thirds">
+        <div class="column-full">
             @Html.Partial("_GdsValidationSummary")
         </div>
         <div class="column-full">
@@ -18,21 +18,31 @@
                 @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">
-            @if (Model.LegalStatus == GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany)
-            {
-                <div class="form-group">
+    </div>
+    <div class="grid-row">
+        @Html.HiddenFor(x => x.LegalStatus)
+        @if (Model.LegalStatus == GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany)
+        {
+            <div class="form-group">
+                <div class="column-half">
                     @Html.LabelWithHintFor(x => x.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber)
                     @Html.TextBoxFor(x => x.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber, new { @class = "form-control" })
-
+                </div>
+                <div class="column-half">
                     @Html.DateFormGroupFor(x => x.CompaniesHouseRegistrationViewModel.CompanyRegistrationDate)
                 </div>
-            }
-            <hr />
+            </div>
+        }
+    </div>
+    <hr />
+    <div class="grid-row">
+        <div class="column-full">
             <div class="form-group">
                 <fieldset class="inline">
                     <legend>
-                        Do you have a VAT number?
+                        <h1 class="heading-medium">
+                            Do you have a VAT number?
+                        </h1>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
@@ -41,21 +51,32 @@
                             @Html.Label(option.Text)
                         </div>
                     }
-
-                    @if (Model.VATStatusViewModel.HasVATNumber.HasValue && Model.VATStatusViewModel.HasVATNumber.Value)
-                    {
-                        <div class="js-hidden" id="VAT-details">
-                            @Html.TextFormGroupFor(x => x.VATStatusViewModel.VATNumber)
-                            @Html.DateFormGroupFor(x => x.VATStatusViewModel.VATRegistrationDate)
-                        </div>
-                    }
                 </fieldset>
             </div>
-            <hr />
+        </div>
+        @if (Model.VATStatusViewModel.HasVATNumber.HasValue && Model.VATStatusViewModel.HasVATNumber.Value)
+        {
+            <div class="js-hidden" id="VAT-details">
+                <div class="column-half">
+                    @Html.TextFormGroupFor(x => x.VATStatusViewModel.VATNumber)
+                </div>
+                <div class="column-half">
+                    @Html.DateFormGroupFor(x => x.VATStatusViewModel.VATRegistrationDate)
+                </div>
+            </div>
+        }
+
+
+    </div>
+    <hr />
+    <div class="grid-row">
+        <div class="column-full">
             <div class="form-group">
                 <fieldset class="inline">
                     <legend>
-                        Do you have a PAYE number?
+                        <h1 class="heading-medium">
+                            Do you have a PAYE number?
+                        </h1>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
@@ -64,35 +85,68 @@
                             @Html.Label(option.Text)
                         </div>
                     }
-
-                    @if (Model.PAYEStatusViewModel.HasPAYENumber.HasValue && Model.PAYEStatusViewModel.HasPAYENumber.Value)
-                    {
-                        <div class="js-hidden" id="PAYE-details">
-                            @Html.TextFormGroupFor(x => x.PAYEStatusViewModel.PAYENumber)
-                            @Html.DateFormGroupFor(x => x.PAYEStatusViewModel.PAYERegistrationDate)
-                        </div>
-                    }
                 </fieldset>
             </div>
-            <hr />
+        </div>
+        @if (Model.PAYEStatusViewModel.HasPAYENumber.HasValue && Model.PAYEStatusViewModel.HasPAYENumber.Value)
+        {
+            @for (var i = 0; i < Model.PAYEStatusViewModel.PAYENumbers.Count; i++)
+            {
+                <div class="grid-row">
+                    @Html.HiddenFor(x => x.PAYEStatusViewModel.PAYENumbers[i].Id)
+
+                    <div class="column-one-third">
+                        @Html.TextFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYENumber)
+                    </div>
+                    <div class="column-one-third">
+                        @Html.DateFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYERegistrationDate)
+                    </div>
+                    <div class="column-one-third">
+                        @if (Model.PAYEStatusViewModel.PAYENumbers.Count() > 0)
+                        {
+                            <button class="link-button cancel" asp-controller="OrganisationDetails" asp-action="RemovePAYENumber" asp-route-id="@i">Remove this</button>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="grid-row">
+                <div class="column-full">
+                    <div class="form-group">
+                        <button class="button button-add-another cancel" asp-controller="OrganisationDetails" asp-action="AddPAYENumber">Add another</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="js-hidden" id="PAYE-details">
+
+            </div>
+        }
+    </div>
+    <hr />
+    <div class="grid-row">
+        <div class="column-full">
             <div class="form-group">
                 <fieldset class="inline">
                     <legend>
-                        Do you have a unique Tax reference number?
+                        <h1 class="heading-medium">
+                            Do you have a unique Tax reference number?
+                        </h1>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
-                        <div class="multiple-choice tax">
-                            @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
-                            @Html.Label(option.Text)
-                        </div>
+                    <div class="multiple-choice tax">
+                        @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
+                        @Html.Label(option.Text)
+                    </div>
                     }
 
                     @if (Model.TaxReferenceViewModel.HasTaxReferenceNumber.HasValue && Model.TaxReferenceViewModel.HasTaxReferenceNumber.Value)
                     {
-                        <div class="panel panel-border-narrow js-hidden" id="TAX-details">
-                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber)
-                        </div>
+                    <div class="js-hidden" id="TAX-details">
+                        @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber)
+                    </div>
                     }
                 </fieldset>
             </div>

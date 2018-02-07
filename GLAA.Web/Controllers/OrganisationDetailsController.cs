@@ -152,6 +152,25 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
+        public IActionResult AddPAYENumber(BusinessCredentialsViewModel model)
+        {
+            model.Validate();
+
+            model.PAYEStatusViewModel.PAYENumbers = model.PAYEStatusViewModel.PAYENumbers.Concat(new[] { new PAYENumberRow() }).ToList();
+            return View(GetViewPath(FormSection.OrganisationDetails, 10), model);
+        }
+
+        [HttpPost]
+        [ExportModelState]
+        [Route("Licence/Apply/OrganisationDetails/RemovePAYENumber/{id}")]
+        public IActionResult RemovePAYENumber(int id, BusinessCredentialsViewModel model)
+        {
+            model.PAYEStatusViewModel.PAYENumbers.RemoveAt(id);
+            return View(GetViewPath(FormSection.OrganisationDetails, 10), model);
+        }
+
+        [HttpPost]
+        [ExportModelState]
         public IActionResult SaveVATStatus(VATStatusViewModel model)
         {
             return OrganisationDetailsPost(model, 11);

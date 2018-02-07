@@ -18,7 +18,7 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public LegalStatusEnum LegalStatus { get; set; }
 
-        public string LegalStatusOther { get; set; }
+        //public string LegalStatusOther { get; set; }
 
         public CompaniesHouseRegistrationViewModel CompaniesHouseRegistrationViewModel { get; set; }
 
@@ -36,7 +36,7 @@ namespace GLAA.ViewModels.LicenceApplication
             PAYEStatusViewModel.Validate();
             TaxReferenceViewModel.Validate();
 
-            IsValid = VATStatusViewModel.IsValid && VATStatusViewModel.IsValid && TaxReferenceViewModel.IsValid;
+            IsValid = VATStatusViewModel.IsValid && PAYEStatusViewModel.IsValid && TaxReferenceViewModel.IsValid;
 
             if (LegalStatus == LegalStatusEnum.RegisteredCompany)
             {

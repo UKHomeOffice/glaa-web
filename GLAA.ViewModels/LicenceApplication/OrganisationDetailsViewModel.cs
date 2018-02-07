@@ -24,7 +24,7 @@ namespace GLAA.ViewModels.LicenceApplication
             BusinessWebsite = new BusinessWebsiteViewModel();
             LegalStatus = new LegalStatusViewModel();
             BusinessCredentialsViewModel = new BusinessCredentialsViewModel();
-            PAYEERNStatus = new PAYEStatusViewModel();
+            PAYEStatus = new PAYEStatusViewModel();
             VATStatus = new VATStatusViewModel();
             TaxReference = new TaxReferenceViewModel();
         }
@@ -41,7 +41,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
         public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }        
-        public PAYEStatusViewModel PAYEERNStatus { get; set; }
+        public PAYEStatusViewModel PAYEStatus { get; set; }
         public VATStatusViewModel VATStatus { get; set; }
         public TaxReferenceViewModel TaxReference { get; set; }
     }
@@ -256,22 +256,14 @@ namespace GLAA.ViewModels.LicenceApplication
     {
         public PAYEStatusViewModel()
         {
-            PAYERegistrationDate = new DateViewModel();
+            PAYENumbers = new List<PAYENumberRow>();
         }
 
         [Required]
         [Display(Name = "Do you have an PAYE Registion Number?")]
         public bool? HasPAYENumber { get; set; }
 
-        // TODO: Check example numbers
-        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]
-        [RequiredIf(ErrorMessage = "The PAYE Number field is required")]
-        [Display(Name = "PAYE Number", Description = "For example 123/A12345 or 123/AB12345")]
-        public string PAYENumber { get; set; }
-
-        [UIHint("_NullableDateTime")]
-        [Display(Name = "Employer Registration Date", Description = "Please enter the date you registered as an employer with HMRC.")]
-        public DateViewModel PAYERegistrationDate { get; set; }
+        public List<PAYENumberRow> PAYENumbers { get; set; }
 
         public bool IsRequired => HasPAYENumber ?? false;
 
@@ -279,35 +271,41 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public void Validate()
         {
-            var invalidModelFields = new List<string>();
-            foreach (var prop in GetType().GetProperties())
+
+            if(HasPAYENumber.HasValue == false)
             {
-                var obj = prop.GetValue(this) ?? string.Empty;
-
-                var validatable = obj as IValidatable;
-
-                bool propertyIsValid;
-
-                if (validatable != null)
-                {
-                    // Use the defined validate method if one is defined
-                    validatable.Validate();
-                    propertyIsValid = validatable.IsValid;
-                }
-                else
-                {
-                    // Use the validation context for properties
-                    var context = new ValidationContext(obj, null);
-                    propertyIsValid = Validator.TryValidateObject(obj, context, null, true);
-                }
-
-                if (!propertyIsValid)
-                {
-                    invalidModelFields.Add(prop.Name);
-                }
+                IsValid = false;
+                return;
             }
-            IsValid = !invalidModelFields.Any();
+
+            foreach (var number in PAYENumbers)
+            {
+                number.Validate();
+            }
+
+            IsValid = PAYENumbers.All(x => x.IsValid);
+
         }
+    }
+
+    public class PAYENumberRow : Validatable, IId
+    {
+        public PAYENumberRow()
+        {
+            PAYERegistrationDate = new DateViewModel();
+        }
+
+        public int Id { get; set; }
+
+        // TODO: Check example numbers
+        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]
+        [RequiredIf(ErrorMessage = "The PAYE Number field is required")]
+        [Display(Name = "PAYE Registration Number", Description = "For example 123/A12345 or 123/AB12345")]
+        public string PAYENumber { get; set; }
+
+        [UIHint("_NullableDateTime")]
+        [Display(Name = "PAYE Registration Date")]
+        public DateViewModel PAYERegistrationDate { get; set; }        
     }
 
     public class VATStatusViewModel : YesNoViewModel, IRequiredIf, IValidatable
@@ -326,11 +324,11 @@ namespace GLAA.ViewModels.LicenceApplication
         // https://en.wikipedia.org/wiki/VAT_identification_number
         [RegularExpression(@"[a-zA-Z]{2}[a-zA-Z0-9 ]{2,13}", ErrorMessage = "Please enter a valid VAT registration number")]
         [RequiredIf(ErrorMessage = "The VAT registration number field is required")]
-        [Display(Name = "VAT Number", Description = "For example GB999 9999 73")]
+        [Display(Name = "VAT Registration Number", Description = "For example GB999 9999 73")]
         public string VATNumber { get; set; }
 
         [UIHint("_NullableDateTime")]
-        [Display(Name = "VAT Registration Date", Description = "Please enter the date you registered for VAT.")]
+        [Display(Name = "VAT Registration Date")]
         public DateViewModel VATRegistrationDate { get; set; }
 
         public bool IsRequired => HasVATNumber ?? false;

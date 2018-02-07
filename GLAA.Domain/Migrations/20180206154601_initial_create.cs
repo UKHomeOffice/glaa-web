@@ -356,7 +356,7 @@ namespace GLAA.Domain.Migrations
                     HasBeenBanned = table.Column<bool>(nullable: true),
                     HasMultiples = table.Column<bool>(nullable: true),
                     HasNamedIndividuals = table.Column<bool>(nullable: true),
-                    HasPAYEERNNumber = table.Column<bool>(nullable: true),
+                    HasPAYENumber = table.Column<bool>(nullable: true),
                     HasPreviousTradingName = table.Column<bool>(nullable: true),
                     HasTaxReferenceNumber = table.Column<bool>(nullable: true),
                     HasTradingName = table.Column<bool>(nullable: true),
@@ -376,8 +376,6 @@ namespace GLAA.Domain.Migrations
                     OtherMultiple = table.Column<string>(nullable: true),
                     OtherOperatingIndustry = table.Column<string>(nullable: true),
                     OtherSector = table.Column<string>(nullable: true),
-                    PAYEERNNumber = table.Column<string>(nullable: true),
-                    PAYEERNRegistrationDate = table.Column<DateTime>(nullable: true),
                     PSCDetails = table.Column<string>(nullable: true),
                     PreviouslyWorkedInShellfish = table.Column<bool>(nullable: true),
                     SignatoryName = table.Column<string>(nullable: true),
@@ -655,6 +653,27 @@ namespace GLAA.Domain.Migrations
                         principalTable: "Licence",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PAYENumber",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    LicenceId = table.Column<int>(nullable: true),
+                    Number = table.Column<string>(nullable: true),
+                    RegistrationDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PAYENumber", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PAYENumber_Licence_LicenceId",
+                        column: x => x.LicenceId,
+                        principalTable: "Licence",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1117,6 +1136,11 @@ namespace GLAA.Domain.Migrations
                 column: "PrincipalAuthorityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PAYENumber_LicenceId",
+                table: "PAYENumber",
+                column: "LicenceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PreviousTradingName_LicenceId",
                 table: "PreviousTradingName",
                 column: "LicenceId");
@@ -1259,6 +1283,9 @@ namespace GLAA.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "OffenceAwaitingTrial");
+
+            migrationBuilder.DropTable(
+                name: "PAYENumber");
 
             migrationBuilder.DropTable(
                 name: "PreviousTradingName");

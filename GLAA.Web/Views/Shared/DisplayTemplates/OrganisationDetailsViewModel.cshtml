@@ -92,11 +92,11 @@
             }
         </tr>
         <tr>
-            <td>PAYE/ERN Status</td>
-            <td>@Html.DisplayFor(m => m.PAYEERNStatus)</td>
+            <td>PAYE Status</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.PAYEStatusViewModel.HasPAYENumber)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> PAYE/ERN Status</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> PAYE Status</span></a></td>
             }
         </tr>
         <tr>

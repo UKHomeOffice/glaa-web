@@ -451,7 +451,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool?>("HasNamedIndividuals");
 
-                    b.Property<bool?>("HasPAYEERNNumber");
+                    b.Property<bool?>("HasPAYENumber");
 
                     b.Property<bool?>("HasPreviousTradingName");
 
@@ -490,10 +490,6 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("OtherOperatingIndustry");
 
                     b.Property<string>("OtherSector");
-
-                    b.Property<string>("PAYEERNNumber");
-
-                    b.Property<DateTime?>("PAYEERNRegistrationDate");
 
                     b.Property<string>("PSCDetails");
 
@@ -749,6 +745,24 @@ namespace GLAA.Domain.Migrations
                     b.HasIndex("PrincipalAuthorityId");
 
                     b.ToTable("OffenceAwaitingTrial");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.PAYENumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("LicenceId");
+
+                    b.Property<string>("Number");
+
+                    b.Property<DateTime>("RegistrationDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LicenceId");
+
+                    b.ToTable("PAYENumber");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.PreviousTradingName", b =>
@@ -1192,6 +1206,13 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.PrincipalAuthority", "PrincipalAuthority")
                         .WithMany("OffencesAwaitingTrial")
                         .HasForeignKey("PrincipalAuthorityId");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.PAYENumber", b =>
+                {
+                    b.HasOne("GLAA.Domain.Models.Licence", "Licence")
+                        .WithMany("PAYENumbers")
+                        .HasForeignKey("LicenceId");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.PreviousTradingName", b =>

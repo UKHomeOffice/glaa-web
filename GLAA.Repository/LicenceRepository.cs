@@ -15,7 +15,7 @@ namespace GLAA.Repository
 
         public Licence GetById(int id)
         {
-            return GetAllEntriesWithStatusesAndAddress().First(l => l.Id == id);
+            return GetCoreLicenses().First(l => l.Id == id);
         }
 
         public Licence GetByApplicationId(string applicationId)
@@ -37,6 +37,37 @@ namespace GLAA.Repository
                 l.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).First().Status.IsApplication);
         }
 
+        public IQueryable<Licence> GetCoreLicenses()
+        {
+            return Context.Licences
+                .Include(l => l.LicenceStatusHistory).ThenInclude(h => h.Status)
+                .Include(l => l.LicenceStatusHistory).ThenInclude(h => h.NonCompliantStandards)
+                .Include(l => l.LicenceStatusHistory).ThenInclude(h => h.Reason)
+                .Include(l => l.Address)
+                .Include(l => l.OperatingIndustries)
+                .Include(l => l.OperatingCountries)
+                .Include(l => l.SelectedSectors)
+                .Include(l => l.SelectedMultiples)
+                .Include(l => l.PreviousTradingNames)
+                .Include(l => l.PAYENumbers)
+                .Include(l => l.DirectorOrPartners).ThenInclude(x => x.Address)
+                .Include(l => l.DirectorOrPartners).ThenInclude(x => x.RestraintOrders)
+                .Include(l => l.DirectorOrPartners).ThenInclude(x => x.UnspentConvictions)
+                .Include(l => l.DirectorOrPartners).ThenInclude(x => x.OffencesAwaitingTrial)
+                .Include(l => l.PrincipalAuthorities).ThenInclude(x => x.Address)
+                .Include(l => l.PrincipalAuthorities).ThenInclude(x => x.RestraintOrders)
+                .Include(l => l.PrincipalAuthorities).ThenInclude(x => x.UnspentConvictions)
+                .Include(l => l.PrincipalAuthorities).ThenInclude(x => x.OffencesAwaitingTrial)
+                .Include(l => l.AlternativeBusinessRepresentatives).ThenInclude(x => x.Address)
+                .Include(l => l.AlternativeBusinessRepresentatives).ThenInclude(x => x.RestraintOrders)
+                .Include(l => l.AlternativeBusinessRepresentatives).ThenInclude(x => x.UnspentConvictions)
+                .Include(l => l.AlternativeBusinessRepresentatives).ThenInclude(x => x.OffencesAwaitingTrial)
+                .Include(l => l.NamedIndividuals).ThenInclude(x => x.RestraintOrders)
+                .Include(l => l.NamedIndividuals).ThenInclude(x => x.UnspentConvictions)
+                .Include(l => l.NamedIndividuals).ThenInclude(x => x.OffencesAwaitingTrial);
+                //.Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
+        }
+
         public IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress()
         {
             return Context.Licences
@@ -49,6 +80,7 @@ namespace GLAA.Repository
                 .Include(l => l.SelectedSectors)
                 .Include(l => l.SelectedMultiples)
                 .Include(l => l.PreviousTradingNames)
+                .Include(l => l.PAYENumbers)
                 .Include(l => l.DirectorOrPartners).ThenInclude(x => x.Address)
                 .Include(l => l.DirectorOrPartners).ThenInclude(x => x.RestraintOrders)
                 .Include(l => l.DirectorOrPartners).ThenInclude(x => x.UnspentConvictions)

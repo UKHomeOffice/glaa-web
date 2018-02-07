@@ -53,9 +53,9 @@ namespace GLAA.Domain.Models
 
         public string CompaniesHouseNumber { get; set; }
         public DateTime? CompanyRegistrationDate { get; set; }
-        public bool? HasPAYEERNNumber { get; set; }
-        public string PAYEERNNumber { get; set; }
-        public DateTime? PAYEERNRegistrationDate { get; set; }
+        public bool? HasPAYENumber { get; set; }
+        public virtual ICollection<PAYENumber> PAYENumbers { get; set; } = new Collection<PAYENumber>();
+
         public bool? HasVATNumber { get; set; }
         public string VATNumber { get; set; }
         public DateTime? VATRegistrationDate { get; set; }
