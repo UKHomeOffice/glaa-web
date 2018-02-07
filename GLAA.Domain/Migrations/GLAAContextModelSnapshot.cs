@@ -21,17 +21,17 @@ namespace GLAA.Domain.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GLAA.Domain.Core.Models.LicenceCountry", b =>
+            modelBuilder.Entity("GLAA.Domain.Core.Models.LicenceWorkerCountry", b =>
                 {
                     b.Property<int>("LicenceId");
 
-                    b.Property<int>("CountryId");
+                    b.Property<int>("WorkerCountryId");
 
-                    b.HasKey("LicenceId", "CountryId");
+                    b.HasKey("LicenceId", "WorkerCountryId");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("WorkerCountryId");
 
-                    b.ToTable("LicenceCountry");
+                    b.ToTable("LicenceWorkerCountry");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Core.Models.LicenceIndustry", b =>
@@ -84,7 +84,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("AddressLine3");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("WorkerCountry");
 
                     b.Property<string>("County");
 
@@ -201,7 +201,7 @@ namespace GLAA.Domain.Migrations
                     b.ToTable("Conviction");
                 });
 
-            modelBuilder.Entity("GLAA.Domain.Models.Country", b =>
+            modelBuilder.Entity("GLAA.Domain.Models.WorkerCountry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -210,7 +210,7 @@ namespace GLAA.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("WorkerCountry");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.DirectorOrPartner", b =>
@@ -766,7 +766,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("BusinessName");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("WorkerCountry");
 
                     b.Property<int?>("LicenceId");
 
@@ -1017,11 +1017,11 @@ namespace GLAA.Domain.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("GLAA.Domain.Core.Models.LicenceCountry", b =>
+            modelBuilder.Entity("GLAA.Domain.Core.Models.LicenceWorkerCountry", b =>
                 {
-                    b.HasOne("GLAA.Domain.Models.Country", "Country")
+                    b.HasOne("GLAA.Domain.Models.WorkerCountry", "WorkerCountry")
                         .WithMany("Licences")
-                        .HasForeignKey("CountryId")
+                        .HasForeignKey("WorkerCountryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("GLAA.Domain.Models.Licence", "Licence")

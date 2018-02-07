@@ -72,7 +72,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Licences, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<CountryViewModel, Country>()
+            CreateMap<WorkerCountryViewModel, WorkerCountry>()
                 .ForMember(x => x.Licences, opt => opt.Ignore())
                 .ReverseMap();
 

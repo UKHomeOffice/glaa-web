@@ -2,7 +2,7 @@
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class CountryViewModel : ICheckboxList
+    public class WorkerCountryViewModel : ICheckboxList
     {
         public int Id { get; set; }
         public string Name { get; set; }        

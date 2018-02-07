@@ -20,7 +20,7 @@ namespace GLAA.Domain
         public DbSet<LicenceStatusChange> LicenceStatusChanges { get; set; }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<Industry> Industries { get; set; }
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<WorkerCountry> Countries { get; set; }
         public DbSet<Multiple> Multiples { get; set; }
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<PrincipalAuthority> PrincipalAuthorities { get; set; }
@@ -45,18 +45,18 @@ namespace GLAA.Domain
             }
 
             // many-to-many
-            modelBuilder.Entity<LicenceCountry>()
-                .HasKey(x => new { x.LicenceId, x.CountryId });
+            modelBuilder.Entity<LicenceWorkerCountry>()
+                .HasKey(x => new { x.LicenceId, CountryId = x.WorkerCountryId });
 
-            modelBuilder.Entity<LicenceCountry>()
+            modelBuilder.Entity<LicenceWorkerCountry>()
                 .HasOne(x => x.Licence)
                 .WithMany(x => x.OperatingCountries)
                 .HasForeignKey(x => x.LicenceId);
 
-            modelBuilder.Entity<LicenceCountry>()
-                .HasOne(x => x.Country)
+            modelBuilder.Entity<LicenceWorkerCountry>()
+                .HasOne(x => x.WorkerCountry)
                 .WithMany(x => x.Licences)
-                .HasForeignKey(x => x.CountryId);
+                .HasForeignKey(x => x.WorkerCountryId);
 
             modelBuilder.Entity<LicenceIndustry>()
                 .HasKey(x => new { x.LicenceId, x.IndustryId });

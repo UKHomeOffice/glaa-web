@@ -60,7 +60,7 @@ namespace GLAA.Services.Automapper
             CreateMap<Industry, IndustryViewModel>()
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
-            CreateMap<Country, CountryViewModel>()
+            CreateMap<WorkerCountry, WorkerCountryViewModel>()
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
             CreateMap<ICollection<Industry>, OperatingIndustriesViewModel>()
@@ -174,7 +174,7 @@ namespace GLAA.Services.Automapper
             {
                 foreach (var country in licence.OperatingCountries)
                 {
-                    var match = vm.OperatingCountries.Single(x => x.Id == country.CountryId);
+                    var match = vm.OperatingCountries.Single(x => x.Id == country.WorkerCountryId);
                     match.Checked = true;
                 }
             }

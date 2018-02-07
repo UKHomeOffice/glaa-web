@@ -114,13 +114,13 @@ namespace GLAA.Services.Tests.AutoMapper
         [TestMethod]
         public void it_should_map_the_country_view_model_to_the_country_entity()
         {
-            var vm = new CountryViewModel
+            var vm = new WorkerCountryViewModel
             {
                 Id = 1,
                 Name = "Test Country"
             };
 
-            var result = this.mapper.Map<Country>(vm);
+            var result = this.mapper.Map<WorkerCountry>(vm);
 
             Assert.AreEqual(vm.Id, result.Id);
             Assert.AreEqual(vm.Name, result.Name);

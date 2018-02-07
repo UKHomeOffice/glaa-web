@@ -181,13 +181,13 @@ namespace GLAA.Services.Tests.AutoMapper
         [TestMethod]
         public void it_should_map_the_country_entity_to_the_country_view_model()
         {
-            var country = new Country
+            var country = new WorkerCountry
             {
                 Id = 1,
                 Name = "Test Country"
             };
 
-            var result = this.mapper.Map<CountryViewModel>(country);
+            var result = this.mapper.Map<WorkerCountryViewModel>(country);
 
             Assert.AreEqual(country.Id, result.Id);
             Assert.AreEqual(country.Name, result.Name);
@@ -581,12 +581,12 @@ namespace GLAA.Services.Tests.AutoMapper
                         IndustryId = expectedIndustry
                     }
                 },
-                OperatingCountries = new List<LicenceCountry>
+                OperatingCountries = new List<LicenceWorkerCountry>
                 {
-                    new LicenceCountry
+                    new LicenceWorkerCountry
                     {
                         LicenceId = licenceId,
-                        CountryId = expectedCountry
+                        WorkerCountryId = expectedCountry
                     }
                 }
             };

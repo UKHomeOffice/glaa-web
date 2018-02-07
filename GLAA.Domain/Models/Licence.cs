@@ -64,7 +64,7 @@ namespace GLAA.Domain.Models
 
         public string OtherOperatingIndustry { get; set; }
 
-        public virtual ICollection<LicenceCountry> OperatingCountries { get; set; }
+        public virtual ICollection<LicenceWorkerCountry> OperatingCountries { get; set; }
 
         public int? AddressId { get; set; }
 

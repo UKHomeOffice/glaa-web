@@ -33,7 +33,7 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Country",
+                name: "WorkerCountry",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -481,7 +481,7 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LicenceCountry",
+                name: "LicenceWorkerCountry",
                 columns: table => new
                 {
                     LicenceId = table.Column<int>(nullable: false),
@@ -493,7 +493,7 @@ namespace GLAA.Domain.Migrations
                     table.ForeignKey(
                         name: "FK_LicenceCountry_Country_CountryId",
                         column: x => x.CountryId,
-                        principalTable: "Country",
+                        principalTable: "WorkerCountry",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -1042,8 +1042,8 @@ namespace GLAA.Domain.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_LicenceCountry_CountryId",
-                table: "LicenceCountry",
-                column: "CountryId");
+                table: "LicenceWorkerCountry",
+                column: "WorkerCountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LicenceIndustry_IndustryId",
@@ -1257,7 +1257,7 @@ namespace GLAA.Domain.Migrations
                 name: "Conviction");
 
             migrationBuilder.DropTable(
-                name: "LicenceCountry");
+                name: "LicenceWorkerCountry");
 
             migrationBuilder.DropTable(
                 name: "LicenceIndustry");
@@ -1291,7 +1291,7 @@ namespace GLAA.Domain.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Country");
+                name: "WorkerCountry");
 
             migrationBuilder.DropTable(
                 name: "Industry");

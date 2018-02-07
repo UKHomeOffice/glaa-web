@@ -144,21 +144,21 @@ namespace GLAA.Domain
 
             if (!context.Countries.Any())
             {
-                var defaultCountries = new List<Country>
+                var defaultCountries = new List<WorkerCountry>
                 {
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "England"
                     },
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "Scotland"
                     },
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "Wales"
                     },
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "Northern Ireland"
                     }
@@ -257,9 +257,9 @@ namespace GLAA.Domain
                     LegalStatus = LegalStatusEnum.LimitedCompany,
                     NumberOfMultiples = 3,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.Countries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
