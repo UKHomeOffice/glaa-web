@@ -1,9 +1,9 @@
-﻿using GLAA.ViewModels.LicenceApplication;
+﻿using GLAA.ViewModels;
 
 namespace GLAA.Services.AccountCreation
 {
     public interface IAccountCreationViewModelBuilder
     {
-        EligibilityViewModel Build(string email);
+        SignUpViewModel Build(string email);
     }
 }

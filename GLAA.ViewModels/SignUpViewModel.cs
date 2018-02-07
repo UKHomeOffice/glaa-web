@@ -2,12 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using GLAA.ViewModels.Attributes;
+using GLAA.ViewModels.LicenceApplication;
 
-namespace GLAA.ViewModels.LicenceApplication
+namespace GLAA.ViewModels
 {
-    public class EligibilityViewModel : Validatable
+    public class SignUpViewModel : Validatable
     {
-        public EligibilityViewModel()
+        public SignUpViewModel()
         {
             FullName = new PrincipalAuthorityFullNameViewModel();
             EmailAddress = new PrincipalAuthorityEmailAddressViewModel();
@@ -34,7 +35,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string FirstName { get; set; }
 
         [HiddenOptional]
-        [Display(Name = "Middle name")]
+        [Display(Name = "Middle names")]
         public string MiddleName { get; set; }
 
         [Required]
@@ -59,7 +60,7 @@ namespace GLAA.ViewModels.LicenceApplication
     public class PasswordViewModel : IValidatable
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{9,}$", ErrorMessage = "Your password must be at least 9 characters long and contain at least one lower-case letter, at least one upper-case letter and at least one number.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

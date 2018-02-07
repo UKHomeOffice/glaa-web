@@ -1,5 +1,6 @@
 ﻿using System;
 using GLAA.Services.AccountCreation;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Attributes;
 using GLAA.Web.FormLogic;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GLAA.Web.Controllers
 {
-    public class EligibilityController : DefaultController
+    public class SignUpController : DefaultController
     {
         private const string CurrentPaEmail = "CURRENT_PA_EMAIL";
 
@@ -16,7 +17,7 @@ namespace GLAA.Web.Controllers
         private readonly IAccountCreationViewModelBuilder accountCreationViewModelBuilder;
         private readonly IAccountCreationPostDataHandler accountCreationPostDataHandler;
 
-        public EligibilityController(ISessionHelper session,
+        public SignUpController(ISessionHelper session,
             IAccountCreationViewModelBuilder accountCreationViewModelBuilder, IFormDefinition formDefinition,
             IAccountCreationPostDataHandler accountCreationPostDataHandler)
             : base(formDefinition)
@@ -44,7 +45,7 @@ namespace GLAA.Web.Controllers
         protected IActionResult CheckParentValidityAndRedirect(int submittedPageId)
         {
             var email = session.GetString(CurrentPaEmail);
-            var sectionLength = FormDefinition.GetSectionLength(FormSection.Eligibility);
+            var sectionLength = FormDefinition.GetSectionLength(FormSection.SignUp);
             var nextPageId = submittedPageId + 1;
 
             if (submittedPageId + 1 != sectionLength)
@@ -52,11 +53,11 @@ namespace GLAA.Web.Controllers
                 var parent = accountCreationViewModelBuilder.Build(email);
 
                 return parent == null
-                    ? RedirectToAction("Introduction", "Eligibility")
+                    ? RedirectToAction("Introduction", "SignUp")
                     : ValidateParentAndRedirect(parent, nextPageId);
             }
 
-            return RedirectToLastAction(FormSection.Eligibility);
+            return RedirectToLastAction(FormSection.SignUp);
         }
 
         protected IActionResult CheckParentValidityAndRedirectBack(int submittedPageId)
@@ -66,33 +67,33 @@ namespace GLAA.Web.Controllers
             var parent = accountCreationViewModelBuilder.Build(email);
 
             return parent == null && nextPageId > 0
-                ? RedirectBackToAction(FormSection.Eligibility, nextPageId)
+                ? RedirectBackToAction(FormSection.SignUp, nextPageId)
                 : ValidateParentAndRedirectBack(parent, nextPageId);
         }
 
-        protected IActionResult ValidateParentAndRedirect(EligibilityViewModel parent, int nextPageId)
+        protected IActionResult ValidateParentAndRedirect(SignUpViewModel parent, int nextPageId)
         {
             parent.Validate();
             return parent.IsValid
-                ? RedirectToLastAction(FormSection.Eligibility)
-                : RedirectToAction(FormSection.Eligibility, nextPageId);
+                ? RedirectToLastAction(FormSection.SignUp)
+                : RedirectToAction(FormSection.SignUp, nextPageId);
         }
 
-        protected IActionResult ValidateParentAndRedirectBack(EligibilityViewModel parent, int nextPageId)
+        protected IActionResult ValidateParentAndRedirectBack(SignUpViewModel parent, int nextPageId)
         {
             parent.Validate();
 
             return nextPageId > 0
                 ? (parent.IsValid
-                    ? RedirectToLastAction(FormSection.Eligibility)
-                    : RedirectBackToAction(FormSection.Eligibility, nextPageId))
-                : RedirectToLastAction(FormSection.Eligibility);
+                    ? RedirectToLastAction(FormSection.SignUp)
+                    : RedirectBackToAction(FormSection.SignUp, nextPageId))
+                : RedirectToLastAction(FormSection.SignUp);
         }
 
         [HttpGet]
         [ImportModelState]
-        [Route("Eligibility/Part/{id}")]
-        public ActionResult Eligibility(int id, bool? back = false)
+        [Route("SignUp/Part/{id}")]
+        public ActionResult SignUp(int id, bool? back = false)
         {
             session.SetLoadedPage(id);
             var email = session.GetString(CurrentPaEmail);
@@ -100,8 +101,8 @@ namespace GLAA.Web.Controllers
             var model = accountCreationViewModelBuilder.Build(email);
 
             return back.HasValue && back.Value
-                ? GetPreviousView(id, FormSection.Eligibility, model)
-                : GetNextView(id, FormSection.Eligibility, model);
+                ? GetPreviousView(id, FormSection.SignUp, model)
+                : GetNextView(id, FormSection.SignUp, model);
         }
 
         public IActionResult Back(int submittedPageId)
@@ -112,27 +113,27 @@ namespace GLAA.Web.Controllers
         [HttpGet]
         public ActionResult Introduction()
         {
-            return View("Introduction");
+            return View(nameof(Introduction));
         }
 
         [HttpGet]
         public ActionResult VerificationSent()
         {
-            return View("VerificationSent", session.GetString(CurrentPaEmail));
+            return View(nameof(VerificationSent), session.GetString(CurrentPaEmail));
         }
 
         [HttpGet]
         public IActionResult ResendVerification()
         {
             accountCreationPostDataHandler.SendConfirmation(session.GetString(CurrentPaEmail), Url);
-            return RedirectToAction("VerificationSent");
+            return RedirectToAction(nameof(VerificationSent));
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
         {
-            session.SetSubmittedPage(FormSection.Eligibility, 1);
+            session.SetSubmittedPage(FormSection.SignUp, 1);
 
             if (accountCreationPostDataHandler.Exists(model.EmailAddress))
             {
@@ -142,7 +143,7 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.Eligibility, 1), model);
+                return View(GetViewPath(FormSection.SignUp, 1), model);
             }
 
             // Don't overwrite an unconfirmed user if we're currently editing that user
@@ -163,11 +164,11 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SaveFullName(PrincipalAuthorityFullNameViewModel model)
         {
-            session.SetSubmittedPage(FormSection.Eligibility, 2);
+            session.SetSubmittedPage(FormSection.SignUp, 2);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.Eligibility, 2), model);
+                return View(GetViewPath(FormSection.SignUp, 2), model);
             }
 
             accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
@@ -179,11 +180,11 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SaveAddress(AddressViewModel model)
         {
-            session.SetSubmittedPage(FormSection.Eligibility, 3);
+            session.SetSubmittedPage(FormSection.SignUp, 3);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.Eligibility, 3), model);
+                return View(GetViewPath(FormSection.SignUp, 3), model);
             }
 
             accountCreationPostDataHandler.UpdateAddress(session.GetString(CurrentPaEmail), model);
@@ -195,11 +196,11 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
         {
-            session.SetSubmittedPage(FormSection.Eligibility, 4);
+            session.SetSubmittedPage(FormSection.SignUp, 4);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.Eligibility, 4), model);
+                return View(GetViewPath(FormSection.SignUp, 4), model);
             }
 
             accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
@@ -211,11 +212,11 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SavePassword(PasswordViewModel model)
         {
-            session.SetSubmittedPage(FormSection.Eligibility, 5);
+            session.SetSubmittedPage(FormSection.SignUp, 5);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.Eligibility, 5), model);
+                return View(GetViewPath(FormSection.SignUp, 5), model);
             }
 
             accountCreationPostDataHandler.SetPassword(session.GetString(CurrentPaEmail), model.Password);
@@ -228,7 +229,7 @@ namespace GLAA.Web.Controllers
         public ActionResult SendVerification()
         {
             accountCreationPostDataHandler.SendConfirmation(session.GetString(CurrentPaEmail), Url);
-            return RedirectToAction("VerificationSent");
+            return RedirectToAction(nameof(VerificationSent));
         }
     }
 }

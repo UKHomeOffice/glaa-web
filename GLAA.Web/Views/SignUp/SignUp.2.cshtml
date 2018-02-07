@@ -2,11 +2,11 @@
     ViewBag.Title = "Principal Authority's full name";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PrincipalAuthorityFullNameViewModel
+@model GLAA.ViewModels.PrincipalAuthorityFullNameViewModel
 
-@Html.ActionLink("< Back", "Back", "Eligibility", new { submittedPageId = 2 }, new { @class = "details-back-button" })
+@Html.ActionLink("< Back", "Back", "SignUp", new { submittedPageId = 2 }, new { @class = "details-back-button" })
 
-@using (Html.BeginForm("SaveFullName", "Eligibility"))
+@using (Html.BeginForm("SaveFullName", "SignUp"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">

@@ -20,7 +20,7 @@ namespace GLAA.Web.FormLogic
                         }
                     },
                     {
-                        FormSection.Eligibility,
+                        FormSection.SignUp,
                         new []
                         {
                             new FormPageDefinition("EmailAddress"),

@@ -13,7 +13,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.LastPage, opt => opt.Ignore())
                 .ForMember(x => x.IsApplication, opt => opt.Ignore())
                 .ForMember(x => x.Declaration, opt => opt.Ignore())
-                .ForMember(x => x.Eligibility, opt => opt.Ignore())
+                .ForMember(x => x.SignUp, opt => opt.Ignore())
                 .ForMember(x => x.OrganisationDetails, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PrincipalAuthority, opt => opt.Ignore())
                 .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.Ignore())

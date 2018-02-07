@@ -10,7 +10,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public LicenceApplicationViewModel()
         {
             Declaration = new DeclarationViewModel();
-            Eligibility = new EligibilityViewModel();
+            SignUp = new SignUpViewModel();
             OrganisationDetails = new OrganisationDetailsViewModel();
             PrincipalAuthority = new PrincipalAuthorityViewModel();
             AlternativeBusinessRepresentatives = new AlternativeBusinessRepresentativeCollectionViewModel();
@@ -39,7 +39,7 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public NamedIndividualType NamedIndividualType { get; set; }
 
-        public EligibilityViewModel Eligibility { get; set; }
+        public SignUpViewModel SignUp { get; set; }
         public DeclarationViewModel Declaration { get; set; }
         public OrganisationDetailsViewModel OrganisationDetails { get; set; }
         public PrincipalAuthorityViewModel PrincipalAuthority { get; set; }

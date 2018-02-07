@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GLAA.Domain.Models;
-using GLAA.ViewModels.LicenceApplication;
+using GLAA.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace GLAA.Services.AccountCreation
@@ -16,15 +16,15 @@ namespace GLAA.Services.AccountCreation
             userManager = um;
         }
 
-        public EligibilityViewModel Build(string email)
+        public SignUpViewModel Build(string email)
         {
             if (string.IsNullOrEmpty(email))
             {
-                return new EligibilityViewModel();
+                return new SignUpViewModel();
             }
 
             var user = userManager.FindCompleteUserByEmail(email);
-            var model = mapper.Map<EligibilityViewModel>(user);
+            var model = mapper.Map<SignUpViewModel>(user);
 
             return model;
         }
