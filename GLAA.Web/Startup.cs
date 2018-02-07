@@ -26,6 +26,7 @@ using Amazon.S3;
 using Amazon.Runtime.CredentialManagement;
 using Amazon;
 using Amazon.Runtime;
+using GLAA.Services.AccountCreation;
 
 namespace GLAA.Web
 {
@@ -107,6 +108,10 @@ namespace GLAA.Web
 
             // http session
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // account creation
+            services.AddTransient<IAccountCreationPostDataHandler, AccountCreationPostDataHandler>();
+            services.AddTransient<IAccountCreationViewModelBuilder, AccountCreationViewModelBuilder>();
 
             // licence profile
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
@@ -315,20 +320,21 @@ namespace GLAA.Web
                 for (var i = 0; i < 50; i++)
                 {
                     string un;
-                    string fn;
+                    string f;
+                    string l;
                     do
                     {
-                        var f = FirstNames[rnd.Next(FirstNames.Length)];
-                        var l = LastNames[rnd.Next(LastNames.Length)];
+                        f = FirstNames[rnd.Next(FirstNames.Length)];
+                        l = LastNames[rnd.Next(LastNames.Length)];
                         un = $"{f}.{l}@example.com";
-                        fn = $"{f} {l}";
                     } while (await um.FindByEmailAsync(un) != null);
 
                     var user = new GLAAUser
                     {
                         UserName = un,
                         Email = un,
-                        FullName = fn
+                        FirstName = f,
+                        LastName = l
                     };
                     var pw = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 

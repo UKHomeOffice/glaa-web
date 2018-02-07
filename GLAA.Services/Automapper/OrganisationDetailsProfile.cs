@@ -63,6 +63,10 @@ namespace GLAA.Services.Automapper
             CreateMap<Country, CountryViewModel>()
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
+            CreateMap<ICollection<Industry>, OperatingIndustriesViewModel>()
+                .ForMember(x => x.OtherIndustry, opt => opt.Ignore())
+                .ForMember(x => x.OperatingIndustries, opt => opt.MapFrom(y => y));
+
             CreateMap<OrganisationDetailsViewModel, Licence>()
                 .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName.BusinessName))
                 .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.BusinessName.HasTradingName))

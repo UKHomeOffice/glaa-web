@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180202121120_initial_create")]
+    [Migration("20180205105811_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -327,6 +327,10 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<int?>("AddressId");
+
+                    b.Property<int?>("CommunicationPreference");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -335,11 +339,15 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("MiddleName");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -355,12 +363,16 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<string>("Title");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -1103,6 +1115,13 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.PrincipalAuthority", "PrincipalAuthority")
                         .WithMany()
                         .HasForeignKey("PrincipalAuthorityId");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.GLAAUser", b =>
+                {
+                    b.HasOne("GLAA.Domain.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.Licence", b =>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Summary of whether you need a licence";
+}
+
+@model GLAA.ViewModels.SignUpViewModel
+    
+@using (Html.BeginForm("SendVerification", "SignUp"))
+{
+    <div class="grid-row">
+        <div class="column-full">
+            <h1 class="heading-large">
+                Check your account details
+            </h1>
+            @Html.HiddenFor(m => m.EmailAddress.EmailAddress)
+            @Html.DisplayFor(m => m)
+        </div>
+        <div class="column-full">
+            <p>We will be sharing and checking your information with other Government Departments and their agencies. For more information <a href="#">please read our privacy policy.</a>
+            </p>
+            <p><button class="button button-start" type="submit">Complete account set up</button></p>
+        </div>
+    </div>
+}

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Principal Authority's full name";
+}
+
+@model GLAA.ViewModels.PrincipalAuthorityFullNameViewModel
+
+@Html.ActionLink("< Back", "Back", "SignUp", new { submittedPageId = 2 }, new { @class = "details-back-button" })
+
+@using (Html.BeginForm("SaveFullName", "SignUp"))
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                @ViewBag.Title
+            </h1>
+            <p class="lede">Once a licence has been granted the Principal Authority is authorised to act as a gangmaster and will be individually named on the licence.</p>
+        </div>
+        <div class="column-two-thirds">
+            @Html.TextFormGroupFor(x => x.Title)
+            @Html.TextFormGroupFor(x => x.FirstName)
+            @Html.TextFormGroupFor(x => x.MiddleName)
+            @Html.TextFormGroupFor(x => x.LastName)
+            <button type="submit" class="button">Continue</button>
+        </div>
+    </div>
+}
+    
