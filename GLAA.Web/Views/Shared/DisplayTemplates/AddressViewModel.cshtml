@@ -24,7 +24,7 @@
             @Model.AddressLine2
         }
 
-        if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+        if (!string.IsNullOrWhiteSpace(Model.AddressLine3))
         {
             <br />
             @Model.AddressLine3
@@ -42,7 +42,7 @@
         if (Model.NonUK)
         {
             <br />
-            @Model.Country
+            @(Model.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.CountryId)?.Text ?? string.Empty)
         }
     }
 }
