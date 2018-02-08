@@ -62,39 +62,5 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y.CommunicationPreference))
                 .ForAllOtherMembers(opt => opt.Ignore());
         }
-
-        private int GetApplicationFee(TurnoverBand? turnover)
-        {
-            switch (turnover)
-            {
-                case TurnoverBand.UnderOneMillion:
-                    return 400;
-                case TurnoverBand.OneToFiveMillion:
-                    return 1200;
-                case TurnoverBand.FiveToTenMillion:
-                    return 2000;
-                case TurnoverBand.OverTenMillion:
-                    return 2600;
-                default:
-                    return 0;
-            }
-        }
-
-        private int GetInspectionFee(TurnoverBand? turnover)
-        {
-            switch (turnover)
-            {
-                case TurnoverBand.UnderOneMillion:
-                    return 1850;
-                case TurnoverBand.OneToFiveMillion:
-                    return 2150;
-                case TurnoverBand.FiveToTenMillion:
-                    return 2400;
-                case TurnoverBand.OverTenMillion:
-                    return 2900;
-                default:
-                    return 0;
-            }
-        }
     }
 }

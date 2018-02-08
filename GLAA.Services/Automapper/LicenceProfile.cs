@@ -13,7 +13,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.LastPage, opt => opt.Ignore())
                 .ForMember(x => x.IsApplication, opt => opt.Ignore())
                 .ForMember(x => x.Declaration, opt => opt.Ignore())
-                .ForMember(x => x.SignUp, opt => opt.Ignore())
                 .ForMember(x => x.OrganisationDetails, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PrincipalAuthority, opt => opt.Ignore())
                 .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.Ignore())
@@ -22,6 +21,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Organisation, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.NewLicenceStatus, opt => opt.Ignore())
                 .ForMember(x => x.YesNo, opt => opt.Ignore())
+                .ForMember(x => x.ApplicationFee, opt => opt.ResolveUsing(GetApplicationFee))
+                .ForMember(x => x.InspectionFee, opt => opt.ResolveUsing(GetInspectionFee))
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.Countries, opt => opt.Ignore());
 
@@ -122,6 +123,44 @@ namespace GLAA.Services.Automapper
         private static LegalStatusEnum? MapNullableLegalStatus(LegalStatusViewModel model)
         {
             return model.LegalStatus;
+        }
+
+        private static int GetApplicationFee(Licence licence)
+        {
+            switch (licence.TurnoverBand)
+            {
+                case TurnoverBand.UnderOneMillion:
+                    return 400;
+                case TurnoverBand.OneToFiveMillion:
+                    return 1200;
+                case TurnoverBand.FiveToTenMillion:
+                    return 2000;
+                case TurnoverBand.OverTenMillion:
+                    return 2600;
+                case null:
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+
+        private static int GetInspectionFee(Licence licence)
+        {
+            switch (licence.TurnoverBand)
+            {
+                case TurnoverBand.UnderOneMillion:
+                    return 1850;
+                case TurnoverBand.OneToFiveMillion:
+                    return 2150;
+                case TurnoverBand.FiveToTenMillion:
+                    return 2400;
+                case TurnoverBand.OverTenMillion:
+                    return 2900;
+                case null:
+                    return 0;
+                default:
+                    return 0;
+            }
         }
     }
 }
