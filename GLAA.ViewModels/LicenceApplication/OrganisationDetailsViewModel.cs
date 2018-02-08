@@ -298,11 +298,12 @@ namespace GLAA.ViewModels.LicenceApplication
         public int Id { get; set; }
 
         // TODO: Check example numbers
-        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]
-        [RequiredIf(ErrorMessage = "The PAYE Number field is required")]
+        [Required]
+        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]        
         [Display(Name = "PAYE Registration Number", Description = "For example 123/A12345 or 123/AB12345")]
         public string PAYENumber { get; set; }
 
+        [Required]
         [UIHint("_NullableDateTime")]
         [Display(Name = "PAYE Registration Date")]
         public DateViewModel PAYERegistrationDate { get; set; }        

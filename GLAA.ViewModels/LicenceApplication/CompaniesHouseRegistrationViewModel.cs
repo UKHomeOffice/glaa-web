@@ -1,10 +1,11 @@
 ﻿using GLAA.Domain.Models;
+using GLAA.ViewModels.Core;
 using GLAA.ViewModels.Core.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class CompaniesHouseRegistrationViewModel : Validatable
+    public class CompaniesHouseRegistrationViewModel : Validatable, IRequiredIf
     {
         public CompaniesHouseRegistrationViewModel()
         {
@@ -21,5 +22,9 @@ namespace GLAA.ViewModels.LicenceApplication
         [UIHint("_NullableDateTime")]
         [Display(Name = "Registration Date", Description = "")]
         public DateViewModel CompanyRegistrationDate { get; set; }
+
+        public LegalStatusEnum LegalStatus { get; set; }
+
+        public bool IsRequired => LegalStatus == LegalStatusEnum.RegisteredCompany;
     }
 }
