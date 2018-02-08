@@ -13,21 +13,30 @@ namespace GLAA.Services.LicenceApplication
     {
         private readonly ILicenceRepository licenceRepository;
         private readonly IMapper mapper;
+        private readonly IReferenceDataProvider referenceDataProvider;
 
-        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper)
+        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp)
         {
             this.licenceRepository = licenceRepository;
             this.mapper = mapper;
+            referenceDataProvider = rdp;
         }
 
         public T New<T>() where T : new()
         {
-            return new T();
+            var model = new T();
+
+            if (model is INeedCountries countryModel)
+            {
+                countryModel.Countries = referenceDataProvider.GetCountries();
+            }
+
+            return model;
         }
 
         public LicenceApplicationViewModel New()
         {
-            return new LicenceApplicationViewModel();
+            return New<LicenceApplicationViewModel>();
         }
 
         private LicenceApplicationViewModel BuildFromLicence(Licence licence)
@@ -65,7 +74,9 @@ namespace GLAA.Services.LicenceApplication
         {
             var licence = licenceRepository.GetById(licenceId);
 
-            var model = mapper.Map<T>(licence);
+            var model = New<T>();
+
+            model = mapper.Map(licence, model);
 
             return model;
         }
@@ -86,8 +97,8 @@ namespace GLAA.Services.LicenceApplication
                 linkable.Licence = licence;
             }
 
-            var model = new T();
-                
+            var model = New<T>();
+
             mapper.Map(source, model);
 
             return model;
@@ -99,7 +110,7 @@ namespace GLAA.Services.LicenceApplication
 
             var source = objectSelector(licence);
 
-            var model = new T();
+            var model = New<T>();
 
             if (source.Any())
             {

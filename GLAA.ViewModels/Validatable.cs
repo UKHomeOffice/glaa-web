@@ -6,7 +6,7 @@ namespace GLAA.ViewModels
 {
     public abstract class Validatable : IValidatable
     {
-        public void Validate()
+        public virtual void Validate()
         {
             var invalidModelFields = new List<string>();
             foreach (var prop in GetType().GetProperties())

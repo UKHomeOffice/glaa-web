@@ -20,7 +20,7 @@ namespace GLAA.Domain
         public DbSet<LicenceStatusChange> LicenceStatusChanges { get; set; }
         public DbSet<Licence> Licences { get; set; }
         public DbSet<Industry> Industries { get; set; }
-        public DbSet<WorkerCountry> Countries { get; set; }
+        public DbSet<WorkerCountry> WorkerCountries { get; set; }
         public DbSet<Multiple> Multiples { get; set; }
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<PrincipalAuthority> PrincipalAuthorities { get; set; }
@@ -32,6 +32,7 @@ namespace GLAA.Domain
         public DbSet<Conviction> Convictions { get; set; }
         public DbSet<OffenceAwaitingTrial> OffencesAwaitingTrial { get; set; }
         public DbSet<PreviousTradingName> PreviousTradingNames { get; set; }
+        public DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            

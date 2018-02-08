@@ -1,8 +1,9 @@
-﻿using GLAA.Domain;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class PersonViewModel : IPersonViewModel
+    public class PersonViewModel : IPersonViewModel, INeedCountries
     {
         public PersonViewModel()
         {
@@ -49,5 +50,11 @@ namespace GLAA.ViewModels.LicenceApplication
         public UnspentConvictionsViewModel UnspentConvictionsViewModel { get; set; }
         public OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
         public PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            set => Address.Countries = value;
+            get => Address.Countries;
+        }
     }
 }

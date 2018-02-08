@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using GLAA.Domain.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class AddressViewModel : IId
+    public class AddressViewModel : IId, INeedCountries
     {
         public int Id { get; set; }
         [Required]
@@ -21,8 +23,11 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         public string County { get; set; }
         [Required]
-        public string Country { get; set; }
+        [Display(Name = "Country")]
+        public int CountryId { get; set; }
         [Display(Name = "Non UK Address")]
         public bool NonUK { get; set; }
+
+        public IEnumerable<SelectListItem> Countries { get; set; }
     }
 }

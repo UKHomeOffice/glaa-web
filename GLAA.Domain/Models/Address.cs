@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
@@ -18,7 +19,9 @@ namespace GLAA.Domain.Models
 
         public string Postcode { get; set; }
 
-        public string Country { get; set; }
+        public int? CountryId { get; set; }
+        [ForeignKey(nameof(CountryId))]
+        public virtual Country Country { get; set; }
 
         public bool NonUK { get; set; }            
     }

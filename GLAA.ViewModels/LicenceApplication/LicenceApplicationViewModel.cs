@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using GLAA.Domain.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class LicenceApplicationViewModel : YesNoViewModel, IViewModel<Licence>, IValidatable
+    public class LicenceApplicationViewModel : YesNoViewModel, IViewModel<Licence>, IValidatable, INeedCountries
     {
         public LicenceApplicationViewModel()
         {
@@ -68,5 +68,11 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public bool IsValid { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            set => OrganisationDetails.Countries = value;
+            get => OrganisationDetails.Countries;
+        }
     }
 }

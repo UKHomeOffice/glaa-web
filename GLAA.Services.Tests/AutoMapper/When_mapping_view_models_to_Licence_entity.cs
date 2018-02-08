@@ -4,6 +4,7 @@ using GLAA.Domain;
 using GLAA.Domain.Models;
 using GLAA.Services.Automapper;
 using GLAA.ViewModels.LicenceApplication;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GLAA.Services.Tests.AutoMapper
@@ -29,9 +30,10 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine2 = "2",
                 AddressLine3 = "3",
                 County = "county",
-                Country = "country",
+                CountryId = 1,
                 Town = "town",
-                Postcode = "postcode"
+                Postcode = "postcode",
+                Countries = new[] {new SelectListItem {Value = "1", Text = "country"}}
             };
 
             var expectedFullName = "fullname";
@@ -93,7 +95,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AddressLine1, actual.AddressLine1);
             Assert.AreEqual(expected.AddressLine2, actual.AddressLine2);
             Assert.AreEqual(expected.AddressLine3, actual.AddressLine3);
-            Assert.AreEqual(expected.Country, actual.Country);
+            Assert.AreEqual(expected.CountryId, actual.CountryId);
             Assert.AreEqual(expected.County, actual.County);
             Assert.AreEqual(expected.Postcode, actual.Postcode);
             Assert.AreEqual(expected.Town, actual.Town);
@@ -105,7 +107,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AddressLine1, actual.AddressLine1);
             Assert.AreEqual(expected.AddressLine2, actual.AddressLine2);
             Assert.AreEqual(expected.AddressLine3, actual.AddressLine3);
-            Assert.AreEqual(expected.Country, actual.Country);
+            Assert.AreEqual(expected.CountryId, actual.CountryId);
             Assert.AreEqual(expected.County, actual.County);
             Assert.AreEqual(expected.Postcode, actual.Postcode);
             Assert.AreEqual(expected.Town, actual.Town);
@@ -202,7 +204,7 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine2 = "2",
                 AddressLine3 = "3",
                 County = "county",
-                Country = "country",
+                CountryId = 1,
                 Town = "town",
                 Postcode = "postcode"
             };
@@ -371,7 +373,7 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine2 = "2",
                 AddressLine3 = "3",
                 County = "county",
-                Country = "country",
+                CountryId = 1,
                 Town = "town",
                 Postcode = "postcode"
             };

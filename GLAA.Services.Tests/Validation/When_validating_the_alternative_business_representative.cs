@@ -50,7 +50,7 @@ namespace GLAA.Services.Tests.Validation
                     AddressLine2 = "2",
                     Town = "Perutown",
                     County = "County",
-                    Country = "Peru",
+                    CountryId = 1,
                     Postcode = "postcode",
                     NonUK = false
                 },

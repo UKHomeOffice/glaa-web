@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class OrganisationDetailsViewModel : Validatable
+    public class OrganisationDetailsViewModel : Validatable, INeedCountries
     {
         public OrganisationDetailsViewModel()
         {
@@ -42,6 +42,12 @@ namespace GLAA.ViewModels.LicenceApplication
         public PAYEERNStatusViewModel PAYEERNStatus { get; set; }
         public VATStatusViewModel VATStatus { get; set; }
         public TaxReferenceViewModel TaxReference { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            set => Address.Countries = value;
+            get => Address.Countries;
+        }
     }
 
 

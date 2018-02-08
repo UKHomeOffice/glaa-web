@@ -21,7 +21,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.VATStatus, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.TaxReference, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.BusinessName, opt => opt.ResolveUsing(BusinessNameResolver))
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                .ForMember(x => x.IsValid, opt => opt.Ignore())
+                .ForMember(x => x.Countries, opt => opt.Ignore());
 
             CreateMap<Licence, BusinessEmailAddressViewModel>()
                 .ForMember(x => x.BusinessEmailAddress, opt => opt.MapFrom(y => y.BusinessEmailAddress))

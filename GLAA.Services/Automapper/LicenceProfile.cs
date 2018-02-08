@@ -22,7 +22,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Organisation, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.NewLicenceStatus, opt => opt.Ignore())
                 .ForMember(x => x.YesNo, opt => opt.Ignore())
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                .ForMember(x => x.IsValid, opt => opt.Ignore())
+                .ForMember(x => x.Countries, opt => opt.Ignore());
 
             CreateMappings();
         }
