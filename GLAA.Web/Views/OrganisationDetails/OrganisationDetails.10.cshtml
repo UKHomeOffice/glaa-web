@@ -83,36 +83,33 @@
                 </fieldset>
             </div>
         </div>
-        @if (Model.PAYEStatusViewModel.HasPAYENumber.HasValue && Model.PAYEStatusViewModel.HasPAYENumber.Value)
+
+        @for (var i = 0; i < Model.PAYEStatusViewModel.PAYENumbers.Count; i++)
         {
-            @for (var i = 0; i < Model.PAYEStatusViewModel.PAYENumbers.Count; i++)
-            {
-                <div class="grid-row">
-                    @Html.HiddenFor(x => x.PAYEStatusViewModel.PAYENumbers[i].Id)
-
-                    <div class="column-one-third">
-                        @Html.TextFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYENumber)
-                    </div>
-                    <div class="column-one-third">
-                        @Html.DateFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYERegistrationDate)
-                    </div>
-                    <div class="column-one-third">
-                        @if (Model.PAYEStatusViewModel.PAYENumbers.Count() > 0)
-                        {
-                            <button class="link-button cancel" asp-controller="OrganisationDetails" asp-action="RemovePAYENumber" asp-route-id="@i">Remove this</button>
-                        }
-                    </div>
-                </div>
-            }
-
             <div class="grid-row">
-                <div class="column-full">
-                    <div class="form-group">
-                        <button class="button button-add-another cancel" asp-controller="OrganisationDetails" asp-action="AddPAYENumber">Add another</button>
-                    </div>
+                @Html.HiddenFor(x => x.PAYEStatusViewModel.PAYENumbers[i].Id)
+
+                <div class="column-one-third">
+                    @Html.TextFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYENumber)
+                </div>
+                <div class="column-one-third">
+                    @Html.DateFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYERegistrationDate)
+                </div>
+                <div class="column-one-third">
+                    @if (Model.PAYEStatusViewModel.PAYENumbers.Count() > 0)
+                    {
+                        <button class="link-button cancel" asp-controller="OrganisationDetails" asp-action="RemovePAYENumber" asp-route-id="@i">Remove this</button>
+                    }
                 </div>
             </div>
         }
+        <div class="grid-row">
+            <div class="column-full">
+                <div class="form-group">
+                    <button class="button button-add-another cancel" asp-controller="OrganisationDetails" asp-action="AddPAYENumber">Add another</button>
+                </div>
+            </div>
+        </div>
     </div>
     <hr />
     <div class="grid-row">

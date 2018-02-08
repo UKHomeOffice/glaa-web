@@ -147,7 +147,19 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult SaveBusinessCredentials(BusinessCredentialsViewModel model)
         {
-            return OrganisationDetailsPost(model, 10);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 10);
+
+            if (!ModelState.IsValid)
+            {
+                return View(GetViewPath(FormSection.OrganisationDetails, 10), model);
+            }
+
+            var licenceId = Session.GetCurrentLicenceId();
+
+            LicenceApplicationPostDataHandler.Update(licenceId, x => x, model);
+            LicenceApplicationPostDataHandler.UpdateAll(licenceId, x => x.PAYENumbers, model.PAYEStatusViewModel.PAYENumbers);
+
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 10);
         }
 
         [HttpPost]

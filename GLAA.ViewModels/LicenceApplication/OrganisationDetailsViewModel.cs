@@ -260,7 +260,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         [Required]
-        [Display(Name = "Do you have an PAYE Registion Number?")]
+        [Display(Name = "Do you have an PAYE Registration Number?", Description = "Please put the organisations PAYE registration number in the space provided.")]
         public bool? HasPAYENumber { get; set; }
 
         public List<PAYENumberRow> PAYENumbers { get; set; }
@@ -329,7 +329,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string VATNumber { get; set; }
 
         [UIHint("_NullableDateTime")]
-        [RequiredIf]
+        [RequiredIf(ErrorMessage = "The VAT Registration Date field is required")]
         [Display(Name = "VAT Registration Date")]
         public DateViewModel VATRegistrationDate { get; set; }
 
@@ -377,7 +377,7 @@ namespace GLAA.ViewModels.LicenceApplication
 
         // Only GOV.UK format guidance: https://www.gov.uk/find-lost-utr-number
         // X:\04PTW\38500\38548 - GLAA - Government Licensing System\TECHNICAL\HMRC_dummy_data.txt
-        [RequiredIf]
+        [RequiredIf(ErrorMessage = "The Tax reference number field is required")]
         [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Tax Reference Number")]
         [Display(Name = "Tax reference number", Description = "For example 1334404714")]
         public string TaxReferenceNumber { get; set; }

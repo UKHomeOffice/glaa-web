@@ -2,7 +2,7 @@
 
 namespace GLAA.Domain.Models
 {
-    public class PAYENumber : IId
+    public class PAYENumber : IId, ILinkedToLicence
     {
         public int Id { get; set; }
 
