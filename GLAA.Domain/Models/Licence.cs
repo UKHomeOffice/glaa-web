@@ -18,14 +18,7 @@ namespace GLAA.Domain.Models
         public bool? ContinueApplication { get; set; }
         public bool EmailAlreadyRegistered { get; set; }
 
-        #region Declaration
-        
-        public bool? AgreedToStatementOne { get; set; }        
-        public bool? AgreedToStatementTwo { get; set; }        
-        public bool? AgreedToStatementThree { get; set; }        
-        public bool? AgreedToStatementFour { get; set; }        
-        public bool? AgreedToStatementFive { get; set; }        
-        public bool? AgreedToStatementSix { get; set; }        
+        #region Declaration            
         public string SignatoryName { get; set; }
         public DateTime? SignatureDate { get; set; }
         #endregion

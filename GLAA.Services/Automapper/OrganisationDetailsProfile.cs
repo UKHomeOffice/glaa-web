@@ -40,8 +40,6 @@ namespace GLAA.Services.Automapper
             CreateMap<Licence, PAYEStatusViewModel>()
                 .ForMember(x => x.HasPAYENumber, opt => opt.MapFrom(y => y.HasPAYENumber))
                 .ForMember(x => x.PAYENumbers, opt => opt.ResolveUsing(PAYENumberResolver))
-                //.ForMember(x => x.PAYENumber, opt => opt.MapFrom(y => y.PAYEERNNumber))
-                //.ForMember(x => x.PAYERegistrationDate, opt => opt.MapFrom(y => y.PAYEERNRegistrationDate))
                 .ForMember(x => x.YesNo, opt => opt.UseValue(ProfileHelpers.YesNoList))
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
 
@@ -103,6 +101,18 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.HasTaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
+            CreateMap<BusinessCredentialsViewModel, Licence>()
+                .ForMember(x => x.CompaniesHouseNumber, opt => opt.MapFrom(y => y.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber))
+                .ForMember(x => x.CompanyRegistrationDate, opt => opt.MapFrom(y => y.CompaniesHouseRegistrationViewModel.CompanyRegistrationDate))
+                .ForMember(x => x.HasVATNumber, opt => opt.MapFrom(y => y.VATStatusViewModel.HasVATNumber))
+                .ForMember(x => x.VATNumber, opt => opt.MapFrom(y => y.VATStatusViewModel.VATNumber))
+                .ForMember(x => x.VATRegistrationDate, opt => opt.MapFrom(y => y.VATStatusViewModel.VATRegistrationDate))
+                .ForMember(x => x.HasPAYENumber, opt => opt.MapFrom(y => y.PAYEStatusViewModel.HasPAYENumber))
+                .ForMember(x => x.PAYENumbers, opt => opt.ResolveUsing(PAYENumberRowResolver))
+                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceViewModel.HasTaxReferenceNumber))
+                .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceViewModel.TaxReferenceNumber))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
             CreateMap<BusinessNameViewModel, Licence>()
                 .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
                 .ForMember(x => x.HasTradingName, opt => opt.MapFrom(y => y.HasTradingName))
@@ -143,8 +153,6 @@ namespace GLAA.Services.Automapper
             CreateMap<PAYEStatusViewModel, Licence>()
                 .ForMember(x => x.HasPAYENumber, opt => opt.MapFrom(y => y.HasPAYENumber))
                 .ForMember(x => x.PAYENumbers, opt => opt.MapFrom(y => y.PAYENumbers))
-                //.ForMember(x => x.PAYEERNNumber, opt => opt.MapFrom(y => y.PAYENumber))
-                //.ForMember(x => x.PAYEERNRegistrationDate, opt => opt.MapFrom(y => y.PAYERegistrationDate))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<VATStatusViewModel, Licence>()
@@ -172,6 +180,17 @@ namespace GLAA.Services.Automapper
                 }
             });
         }
+
+        private IEnumerable<PAYENumber> PAYENumberRowResolver(BusinessCredentialsViewModel model)
+        {
+            return model.PAYEStatusViewModel.PAYENumbers.Select(x => new PAYENumber
+            {
+                Id = x.Id,
+                Number = x.PAYENumber,
+                RegistrationDate = x.PAYERegistrationDate.Date.Value
+            });
+        }
+
         private CompaniesHouseRegistrationViewModel CompaniesHouseRegistrationResolver(Licence licence)
         {
             return new CompaniesHouseRegistrationViewModel

@@ -317,12 +317,6 @@ namespace GLAA.Domain
                     HasNamedIndividuals = true,
                     NamedIndividualType = NamedIndividualType.PersonalDetails,
                     SuppliesWorkers = true,
-                    AgreedToStatementOne = true,
-                    AgreedToStatementTwo = true,
-                    AgreedToStatementThree = true,
-                    AgreedToStatementFour = true,
-                    AgreedToStatementFive = true,
-                    AgreedToStatementSix = true,
                     SignatoryName = "The signatory name",
                     SignatureDate = new DateTime(2017, 1, 1),
 

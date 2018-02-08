@@ -54,19 +54,14 @@
                 </fieldset>
             </div>
         </div>
-        @if (Model.VATStatusViewModel.HasVATNumber.HasValue && Model.VATStatusViewModel.HasVATNumber.Value)
-        {
-            <div class="js-hidden" id="VAT-details">
-                <div class="column-half">
-                    @Html.TextFormGroupFor(x => x.VATStatusViewModel.VATNumber)
-                </div>
-                <div class="column-half">
-                    @Html.DateFormGroupFor(x => x.VATStatusViewModel.VATRegistrationDate)
-                </div>
+        <div class="js-hidden" id="VAT-details">
+            <div class="column-half">
+                @Html.TextFormGroupFor(x => x.VATStatusViewModel.VATNumber)
             </div>
-        }
-
-
+            <div class="column-half">
+                @Html.DateFormGroupFor(x => x.VATStatusViewModel.VATRegistrationDate)
+            </div>
+        </div>
     </div>
     <hr />
     <div class="grid-row">
@@ -117,11 +112,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="js-hidden" id="PAYE-details">
-
-            </div>
         }
     </div>
     <hr />
@@ -136,22 +126,19 @@
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
-                    <div class="multiple-choice tax">
-                        @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
-                        @Html.Label(option.Text)
-                    </div>
-                    }
-
-                    @if (Model.TaxReferenceViewModel.HasTaxReferenceNumber.HasValue && Model.TaxReferenceViewModel.HasTaxReferenceNumber.Value)
-                    {
-                    <div class="js-hidden" id="TAX-details">
-                        @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber)
-                    </div>
+                        <div class="multiple-choice tax">
+                            @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
                     }
                 </fieldset>
             </div>
+            <div class="js-hidden" id="TAX-details">
+                @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber)
+            </div>
         </div>
     </div>
+
     <button type="submit" class="button">Save and continue</button>
 }
 

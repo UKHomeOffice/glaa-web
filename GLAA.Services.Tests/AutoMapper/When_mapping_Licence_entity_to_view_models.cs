@@ -686,7 +686,7 @@ namespace GLAA.Services.Tests.AutoMapper
 
             Assert.AreEqual(input.PAYENumbers.First().Id, result.PAYEStatus.PAYENumbers.First().Id);
             Assert.AreEqual(input.PAYENumbers.First().Number, result.PAYEStatus.PAYENumbers.First().PAYENumber);
-            Assert.AreEqual(input.PAYENumbers.First().RegistrationDate, result.PAYEStatus.PAYENumbers.First().PAYERegistrationDate);            
+            Assert.AreEqual(input.PAYENumbers.First().RegistrationDate, result.PAYEStatus.PAYENumbers.First().PAYERegistrationDate.Date);
             Assert.AreEqual(input.HasPAYENumber, result.PAYEStatus.HasPAYENumber);
 
             Assert.AreEqual(input.VATNumber, result.VATStatus.VATNumber);
@@ -807,7 +807,7 @@ namespace GLAA.Services.Tests.AutoMapper
                             Id = selectedIndustry,
                             Name = "An industry"
                         }
-                    }                    
+                    }
                 }
             };
 
@@ -824,26 +824,56 @@ namespace GLAA.Services.Tests.AutoMapper
         {
             var input = new Licence
             {
-                AgreedToStatementOne = true,
-                AgreedToStatementTwo = true,
-                AgreedToStatementThree = true,
-                AgreedToStatementFour = true,
-                AgreedToStatementFive = true,
-                AgreedToStatementSix = true,
                 SignatoryName = "Signatory Name",
                 SignatureDate = new DateTime(2017, 4, 1)
             };
 
             var result = this.mapper.Map<DeclarationViewModel>(input);
 
-            Assert.AreEqual(input.AgreedToStatementOne, result.AgreedToStatementOne);
-            Assert.AreEqual(input.AgreedToStatementTwo, result.AgreedToStatementTwo);
-            Assert.AreEqual(input.AgreedToStatementThree, result.AgreedToStatementThree);
-            Assert.AreEqual(input.AgreedToStatementFour, result.AgreedToStatementFour);
-            Assert.AreEqual(input.AgreedToStatementFive, result.AgreedToStatementFive);
-            Assert.AreEqual(input.AgreedToStatementSix, result.AgreedToStatementSix);
             Assert.AreEqual(input.SignatoryName, result.SignatoryName);
             Assert.AreEqual(input.SignatureDate, result.SignatureDate.Date);
+        }
+
+        [TestMethod]
+        public void it_should_map_the_licence_entity_to_the_business_credentials_view_model()
+        {
+            var input = new Licence
+            {
+                LegalStatus = LegalStatusEnum.RegisteredCompany,
+                CompaniesHouseNumber = "123123",
+                CompanyRegistrationDate = new DateTime(2000, 1, 1),
+                HasVATNumber = true,
+                VATNumber = "2131232",
+                VATRegistrationDate = new DateTime(2000, 1, 2),
+                HasPAYENumber = true,
+                PAYENumbers = new List<PAYENumber>
+                {
+                    new PAYENumber
+                    {
+                        Number = "893725",
+                        RegistrationDate = new DateTime(2000, 1, 3)
+                    },
+                    new PAYENumber
+                    {
+                        Number = "2353425",
+                        RegistrationDate = new DateTime(2000, 1, 4)
+                    }
+                }
+            };
+
+            var result = mapper.Map<BusinessCredentialsViewModel>(input);
+
+            Assert.AreEqual(input.LegalStatus, result.LegalStatus);
+            Assert.AreEqual(input.CompaniesHouseNumber, result.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber);
+            Assert.AreEqual(input.CompanyRegistrationDate, result.CompaniesHouseRegistrationViewModel.CompanyRegistrationDate.Date);
+
+            Assert.AreEqual(input.HasVATNumber, result.VATStatusViewModel.HasVATNumber);
+            Assert.AreEqual(input.VATNumber, result.VATStatusViewModel.VATNumber);
+            Assert.AreEqual(input.VATRegistrationDate, result.VATStatusViewModel.VATRegistrationDate.Date);
+
+            Assert.AreEqual(input.HasPAYENumber, result.PAYEStatusViewModel.HasPAYENumber);
+            Assert.AreEqual(input.PAYENumbers.Last().Number, result.PAYEStatusViewModel.PAYENumbers.Last().PAYENumber);
+            Assert.AreEqual(input.PAYENumbers.Last().RegistrationDate, result.PAYEStatusViewModel.PAYENumbers.Last().PAYERegistrationDate.Date);
         }
     }
 }

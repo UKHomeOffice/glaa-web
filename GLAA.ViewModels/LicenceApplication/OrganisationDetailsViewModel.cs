@@ -329,6 +329,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string VATNumber { get; set; }
 
         [UIHint("_NullableDateTime")]
+        [RequiredIf]
         [Display(Name = "VAT Registration Date")]
         public DateViewModel VATRegistrationDate { get; set; }
 
@@ -369,15 +370,18 @@ namespace GLAA.ViewModels.LicenceApplication
         }
     }
 
-    public class TaxReferenceViewModel : Validatable
+    public class TaxReferenceViewModel : Validatable, IRequiredIf
     {
+        [Required]
         public bool? HasTaxReferenceNumber { get; set; }
 
         // Only GOV.UK format guidance: https://www.gov.uk/find-lost-utr-number
         // X:\04PTW\38500\38548 - GLAA - Government Licensing System\TECHNICAL\HMRC_dummy_data.txt
-        [Required]
+        [RequiredIf]
         [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Tax Reference Number")]
         [Display(Name = "Tax reference number", Description = "For example 1334404714")]
         public string TaxReferenceNumber { get; set; }
+
+        public bool IsRequired => HasTaxReferenceNumber.HasValue && HasTaxReferenceNumber.Value;
     }
 }

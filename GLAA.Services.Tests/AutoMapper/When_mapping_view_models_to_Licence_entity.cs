@@ -579,12 +579,6 @@ namespace GLAA.Services.Tests.AutoMapper
         {
             var input = new DeclarationViewModel
             {
-                AgreedToStatementOne = true,
-                AgreedToStatementTwo = true,
-                AgreedToStatementThree = true,
-                AgreedToStatementFour = true,
-                AgreedToStatementFive = true,
-                AgreedToStatementSix = true,
                 SignatoryName = "Demo Signatory",
                 SignatureDate = new DateViewModel
                 {
@@ -594,14 +588,61 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<Licence>(input);
 
-            Assert.AreEqual(input.AgreedToStatementOne, result.AgreedToStatementOne);
-            Assert.AreEqual(input.AgreedToStatementTwo, result.AgreedToStatementTwo);
-            Assert.AreEqual(input.AgreedToStatementThree, result.AgreedToStatementThree);
-            Assert.AreEqual(input.AgreedToStatementFour, result.AgreedToStatementFour);
-            Assert.AreEqual(input.AgreedToStatementFive, result.AgreedToStatementFive);
-            Assert.AreEqual(input.AgreedToStatementSix, result.AgreedToStatementSix);
             Assert.AreEqual(input.SignatoryName, result.SignatoryName);
             Assert.AreEqual(input.SignatureDate.Date, result.SignatureDate);
+        }
+
+        [TestMethod]
+        public void it_should_map_business_credentials_to_the_licence_entity()
+        {
+            var input = new BusinessCredentialsViewModel 
+            {
+                CompaniesHouseRegistrationViewModel = new CompaniesHouseRegistrationViewModel
+                {
+                    CompaniesHouseNumber = "0123455",
+                    CompanyRegistrationDate = new DateViewModel
+                    {
+                        Date = new DateTime(2017, 1, 1)
+                    }
+                },
+                VATStatusViewModel = new VATStatusViewModel
+                {
+                    HasVATNumber = true,
+                    VATNumber = "12345",
+                    VATRegistrationDate = new DateViewModel
+                    {
+                        Date = new DateTime(2017, 1, 2)
+                    }
+                },
+                PAYEStatusViewModel = new PAYEStatusViewModel
+                {
+                    HasPAYENumber = true,
+                    PAYENumbers = new List<PAYENumberRow>
+                    {
+                        new PAYENumberRow
+                        {
+                            PAYENumber = "121243",
+                            PAYERegistrationDate = new DateViewModel
+                            {
+                                Date = new DateTime(2017, 1, 3)
+                            }
+                        }
+                    }
+                }
+            };
+
+            var result = this.mapper.Map<Licence>(input);
+
+            Assert.AreEqual(input.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber, result.CompaniesHouseNumber);
+            Assert.AreEqual(input.CompaniesHouseRegistrationViewModel.CompanyRegistrationDate.Date, result.CompanyRegistrationDate);
+
+            Assert.AreEqual(input.VATStatusViewModel.HasVATNumber, result.HasVATNumber);
+            Assert.AreEqual(input.VATStatusViewModel.VATNumber, result.VATNumber);
+            Assert.AreEqual(input.VATStatusViewModel.VATRegistrationDate.Date, result.VATRegistrationDate);
+
+            Assert.AreEqual(input.PAYEStatusViewModel.HasPAYENumber, result.HasPAYENumber);
+            Assert.AreEqual(input.PAYEStatusViewModel.PAYENumbers.First().PAYENumber, result.PAYENumbers.First().Number);
+            Assert.AreEqual(input.PAYEStatusViewModel.PAYENumbers.First().PAYERegistrationDate.Date, result.PAYENumbers.First().RegistrationDate);
         }
     }
 }

@@ -16,12 +16,6 @@ namespace GLAA.Services.Tests.Validation
         {
             validModel = new DeclarationViewModel
             {
-                AgreedToStatementOne = true,
-                AgreedToStatementTwo = true,
-                AgreedToStatementThree = true,
-                AgreedToStatementFour = true,
-                AgreedToStatementFive = true,
-                AgreedToStatementSix = true,
                 SignatoryName = "The name of the signatory",
                 SignatureDate = new DateViewModel
                 {
@@ -51,7 +45,6 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_with_a_missing_required_property_is_invalid()
         {
-            validModel.AgreedToStatementFour = false;
             validModel.SignatoryName = string.Empty;
 
             validModel.Validate();
