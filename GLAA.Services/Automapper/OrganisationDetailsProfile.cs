@@ -57,8 +57,9 @@ namespace GLAA.Services.Automapper
 
             CreateMap<Licence, TaxReferenceViewModel>()
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceNumber))
-                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.HasTaxReferenceNumber))
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                //.ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.HasTaxReferenceNumber))
+                //.ForMember(x => x.LegalStatus, opt => opt.MapFrom(y => y.LegalStatus))
+                .ForAllMembers(opt => opt.Ignore());
 
             CreateMap<Licence, TurnoverViewModel>()
                 .ForMember(x => x.TurnoverBand, opt => opt.MapFrom(y => y.TurnoverBand))
@@ -99,7 +100,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.VATNumber, opt => opt.MapFrom(y => y.VATStatus.VATNumber))
                 .ForMember(x => x.VATRegistrationDate, opt => opt.MapFrom(y => y.VATStatus.VATRegistrationDate))
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.TaxReferenceNumber))
-                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.HasTaxReferenceNumber))
+                //.ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReference.HasTaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<BusinessCredentialsViewModel, Licence>()
@@ -109,7 +110,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.VATNumber, opt => opt.MapFrom(y => y.VATStatusViewModel.VATNumber))
                 .ForMember(x => x.VATRegistrationDate, opt => opt.MapFrom(y => y.VATStatusViewModel.VATRegistrationDate))
                 .ForMember(x => x.HasPAYENumber, opt => opt.MapFrom(y => y.PAYEStatusViewModel.HasPAYENumber))
-                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceViewModel.HasTaxReferenceNumber))
+                //.ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceViewModel.HasTaxReferenceNumber))
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceViewModel.TaxReferenceNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
@@ -173,7 +174,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<TaxReferenceViewModel, Licence>()
                 .ForMember(x => x.TaxReferenceNumber, opt => opt.MapFrom(y => y.TaxReferenceNumber))
-                .ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.HasTaxReferenceNumber))
+                //.ForMember(x => x.HasTaxReferenceNumber, opt => opt.MapFrom(y => y.HasTaxReferenceNumber))                
                 .ForAllOtherMembers(opt => opt.Ignore());
 
         }

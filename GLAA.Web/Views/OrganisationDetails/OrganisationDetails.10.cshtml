@@ -118,20 +118,66 @@
                 <fieldset class="inline">
                     <legend>
                         <h1 class="heading-medium">
-                            Do you have a unique Tax reference number?
+                        @{
+                            var header = string.Empty;
+                            switch (Model.LegalStatus)
+                            {
+                                case GLAA.Domain.Models.LegalStatusEnum.SoleTrader:
+                                    header = "What is your Personal Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany:
+                                    header = "What is your Company Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.Partnership:
+                                    header = "What is your Business Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.UnincorporateAssociation:
+                                    header = "What is your Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.Other:
+                                    header = "What is your Unique Tax Reference?";
+                                    break;
+                                default:
+                                    header = "What is your Unique Tax Reference?";
+                                    break;
+                            }
+                        }
+                        @header
                         </h1>
                     </legend>
-                    @foreach (var option in Model.YesNo)
+                    @*@foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice tax">
                             @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
-                    }
+                    }*@
                 </fieldset>
             </div>
-            <div class="js-hidden" id="TAX-details">
-                @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber)
+            <div id="TAX-details">
+                @{
+                    switch (Model.LegalStatus)
+                    {
+                        case GLAA.Domain.Models.LegalStatusEnum.SoleTrader:
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.SoleTraderTaxReference)
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany:
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.RegisteredCompanyTaxReference)
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.Partnership:
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.PartnershipTaxReference)
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.UnincorporateAssociation:
+                            Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber);
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.Other:
+                            Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber);
+                            break;
+                        default:
+                            Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber);
+                            break;
+                    }
+                }                
             </div>
         </div>
     </div>
@@ -146,7 +192,7 @@
             hiddenContent.hideContent();
             branchedQuestion.toggleBranch('.multiple-choice.paye input', '#PAYE-details', @switchValue);
             branchedQuestion.toggleBranch('.multiple-choice.vat input', '#VAT-details', @switchValue);
-            branchedQuestion.toggleBranch('.multiple-choice.tax input', '#TAX-details', @switchValue);
+            //branchedQuestion.toggleBranch('.multiple-choice.tax input', '#TAX-details', @switchValue);
         });
     </script>
 }

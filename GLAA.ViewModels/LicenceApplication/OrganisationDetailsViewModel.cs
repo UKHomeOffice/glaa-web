@@ -40,7 +40,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessEmailAddressViewModel BusinessEmailAddress { get; set; }
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
-        public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }        
+        public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }
         public PAYEStatusViewModel PAYEStatus { get; set; }
         public VATStatusViewModel VATStatus { get; set; }
         public TaxReferenceViewModel TaxReference { get; set; }
@@ -272,7 +272,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public void Validate()
         {
 
-            if(HasPAYENumber.HasValue == false)
+            if (HasPAYENumber.HasValue == false)
             {
                 IsValid = false;
                 return;
@@ -299,18 +299,17 @@ namespace GLAA.ViewModels.LicenceApplication
 
         // TODO: Check example numbers
         [Required]
-        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]        
+        [RegularExpression(@"\d{3}\/[a-zA-Z]{1,2}\d{5}", ErrorMessage = "Please enter a valid PAYE Number")]
         [Display(Name = "PAYE Registration Number", Description = "For example 123/A12345 or 123/AB12345")]
         public string PAYENumber { get; set; }
 
-        [Required]
         [UIHint("_NullableDateTime")]
         [Display(Name = "PAYE Registration Date")]
-        public DateViewModel PAYERegistrationDate { get; set; }        
+        public DateViewModel PAYERegistrationDate { get; set; }
     }
 
     public class VATStatusViewModel : YesNoViewModel, IRequiredIf, IValidatable
-    {        
+    {
         public VATStatusViewModel()
         {
             VATRegistrationDate = new DateViewModel();
@@ -329,7 +328,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public string VATNumber { get; set; }
 
         [UIHint("_NullableDateTime")]
-        [RequiredIf(ErrorMessage = "The VAT Registration Date field is required")]
         [Display(Name = "VAT Registration Date")]
         public DateViewModel VATRegistrationDate { get; set; }
 
@@ -370,18 +368,45 @@ namespace GLAA.ViewModels.LicenceApplication
         }
     }
 
-    public class TaxReferenceViewModel : Validatable, IRequiredIf
+    public class TaxReferenceViewModel : Validatable
     {
-        [Required]
-        public bool? HasTaxReferenceNumber { get; set; }
+        //[Required]
+        //public bool? HasTaxReferenceNumber { get; set; }        
+
+        [Required(ErrorMessage = "The Personal Unique Tax Reference number field is required")]
+        [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Personal Unique Tax Reference Number")]
+        [Display(Name = "Personal Unique Tax Reference number", Description = "For example 1334404714")]
+        public string SoleTraderTaxReference
+        {
+            get { return TaxReferenceNumber; }
+            set { TaxReferenceNumber = value; }
+        }
+
+        [Required(ErrorMessage = "The Company Unique Tax Reference number field is required")]
+        [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Company Unique Tax Reference Number")]
+        [Display(Name = "Company Unique Tax Reference number", Description = "For example 1334404714")]
+        public string RegisteredCompanyTaxReference
+        {
+            get { return TaxReferenceNumber; }
+            set { TaxReferenceNumber = value; }
+        }
+
+        [Required(ErrorMessage = "The Business Unique Tax Reference number field is required")]
+        [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Business Unique Tax Reference Number")]
+        [Display(Name = "Business Unique Tax Reference number", Description = "For example 1334404714")]
+        public string PartnershipTaxReference
+        {
+            get { return TaxReferenceNumber; }
+            set { TaxReferenceNumber = value; }
+        }
 
         // Only GOV.UK format guidance: https://www.gov.uk/find-lost-utr-number
         // X:\04PTW\38500\38548 - GLAA - Government Licensing System\TECHNICAL\HMRC_dummy_data.txt
-        [RequiredIf(ErrorMessage = "The Tax reference number field is required")]
+        [Required(ErrorMessage = "The Tax Reference number field is required")]
         [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Tax Reference Number")]
         [Display(Name = "Tax reference number", Description = "For example 1334404714")]
         public string TaxReferenceNumber { get; set; }
 
-        public bool IsRequired => HasTaxReferenceNumber.HasValue && HasTaxReferenceNumber.Value;
+        //public bool IsRequired => HasTaxReferenceNumber.HasValue && HasTaxReferenceNumber.Value;
     }
 }
