@@ -1,0 +1,84 @@
+﻿@model GLAA.ViewModels.PublicRegister.PublicRegisterLicenceListViewModel
+
+@{
+    ViewBag.Title = "GLAA - Public Register";
+}
+
+@using (Html.BeginForm("Index", "PublicRegister"))
+{
+    <div class="grid-row">
+        <div class="form-group">
+            <fieldset>
+                <input type="hidden" name="PublicRegisterSearchCriteria.SearchActive" value="@(Model.PublicRegisterSearchCriteria.SearchActive.ToString())" />
+                <div>Suppliers who</div>
+
+                <div>
+                    @Html.DropDownListFor(x => x.PublicRegisterSearchCriteria.SupplierWho, Model.AvailableSuppliersWho, new { @class = "form-control public-register-control" })
+                    in
+                    @Html.DropDownListFor(x => x.PublicRegisterSearchCriteria.CountryAdded, Model.AvailableCountries, new { @class = "form-control public-register-control" })
+                    <button type="submit" class="button" name="submitButtonType" value="add">Add Country</button>
+
+                    @if (Model.PublicRegisterSearchCriteria.CountriesSelected != null)
+                    {
+                        foreach (var country in Model.PublicRegisterSearchCriteria.CountriesSelected)
+                        {
+                            <input type="hidden" name="PublicRegisterSearchCriteria.CountriesSelected" value="@country" />
+                            <button type="submit" class="button public-register-selected-country" name="submitButtonType" value="@country">@country</button>
+                        }
+                    }
+                </div>
+                <div>
+                    Search suppliers
+                </div>
+                <div>
+                    @Html.TextBoxFor(x => x.PublicRegisterSearchCriteria.BusinessName, new { @class = "form-control" })
+                </div>
+
+                <button type="submit" class="button public-register-search-button" name="submitButtonType" value="search">Search</button>
+            </fieldset>
+        </div>
+    </div>
+}
+
+
+@if (Model.Licences != null && Model.Licences.Any())
+{
+    <table class="table publicregister">
+        <thead>
+            <tr>
+                <th>Unique Ref No.</th>
+                <th>Business Name</th>
+                <th>Trading Name</th>
+                <th>Country</th>
+                <th>County</th>
+                <th>Status</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var licence in Model.Licences)
+            {
+                <tr>
+                    <td>@licence.ApplicationId</td>
+                    <td>@licence.BusinessName</td>
+                    <td>@licence.TradingName</td>
+                    <td>@licence.Country</td>
+                    <td>@licence.County</td>
+                    <td>Licensed</td>
+                    <td><a href="@Url.Action("Licence", new {id = licence.Id})" class="link">view</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    if (Model.PublicRegisterSearchCriteria.SearchActive)
+    {
+        <div>Search returned no results.</div>
+    }
+    else
+    {
+        <div>Click "Search" to search the public register.</div>
+    }
+}

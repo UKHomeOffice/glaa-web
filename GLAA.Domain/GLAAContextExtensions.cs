@@ -663,6 +663,176 @@ namespace GLAA.Domain
 
                 context.SaveChanges();
             }
+
+
+            //Public Register Test Licenses
+            if (!context.Licences.Any(x => x.ApplicationId == "LINC-1234"))
+            {
+                var completedLicences = new List<Licence>();
+
+                for (var i = 0; i < 50; i++)
+                {
+                    var licensedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
+                    var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
+                    var country = string.Empty;
+                    var operatingCountries = new List<Country>();
+
+                    switch (i % 4)
+                    {
+                        //we set the country variable for the address
+                        //the operatingCountries.Add is a seperate country than the address.
+                        case 0:
+                            country = "England";
+                            break;
+                        case 1:
+                            country = "Northern Ireland";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                        case 2:
+                            country = "Wales";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                        case 3:
+                            country = "Scotland";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                    }
+
+                    //This adds another country into the operating countries address, so we have two to filter on.
+                    operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == country));
+
+                    completedLicences.Add(new Licence
+                    {
+                        ApplicationId = $"LINC-{1234 + i}",
+                        BusinessName = $"Licensed Organisation {i + 1}",
+                        TradingName =
+                            $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
+                        LicenceStatusHistory = new List<LicenceStatusChange>
+                        {
+                            new LicenceStatusChange
+                            {
+                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                                Status = submittedStatus
+                            },
+                            new LicenceStatusChange
+                            {
+                                DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
+                                Status = licensedStatus
+                            }
+                        },
+                        PrincipalAuthorities = new List<PrincipalAuthority>
+                        {
+                            new PrincipalAuthority
+                            {
+                                FullName =
+                                    $"{_firstNames[rnd.Next(_firstNames.Length)]} {_lastNames[rnd.Next(_lastNames.Length)]}",
+                                IsCurrent = true
+                            }
+                        },
+                        OperatingIndustries = new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(rnd.Next(1, 3))
+                            },
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(rnd.Next(4, 5))
+                            }
+                        },
+                        BusinessPhoneNumber = "0" + (7777777000 + i),
+                        LegalStatus = (LegalStatusEnum)Enum.ToObject(typeof(LegalStatusEnum), rnd.Next(1, 5)),
+                        Address = new Address
+                        {
+                            AddressLine1 = rnd.Next(9999) + " Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = $"FA{rnd.Next(1, 99)} {rnd.Next(1, 9)}KE",
+                            Country = country,
+                            NonUK = false
+                        },
+                        HasNamedIndividuals = true,
+                        NamedIndividualType = NamedIndividualType.PersonalDetails,
+                        NamedIndividuals = new List<NamedIndividual>
+                        {
+                            new NamedIndividual
+                            {
+                                BusinessExtension = rnd.Next(100, 999).ToString(),
+                                BusinessPhoneNumber = "0777777" + rnd.Next(1000, 9999),
+                                DateOfBirth = DateTime.Now.AddDays(rnd.Next(1000, 9999) * -1),
+                                FullName = "Joe Bloggs-" + i,
+                                IsUndischargedBankrupt = rnd.Next(0, 1) == 1,
+                                BankruptcyDate = DateTime.Now,
+                                BankruptcyNumber = rnd.Next(1000000, 9999999).ToString(),
+                                IsDisqualifiedDirector = rnd.Next(0, 1) == 1,
+                                DisqualificationDetails = "Some details " + i,
+                                HasRestraintOrders = rnd.Next(0, 1) == 1,
+                                RequiresVisa = rnd.Next(0, 1) == 1,
+                                RestraintOrders = new[]
+                                {
+                                    new RestraintOrder
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Restraint description " + 1
+                                    }
+                                },
+                                HasUnspentConvictions = rnd.Next(0, 1) == 1,
+                                UnspentConvictions = new[]
+                                {
+                                    new Conviction
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Conviction description " + i
+                                    }
+                                },
+                                HasOffencesAwaitingTrial = rnd.Next(0, 1) == 1,
+                                OffencesAwaitingTrial = new[]
+                                {
+                                    new OffenceAwaitingTrial
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Offence description " + i
+                                    }
+                                },
+                                HasPreviouslyHeldLicence = rnd.Next(0, 1) == 1,
+                                PreviousLicenceDescription = "I had a previous licence."
+                            }
+                        },
+                        NamedJobTitles = new List<NamedJobTitle>
+                        {
+                            new NamedJobTitle
+                            {
+                                JobTitle = "Job Title " + i,
+                                JobTitleNumber = 1000 + i,
+                            }
+                        }
+                    });
+
+                    foreach (var operatingCountry in operatingCountries)
+                    {
+                        var completedLicence = completedLicences.LastOrDefault();
+
+                        if (completedLicence != null)
+                        {
+                            completedLicence.OperatingCountries = new List<LicenceCountry>
+                            {
+                                new LicenceCountry
+                                {
+                                    Country = operatingCountry,
+                                    CountryId = operatingCountry.Id,
+                                    Licence = completedLicences.LastOrDefault(),
+                                    LicenceId = completedLicence.Id
+                                }
+                            };
+                        }
+                    }
+                }
+
+                context.Licences.AddRange(completedLicences);
+
+                context.SaveChanges();
+            }
         }
 
         private static void LinkNextStatuses(this GLAAContext context, IEnumerable<LicenceStatus> _defaultStatuses)

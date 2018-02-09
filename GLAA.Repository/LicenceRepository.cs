@@ -23,6 +23,11 @@ namespace GLAA.Repository
             return GetAllEntriesWithStatusesAndAddress().First(l => l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));            
         }
 
+        public IEnumerable<Licence> GetAllLicencesForPublicRegister()
+        {
+            return GetAllLicences().Where(x => GetLatestStatus(x).Status.ShowInPublicRegister);
+        }
+
         public IEnumerable<Licence> GetAllLicences()
         {
             return GetAllEntriesWithStatusesAndAddress().Where(l =>
@@ -75,9 +80,9 @@ namespace GLAA.Repository
                 .Include(l => l.LicenceStatusHistory).ThenInclude(h => h.NonCompliantStandards)
                 .Include(l => l.LicenceStatusHistory).ThenInclude(h => h.Reason)
                 .Include(l => l.Address)
-                .Include(l => l.OperatingIndustries)
+                .Include(l => l.OperatingIndustries).ThenInclude(h => h.Industry)
                 .Include(l => l.OperatingCountries)
-                .Include(l => l.SelectedSectors)
+                .Include(l => l.SelectedSectors).ThenInclude(h => h.Sector)
                 .Include(l => l.SelectedMultiples)
                 .Include(l => l.PreviousTradingNames)
                 .Include(l => l.PAYENumbers)
@@ -96,7 +101,23 @@ namespace GLAA.Repository
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.RestraintOrders)
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.UnspentConvictions)
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.OffencesAwaitingTrial)
+                .Include(l => l.NamedJobTitles)
                 .Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
+        }
+
+        public static LicenceStatusChange GetLatestStatus(Licence licence)
+        {
+            return licence.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).First();
+        }
+
+        public static LicenceStatusChange GetLatestLicenceSubmissionStatus(Licence licence)
+        {
+            return licence.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).FirstOrDefault(x => x.Status.LicenceSubmitted);
+        }
+
+        public static LicenceStatusChange GetLatestLicenceIssueStatus(Licence licence)
+        {
+            return licence.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).FirstOrDefault(x => x.Status.LicenceIssued);
         }
     }
 }

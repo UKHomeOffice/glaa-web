@@ -25,6 +25,8 @@ namespace GLAA.Domain.Models
         public virtual ICollection<LicenceStatusNextStatus> NextStatuses { get; set; }
         public virtual ICollection<StatusReason> StatusReasons { get; set; }
         public virtual ICollection<LicenceStatusChange> LicenceStatusChanges { get; set; }
+        public bool LicenceIssued { get; set; }
+        public bool LicenceSubmitted { get; set; }
         // TODO: Remove when no longer needed for seeding
         [NotMapped]
         public IEnumerable<int> NextStatusIds

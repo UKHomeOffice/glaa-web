@@ -27,6 +27,7 @@ using Amazon.Runtime.CredentialManagement;
 using Amazon;
 using Amazon.Runtime;
 using GLAA.Services.AccountCreation;
+using GLAA.Services.PublicRegister;
 
 namespace GLAA.Web
 {
@@ -135,6 +136,10 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
 
+            // Public Reigster
+            services.AddTransient<IPublicRegisterViewModelBuilder, PublicRegisterViewModelBuilder>();
+            services.AddTransient<IPublicRegisterPostDataHandler, PublicRegisterPostDataHandler>();
+
             services.AddTransient<IFileUploadService, FileUploadService>();
 
             // notify
@@ -175,7 +180,7 @@ namespace GLAA.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("secrets/appsettings.secrets.json", optional: true);
-                //.AddEnvironmentVariables();
+            //.AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
@@ -298,7 +303,9 @@ namespace GLAA.Web
                 if (result.Succeeded)
                 {
                     su = await um.FindByEmailAsync(Configuration.GetSection("SuperUser")["SuperUserEmail"]);
-                } else {
+                }
+                else
+                {
                     throw new Exception($"Could not create superuser {result.Errors.First().Description}");
                 }
             }
