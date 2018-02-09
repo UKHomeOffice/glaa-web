@@ -89,6 +89,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.OffencesAwaitingTrialViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
                 .ForMember(x => x.PreviousExperience, opt => opt.ResolveUsing(PreviousExperienceResolver))
+                .ForMember(x => x.Counties, opt => opt.Ignore())
                 .ForMember(x => x.Countries, opt => opt.Ignore());
 
             CreateMap<PrincipalAuthority, IsDirectorViewModel>()

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GLAA.Domain.Core.Models;
 using GLAA.Domain.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GLAA.Domain
@@ -221,9 +220,113 @@ namespace GLAA.Domain
                 "Zimbabwe"
             };
 
+            var counties = new[]
+            {
+                "Bedfordshire",
+                "Buckinghamshire",
+                "Cambridgeshire",
+                "Cheshire",
+                "Cleveland",
+                "Cornwall",
+                "Cumbria",
+                "Derbyshire",
+                "Devon",
+                "Dorset",
+                "Durham",
+                "East Sussex",
+                "Essex",
+                "Gloucestershire",
+                "Greater London",
+                "Greater Manchester",
+                "Hampshire",
+                "Hertfordshire",
+                "Kent",
+                "Lancashire",
+                "Leicestershire",
+                "Lincolnshire",
+                "Merseyside",
+                "Norfolk",
+                "North Yorkshire",
+                "Northamptonshire",
+                "Northumberland",
+                "Nottinghamshire",
+                "Oxfordshire",
+                "Shropshire",
+                "Somerset",
+                "South Yorkshire",
+                "Staffordshire",
+                "Suffolk",
+                "Surrey",
+                "Tyne and Wear",
+                "Warwickshire",
+                "West Berkshire",
+                "West Midlands",
+                "West Sussex",
+                "West Yorkshire",
+                "Wiltshire",
+                "Worcestershire",
+                "Flintshire",
+                "Glamorgan",
+                "Merionethshire",
+                "Monmouthshire",
+                "Montgomeryshire",
+                "Pembrokeshire",
+                "Radnorshire",
+                "Anglesey",
+                "Breconshire",
+                "Caernarvonshire",
+                "Cardiganshire",
+                "Carmarthenshire",
+                "Denbighshire",
+                "Aberdeen City",
+                "Aberdeenshire",
+                "Angus",
+                "Argyll and Bute",
+                "City of Edinburgh",
+                "Clackmannanshire",
+                "Dumfries and Galloway",
+                "Dundee City",
+                "East Ayrshire",
+                "East Dunbartonshire",
+                "East Lothian",
+                "East Renfrewshire",
+                "Eilean Siar",
+                "Falkirk",
+                "Fife",
+                "Glasgow City",
+                "Highland",
+                "Inverclyde",
+                "Midlothian",
+                "Moray",
+                "North Ayrshire",
+                "North Lanarkshire",
+                "Orkney Islands",
+                "Perth and Kinross",
+                "Renfrewshire",
+                "Scottish Borders",
+                "Shetland Islands",
+                "South Ayrshire",
+                "South Lanarkshire",
+                "Stirling",
+                "West Dunbartonshire",
+                "West Lothian",
+                "Antrim",
+                "Armagh",
+                "Down",
+                "Fermanagh",
+                "Derry and Londonderry",
+                "Tyrone"
+            };
+
             if (!context.Countries.Any())
             {
                 context.Countries.AddRange(countries.Select(c => new Country {Name = c}));
+                context.SaveChanges();
+            }
+
+            if (!context.Counties.Any())
+            {
+                context.Counties.AddRange(counties.Select(c => new County {Name = c}));
                 context.SaveChanges();
             }
 
@@ -431,7 +534,7 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("United Kingdom")),
                         NonUK = false
@@ -536,7 +639,7 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("United Kingdom")),
                                 NonUK = false
@@ -603,7 +706,7 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("United Kingdom")),
                                 NonUK = false
@@ -732,7 +835,7 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("United Kingdom")),
                         NonUK = false
@@ -804,7 +907,7 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("United Kingdom")),
                             NonUK = false

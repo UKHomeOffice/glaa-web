@@ -32,7 +32,7 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
+                County = new County{Name = "county"},
                 Country = new Country { Name = "country" },
                 Town = "town",
                 Postcode = "postcode"
@@ -173,7 +173,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AddressLine2, actual.AddressLine2);
             Assert.AreEqual(expected.AddressLine3, actual.AddressLine3);
             Assert.AreEqual(expected.Country.Id, actual.CountryId);
-            Assert.AreEqual(expected.County, actual.County);
+            Assert.AreEqual(expected.County.Id, actual.CountyId);
             Assert.AreEqual(expected.Postcode, actual.Postcode);
             Assert.AreEqual(expected.Town, actual.Town);
         }
@@ -265,7 +265,7 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
+                County = new County{Name = "county"},
                 Country = new Country {Name = "country"},
                 Town = "town",
                 Postcode = "postcode"
@@ -621,7 +621,7 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
+                County = new County{Name = "county"},
                 Country = new Country { Name = "country" },
                 Town = "town",
                 Postcode = "postcode"

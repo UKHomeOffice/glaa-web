@@ -31,6 +31,11 @@ namespace GLAA.Services.LicenceApplication
                 countryModel.Countries = referenceDataProvider.GetCountries();
             }
 
+            if (model is INeedCounties countyModel)
+            {
+                countyModel.Counties = referenceDataProvider.GetCounties();
+            }
+
             return model;
         }
 

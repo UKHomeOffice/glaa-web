@@ -22,8 +22,8 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelWithHintFor(x => x.County)
-    @Html.TextBoxFor(x => x.County, new { @class = "form-control" })
+    @Html.LabelWithHintFor(x => x.CountyId)
+    @Html.DropDownListFor(m => m.CountyId, Model.Counties, null, new { @class = "form-control" })
 </div>
 
 <div class="form-group">

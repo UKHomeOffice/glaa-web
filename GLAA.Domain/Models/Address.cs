@@ -15,13 +15,15 @@ namespace GLAA.Domain.Models
 
         public string Town { get; set; }
 
-        public string County { get; set; }
-
         public string Postcode { get; set; }
 
         public int? CountryId { get; set; }
         [ForeignKey(nameof(CountryId))]
         public virtual Country Country { get; set; }
+
+        public int? CountyId { get; set; }
+        [ForeignKey(nameof(CountyId))]
+        public virtual County County { get; set; }
 
         public bool NonUK { get; set; }            
     }

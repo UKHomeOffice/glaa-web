@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class LicenceApplicationViewModel : YesNoViewModel, IViewModel<Licence>, IValidatable, INeedCountries
+    public class LicenceApplicationViewModel : YesNoViewModel, IViewModel<Licence>, IValidatable, INeedCountries, INeedCounties
     {
         public LicenceApplicationViewModel()
         {
@@ -73,6 +73,12 @@ namespace GLAA.ViewModels.LicenceApplication
         {
             set => OrganisationDetails.Countries = value;
             get => OrganisationDetails.Countries;
+        }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            set => OrganisationDetails.Counties = value;
+            get => OrganisationDetails.Counties;
         }
     }
 }

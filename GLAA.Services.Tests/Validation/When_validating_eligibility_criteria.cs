@@ -31,7 +31,7 @@ namespace GLAA.Services.Tests.Validation
                     AddressLine2 = "Line 2",
                     AddressLine3 = "Line 3",
                     CountryId = 1,
-                    County = "Notts",
+                    CountyId = 1,
                     NonUK = false,
                     Postcode = "W1A 1AA",
                     Town = "Nottingham"

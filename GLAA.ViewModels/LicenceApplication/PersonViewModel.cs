@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class PersonViewModel : IPersonViewModel, INeedCountries
+    public class PersonViewModel : IPersonViewModel, INeedCountries, INeedCounties
     {
         public PersonViewModel()
         {
@@ -55,6 +55,12 @@ namespace GLAA.ViewModels.LicenceApplication
         {
             set => Address.Countries = value;
             get => Address.Countries;
+        }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            set => Address.Counties = value;
+            get => Address.Counties;
         }
     }
 }

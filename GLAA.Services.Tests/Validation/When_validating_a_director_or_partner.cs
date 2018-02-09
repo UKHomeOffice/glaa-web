@@ -53,7 +53,7 @@ namespace GLAA.Services.Tests.Validation
                     AddressLine1 = "1",
                     AddressLine2 = "2",
                     Town = "Perutown",
-                    County = "County",
+                    CountyId = 1,
                     CountryId = 1,
                     Postcode = "postcode",
                     NonUK = false

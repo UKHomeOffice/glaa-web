@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class AddressViewModel : IId, INeedCountries
+    public class AddressViewModel : IId, INeedCountries, INeedCounties
     {
         public int Id { get; set; }
         [Required]
@@ -21,7 +21,8 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         public string Town { get; set; }
         [Required]
-        public string County { get; set; }
+        [Display(Name = "County")]
+        public int CountyId { get; set; }
         [Required]
         [Display(Name = "Country")]
         public int CountryId { get; set; }
@@ -29,5 +30,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool NonUK { get; set; }
 
         public IEnumerable<SelectListItem> Countries { get; set; }
+        public IEnumerable<SelectListItem> Counties { get; set; }
     }
 }

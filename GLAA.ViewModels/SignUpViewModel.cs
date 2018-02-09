@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels
 {
-    public class SignUpViewModel : Validatable, INeedCountries
+    public class SignUpViewModel : Validatable, INeedCountries, INeedCounties
     {
         public SignUpViewModel()
         {
@@ -28,6 +28,12 @@ namespace GLAA.ViewModels
         {
             set => Address.Countries = value;
             get => Address.Countries;
+        }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            set => Address.Counties = value;
+            get => Address.Counties;
         }
     }
 

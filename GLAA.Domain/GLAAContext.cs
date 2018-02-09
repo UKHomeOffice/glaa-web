@@ -33,6 +33,7 @@ namespace GLAA.Domain
         public DbSet<OffenceAwaitingTrial> OffencesAwaitingTrial { get; set; }
         public DbSet<PreviousTradingName> PreviousTradingNames { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<County> Counties { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            

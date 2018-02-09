@@ -36,7 +36,7 @@
             @Model.Town
         }
         <br />
-        @Model.County
+        @(Model.Counties.SingleOrDefault(c => int.Parse(c.Value) == Model.CountyId)?.Text ?? string.Empty)
         <br />
         @Model.Postcode
         if (Model.NonUK)

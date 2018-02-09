@@ -16,6 +16,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Password, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
+                .ForMember(x => x.Counties, opt => opt.Ignore())
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<SignUpViewModel, GLAAUser>()

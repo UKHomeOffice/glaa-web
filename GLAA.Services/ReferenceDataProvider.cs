@@ -19,5 +19,10 @@ namespace GLAA.Services
         {
             return repository.GetAll<Country>().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name });
         }
+
+        public IEnumerable<SelectListItem> GetCounties()
+        {
+            return repository.GetAll<County>().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name });
+        }
     }
 }
