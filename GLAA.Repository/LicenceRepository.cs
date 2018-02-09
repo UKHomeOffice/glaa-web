@@ -15,7 +15,7 @@ namespace GLAA.Repository
 
         public Licence GetById(int id)
         {
-            return GetCoreLicenses().First(l => l.Id == id);
+            return GetAllEntriesWithStatusesAndAddress().First(l => l.Id == id);
         }
 
         public Licence GetByApplicationId(string applicationId)

@@ -397,7 +397,5 @@ namespace GLAA.ViewModels.LicenceApplication
         [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Tax Reference Number")]
         [Display(Name = "Tax reference number", Description = "For example 1334404714")]
         public string TaxReferenceNumber { get; set; }
-
-        //public bool IsRequired => HasTaxReferenceNumber.HasValue && HasTaxReferenceNumber.Value;
     }
 }
