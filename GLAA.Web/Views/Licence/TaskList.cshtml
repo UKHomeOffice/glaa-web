@@ -20,22 +20,6 @@
                         </h2>
                         <ul class="task-list-items">
                             <li class="task-list-item">
-
-                                @if (Model.SignUp.IsValid)
-                                {
-                                    <a class="task-name" href="@Url.Action("SignUp", "SignUp", new { id = 5 })" aria-describedby="eligibility-completed">
-                                        Check eligibility
-                                    </a>
-                                    <strong class="task-completed" id="eligibility-completed">Completed</strong>
-                                }
-                                else
-                                {
-                                    <a class="task-name" href="@Url.Action("SignUp", "SignUp", new { id = 1 })" aria-describedby="eligibility-completed">
-                                        Check eligibility
-                                    </a>
-                                }
-                            </li>
-                            <li class="task-list-item">
                                 <a class="task-name" href="@Url.Action("Index", "Declaration")" aria-describedby="read-declaration-completed">
                                     Read declaration
                                 </a>

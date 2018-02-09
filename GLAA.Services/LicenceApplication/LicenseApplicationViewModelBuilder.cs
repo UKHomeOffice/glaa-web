@@ -36,7 +36,6 @@ namespace GLAA.Services.LicenceApplication
 
             if (licence != null)
             {
-                model.SignUp = mapper.Map<SignUpViewModel>(licence);
                 model.Declaration = mapper.Map<DeclarationViewModel>(licence);                
                 model.PrincipalAuthority =
                     mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());
