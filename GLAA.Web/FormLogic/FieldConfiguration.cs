@@ -44,9 +44,7 @@ namespace GLAA.Web.FormLogic
                             new FormPageDefinition(nameof(BusinessWebsiteViewModel.BusinessWebsite)),
                             new FormPageDefinition(nameof(CommunicationPreferenceViewModel.CommunicationPreference)),
                             new FormPageDefinition(nameof(LegalStatusViewModel.LegalStatus)),
-                            new FormPageDefinition("PAYEERNStatus"),
-                            new FormPageDefinition("VATStatus"),
-                            new FormPageDefinition("TaxReference"),
+                            new FormPageDefinition(nameof(BusinessCredentialsViewModel), true),
                             new FormPageDefinition(nameof(OperatingIndustriesViewModel.OperatingIndustries)),
                             new FormPageDefinition("Turnover"),
                             new FormPageDefinition(nameof(OperatingCountriesViewModel.OperatingCountries)),
@@ -54,8 +52,7 @@ namespace GLAA.Web.FormLogic
                         }
                     },
                     {
-                        FormSection.PrincipalAuthority,
-                        
+                        FormSection.PrincipalAuthority,                        
                         new[]
                         {
                             new FormPageDefinition(),

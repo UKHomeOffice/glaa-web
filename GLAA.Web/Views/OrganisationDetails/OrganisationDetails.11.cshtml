@@ -1,13 +1,11 @@
-﻿@{
-    ViewBag.Title = "Do you have a VAT registration number?";
-    var switchValue = "true";
+﻿@model GLAA.ViewModels.LicenceApplication.OperatingIndustriesViewModel
+@{
+    ViewBag.Title = "Which GLAA sectors would you like to operate in?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.VATStatusViewModel
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "12" } })
-
-@using (Html.BeginForm("SaveVATStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SaveOperatingIndustries", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -19,38 +17,9 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            <div class="form-group">
-                <fieldset>
-                    <legend>
-                    </legend>
-                    @foreach (var option in Model.YesNo)
-                    {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasVATNumber, option.Value)
-                            @Html.Label(option.Text)
-                        </div>
-
-                        if (option.Value == switchValue)
-                        {
-                            <div class="panel panel-border-narrow js-hidden" id="VAT-details">
-                                @Html.TextFormGroupFor(x => x.VATNumber)
-                                @Html.DateFormGroupFor(x => x.VATRegistrationDate)
-                            </div>
-                        }
-                    }
-                </fieldset>
-            </div>
+            @Html.CheckBoxFormGroupFor(x => x.OperatingIndustries, Model.OperatingIndustries)
         </div>
     </div>
-    <button type="submit" class="button">Save and continue</button>
-}
 
-@section scripts
-    {
-    <script>
-        $(document).ready(function () {
-            hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#VAT-details', @switchValue);
-        });
-    </script>
+    <button type="submit" class="button">Save and continue</button>
 }

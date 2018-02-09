@@ -66,7 +66,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string JobTitle { get; set; }
     }
 
-    public class NamedJobTitleViewModel: Validatable
+    public class NamedJobTitleViewModel : Validatable
     {
         public int Id { get; set; }
 

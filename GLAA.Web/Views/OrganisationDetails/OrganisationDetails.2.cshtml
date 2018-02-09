@@ -12,8 +12,6 @@
     }
 }
 
-@*new { section = "OrganisationDetails", submittedPageId = 2 }*@
-
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData){{"section", "OrganisationDetails"}, {"submittedPageId", "2"}})
 
 @using (Html.BeginForm("SaveOrganisationName", "OrganisationDetails"))

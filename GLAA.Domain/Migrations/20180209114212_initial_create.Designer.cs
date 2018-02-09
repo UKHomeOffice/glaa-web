@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180205105811_initial_create")]
+    [Migration("20180209114212_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -410,18 +410,6 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("AddressId");
 
-                    b.Property<bool?>("AgreedToStatementFive");
-
-                    b.Property<bool?>("AgreedToStatementFour");
-
-                    b.Property<bool?>("AgreedToStatementOne");
-
-                    b.Property<bool?>("AgreedToStatementSix");
-
-                    b.Property<bool?>("AgreedToStatementThree");
-
-                    b.Property<bool?>("AgreedToStatementTwo");
-
                     b.Property<bool?>("AgreedToTermsAndConditions");
 
                     b.Property<string>("ApplicationId");
@@ -464,9 +452,11 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool?>("HasNamedIndividuals");
 
-                    b.Property<bool?>("HasPAYEERNNumber");
+                    b.Property<bool?>("HasPAYENumber");
 
                     b.Property<bool?>("HasPreviousTradingName");
+
+                    b.Property<bool?>("HasTaxReferenceNumber");
 
                     b.Property<bool?>("HasTradingName");
 
@@ -494,15 +484,13 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("NumberOfVehicles");
 
+                    b.Property<string>("OtherLegalStatus");
+
                     b.Property<string>("OtherMultiple");
 
                     b.Property<string>("OtherOperatingIndustry");
 
                     b.Property<string>("OtherSector");
-
-                    b.Property<string>("PAYEERNNumber");
-
-                    b.Property<DateTime?>("PAYEERNRegistrationDate");
 
                     b.Property<string>("PSCDetails");
 
@@ -758,6 +746,24 @@ namespace GLAA.Domain.Migrations
                     b.HasIndex("PrincipalAuthorityId");
 
                     b.ToTable("OffenceAwaitingTrial");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.PAYENumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("LicenceId");
+
+                    b.Property<string>("Number");
+
+                    b.Property<DateTime>("RegistrationDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LicenceId");
+
+                    b.ToTable("PAYENumber");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.PreviousTradingName", b =>
@@ -1208,6 +1214,13 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.PrincipalAuthority", "PrincipalAuthority")
                         .WithMany("OffencesAwaitingTrial")
                         .HasForeignKey("PrincipalAuthorityId");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.PAYENumber", b =>
+                {
+                    b.HasOne("GLAA.Domain.Models.Licence", "Licence")
+                        .WithMany("PAYENumbers")
+                        .HasForeignKey("LicenceId");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.PreviousTradingName", b =>

@@ -145,9 +145,40 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePAYEERNStatus(PAYEERNStatusViewModel model)
+        public IActionResult SaveBusinessCredentials(BusinessCredentialsViewModel model)
         {
-            return OrganisationDetailsPost(model, 10);
+            Session.SetSubmittedPage(FormSection.OrganisationDetails, 10);
+
+            if (!ModelState.IsValid)
+            {
+                return View(GetViewPath(FormSection.OrganisationDetails, 10), model);
+            }
+
+            var licenceId = Session.GetCurrentLicenceId();
+
+            LicenceApplicationPostDataHandler.Update(licenceId, x => x, model);
+            LicenceApplicationPostDataHandler.UpdateAll(licenceId, x => x.PAYENumbers, model.PAYEStatusViewModel.PAYENumbers);
+
+            return CheckParentValidityAndRedirect(FormSection.OrganisationDetails, 10);
+        }
+
+        [HttpPost]
+        [ExportModelState]
+        public IActionResult AddPAYENumber(BusinessCredentialsViewModel model)
+        {
+            model.Validate();
+
+            model.PAYEStatusViewModel.PAYENumbers = model.PAYEStatusViewModel.PAYENumbers.Concat(new[] { new PAYENumberRow() }).ToList();
+            return View(GetViewPath(FormSection.OrganisationDetails, 10), model);
+        }
+
+        [HttpPost]
+        [ExportModelState]
+        [Route("Licence/Apply/OrganisationDetails/RemovePAYENumber/{id}")]
+        public IActionResult RemovePAYENumber(int id, BusinessCredentialsViewModel model)
+        {
+            model.PAYEStatusViewModel.PAYENumbers.RemoveAt(id);
+            return View(GetViewPath(FormSection.OrganisationDetails, 10), model);
         }
 
         [HttpPost]

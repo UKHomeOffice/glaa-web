@@ -91,28 +91,39 @@
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 9 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.LegalStatus.LegalStatus)</span></a></td>
             }
         </tr>
+        @if (Model.LegalStatus.LegalStatus == GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany)
+        {
         <tr>
-            <td>PAYE/ERN Status</td>
-            <td>@Html.DisplayFor(m => m.PAYEERNStatus)</td>
+            <td>Companies House Registration</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.CompaniesHouseRegistrationViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> PAYE/ERN Status</span></a></td>
+                <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> Companies House Registration</span></a></td>
+            }
+        </tr>
+        }
+        <tr>
+            <td>PAYE Status</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.PAYEStatusViewModel)</td>
+            @if (isEditable)
+            {
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> PAYE Status</span></a></td>
             }
         </tr>
         <tr>
             <td>VAT Status</td>
-            <td>@Html.DisplayFor(m => m.VATStatus)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.VATStatusViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 11 })">Change<span class="visually-hidden"> VAT Status</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> VAT Status</span></a></td>
             }
         </tr>
         <tr>
             <td>Tax Reference Number</td>
-            <td>@Html.DisplayFor(m => m.TaxReference.TaxReferenceNumber)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.TaxReferenceViewModel.TaxReferenceNumber)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 12 })">Change<span class="visually-hidden"> Tax Reference Number</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> Tax Reference Number</span></a></td>
             }
         </tr>
         <tr>
@@ -120,7 +131,7 @@
             <td>@Html.DisplayFor(m => m.OperatingIndustries.OperatingIndustries, "ListCheckboxListItem")</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 13 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OperatingIndustries.OperatingIndustries)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 11 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OperatingIndustries.OperatingIndustries)</span></a></td>
             }
         </tr>
         <tr>
@@ -128,7 +139,7 @@
             <td>@Html.DisplayFor(m => m.Turnover)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 14 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Turnover.TurnoverBand)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 12 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Turnover.TurnoverBand)</span></a></td>
             }
         </tr>
         <tr>
@@ -136,7 +147,7 @@
             <td>@Html.DisplayFor(m => m.OperatingCountries.OperatingCountries, "ListCheckboxListItem")</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 15 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OperatingCountries.OperatingCountries)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 13 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.OperatingCountries.OperatingCountries)</span></a></td>
             }
         </tr>
     </tbody>

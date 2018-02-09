@@ -159,7 +159,7 @@ namespace GLAA.Services.Automapper
 
         public static bool DirectorsRequiredResolver(Licence licence)
         {
-            return licence.LegalStatus.HasValue && (licence.LegalStatus == LegalStatusEnum.LimitedCompany ||
+            return licence.LegalStatus.HasValue && (licence.LegalStatus == LegalStatusEnum.RegisteredCompany ||
                                                     licence.LegalStatus == LegalStatusEnum.Partnership);
         }
 

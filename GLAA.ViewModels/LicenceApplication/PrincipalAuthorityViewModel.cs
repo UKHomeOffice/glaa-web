@@ -71,7 +71,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool CanView(PrincipalAuthorityViewModel parent)
         {
             return !parent.LegalStatus.HasValue ||
-                   parent.LegalStatus.Value == LegalStatusEnum.LimitedCompany ||
+                   parent.LegalStatus.Value == LegalStatusEnum.RegisteredCompany ||
                    parent.LegalStatus.Value == LegalStatusEnum.Partnership;
         }
     }
@@ -87,7 +87,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool CanView(PrincipalAuthorityViewModel parent)
         {
             return (!parent.LegalStatus.HasValue ||
-                    parent.LegalStatus.Value == LegalStatusEnum.LimitedCompany ||
+                    parent.LegalStatus.Value == LegalStatusEnum.RegisteredCompany ||
                     parent.LegalStatus.Value == LegalStatusEnum.Partnership)
                    && IsDirector.HasValue && !IsDirector.Value;
         }
