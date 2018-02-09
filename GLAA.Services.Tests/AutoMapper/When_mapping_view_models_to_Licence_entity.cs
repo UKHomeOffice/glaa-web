@@ -5,6 +5,8 @@ using GLAA.Domain.Models;
 using GLAA.Services.Automapper;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GLAA.Services.Tests.AutoMapper
 {

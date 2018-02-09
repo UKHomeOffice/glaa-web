@@ -679,23 +679,11 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.BusinessMobileNumber, result.BusinessMobileNumber.BusinessMobileNumber);
             Assert.AreEqual(input.BusinessWebsite, result.BusinessWebsite.BusinessWebsite);
             Assert.AreEqual(input.BusinessEmailAddress, result.BusinessEmailAddress.BusinessEmailAddress);
-            Assert.AreEqual(input.BusinessEmailAddressConfirmation, result.BusinessEmailAddress.BusinessEmailAddressConfirmation);
-            Assert.AreEqual(input.TaxReferenceNumber, result.TaxReference.TaxReferenceNumber);
+            Assert.AreEqual(input.BusinessEmailAddressConfirmation, result.BusinessEmailAddress.BusinessEmailAddressConfirmation);            
 
             AssertAddress(expectedAddress, result.Address);
 
-            Assert.AreEqual(input.PAYENumbers.First().Id, result.PAYEStatus.PAYENumbers.First().Id);
-            Assert.AreEqual(input.PAYENumbers.First().Number, result.PAYEStatus.PAYENumbers.First().PAYENumber);
-            Assert.AreEqual(input.PAYENumbers.First().RegistrationDate, result.PAYEStatus.PAYENumbers.First().PAYERegistrationDate.Date);
-            Assert.AreEqual(input.HasPAYENumber, result.PAYEStatus.HasPAYENumber);
-
-            Assert.AreEqual(input.VATNumber, result.VATStatus.VATNumber);
-            Assert.AreEqual(input.VATRegistrationDate, result.VATStatus.VATRegistrationDate.Date);
-            Assert.AreEqual(input.HasVATNumber, result.VATStatus.HasVATNumber);
-
             Assert.AreEqual(input.LegalStatus, result.LegalStatus.LegalStatus);
-            //Assert.AreEqual(input.CompaniesHouseNumber, result.LegalStatus.CompaniesHouseNumber);
-            //Assert.AreEqual(input.CompanyRegistrationDate, result.LegalStatus.CompanyRegistrationDate.Date);
         }
 
         [TestMethod]
@@ -784,39 +772,6 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.HasMultiples, result.MultipleBranchViewModel.HasMultiples);
             Assert.AreEqual(input.OtherMultiple, result.MultipleBranchViewModel.OtherMultiple);
             Assert.AreEqual(input.NumberOfMultiples, result.MultipleBranchViewModel.NumberOfMultiples);
-        }
-
-        [TestMethod]
-        public void it_should_map_the_licence_entity_to_the_eligibility_view_model()
-        {
-            var selectedIndustry = 1;
-            var licenceId = 1;
-            var input = new Licence
-            {
-                Id = licenceId,
-                TurnoverBand = TurnoverBand.OneToFiveMillion,
-                SuppliesWorkers = true,
-                OperatingIndustries = new List<LicenceIndustry>
-                {
-                    new LicenceIndustry
-                    {
-                        LicenceId = licenceId,
-                        IndustryId = selectedIndustry,
-                        Industry = new Industry
-                        {
-                            Id = selectedIndustry,
-                            Name = "An industry"
-                        }
-                    }
-                }
-            };
-
-            var result = this.mapper.Map<EligibilityViewModel>(input);
-
-            Assert.AreEqual(input.TurnoverBand, result.Turnover.TurnoverBand);
-            Assert.AreEqual(input.SuppliesWorkers, result.SuppliesWorkers.SuppliesWorkers);
-            Assert.AreEqual(true, result.OperatingIndustries.OperatingIndustries.Single(x => x.Id == selectedIndustry).Checked);
-            Assert.AreEqual(input.ContinueApplication, result.EligibilitySummary.ContinueApplication);
         }
 
         [TestMethod]
