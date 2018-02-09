@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using GLAA.Domain.Core.Models;
 using GLAA.Domain.Models;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Services.Automapper
@@ -112,6 +114,26 @@ namespace GLAA.Services.Automapper
             CreateMap<LicenceStatusHistoryViewModel, Licence>()
                 .ForAllMembers(opt => opt.Ignore());
 
+            //Licence Country
+            CreateMap<LicenceCountry, LicenceCountryViewModel>()
+                .ForMember(x => x.Country, opt => opt.MapFrom(y => y.Country))
+                .ForMember(x => x.Licence, opt => opt.MapFrom(y => y.Licence))
+                .ReverseMap()
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            //Licence Sector
+            CreateMap<LicenceSector, LicenceSectorViewModel>()
+                .ForMember(x => x.Sector, opt => opt.MapFrom(y => y.Sector))
+                .ForMember(x => x.Licence, opt => opt.MapFrom(y => y.Licence))
+                .ReverseMap()
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            //Licence Industry
+            CreateMap<LicenceIndustry, LicenceIndustryViewModel>()
+                .ForMember(x => x.Industry, opt => opt.MapFrom(y => y.Industry))
+                .ForMember(x => x.Licence, opt => opt.MapFrom(y => y.Licence))
+                .ReverseMap()
+                .ForAllOtherMembers(opt => opt.Ignore());
         }
 
         private static CommunicationPreference? MapNullableCommunicationPreference(CommunicationPreferenceViewModel model)

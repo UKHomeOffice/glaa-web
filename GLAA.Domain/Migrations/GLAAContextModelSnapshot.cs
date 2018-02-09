@@ -574,6 +574,10 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool>("ShowInPublicRegister");
 
+                    b.Property<bool>("LicenceSubmitted");
+
+                    b.Property<bool>("LicenceIssued");
+
                     b.HasKey("Id");
 
                     b.ToTable("LicenceStatus");
