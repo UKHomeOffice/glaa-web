@@ -40,7 +40,9 @@ namespace GLAA.Services.Automapper
                 NextStatuses = change.Status.NextStatuses?.Select(x => MapLicenceStatus(x.NextStatus)),
                 SelectedReason = change.Reason?.Description,
                 CssClassStem = change.Status.CssClassStem,
-                AdminCategory = change.Status.AdminCategory
+                AdminCategory = change.Status.AdminCategory,
+                LicenceIssued = change.Status.LicenceIssued,
+                LicenceSubmitted = change.Status.LicenceSubmitted
             };
         }
 

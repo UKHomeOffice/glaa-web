@@ -16,14 +16,14 @@
                     @Html.DropDownListFor(x => x.PublicRegisterSearchCriteria.SupplierWho, Model.AvailableSuppliersWho, new { @class = "form-control public-register-control" })
                     in
                     @Html.DropDownListFor(x => x.PublicRegisterSearchCriteria.CountryAdded, Model.AvailableCountries, new { @class = "form-control public-register-control" })
-                    <button type="submit" class="button" name="submit" value="add">Add Country</button>
+                    <button type="submit" class="button" name="submitButtonType" value="add">Add Country</button>
 
                     @if (Model.PublicRegisterSearchCriteria.CountriesSelected != null)
                     {
                         foreach (var country in Model.PublicRegisterSearchCriteria.CountriesSelected)
                         {
                             <input type="hidden" name="PublicRegisterSearchCriteria.CountriesSelected" value="@country" />
-                            <button type="submit" class="button public-register-selected-country" name="submit" value="@country">@country</button>
+                            <button type="submit" class="button public-register-selected-country" name="submitButtonType" value="@country">@country</button>
                         }
                     }
                 </div>
@@ -34,7 +34,7 @@
                     @Html.TextBoxFor(x => x.PublicRegisterSearchCriteria.BusinessName, new { @class = "form-control" })
                 </div>
 
-                <button type="submit" class="button public-register-search-button" name="submit" value="search">Search</button>
+                <button type="submit" class="button public-register-search-button" name="submitButtonType" value="search">Search</button>
             </fieldset>
         </div>
     </div>

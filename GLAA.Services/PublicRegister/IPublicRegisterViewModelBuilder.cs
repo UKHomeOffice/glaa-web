@@ -9,7 +9,7 @@ namespace GLAA.Services.PublicRegister
         List<SelectListItem> UkCountries { get; }
         PublicRegisterLicenceListViewModel BuildAllLicences();
         PublicRegisterLicenceListViewModel BuildEmptySearch();
-        PublicRegisterLicenceSummaryViewModel BuildLicence(int id);
+        PublicRegisterLicenceDetailViewModel BuildLicence(int id);
         PublicRegisterLicenceListViewModel BuildSearchForLicences(PublicRegisterSearchCriteria publicRegisterSearchCriteria);
         List<SelectListItem> BuildAvailableCountries();
     }

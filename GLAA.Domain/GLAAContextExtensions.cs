@@ -673,8 +673,8 @@ namespace GLAA.Domain
 
                 for (var i = 0; i < 50; i++)
                 {
-                    var licensedStatus =
-                        context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
+                    var licensedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
+                    var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
                     var country = string.Empty;
                     var operatingCountries = new List<Country>();
 
@@ -713,6 +713,11 @@ namespace GLAA.Domain
                             new LicenceStatusChange
                             {
                                 DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                                Status = submittedStatus
+                            },
+                            new LicenceStatusChange
+                            {
+                                DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
                                 Status = licensedStatus
                             }
                         },
@@ -725,11 +730,84 @@ namespace GLAA.Domain
                                 IsCurrent = true
                             }
                         },
+                        OperatingIndustries = new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(rnd.Next(1, 3))
+                            },
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(rnd.Next(4, 5))
+                            }
+                        },
+                        BusinessPhoneNumber = "0" + (7777777000 + i),
+                        LegalStatus = (LegalStatusEnum)Enum.ToObject(typeof(LegalStatusEnum), rnd.Next(1, 5)),
                         Address = new Address
                         {
-                            Country = country
+                            AddressLine1 = rnd.Next(9999) + " Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = $"FA{rnd.Next(1, 99)} {rnd.Next(1, 9)}KE",
+                            Country = country,
+                            NonUK = false
+                        },
+                        HasNamedIndividuals = true,
+                        NamedIndividualType = NamedIndividualType.PersonalDetails,
+                        NamedIndividuals = new List<NamedIndividual>
+                        {
+                            new NamedIndividual
+                            {
+                                BusinessExtension = rnd.Next(100, 999).ToString(),
+                                BusinessPhoneNumber = "0777777" + rnd.Next(1000, 9999),
+                                DateOfBirth = DateTime.Now.AddDays(rnd.Next(1000, 9999) * -1),
+                                FullName = "Joe Bloggs-" + i,
+                                IsUndischargedBankrupt = rnd.Next(0, 1) == 1,
+                                BankruptcyDate = DateTime.Now,
+                                BankruptcyNumber = rnd.Next(1000000, 9999999).ToString(),
+                                IsDisqualifiedDirector = rnd.Next(0, 1) == 1,
+                                DisqualificationDetails = "Some details " + i,
+                                HasRestraintOrders = rnd.Next(0, 1) == 1,
+                                RequiresVisa = rnd.Next(0, 1) == 1,
+                                RestraintOrders = new[]
+                                {
+                                    new RestraintOrder
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Restraint description " + 1
+                                    }
+                                },
+                                HasUnspentConvictions = rnd.Next(0, 1) == 1,
+                                UnspentConvictions = new[]
+                                {
+                                    new Conviction
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Conviction description " + i
+                                    }
+                                },
+                                HasOffencesAwaitingTrial = rnd.Next(0, 1) == 1,
+                                OffencesAwaitingTrial = new[]
+                                {
+                                    new OffenceAwaitingTrial
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Offence description " + i
+                                    }
+                                },
+                                HasPreviouslyHeldLicence = rnd.Next(0, 1) == 1,
+                                PreviousLicenceDescription = "I had a previous licence."
+                            }
+                        },
+                        NamedJobTitles = new List<NamedJobTitle>
+                        {
+                            new NamedJobTitle
+                            {
+                                JobTitle = "Job Title " + i,
+                                JobTitleNumber = 1000 + i,
+                            }
                         }
-                        //User = adminUser
                     });
 
                     foreach (var operatingCountry in operatingCountries)

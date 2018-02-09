@@ -21,6 +21,8 @@ namespace GLAA.ViewModels.LicenceApplication
         public string InternalDescription { get; set; }
         public string ActiveCheckDescription { get; set; }
         public bool ShowInPublicRegister { get; set; }
+        public bool LicenceIssued { get; set; }
+        public bool LicenceSubmitted { get; set; }
         public bool RequireNonCompliantStandards { get; set; }
         public DateTime? DateCreated { get; set; }
         public string CssClassStem { get; set; }

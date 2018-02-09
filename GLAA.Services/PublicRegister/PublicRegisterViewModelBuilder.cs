@@ -56,10 +56,9 @@ namespace GLAA.Services.PublicRegister
         {
             var ukCountryNames = UkCountries.Select(x => x.Text);
 
-            var licences = _licenceRepository.GetAllLicences()
-                .Where(x => _licenceRepository.GetLatestStatus(x).Status.ShowInPublicRegister
-                            && (string.IsNullOrWhiteSpace(publicRegisterSearchCriteria.BusinessName) ||
-                                x.BusinessName.Contains(publicRegisterSearchCriteria.BusinessName)));
+            var licences = _licenceRepository.GetAllLicencesForPublicRegister()
+                .Where(x => string.IsNullOrWhiteSpace(publicRegisterSearchCriteria.BusinessName)
+                            || x.BusinessName.Contains(publicRegisterSearchCriteria.BusinessName));
 
             switch (Enum.Parse<SupplierWho>(publicRegisterSearchCriteria.SupplierWho))
             {
@@ -96,11 +95,16 @@ namespace GLAA.Services.PublicRegister
             };
         }
 
-        public PublicRegisterLicenceSummaryViewModel BuildLicence(int id)
+        public PublicRegisterLicenceDetailViewModel BuildLicence(int id)
         {
             var licence = _licenceRepository.GetById(id);
 
-            return _licenceRepository.GetLatestStatus(licence).Status.IsLicence ? BuildSummary(licence) : null;
+            return LicenceRepository.GetLatestStatus(licence).Status.IsLicence ? BuildDetail(licence) : null;
+        }
+
+        private PublicRegisterLicenceDetailViewModel BuildDetail(Licence licence)
+        {
+            return _mapper.Map<PublicRegisterLicenceDetailViewModel>(licence);
         }
 
         private PublicRegisterLicenceSummaryViewModel BuildSummary(Licence licence)

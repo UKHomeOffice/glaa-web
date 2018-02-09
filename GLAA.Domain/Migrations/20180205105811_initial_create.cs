@@ -70,7 +70,9 @@ namespace GLAA.Domain.Migrations
                     InternalDescription = table.Column<string>(nullable: true),
                     InternalStatus = table.Column<string>(nullable: true),
                     RequireNonCompliantStandards = table.Column<bool>(nullable: false),
-                    ShowInPublicRegister = table.Column<bool>(nullable: false)
+                    ShowInPublicRegister = table.Column<bool>(nullable: false),
+                    LicenceIssued = table.Column<bool>(nullable: false),
+                    LicenceSubmitted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
