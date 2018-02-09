@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180208162656_initial_create")]
+    [Migration("20180209112228_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("CountryId");
 
-                    b.Property<string>("County");
+                    b.Property<int?>("CountyId");
 
                     b.Property<bool>("NonUK");
 
@@ -98,6 +98,8 @@ namespace GLAA.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("CountyId");
 
                     b.ToTable("Address");
                 });
@@ -214,6 +216,18 @@ namespace GLAA.Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.County", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("County");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.DirectorOrPartner", b =>
@@ -1089,6 +1103,10 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.Country", "Country")
                         .WithMany("Addresses")
                         .HasForeignKey("CountryId");
+
+                    b.HasOne("GLAA.Domain.Models.County", "County")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CountyId");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.AlternativeBusinessRepresentative", b =>

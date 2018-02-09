@@ -26,6 +26,19 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "County",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_County", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Industry",
                 columns: table => new
                 {
@@ -137,7 +150,7 @@ namespace GLAA.Domain.Migrations
                     AddressLine2 = table.Column<string>(nullable: true),
                     AddressLine3 = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
-                    County = table.Column<string>(nullable: true),
+                    CountyId = table.Column<int>(nullable: true),
                     NonUK = table.Column<bool>(nullable: false),
                     Postcode = table.Column<string>(nullable: true),
                     Town = table.Column<string>(nullable: true)
@@ -149,6 +162,12 @@ namespace GLAA.Domain.Migrations
                         name: "FK_Address_Country_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Country",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Address_County_CountyId",
+                        column: x => x.CountyId,
+                        principalTable: "County",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -990,6 +1009,11 @@ namespace GLAA.Domain.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Address_CountyId",
+                table: "Address",
+                column: "CountyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AlternativeBusinessRepresentative_AddressId",
                 table: "AlternativeBusinessRepresentative",
                 column: "AddressId");
@@ -1238,6 +1262,10 @@ namespace GLAA.Domain.Migrations
                 table: "Address");
 
             migrationBuilder.DropForeignKey(
+                name: "FK_Address_County_CountyId",
+                table: "Address");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_DirectorOrPartner_Address_AddressId",
                 table: "DirectorOrPartner");
 
@@ -1350,6 +1378,9 @@ namespace GLAA.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Country");
+
+            migrationBuilder.DropTable(
+                name: "County");
 
             migrationBuilder.DropTable(
                 name: "Address");
