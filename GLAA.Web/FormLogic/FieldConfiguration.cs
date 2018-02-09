@@ -45,8 +45,6 @@ namespace GLAA.Web.FormLogic
                             new FormPageDefinition(nameof(CommunicationPreferenceViewModel.CommunicationPreference)),
                             new FormPageDefinition(nameof(LegalStatusViewModel.LegalStatus)),
                             new FormPageDefinition(nameof(BusinessCredentialsViewModel), true),
-                            new FormPageDefinition("VATStatus"),
-                            new FormPageDefinition("TaxReference"),
                             new FormPageDefinition(nameof(OperatingIndustriesViewModel.OperatingIndustries)),
                             new FormPageDefinition("Turnover"),
                             new FormPageDefinition(nameof(OperatingCountriesViewModel.OperatingCountries)),

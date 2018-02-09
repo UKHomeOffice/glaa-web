@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "What is your tax reference number?";
+    ViewBag.Title = "What is your estimated business turnover?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.TaxReferenceViewModel
+@model GLAA.ViewModels.LicenceApplication.TurnoverViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "13" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "12" } })
 
-@using (Html.BeginForm("SaveTaxReference", "OrganisationDetails"))
+@using (Html.BeginForm("SaveTurnover", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -17,14 +17,12 @@
                 @ViewBag.Title
             </h1>
         </div>
+
         <div class="column-two-thirds">
-            <div class="form-group">
-                <div class="form-group">
-                    @Html.LabelWithHintFor(x => x.TaxReferenceNumber)
-                    @Html.TextBoxFor(x => x.TaxReferenceNumber, new { @class = "form-control" })
-                </div>
-            </div>
+            @Html.RadioButtonFormGroupFor(x => x.TurnoverBand, Model.AvailableTurnoverBands, "Select the item which matches most closely your turnover")
         </div>
     </div>
+
     <button type="submit" class="button">Save and continue</button>
 }
+
