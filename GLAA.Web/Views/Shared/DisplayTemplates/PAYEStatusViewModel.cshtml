@@ -1,0 +1,26 @@
+﻿@model GLAA.ViewModels.LicenceApplication.PAYEStatusViewModel
+
+
+@{    
+
+    if (Model.HasPAYENumber.HasValue && Model.HasPAYENumber.Value)
+    {        
+        <table class="check-your-answers">
+            <tbody>
+                @foreach (var number in Model.PAYENumbers)
+                {
+                        <tr>
+                            <td>@number.PAYENumber</td>
+                            <td>@number.PAYERegistrationDate</td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <span>Not registered</span>
+    }
+}
+
+

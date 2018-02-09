@@ -91,9 +91,20 @@
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 9 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.LegalStatus.LegalStatus)</span></a></td>
             }
         </tr>
+        @if (Model.LegalStatus.LegalStatus == GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany)
+        {
+        <tr>
+            <td>Companies House Registration</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.CompaniesHouseRegistrationViewModel)</td>
+            @if (isEditable)
+            {
+                <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> Companies House Registration</span></a></td>
+            }
+        </tr>
+        }
         <tr>
             <td>PAYE Status</td>
-            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.PAYEStatusViewModel.HasPAYENumber)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.PAYEStatusViewModel)</td>
             @if (isEditable)
             {
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> PAYE Status</span></a></td>
@@ -101,18 +112,18 @@
         </tr>
         <tr>
             <td>VAT Status</td>
-            <td>@Html.DisplayFor(m => m.VATStatus)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.VATStatusViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 11 })">Change<span class="visually-hidden"> VAT Status</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> VAT Status</span></a></td>
             }
         </tr>
         <tr>
             <td>Tax Reference Number</td>
-            <td>@Html.DisplayFor(m => m.TaxReference.TaxReferenceNumber)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.TaxReferenceViewModel.TaxReferenceNumber)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 12 })">Change<span class="visually-hidden"> Tax Reference Number</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> Tax Reference Number</span></a></td>
             }
         </tr>
         <tr>

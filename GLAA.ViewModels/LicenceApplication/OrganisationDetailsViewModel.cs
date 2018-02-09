@@ -24,9 +24,6 @@ namespace GLAA.ViewModels.LicenceApplication
             BusinessWebsite = new BusinessWebsiteViewModel();
             LegalStatus = new LegalStatusViewModel();
             BusinessCredentialsViewModel = new BusinessCredentialsViewModel();
-            PAYEStatus = new PAYEStatusViewModel();
-            VATStatus = new VATStatusViewModel();
-            TaxReference = new TaxReferenceViewModel();
         }
 
         public BusinessNameViewModel BusinessName { get; set; }
@@ -41,9 +38,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
         public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }
-        public PAYEStatusViewModel PAYEStatus { get; set; }
-        public VATStatusViewModel VATStatus { get; set; }
-        public TaxReferenceViewModel TaxReference { get; set; }
     }
 
 
@@ -369,10 +363,7 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
     public class TaxReferenceViewModel : Validatable
-    {
-        //[Required]
-        //public bool? HasTaxReferenceNumber { get; set; }        
-
+    {      
         [Required(ErrorMessage = "The Personal Unique Tax Reference number field is required")]
         [RegularExpression(@"\d{9}[\dkK]{1}", ErrorMessage = "Please enter a valid Personal Unique Tax Reference Number")]
         [Display(Name = "Personal Unique Tax Reference number", Description = "For example 1334404714")]
