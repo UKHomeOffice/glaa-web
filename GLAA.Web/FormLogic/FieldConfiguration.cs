@@ -20,13 +20,14 @@ namespace GLAA.Web.FormLogic
                         }
                     },
                     {
-                        FormSection.Eligibility,
+                        FormSection.SignUp,
                         new []
                         {
-                            new FormPageDefinition(nameof(EligibilityViewModel.SuppliesWorkers)), 
-                            new FormPageDefinition(nameof(EligibilityViewModel.OperatingIndustries)), 
-                            new FormPageDefinition(nameof(EligibilityViewModel.Turnover)),
-                            new FormPageDefinition(nameof(EligibilityViewModel.EligibilitySummary)),
+                            new FormPageDefinition("EmailAddress"),
+                            new FormPageDefinition("FullName"),
+                            new FormPageDefinition("Address"),
+                            new FormPageDefinition("CommunicationPreference"),
+                            new FormPageDefinition("Password"),
                             new FormPageDefinition()
                         }
                     },

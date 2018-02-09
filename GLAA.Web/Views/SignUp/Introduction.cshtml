@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Create an account to start";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="grid-row">
+        <div class="column-full">
+            <h1 class="heading-xlarge">@ViewBag.Title</h1>
+
+            <p>
+                This will allow you to complete the application form and check the status of your application. It will also allow you to review your licence record should a licence be granted and request changes to be made to your licence information.
+            </p>
+
+            <p>
+                The individual designated as the Principal Authority should create the account.  Your application will be delayed if the person who creates the account is not the Principal Authority.
+            </p>
+            <p>
+                The information contained in your completed application form will be shared and checked with other Government Departments and their agencies.
+            </p>
+            <p>
+                We will also be sharing your information with other government departments as part of our checks. For more information <a href="#">please read our privacy policy.</a>
+            </p>
+
+            <br />
+            <a class="button button-start" asp-controller="SignUp" asp-action="SignUp" asp-route-id="1" role="button">Create Account</a>
+        </div>
+    </div>
+    <div class="grid-row">
+        <div class="column-full">
+            <a id="whatIsPa" href="#paDescription">&gt; What is a Principal Authority?</a>
+            <div id="paDescription" class="js-hidden">
+                <p>
+                    Principal Authority (PA) is a term that we use to describe the person responsible for the day to day management of the business.  In the case of a company the PA will normally be the managing director.  If there is a person in your company that meets this definition, that person should be named as the PA on the application rather than yourself.  If you are responsible for the day-to-day management of the business, then we will require written confirmation by letter or email from a director of your company providing confirmation that you meet the definition of a PA.
+                </p>
+                <p>
+                    A sole trader will always be the Principal Authority.  In a partnership, one of the partners should be designated as the Principal Authority.  In the case of a company the Principal Authority will normally be the managing director.  However, if the person running the company is not a director then he or she should still be named.  In this scenario you will be required during the application process to provide written confirmation from a director of your company that confirms that you meet the definition of a Principal Authority.
+                </p>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            hiddenContent.hideContent();
+            $('a#whatIsPa').click(function() {
+                $('.js-hidden').toggle();
+            });
+        });
+    </script>
+}

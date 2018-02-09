@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.Repository;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Services.LicenceApplication
@@ -35,7 +36,6 @@ namespace GLAA.Services.LicenceApplication
 
             if (licence != null)
             {
-                model.Eligibility = mapper.Map<EligibilityViewModel>(licence);
                 model.Declaration = mapper.Map<DeclarationViewModel>(licence);                
                 model.PrincipalAuthority =
                     mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());

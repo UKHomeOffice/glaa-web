@@ -39,6 +39,13 @@ namespace GLAA.Web.Core.Helpers
             //return new HtmlString(header.ToString());
         }
 
+        public static IHtmlContent PasswordFormGroupFor<TModel, TValue>(this IHtmlHelper<TModel> html,
+            Expression<Func<TModel, TValue>> expression)
+        {
+            var control = html.PasswordFor(expression, new { @class = "form-control" });
+            return BuildFormGroupForControl(html, expression, control);
+        }
+
         public static IHtmlContent TextFormGroupFor<TModel, TValue>(this IHtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> expression)
         {
@@ -286,6 +293,8 @@ namespace GLAA.Web.Core.Helpers
             var metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider).Metadata;
             var resolvedLabelText = metadata.DisplayName ?? metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             var optionalText = metadata.IsRequired ||
+                IsCompared(expression) ||
+                IsHiddenOptional(expression) ||
                 IsDateRequired(expression) ||
                 IsRequiredIf(expression) ||
                 IsAssertThat(expression) ||
@@ -408,6 +417,28 @@ namespace GLAA.Web.Core.Helpers
             }
 
             return memberExpression.Member.GetCustomAttribute<DateRequiredAttribute>() != null;
+        }
+
+        private static bool IsCompared<TModel, TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            var memberExpression = expression.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                throw new InvalidOperationException("Expression must be a member expression");
+            }
+
+            return memberExpression.Member.GetCustomAttribute<CompareAttribute>() != null;
+        }
+
+        private static bool IsHiddenOptional<TModel, TValue>(Expression<Func<TModel, TValue>> expression)
+        {
+            var memberExpression = expression.Body as MemberExpression;
+            if (memberExpression == null)
+            {
+                throw new InvalidOperationException("Expression must be a member expression");
+            }
+
+            return memberExpression.Member.GetCustomAttribute<HiddenOptionalAttribute>() != null;
         }
 
         private static bool HasUIHint<TModel, TValue>(Expression<Func<TModel, TValue>> expression)

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Permissions;
 using AutoMapper;
 using GLAA.Domain;
 using GLAA.Domain.Models;
@@ -510,68 +507,6 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.AccommodatesWorkers, result.AccommodatesWorkers);
             Assert.AreEqual(input.AccommodationDeductedFromPay, result.AccommodationDeductedFromPay);
             Assert.AreEqual(input.AccommodationWorkersChoose, result.AccommodationWorkersChoose);
-        }
-
-        [TestMethod]
-        public void it_should_map_the_supplies_workers_view_model_to_the_licence_entity()
-        {
-            var input = new SuppliesWorkersViewModel
-            {
-                SuppliesWorkers = true
-            };
-
-            var result = this.mapper.Map<Licence>(input);
-
-            Assert.AreEqual(input.SuppliesWorkers, result.SuppliesWorkers);
-        }
-
-        [TestMethod]
-        public void it_should_map_the_eligiblity_view_model_to_the_licence_entity()
-        {
-            var input = new EligibilityViewModel
-            {
-                SuppliesWorkers = new SuppliesWorkersViewModel
-                {
-                    SuppliesWorkers = true
-                },
-                OperatingIndustries = new OperatingIndustriesViewModel
-                {
-                    OperatingIndustries = new List<CheckboxListItem>
-                    {
-                        new CheckboxListItem
-                        {
-                            Id = 1,
-                            Name = "Item 1",
-                            Checked = true
-                        },
-                        new CheckboxListItem
-                        {
-                            Id = 2,
-                            Name = "Item 2",
-                            Checked = false
-                        },
-                        new CheckboxListItem
-                        {
-                            Id = 5,
-                            Name = "Other",
-                            Checked = true
-                        }
-                    },
-                    OtherIndustry = "Other industry"
-                },                
-                Turnover = new TurnoverViewModel
-                {
-                    TurnoverBand = TurnoverBand.FiveToTenMillion
-                }
-            };
-
-            var result = this.mapper.Map<Licence>(input);
-
-            Assert.AreEqual(input.SuppliesWorkers.SuppliesWorkers, result.SuppliesWorkers);
-            // not mapping these at the moment they are mapped from the nested types (OperatingIndustriesViewModel > ICollection<Industry>
-            //Assert.AreEqual(input.OperatingIndustries.OperatingIndustries.Count(x => x.Checked), result.OperatingIndustries.Count);
-            Assert.AreEqual(input.OperatingIndustries.OtherIndustry, result.OtherOperatingIndustry);
-            Assert.AreEqual(input.Turnover.TurnoverBand, result.TurnoverBand);
         }
 
         [TestMethod]
