@@ -187,7 +187,7 @@ namespace GLAA.Web.FormLogic
             new FormPageDefinition(nameof(AlternativeFullNameViewModel.AlternativeName)),
             new FormPageDefinition(nameof(DateOfBirthViewModel.DateOfBirth)),
             new FormPageDefinition(nameof(TownOfBirthViewModel.TownOfBirth)),
-            new FormPageDefinition(nameof(CountryOfBirthViewModel.CountryOfBirth)),
+            new FormPageDefinition("CountryOfBirth"),
             new FormPageDefinition(nameof(JobTitleViewModel.JobTitle)),
             new FormPageDefinition("Address"),
             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),

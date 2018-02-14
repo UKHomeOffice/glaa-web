@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Principal Authority - Part 6";
+    ViewBag.Title = "What country were you born in?";
 }
 
 @model GLAA.ViewModels.LicenceApplication.CountryOfBirthViewModel
@@ -14,15 +14,13 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What country were you born in?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.CountryOfBirth)
+            @Html.DropDownFormGroupFor(x => x.CountryOfBirthId, Model.Countries)
+            <button type="submit" class="button">Save and continue</button>
         </div>
     </div>
 
-    <button type="submit" class="button">Save and continue</button>
 }
-
-

@@ -43,7 +43,7 @@ namespace GLAA.Services.Tests.AutoMapper
             var expectedHasAltName = true;
             var expectedDateOfBirth = new DateTime(2000, 1, 1);
             var expectedTown = "town";
-            var expectedCountry = "country";
+            var expectedCountry = 1;
             var expectedJobTitle = "job";
 
             var expectedBusPhoneNo = "1";
@@ -87,7 +87,7 @@ namespace GLAA.Services.Tests.AutoMapper
             inputPerson.HasAlternativeName = expectedHasAltName;
             inputPerson.DateOfBirth = expectedDateOfBirth;
             inputPerson.TownOfBirth = expectedTown;
-            inputPerson.CountryOfBirth = expectedCountry;
+            inputPerson.CountryOfBirthId = expectedCountry;
             inputPerson.JobTitle = expectedJobTitle;
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension = expectedBusExt;
@@ -136,7 +136,7 @@ namespace GLAA.Services.Tests.AutoMapper
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth.DateOfBirth.Date);
             Assert.AreEqual(expected.TownOfBirth, actual.TownOfBirth.TownOfBirth);
-            Assert.AreEqual(expected.CountryOfBirth, actual.CountryOfBirth.CountryOfBirth);
+            Assert.AreEqual(expected.CountryOfBirthId, actual.CountryOfBirth.CountryOfBirthId);
             Assert.AreEqual(expected.JobTitle, actual.JobTitle.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber, actual.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension, actual.BusinessExtension.BusinessExtension);

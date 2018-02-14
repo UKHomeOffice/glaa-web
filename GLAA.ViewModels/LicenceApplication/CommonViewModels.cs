@@ -52,11 +52,13 @@ namespace GLAA.ViewModels.LicenceApplication
         public string TownOfBirth { get; set; }
     }
 
-    public class CountryOfBirthViewModel
+    public class CountryOfBirthViewModel : INeedCountries
     {
         [Required]
         [Display(Name = "Country of birth", Description = "This will be shown on your birth certificate")]
-        public string CountryOfBirth { get; set; }
+        public int? CountryOfBirthId { get; set; }
+
+        public IEnumerable<SelectListItem> Countries { get; set; }
     }
 
     public class JobTitleViewModel

@@ -5,6 +5,6 @@ namespace GLAA.ViewModels
 {
     public interface INeedCountries
     {
-        IEnumerable<SelectListItem> Countries { set; }
+        IEnumerable<SelectListItem> Countries { get; set; }
     }
 }

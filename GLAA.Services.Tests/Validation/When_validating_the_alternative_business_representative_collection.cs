@@ -47,7 +47,7 @@ namespace GLAA.Services.Tests.Validation
                 },
                 CountryOfBirth = new CountryOfBirthViewModel
                 {
-                    CountryOfBirth = "country"
+                    CountryOfBirthId = 1
                 },
                 JobTitle = new JobTitleViewModel
                 {
@@ -169,7 +169,7 @@ namespace GLAA.Services.Tests.Validation
                 },
                 CountryOfBirth = new CountryOfBirthViewModel
                 {
-                    CountryOfBirth = "country"
+                    CountryOfBirthId = 1
                 },
                 JobTitle = new JobTitleViewModel
                 {

@@ -5,6 +5,8 @@ namespace GLAA.ViewModels.LicenceApplication
 {
     public class PersonViewModel : IPersonViewModel, INeedCountries, INeedCounties
     {
+        private IEnumerable<SelectListItem> countries;
+
         public PersonViewModel()
         {
             FullName = new FullNameViewModel();
@@ -51,16 +53,21 @@ namespace GLAA.ViewModels.LicenceApplication
         public OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
         public PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
 
-        public IEnumerable<SelectListItem> Countries
-        {
-            set => Address.Countries = value;
-            get => Address.Countries;
-        }
-
         public IEnumerable<SelectListItem> Counties
         {
             set => Address.Counties = value;
             get => Address.Counties;
+        }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            get => countries;
+            set
+            {
+                countries = value;
+                Address.Countries = value;
+                CountryOfBirth.Countries = value;
+            }
         }
     }
 }

@@ -120,7 +120,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("BusinessPhoneNumber");
 
-                    b.Property<string>("CountryOfBirth");
+                    b.Property<int?>("CountryOfBirthId");
 
                     b.Property<string>("CountyOfBirth");
 
@@ -169,6 +169,8 @@ namespace GLAA.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("CountryOfBirthId");
 
                     b.HasIndex("LicenceId");
 
@@ -246,7 +248,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("BusinessPhoneNumber");
 
-                    b.Property<string>("CountryOfBirth");
+                    b.Property<int?>("CountryOfBirthId");
 
                     b.Property<string>("CountyOfBirth");
 
@@ -299,6 +301,8 @@ namespace GLAA.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("CountryOfBirthId");
 
                     b.HasIndex("LicenceId");
 
@@ -812,7 +816,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("BusinessPhoneNumber");
 
-                    b.Property<string>("CountryOfBirth");
+                    b.Property<int?>("CountryOfBirthId");
 
                     b.Property<string>("CountyOfBirth");
 
@@ -883,6 +887,8 @@ namespace GLAA.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("CountryOfBirthId");
 
                     b.HasIndex("DirectorOrPartnerId");
 
@@ -1114,6 +1120,10 @@ namespace GLAA.Domain.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
+                    b.HasOne("GLAA.Domain.Models.Country", "CountryOfBirth")
+                        .WithMany()
+                        .HasForeignKey("CountryOfBirthId");
+
                     b.HasOne("GLAA.Domain.Models.Licence", "Licence")
                         .WithMany("AlternativeBusinessRepresentatives")
                         .HasForeignKey("LicenceId")
@@ -1144,6 +1154,10 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
+
+                    b.HasOne("GLAA.Domain.Models.Country", "CountryOfBirth")
+                        .WithMany()
+                        .HasForeignKey("CountryOfBirthId");
 
                     b.HasOne("GLAA.Domain.Models.Licence", "Licence")
                         .WithMany("DirectorOrPartners")
@@ -1260,6 +1274,10 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
+
+                    b.HasOne("GLAA.Domain.Models.Country", "CountryOfBirth")
+                        .WithMany()
+                        .HasForeignKey("CountryOfBirthId");
 
                     b.HasOne("GLAA.Domain.Models.DirectorOrPartner", "DirectorOrPartner")
                         .WithMany()

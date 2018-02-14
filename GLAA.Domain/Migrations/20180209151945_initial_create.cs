@@ -477,7 +477,7 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     DisqualificationDetails = table.Column<string>(nullable: true),
@@ -508,6 +508,12 @@ namespace GLAA.Domain.Migrations
                         name: "FK_AlternativeBusinessRepresentative_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AlternativeBusinessRepresentative_Country_CountryOfBirthId",
+                        column: x => x.CountryOfBirthId,
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -764,7 +770,7 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     DisqualificationDetails = table.Column<string>(nullable: true),
@@ -800,6 +806,12 @@ namespace GLAA.Domain.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_DirectorOrPartner_Country_CountryOfBirthId",
+                        column: x => x.CountryOfBirthId,
+                        principalTable: "Country",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_DirectorOrPartner_Licence_LicenceId",
                         column: x => x.LicenceId,
                         principalTable: "Licence",
@@ -819,7 +831,7 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     DirectorOrPartnerId = table.Column<int>(nullable: true),
@@ -861,6 +873,12 @@ namespace GLAA.Domain.Migrations
                         name: "FK_PrincipalAuthority_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PrincipalAuthority_Country_CountryOfBirthId",
+                        column: x => x.CountryOfBirthId,
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -1019,6 +1037,11 @@ namespace GLAA.Domain.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AlternativeBusinessRepresentative_CountryOfBirthId",
+                table: "AlternativeBusinessRepresentative",
+                column: "CountryOfBirthId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AlternativeBusinessRepresentative_LicenceId",
                 table: "AlternativeBusinessRepresentative",
                 column: "LicenceId");
@@ -1067,6 +1090,11 @@ namespace GLAA.Domain.Migrations
                 name: "IX_DirectorOrPartner_AddressId",
                 table: "DirectorOrPartner",
                 column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DirectorOrPartner_CountryOfBirthId",
+                table: "DirectorOrPartner",
+                column: "CountryOfBirthId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DirectorOrPartner_LicenceId",
@@ -1184,6 +1212,11 @@ namespace GLAA.Domain.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PrincipalAuthority_CountryOfBirthId",
+                table: "PrincipalAuthority",
+                column: "CountryOfBirthId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PrincipalAuthority_DirectorOrPartnerId",
                 table: "PrincipalAuthority",
                 column: "DirectorOrPartnerId");
@@ -1260,6 +1293,14 @@ namespace GLAA.Domain.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Address_Country_CountryId",
                 table: "Address");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_DirectorOrPartner_Country_CountryOfBirthId",
+                table: "DirectorOrPartner");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_PrincipalAuthority_Country_CountryOfBirthId",
+                table: "PrincipalAuthority");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Address_County_CountyId",

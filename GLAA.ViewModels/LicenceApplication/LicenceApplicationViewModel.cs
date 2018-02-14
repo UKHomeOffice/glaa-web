@@ -69,16 +69,16 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool IsValid { get; set; }
 
-        public IEnumerable<SelectListItem> Countries
-        {
-            set => OrganisationDetails.Countries = value;
-            get => OrganisationDetails.Countries;
-        }
-
         public IEnumerable<SelectListItem> Counties
         {
             set => OrganisationDetails.Counties = value;
             get => OrganisationDetails.Counties;
+        }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            get => OrganisationDetails.Countries;
+            set => OrganisationDetails.Countries = value;
         }
     }
 }

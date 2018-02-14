@@ -55,11 +55,11 @@
         }
     </tr>
     <tr>
-        <td>@Html.LabelFor(m => m.CountryOfBirth.CountryOfBirth)</td>
-        <td>@Html.DisplayFor(m => m.CountryOfBirth.CountryOfBirth)</td>
+        <td>@Html.LabelFor(m => m.CountryOfBirth.CountryOfBirthId)</td>
+        <td>@(Model.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.CountryOfBirth.CountryOfBirthId)?.Text ?? string.Empty)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 8 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CountryOfBirth.CountryOfBirth)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 8 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CountryOfBirth.CountryOfBirthId)</span></a></td>
         }
     </tr>
     <tr>

@@ -37,8 +37,13 @@ namespace GLAA.Services.Automapper
             CreateMap<string, TownOfBirthViewModel>()
                 .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y));
 
-            CreateMap<string, CountryOfBirthViewModel>()
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y));
+            CreateMap<int, CountryOfBirthViewModel>()
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            //CreateMap<Person, CountryOfBirthViewModel>()
+            //    .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthId))
+            //    .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<string, JobTitleViewModel>()
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y));
