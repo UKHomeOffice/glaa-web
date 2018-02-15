@@ -28,22 +28,16 @@ namespace GLAA.Services.Admin
         {
             var statuses = _repository.GetAll<LicenceStatus>();
             var adminStatusRecordsLicenceViewModel = new AdminStatusDashboardViewModel();
-
-            //var licenceStatusRecords = _repository.GetAll<LicenceStatusChange>().GroupBy(x => x.Status.Id, (key, group) => group.OrderBy(y => y.DateCreated).First());
-            //var licenceStatusRecords = _repository.GetAll<Licence>().GroupBy(x => x.CurrentStatusChange.Status.Id, (key, group));
-
             var licenceStatuses = statuses.GroupJoin(_licenceRepository.GetAllEntriesWithStatusesAndAddress(), ls => ls.Id,
                 l => l.CurrentStatusChange.Status.Id, (ls, licences) => new { ls, licences });
 
             foreach (var licenceStatus in licenceStatuses)
             {
-                //var licencesByStatus = GetLicencesByStatus(licenceStatus.ls.Id)?.Count() ?? 0;
-
                 adminStatusRecordsLicenceViewModel.AdminStatusCountViewModels.Add(
                     new AdminStatusCountViewModel
                     {
                         LicenceStatusViewModel = _mapper.Map<LicenceStatusViewModel>(licenceStatus.ls),
-                        LicenceApplicationCount = licenceStatus.licences?.Count() ?? 0 //licencesByStatus?.Count() ?? 0
+                        LicenceApplicationCount = licenceStatus.licences?.Count() ?? 0
                     }
                 );
             }
