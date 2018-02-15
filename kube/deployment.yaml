@@ -111,6 +111,11 @@ spec:
               secretKeyRef:
                 name: s3-glaa-notprod
                 key: secret_access_key
+          - name: BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: s3-glaa-notprod
+                key: bucket_name                
           - name: AWS_REGION
             value: eu-west-2              
         volumeMounts:
