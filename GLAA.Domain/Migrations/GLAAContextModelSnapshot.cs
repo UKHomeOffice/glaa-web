@@ -558,13 +558,13 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("InternalStatus");
 
-                    b.Property<bool>("RequireNonCompliantStandards");
-
-                    b.Property<bool>("ShowInPublicRegister");
+                    b.Property<bool>("LicenceIssued");
 
                     b.Property<bool>("LicenceSubmitted");
 
-                    b.Property<bool>("LicenceIssued");
+                    b.Property<bool>("RequireNonCompliantStandards");
+
+                    b.Property<bool>("ShowInPublicRegister");
 
                     b.HasKey("Id");
 

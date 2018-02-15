@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180209114212_initial_create")]
+    [Migration("20180214115006_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -558,6 +558,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("InternalDescription");
 
                     b.Property<string>("InternalStatus");
+
+                    b.Property<bool>("LicenceIssued");
+
+                    b.Property<bool>("LicenceSubmitted");
 
                     b.Property<bool>("RequireNonCompliantStandards");
 
