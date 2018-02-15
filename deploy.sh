@@ -9,7 +9,7 @@ export KUBE_TOKEN=${KUBE_TOKEN_ACP_NOTPROD}
 
 kubectl --server=$KUBE_SERVER --token=$KUBE_TOKEN --namespace=$KUBE_NAMESPACE delete deployments glaa-web
 
-kd --debug --insecure-skip-tls-verify \
+kd --insecure-skip-tls-verify \
   --timeout 10m0s \
   -f kube/deployment.yaml \
   -f kube/ingress.yaml \
