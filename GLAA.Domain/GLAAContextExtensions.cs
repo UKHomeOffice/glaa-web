@@ -215,6 +215,192 @@ namespace GLAA.Domain
 
             context.SaveChanges();
 
+            context.AddFullLicence();
+
+            context.AddLicenceWithBusinessDetailsCompleted();
+
+            context.AddLicenceWithBusinessDetailsAndPACompleted();
+
+            context.AddLicenceWithBusinessDetailsPAAndABRCompleted();
+
+            context.AddLicenceWithBusinessDetailsPAABRAndDoPCompleted();
+
+            context.AddLicenceWithBusinessDetailsPAABRDoPAndNICompleted();
+
+            context.AddLicenceWithBusinessDetailsPAABRDoPNIAndOrganisationCompleted();
+
+            //Public Register Test Licenses
+            if (!context.Licences.Any(x => x.ApplicationId == "LINC-1234"))
+            {
+                var completedLicences = new List<Licence>();
+
+                for (var i = 0; i < 50; i++)
+                {
+                    var licensedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
+                    var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
+                    var country = string.Empty;
+                    var operatingCountries = new List<Country>();
+
+                    switch (i % 4)
+                    {
+                        //we set the country variable for the address
+                        //the operatingCountries.Add is a seperate country than the address.
+                        case 0:
+                            country = "England";
+                            break;
+                        case 1:
+                            country = "Northern Ireland";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                        case 2:
+                            country = "Wales";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                        case 3:
+                            country = "Scotland";
+                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            break;
+                    }
+
+                    //This adds another country into the operating countries address, so we have two to filter on.
+                    operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == country));
+
+                    completedLicences.Add(new Licence
+                    {
+                        ApplicationId = $"LINC-{1234 + i}",
+                        BusinessName = $"Licensed Organisation {i + 1}",
+                        TradingName =
+                            $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
+                        LicenceStatusHistory = new List<LicenceStatusChange>
+                        {
+                            new LicenceStatusChange
+                            {
+                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                                Status = submittedStatus
+                            },
+                            new LicenceStatusChange
+                            {
+                                DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
+                                Status = licensedStatus
+                            }
+                        },
+                        PrincipalAuthorities = new List<PrincipalAuthority>
+                        {
+                            new PrincipalAuthority
+                            {
+                                FullName =
+                                    $"{_firstNames[rnd.Next(_firstNames.Length)]} {_lastNames[rnd.Next(_lastNames.Length)]}",
+                                IsCurrent = true
+                            }
+                        },
+                        OperatingIndustries = new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(rnd.Next(1, 3))
+                            },
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(rnd.Next(4, 5))
+                            }
+                        },
+                        BusinessPhoneNumber = "0" + (7777777000 + i),
+                        LegalStatus = (LegalStatusEnum)Enum.ToObject(typeof(LegalStatusEnum), rnd.Next(1, 5)),
+                        Address = new Address
+                        {
+                            AddressLine1 = rnd.Next(9999) + " Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = $"FA{rnd.Next(1, 99)} {rnd.Next(1, 9)}KE",
+                            Country = country,
+                            NonUK = false
+                        },
+                        HasNamedIndividuals = true,
+                        NamedIndividualType = NamedIndividualType.PersonalDetails,
+                        NamedIndividuals = new List<NamedIndividual>
+                        {
+                            new NamedIndividual
+                            {
+                                BusinessExtension = rnd.Next(100, 999).ToString(),
+                                BusinessPhoneNumber = "0777777" + rnd.Next(1000, 9999),
+                                DateOfBirth = DateTime.Now.AddDays(rnd.Next(1000, 9999) * -1),
+                                FullName = "Joe Bloggs-" + i,
+                                IsUndischargedBankrupt = rnd.Next(0, 1) == 1,
+                                BankruptcyDate = DateTime.Now,
+                                BankruptcyNumber = rnd.Next(1000000, 9999999).ToString(),
+                                IsDisqualifiedDirector = rnd.Next(0, 1) == 1,
+                                DisqualificationDetails = "Some details " + i,
+                                HasRestraintOrders = rnd.Next(0, 1) == 1,
+                                RequiresVisa = rnd.Next(0, 1) == 1,
+                                RestraintOrders = new[]
+                                {
+                                    new RestraintOrder
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Restraint description " + 1
+                                    }
+                                },
+                                HasUnspentConvictions = rnd.Next(0, 1) == 1,
+                                UnspentConvictions = new[]
+                                {
+                                    new Conviction
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Conviction description " + i
+                                    }
+                                },
+                                HasOffencesAwaitingTrial = rnd.Next(0, 1) == 1,
+                                OffencesAwaitingTrial = new[]
+                                {
+                                    new OffenceAwaitingTrial
+                                    {
+                                        Date = DateTime.Now,
+                                        Description = "Offence description " + i
+                                    }
+                                },
+                                HasPreviouslyHeldLicence = rnd.Next(0, 1) == 1,
+                                PreviousLicenceDescription = "I had a previous licence."
+                            }
+                        },
+                        NamedJobTitles = new List<NamedJobTitle>
+                        {
+                            new NamedJobTitle
+                            {
+                                JobTitle = "Job Title " + i,
+                                JobTitleNumber = 1000 + i,
+                            }
+                        }
+                    });
+
+                    foreach (var operatingCountry in operatingCountries)
+                    {
+                        var completedLicence = completedLicences.LastOrDefault();
+
+                        if (completedLicence != null)
+                        {
+                            completedLicence.OperatingCountries = new List<LicenceCountry>
+                            {
+                                new LicenceCountry
+                                {
+                                    Country = operatingCountry,
+                                    CountryId = operatingCountry.Id,
+                                    Licence = completedLicences.LastOrDefault(),
+                                    LicenceId = completedLicence.Id
+                                }
+                            };
+                        }
+                    }
+                }
+
+                context.Licences.AddRange(completedLicences);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void AddFullLicence(this GLAAContext context)
+        {
             if (!context.Licences.Any(x => x.ApplicationId == "FULL-1234"))
             {
                 var fullLicence = new Licence
@@ -663,173 +849,1855 @@ namespace GLAA.Domain
 
                 context.SaveChanges();
             }
+        }
 
-
-            //Public Register Test Licenses
-            if (!context.Licences.Any(x => x.ApplicationId == "LINC-1234"))
+        private static void AddLicenceWithBusinessDetailsCompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0001"))
             {
-                var completedLicences = new List<Licence>();
-
-                for (var i = 0; i < 50; i++)
+                var testLicence = new Licence
                 {
-                    var licensedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
-                    var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
-                    var country = string.Empty;
-                    var operatingCountries = new List<Country>();
-
-                    switch (i % 4)
+                    ApplicationId = "TEST-0001",
+                    Address = new Address
                     {
-                        //we set the country variable for the address
-                        //the operatingCountries.Add is a seperate country than the address.
-                        case 0:
-                            country = "England";
-                            break;
-                        case 1:
-                            country = "Northern Ireland";
-                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
-                            break;
-                        case 2:
-                            country = "Wales";
-                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
-                            break;
-                        case 3:
-                            country = "Scotland";
-                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
-                            break;
-                    }
-
-                    //This adds another country into the operating countries address, so we have two to filter on.
-                    operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == country));
-
-                    completedLicences.Add(new Licence
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    BusinessEmailAddress = "joe@example.com",
+                    BusinessEmailAddressConfirmation = "joe@example.com",
+                    BusinessPhoneNumber = "07777777777",
+                    BusinessMobileNumber = "07777777777",
+                    BusinessWebsite = "http://www.example.com",
+                    CommunicationPreference = CommunicationPreference.Email,
+                    CompaniesHouseNumber = "12341234",
+                    CompanyRegistrationDate = DateTime.Now,
+                    HasPAYENumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
                     {
-                        ApplicationId = $"LINC-{1234 + i}",
-                        BusinessName = $"Licensed Organisation {i + 1}",
-                        TradingName =
-                            $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
-                        LicenceStatusHistory = new List<LicenceStatusChange>
+                        new PreviousTradingName
                         {
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = submittedStatus
-                            },
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = licensedStatus
-                            }
-                        },
-                        PrincipalAuthorities = new List<PrincipalAuthority>
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
+                    HasVATNumber = true,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    OperatingCountries =
+                        new List<LicenceCountry>
                         {
-                            new PrincipalAuthority
-                            {
-                                FullName =
-                                    $"{_firstNames[rnd.Next(_firstNames.Length)]} {_lastNames[rnd.Next(_lastNames.Length)]}",
-                                IsCurrent = true
-                            }
+                            new LicenceCountry {Country = context.Countries.Find(1)}
                         },
-                        OperatingIndustries = new List<LicenceIndustry>
+                    OperatingIndustries =
+                        new List<LicenceIndustry>
                         {
                             new LicenceIndustry
                             {
-                                Industry = context.Industries.Find(rnd.Next(1, 3))
-                            },
-                            new LicenceIndustry
-                            {
-                                Industry = context.Industries.Find(rnd.Next(4, 5))
+                                Industry = context.Industries.Find(1)
                             }
                         },
-                        BusinessPhoneNumber = "0" + (7777777000 + i),
-                        LegalStatus = (LegalStatusEnum)Enum.ToObject(typeof(LegalStatusEnum), rnd.Next(1, 5)),
+                    BusinessName = "Fully Populated Company",                    
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
+                    TaxReferenceNumber = "1334404714",
+                    TradingName = "FullPopCo",
+                    TurnoverBand = TurnoverBand.FiveToTenMillion,
+                    VATNumber = "GB999 9999 73",
+                    VATRegistrationDate = DateTime.Now,
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1),
+                    LicenceStatusHistory = new List<LicenceStatusChange>
+                    {
+                        new LicenceStatusChange
+                        {
+                            DateCreated = DateTime.Now,
+                            Status = context.LicenceStatuses.Find(110)
+                        }
+                    },
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void AddLicenceWithBusinessDetailsAndPACompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0002"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0002",
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    BusinessEmailAddress = "joe@example.com",
+                    BusinessEmailAddressConfirmation = "joe@example.com",
+                    BusinessPhoneNumber = "07777777777",
+                    BusinessMobileNumber = "07777777777",
+                    BusinessWebsite = "http://www.example.com",
+                    CommunicationPreference = CommunicationPreference.Email,
+                    CompaniesHouseNumber = "12341234",
+                    CompanyRegistrationDate = DateTime.Now,
+                    HasPAYENumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
+                    HasVATNumber = true,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    OperatingCountries =
+                        new List<LicenceCountry>
+                        {
+                            new LicenceCountry {Country = context.Countries.Find(1)}
+                        },
+                    OperatingIndustries =
+                        new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(1)
+                            }
+                        },
+                    BusinessName = "Fully Populated Company",
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
+                    TaxReferenceNumber = "1334404714",
+                    TradingName = "FullPopCo",
+                    TurnoverBand = TurnoverBand.FiveToTenMillion,
+                    VATNumber = "GB999 9999 73",
+                    VATRegistrationDate = DateTime.Now,
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1),
+                    LicenceStatusHistory = new List<LicenceStatusChange>
+                    {
+                        new LicenceStatusChange
+                        {
+                            DateCreated = DateTime.Now,
+                            Status = context.LicenceStatuses.Find(110)
+                        }
+                    },
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+
+                var id = testLicence.Id;
+
+                var licence = context.Licences.Find(id);
+
+                var pa = new PrincipalAuthority
+                {
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    AlternativeName = "Alan Smithee",
+                    BusinessExtension = "999",
+                    BusinessPhoneNumber = "07777777777",
+                    CountryOfBirth = "Peru",
+                    CountyOfBirth = "Wiltshire",
+                    DateOfBirth = DateTime.Now,
+                    FullName = "Joe Bloggs",
+                    HasAlternativeName = true,
+                    JobTitle = "CEO",
+                    NationalInsuranceNumber = "JT123456A",
+                    PersonalEmailAddress = "joe@example.com",
+                    PersonalMobileNumber = "07777777777",
+                    TownOfBirth = "Nottingham",
+                    IsCurrent = true,
+                    IsDirector = true,
+                    PreviousExperience =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    WillProvideConfirmation = true,
+                    Nationality = "British",
+                    HasPassport = true,
+                    PermissionToWorkStatus = PermissionToWorkEnum.HasVisa,
+                    VisaNumber = "12341234",
+                    ImmigrationStatus = "Some status",
+                    LeaveToRemainTo = new DateTime(2019, 1, 1),
+                    LengthOfUKWorkMonths = 6,
+                    LengthOfUKWorkYears = 2,
+                    IsUndischargedBankrupt = true,
+                    BankruptcyDate = DateTime.Now,
+                    BankruptcyNumber = "1234567",
+                    IsDisqualifiedDirector = true,
+                    DisqualificationDetails = "Some details",
+                    HasRestraintOrders = true,
+                    RestraintOrders = new[]
+                    {
+                        new RestraintOrder
+                        {
+                            Date = DateTime.Now,
+                            Description = "Restraint description"
+                        }
+                    },
+                    HasUnspentConvictions = true,
+                    UnspentConvictions = new[]
+                    {
+                        new Conviction
+                        {
+                            Date = DateTime.Now,
+                            Description = "Conviction description"
+                        }
+                    },
+                    HasOffencesAwaitingTrial = true,
+                    OffencesAwaitingTrial = new[]
+                    {
+                        new OffenceAwaitingTrial
+                        {
+                            Date = DateTime.Now,
+                            Description = "Offence description"
+                        }
+                    },
+                    HasPreviouslyHeldLicence = true,
+                    PreviousLicenceDescription = "I had a previous licence.",
+                    DirectorOrPartner = new DirectorOrPartner
+                    {
                         Address = new Address
                         {
-                            AddressLine1 = rnd.Next(9999) + " Fake Street",
+                            AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
                             County = "Fakeshire",
-                            Postcode = $"FA{rnd.Next(1, 99)} {rnd.Next(1, 9)}KE",
-                            Country = country,
+                            Postcode = "FA2 4KE",
+                            Country = "UK",
                             NonUK = false
                         },
-                        HasNamedIndividuals = true,
-                        NamedIndividualType = NamedIndividualType.PersonalDetails,
-                        NamedIndividuals = new List<NamedIndividual>
+                        AlternativeName = "Alan Smithee",
+                        BusinessExtension = "999",
+                        BusinessPhoneNumber = "07777777777",
+                        CountryOfBirth = "Peru",
+                        CountyOfBirth = "Wiltshire",
+                        DateOfBirth = DateTime.Now,
+                        FullName = "Joe Bloggs",
+                        HasAlternativeName = true,
+                        JobTitle = "CEO",
+                        NationalInsuranceNumber = "JT123456A",
+                        PersonalEmailAddress = "joe@example.com",
+                        PersonalMobileNumber = "07777777777",
+                        TownOfBirth = "Nottingham",
+                        IsPreviousPrincipalAuthority = true,
+                        Licence = testLicence,
+                        Nationality = "British",
+                        HasPassport = true,
+                        RequiresVisa = true,
+                        VisaDescription = "description",
+                        IsUndischargedBankrupt = true,
+                        BankruptcyDate = DateTime.Now,
+                        BankruptcyNumber = "1234567",
+                        IsDisqualifiedDirector = true,
+                        DisqualificationDetails = "Some details",
+                        HasRestraintOrders = true,
+                        RestraintOrders = new[]
                         {
-                            new NamedIndividual
+                            new RestraintOrder
                             {
-                                BusinessExtension = rnd.Next(100, 999).ToString(),
-                                BusinessPhoneNumber = "0777777" + rnd.Next(1000, 9999),
-                                DateOfBirth = DateTime.Now.AddDays(rnd.Next(1000, 9999) * -1),
-                                FullName = "Joe Bloggs-" + i,
-                                IsUndischargedBankrupt = rnd.Next(0, 1) == 1,
-                                BankruptcyDate = DateTime.Now,
-                                BankruptcyNumber = rnd.Next(1000000, 9999999).ToString(),
-                                IsDisqualifiedDirector = rnd.Next(0, 1) == 1,
-                                DisqualificationDetails = "Some details " + i,
-                                HasRestraintOrders = rnd.Next(0, 1) == 1,
-                                RequiresVisa = rnd.Next(0, 1) == 1,
-                                RestraintOrders = new[]
-                                {
-                                    new RestraintOrder
-                                    {
-                                        Date = DateTime.Now,
-                                        Description = "Restraint description " + 1
-                                    }
-                                },
-                                HasUnspentConvictions = rnd.Next(0, 1) == 1,
-                                UnspentConvictions = new[]
-                                {
-                                    new Conviction
-                                    {
-                                        Date = DateTime.Now,
-                                        Description = "Conviction description " + i
-                                    }
-                                },
-                                HasOffencesAwaitingTrial = rnd.Next(0, 1) == 1,
-                                OffencesAwaitingTrial = new[]
-                                {
-                                    new OffenceAwaitingTrial
-                                    {
-                                        Date = DateTime.Now,
-                                        Description = "Offence description " + i
-                                    }
-                                },
-                                HasPreviouslyHeldLicence = rnd.Next(0, 1) == 1,
-                                PreviousLicenceDescription = "I had a previous licence."
+                                Date = DateTime.Now,
+                                Description = "Restraint description"
                             }
                         },
-                        NamedJobTitles = new List<NamedJobTitle>
+                        HasUnspentConvictions = true,
+                        UnspentConvictions = new[]
                         {
-                            new NamedJobTitle
+                            new Conviction
                             {
-                                JobTitle = "Job Title " + i,
-                                JobTitleNumber = 1000 + i,
+                                Date = DateTime.Now,
+                                Description = "Conviction description"
                             }
-                        }
-                    });
-
-                    foreach (var operatingCountry in operatingCountries)
-                    {
-                        var completedLicence = completedLicences.LastOrDefault();
-
-                        if (completedLicence != null)
+                        },
+                        HasOffencesAwaitingTrial = true,
+                        OffencesAwaitingTrial = new[]
                         {
-                            completedLicence.OperatingCountries = new List<LicenceCountry>
+                            new OffenceAwaitingTrial
                             {
-                                new LicenceCountry
+                                Date = DateTime.Now,
+                                Description = "Offence description"
+                            }
+                        },
+                        HasPreviouslyHeldLicence = true,
+                        PreviousLicenceDescription = "I had a previous licence.",
+                    },
+                    Licence = testLicence
+                };
+
+                context.PrincipalAuthorities.Add(pa);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void AddLicenceWithBusinessDetailsPAAndABRCompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0003"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0003",
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    BusinessEmailAddress = "joe@example.com",
+                    BusinessEmailAddressConfirmation = "joe@example.com",
+                    BusinessPhoneNumber = "07777777777",
+                    BusinessMobileNumber = "07777777777",
+                    BusinessWebsite = "http://www.example.com",
+                    CommunicationPreference = CommunicationPreference.Email,
+                    CompaniesHouseNumber = "12341234",
+                    CompanyRegistrationDate = DateTime.Now,
+                    HasPAYENumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
+                    HasVATNumber = true,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    OperatingCountries =
+                        new List<LicenceCountry>
+                        {
+                            new LicenceCountry {Country = context.Countries.Find(1)}
+                        },
+                    OperatingIndustries =
+                        new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(1)
+                            }
+                        },
+                    BusinessName = "Fully Populated Company",
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
+                    TaxReferenceNumber = "1334404714",
+                    TradingName = "FullPopCo",
+                    TurnoverBand = TurnoverBand.FiveToTenMillion,
+                    VATNumber = "GB999 9999 73",
+                    VATRegistrationDate = DateTime.Now,
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1),
+                    LicenceStatusHistory = new List<LicenceStatusChange>
+                    {
+                        new LicenceStatusChange
+                        {
+                            DateCreated = DateTime.Now,
+                            Status = context.LicenceStatuses.Find(110)
+                        }
+                    }, 
+                    
+                    HasAlternativeBusinessRepresentatives = true,
+                    AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
+                    {
+                        new AlternativeBusinessRepresentative
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Dave Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
                                 {
-                                    Country = operatingCountry,
-                                    CountryId = operatingCountry.Id,
-                                    Licence = completedLicences.LastOrDefault(),
-                                    LicenceId = completedLicence.Id
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
                                 }
-                            };
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
                         }
                     }
-                }
+                };
 
-                context.Licences.AddRange(completedLicences);
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+
+                var id = testLicence.Id;
+
+                var licence = context.Licences.Find(id);
+
+                var pa = new PrincipalAuthority
+                {                  
+                    IsDirector = true,
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    AlternativeName = "Alan Smithee",
+                    BusinessExtension = "999",
+                    BusinessPhoneNumber = "07777777777",
+                    CountryOfBirth = "Peru",
+                    CountyOfBirth = "Wiltshire",
+                    DateOfBirth = DateTime.Now,
+                    FullName = "Joe Bloggs",
+                    HasAlternativeName = true,
+                    JobTitle = "CEO",
+                    NationalInsuranceNumber = "JT123456A",
+                    PersonalEmailAddress = "joe@example.com",
+                    PersonalMobileNumber = "07777777777",
+                    TownOfBirth = "Nottingham",
+                    IsCurrent = true,
+                    PreviousExperience =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    WillProvideConfirmation = true,
+                    Nationality = "British",
+                    HasPassport = true,
+                    PermissionToWorkStatus = PermissionToWorkEnum.HasVisa,
+                    VisaNumber = "12341234",
+                    ImmigrationStatus = "Some status",
+                    LeaveToRemainTo = new DateTime(2019, 1, 1),
+                    LengthOfUKWorkMonths = 6,
+                    LengthOfUKWorkYears = 2,
+                    IsUndischargedBankrupt = true,
+                    BankruptcyDate = DateTime.Now,
+                    BankruptcyNumber = "1234567",
+                    IsDisqualifiedDirector = true,
+                    DisqualificationDetails = "Some details",
+                    HasRestraintOrders = true,
+                    RestraintOrders = new[]
+                    {
+                        new RestraintOrder
+                        {
+                            Date = DateTime.Now,
+                            Description = "Restraint description"
+                        }
+                    },
+                    HasUnspentConvictions = true,
+                    UnspentConvictions = new[]
+                    {
+                        new Conviction
+                        {
+                            Date = DateTime.Now,
+                            Description = "Conviction description"
+                        }
+                    },
+                    HasOffencesAwaitingTrial = true,
+                    OffencesAwaitingTrial = new[]
+                    {
+                        new OffenceAwaitingTrial
+                        {
+                            Date = DateTime.Now,
+                            Description = "Offence description"
+                        }
+                    },
+                    HasPreviouslyHeldLicence = true,
+                    PreviousLicenceDescription = "I had a previous licence.",
+                    DirectorOrPartner = new DirectorOrPartner
+                    {
+                        Address = new Address
+                        {
+                            AddressLine1 = "123 Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = "FA2 4KE",
+                            Country = "UK",
+                            NonUK = false
+                        },
+                        AlternativeName = "Alan Smithee",
+                        BusinessExtension = "999",
+                        BusinessPhoneNumber = "07777777777",
+                        CountryOfBirth = "Peru",
+                        CountyOfBirth = "Wiltshire",
+                        DateOfBirth = DateTime.Now,
+                        FullName = "Joe Bloggs",
+                        HasAlternativeName = true,
+                        JobTitle = "CEO",
+                        NationalInsuranceNumber = "JT123456A",
+                        PersonalEmailAddress = "joe@example.com",
+                        PersonalMobileNumber = "07777777777",
+                        TownOfBirth = "Nottingham",
+                        IsPreviousPrincipalAuthority = true,
+                        Licence = testLicence,
+                        Nationality = "British",
+                        HasPassport = true,
+                        RequiresVisa = true,
+                        VisaDescription = "description",
+                        IsUndischargedBankrupt = true,
+                        BankruptcyDate = DateTime.Now,
+                        BankruptcyNumber = "1234567",
+                        IsDisqualifiedDirector = true,
+                        DisqualificationDetails = "Some details",
+                        HasRestraintOrders = true,
+                        RestraintOrders = new[]
+                        {
+                            new RestraintOrder
+                            {
+                                Date = DateTime.Now,
+                                Description = "Restraint description"
+                            }
+                        },
+                        HasUnspentConvictions = true,
+                        UnspentConvictions = new[]
+                        {
+                            new Conviction
+                            {
+                                Date = DateTime.Now,
+                                Description = "Conviction description"
+                            }
+                        },
+                        HasOffencesAwaitingTrial = true,
+                        OffencesAwaitingTrial = new[]
+                        {
+                            new OffenceAwaitingTrial
+                            {
+                                Date = DateTime.Now,
+                                Description = "Offence description"
+                            }
+                        },
+                        HasPreviouslyHeldLicence = true,
+                        PreviousLicenceDescription = "I had a previous licence.",
+                    },
+                    Licence = testLicence
+                };
+
+                context.PrincipalAuthorities.Add(pa);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void AddLicenceWithBusinessDetailsPAABRAndDoPCompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0004"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0004",
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    BusinessEmailAddress = "joe@example.com",
+                    BusinessEmailAddressConfirmation = "joe@example.com",
+                    BusinessPhoneNumber = "07777777777",
+                    BusinessMobileNumber = "07777777777",
+                    BusinessWebsite = "http://www.example.com",
+                    CommunicationPreference = CommunicationPreference.Email,
+                    CompaniesHouseNumber = "12341234",
+                    CompanyRegistrationDate = DateTime.Now,
+                    HasPAYENumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
+                    HasVATNumber = true,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    OperatingCountries =
+                        new List<LicenceCountry>
+                        {
+                            new LicenceCountry {Country = context.Countries.Find(1)}
+                        },
+                    OperatingIndustries =
+                        new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(1)
+                            }
+                        },
+                    BusinessName = "Fully Populated Company",
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
+                    TaxReferenceNumber = "1334404714",
+                    TradingName = "FullPopCo",
+                    TurnoverBand = TurnoverBand.FiveToTenMillion,
+                    VATNumber = "GB999 9999 73",
+                    VATRegistrationDate = DateTime.Now,
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1),
+                    LicenceStatusHistory = new List<LicenceStatusChange>
+                    {
+                        new LicenceStatusChange
+                        {
+                            DateCreated = DateTime.Now,
+                            Status = context.LicenceStatuses.Find(110)
+                        }
+                    },
+                    HasAlternativeBusinessRepresentatives = true,
+                    AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
+                    {
+                        new AlternativeBusinessRepresentative
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Dave Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
+                        }
+                    },
+                    NumberOfDirectorsOrPartners = 2,
+                    DirectorOrPartners = new List<DirectorOrPartner>
+                    {
+                        new DirectorOrPartner
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Fred Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            IsPreviousPrincipalAuthority = false,
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence.",
+                        }
+                    },
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+
+                var id = testLicence.Id;
+
+                var licence = context.Licences.Find(id);
+
+                var pa = new PrincipalAuthority
+                {
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    AlternativeName = "Alan Smithee",
+                    BusinessExtension = "999",
+                    BusinessPhoneNumber = "07777777777",
+                    CountryOfBirth = "Peru",
+                    CountyOfBirth = "Wiltshire",
+                    DateOfBirth = DateTime.Now,
+                    FullName = "Joe Bloggs",
+                    HasAlternativeName = true,
+                    JobTitle = "CEO",
+                    NationalInsuranceNumber = "JT123456A",
+                    PersonalEmailAddress = "joe@example.com",
+                    PersonalMobileNumber = "07777777777",
+                    TownOfBirth = "Nottingham",
+                    IsCurrent = true,
+                    IsDirector = true,
+                    PreviousExperience =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    WillProvideConfirmation = true,
+                    Nationality = "British",
+                    HasPassport = true,
+                    PermissionToWorkStatus = PermissionToWorkEnum.HasVisa,
+                    VisaNumber = "12341234",
+                    ImmigrationStatus = "Some status",
+                    LeaveToRemainTo = new DateTime(2019, 1, 1),
+                    LengthOfUKWorkMonths = 6,
+                    LengthOfUKWorkYears = 2,
+                    IsUndischargedBankrupt = true,
+                    BankruptcyDate = DateTime.Now,
+                    BankruptcyNumber = "1234567",
+                    IsDisqualifiedDirector = true,
+                    DisqualificationDetails = "Some details",
+                    HasRestraintOrders = true,
+                    RestraintOrders = new[]
+                    {
+                        new RestraintOrder
+                        {
+                            Date = DateTime.Now,
+                            Description = "Restraint description"
+                        }
+                    },
+                    HasUnspentConvictions = true,
+                    UnspentConvictions = new[]
+                    {
+                        new Conviction
+                        {
+                            Date = DateTime.Now,
+                            Description = "Conviction description"
+                        }
+                    },
+                    HasOffencesAwaitingTrial = true,
+                    OffencesAwaitingTrial = new[]
+                    {
+                        new OffenceAwaitingTrial
+                        {
+                            Date = DateTime.Now,
+                            Description = "Offence description"
+                        }
+                    },
+                    HasPreviouslyHeldLicence = true,
+                    PreviousLicenceDescription = "I had a previous licence.",
+                    DirectorOrPartner = new DirectorOrPartner
+                    {
+                        Address = new Address
+                        {
+                            AddressLine1 = "123 Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = "FA2 4KE",
+                            Country = "UK",
+                            NonUK = false
+                        },
+                        AlternativeName = "Alan Smithee",
+                        BusinessExtension = "999",
+                        BusinessPhoneNumber = "07777777777",
+                        CountryOfBirth = "Peru",
+                        CountyOfBirth = "Wiltshire",
+                        DateOfBirth = DateTime.Now,
+                        FullName = "Joe Bloggs",
+                        HasAlternativeName = true,
+                        JobTitle = "CEO",
+                        NationalInsuranceNumber = "JT123456A",
+                        PersonalEmailAddress = "joe@example.com",
+                        PersonalMobileNumber = "07777777777",
+                        TownOfBirth = "Nottingham",
+                        IsPreviousPrincipalAuthority = true,
+                        Licence = testLicence,
+                        Nationality = "British",
+                        HasPassport = true,
+                        RequiresVisa = true,
+                        VisaDescription = "description",
+                        IsUndischargedBankrupt = true,
+                        BankruptcyDate = DateTime.Now,
+                        BankruptcyNumber = "1234567",
+                        IsDisqualifiedDirector = true,
+                        DisqualificationDetails = "Some details",
+                        HasRestraintOrders = true,
+                        RestraintOrders = new[]
+                        {
+                            new RestraintOrder
+                            {
+                                Date = DateTime.Now,
+                                Description = "Restraint description"
+                            }
+                        },
+                        HasUnspentConvictions = true,
+                        UnspentConvictions = new[]
+                        {
+                            new Conviction
+                            {
+                                Date = DateTime.Now,
+                                Description = "Conviction description"
+                            }
+                        },
+                        HasOffencesAwaitingTrial = true,
+                        OffencesAwaitingTrial = new[]
+                        {
+                            new OffenceAwaitingTrial
+                            {
+                                Date = DateTime.Now,
+                                Description = "Offence description"
+                            }
+                        },
+                        HasPreviouslyHeldLicence = true,
+                        PreviousLicenceDescription = "I had a previous licence.",
+                    },
+                    Licence = testLicence
+                };
+
+                context.PrincipalAuthorities.Add(pa);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void AddLicenceWithBusinessDetailsPAABRDoPAndNICompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0005"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0005",
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    BusinessEmailAddress = "joe@example.com",
+                    BusinessEmailAddressConfirmation = "joe@example.com",
+                    BusinessPhoneNumber = "07777777777",
+                    BusinessMobileNumber = "07777777777",
+                    BusinessWebsite = "http://www.example.com",
+                    CommunicationPreference = CommunicationPreference.Email,
+                    CompaniesHouseNumber = "12341234",
+                    CompanyRegistrationDate = DateTime.Now,
+                    HasPAYENumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
+                    HasVATNumber = true,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    OperatingCountries =
+                        new List<LicenceCountry>
+                        {
+                            new LicenceCountry {Country = context.Countries.Find(1)}
+                        },
+                    OperatingIndustries =
+                        new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(1)
+                            }
+                        },
+                    BusinessName = "Fully Populated Company",
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
+                    TaxReferenceNumber = "1334404714",
+                    TradingName = "FullPopCo",
+                    TurnoverBand = TurnoverBand.FiveToTenMillion,
+                    VATNumber = "GB999 9999 73",
+                    VATRegistrationDate = DateTime.Now,
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1),
+                    LicenceStatusHistory = new List<LicenceStatusChange>
+                    {
+                        new LicenceStatusChange
+                        {
+                            DateCreated = DateTime.Now,
+                            Status = context.LicenceStatuses.Find(110)
+                        }
+                    },
+                    HasAlternativeBusinessRepresentatives = true,
+                    AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
+                    {
+                        new AlternativeBusinessRepresentative
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Dave Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
+                        }
+                    },
+                    NumberOfDirectorsOrPartners = 2,
+                    DirectorOrPartners = new List<DirectorOrPartner>
+                    {
+                        new DirectorOrPartner
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Fred Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            IsPreviousPrincipalAuthority = false,
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence.",
+                        }
+                    },
+                    HasNamedIndividuals = true,
+                    NamedIndividualType = NamedIndividualType.PersonalDetails,
+                    NamedIndividuals = new List<NamedIndividual>
+                    {
+                        new NamedIndividual
+                        {
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Joe Bloggs",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RequiresVisa = false,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
+                        }
+                    }
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+
+                var id = testLicence.Id;
+
+                var licence = context.Licences.Find(id);
+
+                var pa = new PrincipalAuthority
+                {
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    AlternativeName = "Alan Smithee",
+                    BusinessExtension = "999",
+                    BusinessPhoneNumber = "07777777777",
+                    CountryOfBirth = "Peru",
+                    CountyOfBirth = "Wiltshire",
+                    DateOfBirth = DateTime.Now,
+                    FullName = "Joe Bloggs",
+                    HasAlternativeName = true,
+                    JobTitle = "CEO",
+                    NationalInsuranceNumber = "JT123456A",
+                    PersonalEmailAddress = "joe@example.com",
+                    PersonalMobileNumber = "07777777777",
+                    TownOfBirth = "Nottingham",
+                    IsCurrent = true,
+                    IsDirector = true,
+                    PreviousExperience =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    WillProvideConfirmation = true,
+                    Nationality = "British",
+                    HasPassport = true,
+                    PermissionToWorkStatus = PermissionToWorkEnum.HasVisa,
+                    VisaNumber = "12341234",
+                    ImmigrationStatus = "Some status",
+                    LeaveToRemainTo = new DateTime(2019, 1, 1),
+                    LengthOfUKWorkMonths = 6,
+                    LengthOfUKWorkYears = 2,
+                    IsUndischargedBankrupt = true,
+                    BankruptcyDate = DateTime.Now,
+                    BankruptcyNumber = "1234567",
+                    IsDisqualifiedDirector = true,
+                    DisqualificationDetails = "Some details",
+                    HasRestraintOrders = true,
+                    RestraintOrders = new[]
+                    {
+                        new RestraintOrder
+                        {
+                            Date = DateTime.Now,
+                            Description = "Restraint description"
+                        }
+                    },
+                    HasUnspentConvictions = true,
+                    UnspentConvictions = new[]
+                    {
+                        new Conviction
+                        {
+                            Date = DateTime.Now,
+                            Description = "Conviction description"
+                        }
+                    },
+                    HasOffencesAwaitingTrial = true,
+                    OffencesAwaitingTrial = new[]
+                    {
+                        new OffenceAwaitingTrial
+                        {
+                            Date = DateTime.Now,
+                            Description = "Offence description"
+                        }
+                    },
+                    HasPreviouslyHeldLicence = true,
+                    PreviousLicenceDescription = "I had a previous licence.",
+                    DirectorOrPartner = new DirectorOrPartner
+                    {
+                        Address = new Address
+                        {
+                            AddressLine1 = "123 Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = "FA2 4KE",
+                            Country = "UK",
+                            NonUK = false
+                        },
+                        AlternativeName = "Alan Smithee",
+                        BusinessExtension = "999",
+                        BusinessPhoneNumber = "07777777777",
+                        CountryOfBirth = "Peru",
+                        CountyOfBirth = "Wiltshire",
+                        DateOfBirth = DateTime.Now,
+                        FullName = "Joe Bloggs",
+                        HasAlternativeName = true,
+                        JobTitle = "CEO",
+                        NationalInsuranceNumber = "JT123456A",
+                        PersonalEmailAddress = "joe@example.com",
+                        PersonalMobileNumber = "07777777777",
+                        TownOfBirth = "Nottingham",
+                        IsPreviousPrincipalAuthority = true,
+                        Licence = testLicence,
+                        Nationality = "British",
+                        HasPassport = true,
+                        RequiresVisa = true,
+                        VisaDescription = "description",
+                        IsUndischargedBankrupt = true,
+                        BankruptcyDate = DateTime.Now,
+                        BankruptcyNumber = "1234567",
+                        IsDisqualifiedDirector = true,
+                        DisqualificationDetails = "Some details",
+                        HasRestraintOrders = true,
+                        RestraintOrders = new[]
+                        {
+                            new RestraintOrder
+                            {
+                                Date = DateTime.Now,
+                                Description = "Restraint description"
+                            }
+                        },
+                        HasUnspentConvictions = true,
+                        UnspentConvictions = new[]
+                        {
+                            new Conviction
+                            {
+                                Date = DateTime.Now,
+                                Description = "Conviction description"
+                            }
+                        },
+                        HasOffencesAwaitingTrial = true,
+                        OffencesAwaitingTrial = new[]
+                        {
+                            new OffenceAwaitingTrial
+                            {
+                                Date = DateTime.Now,
+                                Description = "Offence description"
+                            }
+                        },
+                        HasPreviouslyHeldLicence = true,
+                        PreviousLicenceDescription = "I had a previous licence.",
+                    },
+                    Licence = testLicence
+                };
+
+                context.PrincipalAuthorities.Add(pa);
+
+                context.SaveChanges();
+            }
+        }
+
+        private static void AddLicenceWithBusinessDetailsPAABRDoPNIAndOrganisationCompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0006"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0006",
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    BusinessEmailAddress = "joe@example.com",
+                    BusinessEmailAddressConfirmation = "joe@example.com",
+                    BusinessPhoneNumber = "07777777777",
+                    BusinessMobileNumber = "07777777777",
+                    BusinessWebsite = "http://www.example.com",
+                    CommunicationPreference = CommunicationPreference.Email,
+                    CompaniesHouseNumber = "12341234",
+                    CompanyRegistrationDate = DateTime.Now,
+                    HasPAYENumber = true,
+                    HasTradingName = true,
+                    HasPreviousTradingName = true,
+                    PreviousTradingNames = new[]
+                    {
+                        new PreviousTradingName
+                        {
+                            BusinessName = "Old business name",
+                            Town = "Slough",
+                            Country = "UK"
+                        }
+                    },
+                    HasVATNumber = true,
+                    LegalStatus = LegalStatusEnum.RegisteredCompany,
+                    OperatingCountries =
+                        new List<LicenceCountry>
+                        {
+                            new LicenceCountry {Country = context.Countries.Find(1)}
+                        },
+                    OperatingIndustries =
+                        new List<LicenceIndustry>
+                        {
+                            new LicenceIndustry
+                            {
+                                Industry = context.Industries.Find(1)
+                            }
+                        },
+                    BusinessName = "Fully Populated Company",
+                    PAYENumbers = new List<PAYENumber> {
+                        new PAYENumber
+                        {
+                            Number = "123/A12345",
+                            RegistrationDate = DateTime.Now
+                        }
+                    },
+                    TaxReferenceNumber = "1334404714",
+                    TradingName = "FullPopCo",
+                    TurnoverBand = TurnoverBand.FiveToTenMillion,
+                    VATNumber = "GB999 9999 73",
+                    VATRegistrationDate = DateTime.Now,
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1),
+                    LicenceStatusHistory = new List<LicenceStatusChange>
+                    {
+                        new LicenceStatusChange
+                        {
+                            DateCreated = DateTime.Now,
+                            Status = context.LicenceStatuses.Find(110)
+                        }
+                    },
+                    HasAlternativeBusinessRepresentatives = true,
+                    AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
+                    {
+                        new AlternativeBusinessRepresentative
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Dave Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
+                        }
+                    },
+                    NumberOfDirectorsOrPartners = 2,
+                    DirectorOrPartners = new List<DirectorOrPartner>
+                    {
+                        new DirectorOrPartner
+                        {
+                            Address = new Address
+                            {
+                                AddressLine1 = "123 Fake Street",
+                                AddressLine2 = "Fake Grove",
+                                Town = "Faketon",
+                                County = "Fakeshire",
+                                Postcode = "FA2 4KE",
+                                Country = "UK",
+                                NonUK = false
+                            },
+                            AlternativeName = "Alan Smithee",
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            CountryOfBirth = "Peru",
+                            CountyOfBirth = "Wiltshire",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Fred Bloggs",
+                            HasAlternativeName = true,
+                            JobTitle = "CEO",
+                            NationalInsuranceNumber = "JT123456A",
+                            PersonalEmailAddress = "joe@example.com",
+                            PersonalMobileNumber = "07777777777",
+                            TownOfBirth = "Nottingham",
+                            IsPreviousPrincipalAuthority = false,
+                            Nationality = "British",
+                            HasPassport = true,
+                            RequiresVisa = true,
+                            VisaDescription = "description",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence.",
+                        }
+                    },
+                    HasNamedIndividuals = true,
+                    NamedIndividualType = NamedIndividualType.PersonalDetails,
+                    NamedIndividuals = new List<NamedIndividual>
+                    {
+                        new NamedIndividual
+                        {
+                            BusinessExtension = "999",
+                            BusinessPhoneNumber = "07777777777",
+                            DateOfBirth = DateTime.Now,
+                            FullName = "Joe Bloggs",
+                            IsUndischargedBankrupt = true,
+                            BankruptcyDate = DateTime.Now,
+                            BankruptcyNumber = "1234567",
+                            IsDisqualifiedDirector = true,
+                            DisqualificationDetails = "Some details",
+                            HasRestraintOrders = true,
+                            RequiresVisa = false,
+                            RestraintOrders = new[]
+                            {
+                                new RestraintOrder
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Restraint description"
+                                }
+                            },
+                            HasUnspentConvictions = true,
+                            UnspentConvictions = new[]
+                            {
+                                new Conviction
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Conviction description"
+                                }
+                            },
+                            HasOffencesAwaitingTrial = true,
+                            OffencesAwaitingTrial = new[]
+                            {
+                                new OffenceAwaitingTrial
+                                {
+                                    Date = DateTime.Now,
+                                    Description = "Offence description"
+                                }
+                            },
+                            HasPreviouslyHeldLicence = true,
+                            PreviousLicenceDescription = "I had a previous licence."
+                        }
+                    },
+                    //Organisation
+                    SuppliesWorkersOutsideLicensableAreas = true,
+                    SelectedSectors = new List<LicenceSector>
+                    {
+                        new LicenceSector {Sector = context.Sectors.Find(1)},
+                        new LicenceSector {Sector = context.Sectors.Find(3)}
+                    },
+                    OtherSector = "A sector which is not currently licensable",
+                    HasWrittenAgreementsInPlace = true,
+                    HasMultiples = true,
+                    NumberOfMultiples = 2,
+                    OtherMultiple = "Some unlisted type of multiple",
+                    SelectedMultiples = new List<LicenceMultiple>
+                    {
+                        new LicenceMultiple {Multiple = context.Multiples.Find(1)},
+                        new LicenceMultiple {Multiple = context.Multiples.Find(3)}
+                    },
+                    IsPSCControlled = true,
+                    PSCDetails = "Here are some details about the PSC. And some more. And some more.",
+                    TransportsWorkersToWorkplace = true,
+                    NumberOfVehicles = 10,
+                    TransportDeductedFromPay = true,
+                    TransportWorkersChoose = true,
+                    AccommodatesWorkers = true,
+                    AccommodationDeductedFromPay = true,
+                    NumberOfProperties = 5,
+                    AccommodationWorkersChoose = true,
+                    WorkerSource = WorkerSource.EEA,
+                    WorkerSupplyMethod = WorkerSupplyMethod.SelfEmployed,
+                    WorkerContract = WorkerContract.ContractOfEmployment,
+                    HasBeenBanned = true,
+                    BanDescription = "Banned because of this reason",
+                    DateOfBan = new DateTime(2000, 1, 2),
+                    UsesSubcontractors = true,
+                    SubcontractorNames = "Subcontractor 1, Subcontractor 2"                    
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+
+                var id = testLicence.Id;
+
+                var licence = context.Licences.Find(id);
+
+                var pa = new PrincipalAuthority
+                {
+                    Address = new Address
+                    {
+                        AddressLine1 = "123 Fake Street",
+                        AddressLine2 = "Fake Grove",
+                        Town = "Faketon",
+                        County = "Fakeshire",
+                        Postcode = "FA2 4KE",
+                        Country = "UK",
+                        NonUK = false
+                    },
+                    AlternativeName = "Alan Smithee",
+                    BusinessExtension = "999",
+                    BusinessPhoneNumber = "07777777777",
+                    CountryOfBirth = "Peru",
+                    CountyOfBirth = "Wiltshire",
+                    DateOfBirth = DateTime.Now,
+                    FullName = "Joe Bloggs",
+                    HasAlternativeName = true,
+                    JobTitle = "CEO",
+                    NationalInsuranceNumber = "JT123456A",
+                    PersonalEmailAddress = "joe@example.com",
+                    PersonalMobileNumber = "07777777777",
+                    TownOfBirth = "Nottingham",
+                    IsCurrent = true,
+                    IsDirector = true,
+                    PreviousExperience =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    WillProvideConfirmation = true,
+                    Nationality = "British",
+                    HasPassport = true,
+                    PermissionToWorkStatus = PermissionToWorkEnum.HasVisa,
+                    VisaNumber = "12341234",
+                    ImmigrationStatus = "Some status",
+                    LeaveToRemainTo = new DateTime(2019, 1, 1),
+                    LengthOfUKWorkMonths = 6,
+                    LengthOfUKWorkYears = 2,
+                    IsUndischargedBankrupt = true,
+                    BankruptcyDate = DateTime.Now,
+                    BankruptcyNumber = "1234567",
+                    IsDisqualifiedDirector = true,
+                    DisqualificationDetails = "Some details",
+                    HasRestraintOrders = true,
+                    RestraintOrders = new[]
+                    {
+                        new RestraintOrder
+                        {
+                            Date = DateTime.Now,
+                            Description = "Restraint description"
+                        }
+                    },
+                    HasUnspentConvictions = true,
+                    UnspentConvictions = new[]
+                    {
+                        new Conviction
+                        {
+                            Date = DateTime.Now,
+                            Description = "Conviction description"
+                        }
+                    },
+                    HasOffencesAwaitingTrial = true,
+                    OffencesAwaitingTrial = new[]
+                    {
+                        new OffenceAwaitingTrial
+                        {
+                            Date = DateTime.Now,
+                            Description = "Offence description"
+                        }
+                    },
+                    HasPreviouslyHeldLicence = true,
+                    PreviousLicenceDescription = "I had a previous licence.",
+                    DirectorOrPartner = new DirectorOrPartner
+                    {
+                        Address = new Address
+                        {
+                            AddressLine1 = "123 Fake Street",
+                            AddressLine2 = "Fake Grove",
+                            Town = "Faketon",
+                            County = "Fakeshire",
+                            Postcode = "FA2 4KE",
+                            Country = "UK",
+                            NonUK = false
+                        },
+                        AlternativeName = "Alan Smithee",
+                        BusinessExtension = "999",
+                        BusinessPhoneNumber = "07777777777",
+                        CountryOfBirth = "Peru",
+                        CountyOfBirth = "Wiltshire",
+                        DateOfBirth = DateTime.Now,
+                        FullName = "Joe Bloggs",
+                        HasAlternativeName = true,
+                        JobTitle = "CEO",
+                        NationalInsuranceNumber = "JT123456A",
+                        PersonalEmailAddress = "joe@example.com",
+                        PersonalMobileNumber = "07777777777",
+                        TownOfBirth = "Nottingham",
+                        IsPreviousPrincipalAuthority = true,
+                        Licence = testLicence,
+                        Nationality = "British",
+                        HasPassport = true,
+                        RequiresVisa = true,
+                        VisaDescription = "description",
+                        IsUndischargedBankrupt = true,
+                        BankruptcyDate = DateTime.Now,
+                        BankruptcyNumber = "1234567",
+                        IsDisqualifiedDirector = true,
+                        DisqualificationDetails = "Some details",
+                        HasRestraintOrders = true,
+                        RestraintOrders = new[]
+                        {
+                            new RestraintOrder
+                            {
+                                Date = DateTime.Now,
+                                Description = "Restraint description"
+                            }
+                        },
+                        HasUnspentConvictions = true,
+                        UnspentConvictions = new[]
+                        {
+                            new Conviction
+                            {
+                                Date = DateTime.Now,
+                                Description = "Conviction description"
+                            }
+                        },
+                        HasOffencesAwaitingTrial = true,
+                        OffencesAwaitingTrial = new[]
+                        {
+                            new OffenceAwaitingTrial
+                            {
+                                Date = DateTime.Now,
+                                Description = "Offence description"
+                            }
+                        },
+                        HasPreviouslyHeldLicence = true,
+                        PreviousLicenceDescription = "I had a previous licence.",
+                    },
+                    Licence = testLicence
+                };
+
+                context.PrincipalAuthorities.Add(pa);
 
                 context.SaveChanges();
             }
