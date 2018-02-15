@@ -37,7 +37,7 @@ namespace GLAA.Services.AccountCreation
         public void DeleteIfUnconfirmed(string email)
         {
             var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
-            if (!user.EmailConfirmed)
+            if (user != null && !user.EmailConfirmed)
             {
                 if (user.AddressId != null)
                 {
