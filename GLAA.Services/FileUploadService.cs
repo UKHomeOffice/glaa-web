@@ -35,6 +35,8 @@ namespace GLAA.Services
                     InputStream = fileStream
                 };
 
+                putRequest.ServerSideEncryptionMethod = ServerSideEncryptionMethod.AWSKMS;
+
                 var response = await client.PutObjectAsync(putRequest);
             }
             catch (AmazonS3Exception amazonS3Exception)
