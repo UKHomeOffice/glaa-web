@@ -12,8 +12,8 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180209114212_initial_create")]
-    partial class initial_create
+    [Migration("20180214124749_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -436,6 +436,12 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool?>("ContinueApplication");
 
+                    b.Property<int?>("CurrentCommencementStatusChangeId");
+
+                    b.Property<int?>("CurrentStatusChangeId");
+
+                    b.Property<int?>("CurrentSubmittedStatusChangeId");
+
                     b.Property<DateTime?>("DateOfBan");
 
                     b.Property<bool>("EmailAlreadyRegistered");
@@ -538,6 +544,12 @@ namespace GLAA.Domain.Migrations
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("CurrentCommencementStatusChangeId");
+
+                    b.HasIndex("CurrentStatusChangeId");
+
+                    b.HasIndex("CurrentSubmittedStatusChangeId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Licence");
@@ -558,6 +570,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("InternalDescription");
 
                     b.Property<string>("InternalStatus");
+
+                    b.Property<bool>("LicenceIssued");
+
+                    b.Property<bool>("LicenceSubmitted");
 
                     b.Property<bool>("RequireNonCompliantStandards");
 
@@ -1135,6 +1151,18 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId");
+
+                    b.HasOne("GLAA.Domain.Models.LicenceStatusChange", "CurrentCommencementStatusChange")
+                        .WithMany()
+                        .HasForeignKey("CurrentCommencementStatusChangeId");
+
+                    b.HasOne("GLAA.Domain.Models.LicenceStatusChange", "CurrentStatusChange")
+                        .WithMany()
+                        .HasForeignKey("CurrentStatusChangeId");
+
+                    b.HasOne("GLAA.Domain.Models.LicenceStatusChange", "CurrentSubmittedStatusChange")
+                        .WithMany()
+                        .HasForeignKey("CurrentSubmittedStatusChangeId");
 
                     b.HasOne("GLAA.Domain.Models.GLAAUser", "User")
                         .WithMany("Licences")

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GLAA.Domain.Migrations
 {
-    public partial class initial_create : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,10 +69,10 @@ namespace GLAA.Domain.Migrations
                     ExternalDescription = table.Column<string>(nullable: true),
                     InternalDescription = table.Column<string>(nullable: true),
                     InternalStatus = table.Column<string>(nullable: true),
-                    RequireNonCompliantStandards = table.Column<bool>(nullable: false),
-                    ShowInPublicRegister = table.Column<bool>(nullable: false),
                     LicenceIssued = table.Column<bool>(nullable: false),
-                    LicenceSubmitted = table.Column<bool>(nullable: false)
+                    LicenceSubmitted = table.Column<bool>(nullable: false),
+                    RequireNonCompliantStandards = table.Column<bool>(nullable: false),
+                    ShowInPublicRegister = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -333,6 +333,102 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AlternativeBusinessRepresentative",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddressId = table.Column<int>(nullable: true),
+                    AlternativeName = table.Column<string>(nullable: true),
+                    BankruptcyDate = table.Column<DateTime>(nullable: true),
+                    BankruptcyNumber = table.Column<string>(nullable: true),
+                    BusinessExtension = table.Column<string>(nullable: true),
+                    BusinessPhoneNumber = table.Column<string>(nullable: true),
+                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountyOfBirth = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: true),
+                    DisqualificationDetails = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    HasAlternativeName = table.Column<bool>(nullable: true),
+                    HasOffencesAwaitingTrial = table.Column<bool>(nullable: true),
+                    HasPassport = table.Column<bool>(nullable: true),
+                    HasPreviouslyHeldLicence = table.Column<bool>(nullable: true),
+                    HasRestraintOrders = table.Column<bool>(nullable: true),
+                    HasUnspentConvictions = table.Column<bool>(nullable: true),
+                    IsDisqualifiedDirector = table.Column<bool>(nullable: true),
+                    IsUndischargedBankrupt = table.Column<bool>(nullable: true),
+                    JobTitle = table.Column<string>(nullable: true),
+                    LicenceId = table.Column<int>(nullable: false),
+                    NationalInsuranceNumber = table.Column<string>(nullable: true),
+                    Nationality = table.Column<string>(nullable: true),
+                    PersonalEmailAddress = table.Column<string>(nullable: true),
+                    PersonalMobileNumber = table.Column<string>(nullable: true),
+                    PreviousLicenceDescription = table.Column<string>(nullable: true),
+                    RequiresVisa = table.Column<bool>(nullable: true),
+                    TownOfBirth = table.Column<string>(nullable: true),
+                    VisaDescription = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlternativeBusinessRepresentative", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AlternativeBusinessRepresentative_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DirectorOrPartner",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddressId = table.Column<int>(nullable: true),
+                    AlternativeName = table.Column<string>(nullable: true),
+                    BankruptcyDate = table.Column<DateTime>(nullable: true),
+                    BankruptcyNumber = table.Column<string>(nullable: true),
+                    BusinessExtension = table.Column<string>(nullable: true),
+                    BusinessPhoneNumber = table.Column<string>(nullable: true),
+                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountyOfBirth = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: true),
+                    DisqualificationDetails = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    HasAlternativeName = table.Column<bool>(nullable: true),
+                    HasOffencesAwaitingTrial = table.Column<bool>(nullable: true),
+                    HasPassport = table.Column<bool>(nullable: true),
+                    HasPreviouslyHeldLicence = table.Column<bool>(nullable: true),
+                    HasRestraintOrders = table.Column<bool>(nullable: true),
+                    HasUnspentConvictions = table.Column<bool>(nullable: true),
+                    IsDisqualifiedDirector = table.Column<bool>(nullable: true),
+                    IsPreviousPrincipalAuthority = table.Column<bool>(nullable: true),
+                    IsUndischargedBankrupt = table.Column<bool>(nullable: true),
+                    JobTitle = table.Column<string>(nullable: true),
+                    LicenceId = table.Column<int>(nullable: false),
+                    NationalInsuranceNumber = table.Column<string>(nullable: true),
+                    Nationality = table.Column<string>(nullable: true),
+                    PersonalEmailAddress = table.Column<string>(nullable: true),
+                    PersonalMobileNumber = table.Column<string>(nullable: true),
+                    PreviousLicenceDescription = table.Column<string>(nullable: true),
+                    PrincipalAuthorityId = table.Column<int>(nullable: true),
+                    RequiresVisa = table.Column<bool>(nullable: true),
+                    TownOfBirth = table.Column<string>(nullable: true),
+                    VisaDescription = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DirectorOrPartner", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DirectorOrPartner_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Licence",
                 columns: table => new
                 {
@@ -355,6 +451,9 @@ namespace GLAA.Domain.Migrations
                     CompaniesHouseNumber = table.Column<string>(nullable: true),
                     CompanyRegistrationDate = table.Column<DateTime>(nullable: true),
                     ContinueApplication = table.Column<bool>(nullable: true),
+                    CurrentCommencementStatusChangeId = table.Column<int>(nullable: true),
+                    CurrentStatusChangeId = table.Column<int>(nullable: true),
+                    CurrentSubmittedStatusChangeId = table.Column<int>(nullable: true),
                     DateOfBan = table.Column<DateTime>(nullable: true),
                     EmailAlreadyRegistered = table.Column<bool>(nullable: false),
                     GatheringDate = table.Column<DateTime>(nullable: true),
@@ -421,59 +520,6 @@ namespace GLAA.Domain.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AlternativeBusinessRepresentative",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AddressId = table.Column<int>(nullable: true),
-                    AlternativeName = table.Column<string>(nullable: true),
-                    BankruptcyDate = table.Column<DateTime>(nullable: true),
-                    BankruptcyNumber = table.Column<string>(nullable: true),
-                    BusinessExtension = table.Column<string>(nullable: true),
-                    BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
-                    CountyOfBirth = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    DisqualificationDetails = table.Column<string>(nullable: true),
-                    FullName = table.Column<string>(nullable: true),
-                    HasAlternativeName = table.Column<bool>(nullable: true),
-                    HasOffencesAwaitingTrial = table.Column<bool>(nullable: true),
-                    HasPassport = table.Column<bool>(nullable: true),
-                    HasPreviouslyHeldLicence = table.Column<bool>(nullable: true),
-                    HasRestraintOrders = table.Column<bool>(nullable: true),
-                    HasUnspentConvictions = table.Column<bool>(nullable: true),
-                    IsDisqualifiedDirector = table.Column<bool>(nullable: true),
-                    IsUndischargedBankrupt = table.Column<bool>(nullable: true),
-                    JobTitle = table.Column<string>(nullable: true),
-                    LicenceId = table.Column<int>(nullable: false),
-                    NationalInsuranceNumber = table.Column<string>(nullable: true),
-                    Nationality = table.Column<string>(nullable: true),
-                    PersonalEmailAddress = table.Column<string>(nullable: true),
-                    PersonalMobileNumber = table.Column<string>(nullable: true),
-                    PreviousLicenceDescription = table.Column<string>(nullable: true),
-                    RequiresVisa = table.Column<bool>(nullable: true),
-                    TownOfBirth = table.Column<string>(nullable: true),
-                    VisaDescription = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AlternativeBusinessRepresentative", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AlternativeBusinessRepresentative_Address_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_AlternativeBusinessRepresentative_Licence_LicenceId",
-                        column: x => x.LicenceId,
-                        principalTable: "Licence",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -706,87 +752,6 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LicenceStatusChangeLicensingStandard",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    LicenceStatusChangeId = table.Column<int>(nullable: false),
-                    LicensingStandardId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LicenceStatusChangeLicensingStandard", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LicenceStatusChangeLicensingStandard_LicenceStatusChange_LicenceStatusChangeId",
-                        column: x => x.LicenceStatusChangeId,
-                        principalTable: "LicenceStatusChange",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LicenceStatusChangeLicensingStandard_LicensingStandard_LicensingStandardId",
-                        column: x => x.LicensingStandardId,
-                        principalTable: "LicensingStandard",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DirectorOrPartner",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AddressId = table.Column<int>(nullable: true),
-                    AlternativeName = table.Column<string>(nullable: true),
-                    BankruptcyDate = table.Column<DateTime>(nullable: true),
-                    BankruptcyNumber = table.Column<string>(nullable: true),
-                    BusinessExtension = table.Column<string>(nullable: true),
-                    BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
-                    CountyOfBirth = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: true),
-                    DisqualificationDetails = table.Column<string>(nullable: true),
-                    FullName = table.Column<string>(nullable: true),
-                    HasAlternativeName = table.Column<bool>(nullable: true),
-                    HasOffencesAwaitingTrial = table.Column<bool>(nullable: true),
-                    HasPassport = table.Column<bool>(nullable: true),
-                    HasPreviouslyHeldLicence = table.Column<bool>(nullable: true),
-                    HasRestraintOrders = table.Column<bool>(nullable: true),
-                    HasUnspentConvictions = table.Column<bool>(nullable: true),
-                    IsDisqualifiedDirector = table.Column<bool>(nullable: true),
-                    IsPreviousPrincipalAuthority = table.Column<bool>(nullable: true),
-                    IsUndischargedBankrupt = table.Column<bool>(nullable: true),
-                    JobTitle = table.Column<string>(nullable: true),
-                    LicenceId = table.Column<int>(nullable: false),
-                    NationalInsuranceNumber = table.Column<string>(nullable: true),
-                    Nationality = table.Column<string>(nullable: true),
-                    PersonalEmailAddress = table.Column<string>(nullable: true),
-                    PersonalMobileNumber = table.Column<string>(nullable: true),
-                    PreviousLicenceDescription = table.Column<string>(nullable: true),
-                    PrincipalAuthorityId = table.Column<int>(nullable: true),
-                    RequiresVisa = table.Column<bool>(nullable: true),
-                    TownOfBirth = table.Column<string>(nullable: true),
-                    VisaDescription = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DirectorOrPartner", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DirectorOrPartner_Address_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_DirectorOrPartner_Licence_LicenceId",
-                        column: x => x.LicenceId,
-                        principalTable: "Licence",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PrincipalAuthority",
                 columns: table => new
                 {
@@ -852,6 +817,32 @@ namespace GLAA.Domain.Migrations
                         name: "FK_PrincipalAuthority_Licence_LicenceId",
                         column: x => x.LicenceId,
                         principalTable: "Licence",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LicenceStatusChangeLicensingStandard",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    LicenceStatusChangeId = table.Column<int>(nullable: false),
+                    LicensingStandardId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LicenceStatusChangeLicensingStandard", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LicenceStatusChangeLicensingStandard_LicenceStatusChange_LicenceStatusChangeId",
+                        column: x => x.LicenceStatusChangeId,
+                        principalTable: "LicenceStatusChange",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LicenceStatusChangeLicensingStandard_LicensingStandard_LicensingStandardId",
+                        column: x => x.LicensingStandardId,
+                        principalTable: "LicensingStandard",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1053,6 +1044,21 @@ namespace GLAA.Domain.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Licence_CurrentCommencementStatusChangeId",
+                table: "Licence",
+                column: "CurrentCommencementStatusChangeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Licence_CurrentStatusChangeId",
+                table: "Licence",
+                column: "CurrentStatusChangeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Licence_CurrentSubmittedStatusChangeId",
+                table: "Licence",
+                column: "CurrentSubmittedStatusChangeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Licence_UserId",
                 table: "Licence",
                 column: "UserId");
@@ -1221,10 +1227,50 @@ namespace GLAA.Domain.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_AlternativeBusinessRepresentative_Licence_LicenceId",
+                table: "AlternativeBusinessRepresentative",
+                column: "LicenceId",
+                principalTable: "Licence",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_DirectorOrPartner_Licence_LicenceId",
+                table: "DirectorOrPartner",
+                column: "LicenceId",
+                principalTable: "Licence",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_DirectorOrPartner_PrincipalAuthority_PrincipalAuthorityId",
                 table: "DirectorOrPartner",
                 column: "PrincipalAuthorityId",
                 principalTable: "PrincipalAuthority",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Licence_LicenceStatusChange_CurrentCommencementStatusChangeId",
+                table: "Licence",
+                column: "CurrentCommencementStatusChangeId",
+                principalTable: "LicenceStatusChange",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Licence_LicenceStatusChange_CurrentStatusChangeId",
+                table: "Licence",
+                column: "CurrentStatusChangeId",
+                principalTable: "LicenceStatusChange",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Licence_LicenceStatusChange_CurrentSubmittedStatusChangeId",
+                table: "Licence",
+                column: "CurrentSubmittedStatusChangeId",
+                principalTable: "LicenceStatusChange",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -1251,6 +1297,10 @@ namespace GLAA.Domain.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_DirectorOrPartner_Licence_LicenceId",
                 table: "DirectorOrPartner");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_LicenceStatusChange_Licence_LicenceId",
+                table: "LicenceStatusChange");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_PrincipalAuthority_Licence_LicenceId",
@@ -1328,9 +1378,6 @@ namespace GLAA.Domain.Migrations
                 name: "Sector");
 
             migrationBuilder.DropTable(
-                name: "LicenceStatusChange");
-
-            migrationBuilder.DropTable(
                 name: "LicensingStandard");
 
             migrationBuilder.DropTable(
@@ -1340,20 +1387,23 @@ namespace GLAA.Domain.Migrations
                 name: "NamedIndividual");
 
             migrationBuilder.DropTable(
-                name: "StatusReason");
-
-            migrationBuilder.DropTable(
-                name: "LicenceStatus");
-
-            migrationBuilder.DropTable(
                 name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Licence");
 
             migrationBuilder.DropTable(
+                name: "LicenceStatusChange");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers",
                 schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "StatusReason");
+
+            migrationBuilder.DropTable(
+                name: "LicenceStatus");
 
             migrationBuilder.DropTable(
                 name: "DirectorOrPartner");

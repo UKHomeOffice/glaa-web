@@ -20,7 +20,7 @@ namespace GLAA.Repository
 
         public Licence GetByApplicationId(string applicationId)
         {
-            return GetAllEntriesWithStatusesAndAddress().First(l => l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));            
+            return GetAllEntriesWithStatusesAndAddress().First(l => l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<Licence> GetAllLicencesForPublicRegister()
@@ -70,7 +70,7 @@ namespace GLAA.Repository
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.RestraintOrders)
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.UnspentConvictions)
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.OffencesAwaitingTrial);
-                //.Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
+            //.Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
         }
 
         public IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress()
@@ -102,7 +102,10 @@ namespace GLAA.Repository
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.UnspentConvictions)
                 .Include(l => l.NamedIndividuals).ThenInclude(x => x.OffencesAwaitingTrial)
                 .Include(l => l.NamedJobTitles)
-                .Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
+                .Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons)
+                .Include(l => l.CurrentStatusChange)
+                .Include(l => l.CurrentSubmittedStatusChange)
+                .Include(l => l.CurrentCommencementStatusChange);
         }
 
         public static LicenceStatusChange GetLatestStatus(Licence licence)

@@ -1,0 +1,39 @@
+﻿@model GLAA.ViewModels.Admin.AdminStatusLicencesViewModel
+
+@{
+    ViewBag.Title = "GLAA - Status Dashboard Licences";
+}
+
+@Html.ActionLink("< Back", "StatusDashboard", "Admin", new { }, new { @class = "details-back-button" })
+
+<h2 class="heading-large admin-page-title">Status Dashboard Licences</h2>
+
+<h3 class="heading-medium">
+    Status @Model.LicenceStatusViewModel.Id - @Model.LicenceStatusViewModel.InternalStatus @if (!string.IsNullOrWhiteSpace(Model.LicenceStatusViewModel.InternalDescription))
+                                                                                           {
+    <span>(@Model.LicenceStatusViewModel.InternalDescription)</span>
+                                                                                           }
+</h3>
+
+<table>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Business Name</td>
+            <td>Trading Name</td>
+            <td>Country</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var licence in Model.LicenceApplicationViewModels)
+        {
+        <tr>
+            <td>@licence.Id</td>
+            <td>@licence.OrganisationDetails?.BusinessName?.BusinessName</td>
+            <td>@licence.OrganisationDetails?.BusinessName?.TradingName</td>
+            <td>@licence.OrganisationDetails?.Address?.Country</td>
+        </tr>
+        }
+    </tbody>
+</table>
+

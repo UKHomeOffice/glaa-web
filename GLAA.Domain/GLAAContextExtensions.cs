@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using GLAA.Domain.Core.Models;
 using GLAA.Domain.Models;
 using Microsoft.AspNetCore.Identity;
@@ -77,13 +79,22 @@ namespace GLAA.Domain
 
             if (!context.Licences.Any())
             {
-                var licences = new List<Licence>();
+                //var licences = new List<Licence>();
 
                 for (var i = 0; i < 50; i++)
                 {
                     var newStatus = defaultStatuses[rnd.Next(defaultStatuses.Count)];
                     var newStatusEntry = context.LicenceStatuses.Find(newStatus.Id);
-                    licences.Add(new Licence
+                    var newStatusChangeEntry = new LicenceStatusChange
+                    {
+                        DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                        Status = newStatusEntry
+                    };
+
+                    context.LicenceStatusChanges.Add(newStatusChangeEntry);
+                    context.SaveChanges();
+
+                    var licence = new Licence
                     {
                         ApplicationId = $"DRAFT-{1234 + i}",
                         BusinessName = $"Demo Organisation {i + 1}",
@@ -91,11 +102,7 @@ namespace GLAA.Domain
                             $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
                         LicenceStatusHistory = new List<LicenceStatusChange>
                         {
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = newStatusEntry
-                            }
+                            newStatusChangeEntry
                         },
                         PrincipalAuthorities = new List<PrincipalAuthority>
                         {
@@ -106,11 +113,11 @@ namespace GLAA.Domain
                                 IsCurrent = true
                             }
                         },
-                        //User = adminUser
-                    });
-                }
+                        CurrentStatusChange = newStatusChangeEntry
+                    };
 
-                context.Licences.AddRange(licences);
+                    context.Licences.Add(licence);
+                }
             }
 
             if (!context.Industries.Any())
@@ -217,6 +224,15 @@ namespace GLAA.Domain
 
             if (!context.Licences.Any(x => x.ApplicationId == "FULL-1234"))
             {
+                var submittedStatus = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(submittedStatus);
+                context.SaveChanges();
+
                 var fullLicence = new Licence
                 {
                     ApplicationId = "FULL-1234",
@@ -502,16 +518,13 @@ namespace GLAA.Domain
                     },
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        submittedStatus
                     },
+                    CurrentSubmittedStatusChange = submittedStatus,
+                    CurrentStatusChange = submittedStatus
                 };
 
                 context.Licences.Add(fullLicence);
-
                 context.SaveChanges();
 
                 var id = fullLicence.Id;
@@ -676,6 +689,21 @@ namespace GLAA.Domain
                     var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
                     var country = string.Empty;
                     var operatingCountries = new List<Country>();
+                    var submittedStatusChange = new LicenceStatusChange
+                    {
+                        DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                        Status = submittedStatus
+                    };
+                    var licencedStatusChanged = new LicenceStatusChange
+                    {
+                        DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
+                        Status = licensedStatus
+                    };
+
+                    context.LicenceStatusChanges.Add(submittedStatusChange);
+                    context.LicenceStatusChanges.Add(licencedStatusChanged);
+
+                    context.SaveChanges();
 
                     switch (i % 4)
                     {
@@ -709,16 +737,8 @@ namespace GLAA.Domain
                             $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
                         LicenceStatusHistory = new List<LicenceStatusChange>
                         {
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = submittedStatus
-                            },
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = licensedStatus
-                            }
+                            submittedStatusChange,
+                            licencedStatusChanged
                         },
                         PrincipalAuthorities = new List<PrincipalAuthority>
                         {
@@ -806,7 +826,10 @@ namespace GLAA.Domain
                                 JobTitle = "Job Title " + i,
                                 JobTitleNumber = 1000 + i,
                             }
-                        }
+                        },
+                        CurrentSubmittedStatusChange = submittedStatusChange,
+                        CurrentCommencementStatusChange = licencedStatusChanged,
+                        CurrentStatusChange = licencedStatusChanged
                     });
 
                     foreach (var operatingCountry in operatingCountries)

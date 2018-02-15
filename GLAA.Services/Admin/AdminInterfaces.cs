@@ -36,4 +36,10 @@ namespace GLAA.Services.Admin
 
         IEnumerable<SelectListItem> GetRoles();
     }
+
+    public interface IAdminStatusRecordsViewModelBuilder
+    {
+        AdminStatusDashboardViewModel Build();
+        AdminStatusLicencesViewModel Build(int id);
+    }
 }
