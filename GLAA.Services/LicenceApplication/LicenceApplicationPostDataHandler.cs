@@ -375,6 +375,17 @@ namespace GLAA.Services.LicenceApplication
                 change.DateCreated = dateTimeProvider.Now();
                 change.Licence = licence;
                 repository.Upsert(change);
+
+                //Update the current Licence for the status
+                licence.CurrentStatusChange = change;
+                
+                //Additionally we want to update the Licence with when the latest submission/commencement status was.
+                if (change.Status.LicenceSubmitted)
+                    licence.CurrentSubmittedStatusChange = change;
+                if (change.Status.LicenceIssued)
+                    licence.CurrentCommencementStatusChange = change;
+
+                repository.Upsert(licence);
             }
         }
 
