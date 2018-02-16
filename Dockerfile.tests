@@ -3,5 +3,6 @@ WORKDIR /app
 
 COPY . .
 WORKDIR /app/
+
 RUN dotnet test
 
