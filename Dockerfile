@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:sdk as builder
 WORKDIR /app
 ## install tooling
-RUN apt-get update 
+RUN apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
@@ -11,7 +11,7 @@ WORKDIR /app/GLAA.Web
 RUN npm install webpack -g
 RUN npm install
 RUN webpack
-RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
+RUN dotnet restore && dotnet build && dotnet test && dotnet publish -c Release -o ./out
 
 
 FROM microsoft/dotnet:latest
