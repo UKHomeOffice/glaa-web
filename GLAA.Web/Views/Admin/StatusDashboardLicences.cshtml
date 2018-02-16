@@ -9,10 +9,7 @@
 <h2 class="heading-large admin-page-title">Status Dashboard Licences</h2>
 
 <h3 class="heading-medium">
-    Status @Model.LicenceStatusViewModel.Id - @Model.LicenceStatusViewModel.InternalStatus @if (!string.IsNullOrWhiteSpace(Model.LicenceStatusViewModel.InternalDescription))
-                                                                                           {
-    <span>(@Model.LicenceStatusViewModel.InternalDescription)</span>
-                                                                                           }
+    Status @Model.LicenceStatusViewModel.Id - @Model.LicenceStatusViewModel.InternalStatus @(string.IsNullOrWhiteSpace(Model.LicenceStatusViewModel.InternalDescription)) ? "" : "<span>(@Model.LicenceStatusViewModel.InternalDescription)</span>";
 </h3>
 
 <table>
