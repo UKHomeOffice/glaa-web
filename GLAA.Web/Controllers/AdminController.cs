@@ -20,11 +20,12 @@ namespace GLAA.Web.Controllers
         private readonly IAdminUserListViewModelBuilder userListBuilder;
         private readonly IAdminUserViewModelBuilder userBuilder;
         private readonly IAdminUserPostDataHandler userPostDataHandler;
+        private readonly IAdminStatusRecordsViewModelBuilder statusBuilder;
 
         public AdminController(ISessionHelper session, IAdminHomeViewModelBuilder homeBuilder,
             IAdminLicenceListViewModelBuilder listBuilder,
             IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler,
-            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder, IAdminUserPostDataHandler updh)
+            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder, IAdminUserPostDataHandler updh, IAdminStatusRecordsViewModelBuilder statusBuilder)
         {
             this.session = session;
             this.homeBuilder = homeBuilder;
@@ -34,6 +35,7 @@ namespace GLAA.Web.Controllers
             this.userListBuilder = userListBuilder;
             this.userBuilder = userBuilder;
             this.userPostDataHandler = updh;
+            this.statusBuilder = statusBuilder;
         }
 
         public ActionResult Index()
@@ -131,6 +133,23 @@ namespace GLAA.Web.Controllers
 
             userPostDataHandler.Update(model);
             return RedirectToAction("Users");
+        }
+
+
+        [HttpGet]
+        public ActionResult StatusDashboard()
+        {
+            var model = statusBuilder.Build();
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult StatusDashboardLicences(int id)
+        {
+            var model = statusBuilder.Build(id);
+
+            return View(model);
         }
     }
 }

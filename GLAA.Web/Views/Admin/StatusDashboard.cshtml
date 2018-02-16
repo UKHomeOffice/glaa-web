@@ -1,0 +1,30 @@
+﻿@model GLAA.ViewModels.Admin.AdminStatusDashboardViewModel
+
+@{
+    ViewBag.Title = "GLAA - Status Licences";
+}
+<h2 class="heading-large admin-page-title">Status Dashboard</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Internal Name</th>
+            <th>Internal Desc.</th>
+            <th>External Desc.</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var status in Model.AdminStatusCountViewModels)
+    {
+        <tr>
+            <td class="@status.LicenceStatusViewModel.InternalClassName">@Html.ActionLink(status.LicenceStatusViewModel.InternalStatus, "StatusDashboardLicences", new { id = status.LicenceStatusViewModel.Id})</td>
+            <td>@status.LicenceStatusViewModel.InternalDescription</td>
+            <td>@status.LicenceStatusViewModel.ExternalDescription</td>
+            <td>@status.LicenceApplicationCount</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+

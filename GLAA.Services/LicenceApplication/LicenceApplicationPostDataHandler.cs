@@ -375,6 +375,15 @@ namespace GLAA.Services.LicenceApplication
                 change.DateCreated = dateTimeProvider.Now();
                 change.Licence = licence;
                 repository.Upsert(change);
+
+                licence.CurrentStatusChange = change;
+                
+                if (change.Status.LicenceSubmitted)
+                    licence.CurrentSubmittedStatusChange = change;
+                if (change.Status.LicenceIssued)
+                    licence.CurrentCommencementStatusChange = change;
+
+                repository.Upsert(licence);
             }
         }
 

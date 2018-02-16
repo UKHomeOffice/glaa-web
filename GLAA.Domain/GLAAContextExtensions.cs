@@ -77,13 +77,20 @@ namespace GLAA.Domain
 
             if (!context.Licences.Any())
             {
-                var licences = new List<Licence>();
-
                 for (var i = 0; i < 50; i++)
                 {
                     var newStatus = defaultStatuses[rnd.Next(defaultStatuses.Count)];
                     var newStatusEntry = context.LicenceStatuses.Find(newStatus.Id);
-                    licences.Add(new Licence
+                    var newStatusChangeEntry = new LicenceStatusChange
+                    {
+                        DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                        Status = newStatusEntry
+                    };
+
+                    context.LicenceStatusChanges.Add(newStatusChangeEntry);
+                    context.SaveChanges();
+
+                    var licence = new Licence
                     {
                         ApplicationId = $"DRAFT-{1234 + i}",
                         BusinessName = $"Demo Organisation {i + 1}",
@@ -91,11 +98,7 @@ namespace GLAA.Domain
                             $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
                         LicenceStatusHistory = new List<LicenceStatusChange>
                         {
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = newStatusEntry
-                            }
+                            newStatusChangeEntry
                         },
                         PrincipalAuthorities = new List<PrincipalAuthority>
                         {
@@ -106,11 +109,12 @@ namespace GLAA.Domain
                                 IsCurrent = true
                             }
                         },
+                        CurrentStatusChange = newStatusChangeEntry
                         //User = adminUser
-                    });
-                }
+                    };
 
-                context.Licences.AddRange(licences);
+                    context.Licences.Add(licence);
+                }
             }
 
             if (!context.Industries.Any())
@@ -229,6 +233,14 @@ namespace GLAA.Domain
 
             context.AddLicenceWithBusinessDetailsPAABRDoPNIAndOrganisationCompleted();
 
+            context.AddPublicRegisterLicences(_companyPart1, _companyPart2, _firstNames, _lastNames);
+        }
+
+        private static void AddPublicRegisterLicences(this GLAAContext context, IReadOnlyList<string> companyPart1, 
+            IReadOnlyList<string> companyPart2, IReadOnlyList<string> firstNames, IReadOnlyList<string> lastNames)
+        {
+            var rnd = new Random();
+
             //Public Register Test Licenses
             if (!context.Licences.Any(x => x.ApplicationId == "LINC-1234"))
             {
@@ -236,10 +248,26 @@ namespace GLAA.Domain
 
                 for (var i = 0; i < 50; i++)
                 {
-                    var licensedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
+                    var licensedStatus =
+                        context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
                     var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
                     var country = string.Empty;
                     var operatingCountries = new List<Country>();
+                    var submittedStatusChange = new LicenceStatusChange
+                    {
+                        DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
+                        Status = submittedStatus
+                    };
+                    var licencedStatusChanged = new LicenceStatusChange
+                    {
+                        DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
+                        Status = licensedStatus
+                    };
+
+                    context.LicenceStatusChanges.Add(submittedStatusChange);
+                    context.LicenceStatusChanges.Add(licencedStatusChanged);
+
+                    context.SaveChanges();
 
                     switch (i % 4)
                     {
@@ -270,26 +298,18 @@ namespace GLAA.Domain
                         ApplicationId = $"LINC-{1234 + i}",
                         BusinessName = $"Licensed Organisation {i + 1}",
                         TradingName =
-                            $"{_companyPart1[rnd.Next(_companyPart1.Length)]} {_companyPart2[rnd.Next(_companyPart2.Length)]}",
+                            $"{companyPart1[rnd.Next(companyPart1.Count)]} {companyPart2[rnd.Next(companyPart2.Count)]}",
                         LicenceStatusHistory = new List<LicenceStatusChange>
                         {
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = submittedStatus
-                            },
-                            new LicenceStatusChange
-                            {
-                                DateCreated = new DateTime(2017, 9 + rnd.Next(3), 1 + rnd.Next(29)),
-                                Status = licensedStatus
-                            }
+                            submittedStatusChange,
+                            licencedStatusChanged
                         },
                         PrincipalAuthorities = new List<PrincipalAuthority>
                         {
                             new PrincipalAuthority
                             {
                                 FullName =
-                                    $"{_firstNames[rnd.Next(_firstNames.Length)]} {_lastNames[rnd.Next(_lastNames.Length)]}",
+                                    $"{firstNames[rnd.Next(firstNames.Count)]} {lastNames[rnd.Next(lastNames.Count)]}",
                                 IsCurrent = true
                             }
                         },
@@ -370,7 +390,10 @@ namespace GLAA.Domain
                                 JobTitle = "Job Title " + i,
                                 JobTitleNumber = 1000 + i,
                             }
-                        }
+                        },
+                        CurrentSubmittedStatusChange = submittedStatusChange,
+                        CurrentCommencementStatusChange = licencedStatusChanged,
+                        CurrentStatusChange = licencedStatusChanged
                     });
 
                     foreach (var operatingCountry in operatingCountries)
@@ -403,6 +426,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "FULL-1234"))
             {
+                var submittedStatus = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(submittedStatus);
+                context.SaveChanges();
+
                 var fullLicence = new Licence
                 {
                     ApplicationId = "FULL-1234",
@@ -688,12 +720,10 @@ namespace GLAA.Domain
                     },
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        submittedStatus
                     },
+                    CurrentSubmittedStatusChange = submittedStatus,
+                    CurrentStatusChange = submittedStatus
                 };
 
                 context.Licences.Add(fullLicence);
@@ -855,6 +885,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0001"))
             {
+                var licenceStatusChange = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(licenceStatusChange);
+                context.SaveChanges();
+
                 var testLicence = new Licence
                 {
                     ApplicationId = "TEST-0001",
@@ -903,7 +942,7 @@ namespace GLAA.Domain
                                 Industry = context.Industries.Find(1)
                             }
                         },
-                    BusinessName = "Fully Populated Company",                    
+                    BusinessName = "Fully Populated Company",
                     PAYENumbers = new List<PAYENumber> {
                         new PAYENumber
                         {
@@ -920,12 +959,9 @@ namespace GLAA.Domain
                     SignatureDate = new DateTime(2017, 1, 1),
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        licenceStatusChange
                     },
+                    CurrentStatusChange = licenceStatusChange
                 };
 
                 context.Licences.Add(testLicence);
@@ -938,6 +974,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0002"))
             {
+                var licenceStatusChange = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(licenceStatusChange);
+                context.SaveChanges();
+
                 var testLicence = new Licence
                 {
                     ApplicationId = "TEST-0002",
@@ -1003,12 +1048,9 @@ namespace GLAA.Domain
                     SignatureDate = new DateTime(2017, 1, 1),
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        licenceStatusChange
                     },
+                    CurrentStatusChange = licenceStatusChange,
                 };
 
                 context.Licences.Add(testLicence);
@@ -1170,6 +1212,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0003"))
             {
+                var licenceStatusChange = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(licenceStatusChange);
+                context.SaveChanges();
+
                 var testLicence = new Licence
                 {
                     ApplicationId = "TEST-0003",
@@ -1235,13 +1286,9 @@ namespace GLAA.Domain
                     SignatureDate = new DateTime(2017, 1, 1),
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
-                    }, 
-                    
+                        licenceStatusChange
+                    },
+                    CurrentStatusChange = licenceStatusChange,
                     HasAlternativeBusinessRepresentatives = true,
                     AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
                     {
@@ -1321,7 +1368,7 @@ namespace GLAA.Domain
                 var licence = context.Licences.Find(id);
 
                 var pa = new PrincipalAuthority
-                {                  
+                {
                     IsDirector = true,
                     Address = new Address
                     {
@@ -1471,6 +1518,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0004"))
             {
+                var licenceStatusChange = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(licenceStatusChange);
+                context.SaveChanges();
+
                 var testLicence = new Licence
                 {
                     ApplicationId = "TEST-0004",
@@ -1536,12 +1592,9 @@ namespace GLAA.Domain
                     SignatureDate = new DateTime(2017, 1, 1),
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        licenceStatusChange
                     },
+                    CurrentStatusChange = licenceStatusChange,
                     HasAlternativeBusinessRepresentatives = true,
                     AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
                     {
@@ -1840,6 +1893,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0005"))
             {
+                var licenceStatusChange = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(licenceStatusChange);
+                context.SaveChanges();
+
                 var testLicence = new Licence
                 {
                     ApplicationId = "TEST-0005",
@@ -1905,12 +1967,9 @@ namespace GLAA.Domain
                     SignatureDate = new DateTime(2017, 1, 1),
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        licenceStatusChange
                     },
+                    CurrentStatusChange = licenceStatusChange,
                     HasAlternativeBusinessRepresentatives = true,
                     AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
                     {
@@ -2256,6 +2315,15 @@ namespace GLAA.Domain
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0006"))
             {
+                var licenceStatusChange = new LicenceStatusChange
+                {
+                    DateCreated = DateTime.Now,
+                    Status = context.LicenceStatuses.Find(110)
+                };
+
+                context.LicenceStatusChanges.Add(licenceStatusChange);
+                context.SaveChanges();
+
                 var testLicence = new Licence
                 {
                     ApplicationId = "TEST-0006",
@@ -2321,12 +2389,9 @@ namespace GLAA.Domain
                     SignatureDate = new DateTime(2017, 1, 1),
                     LicenceStatusHistory = new List<LicenceStatusChange>
                     {
-                        new LicenceStatusChange
-                        {
-                            DateCreated = DateTime.Now,
-                            Status = context.LicenceStatuses.Find(110)
-                        }
+                        licenceStatusChange
                     },
+                    CurrentStatusChange = licenceStatusChange,
                     HasAlternativeBusinessRepresentatives = true,
                     AlternativeBusinessRepresentatives = new List<AlternativeBusinessRepresentative>
                     {
@@ -2545,7 +2610,7 @@ namespace GLAA.Domain
                     BanDescription = "Banned because of this reason",
                     DateOfBan = new DateTime(2000, 1, 2),
                     UsesSubcontractors = true,
-                    SubcontractorNames = "Subcontractor 1, Subcontractor 2"                    
+                    SubcontractorNames = "Subcontractor 1, Subcontractor 2"
                 };
 
                 context.Licences.Add(testLicence);

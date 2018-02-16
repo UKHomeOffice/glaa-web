@@ -5,9 +5,9 @@
     var controller = ViewContext.RouteData.Values["Controller"];
     var controllerName = Convert.ToString(controller);
     string layoutFile;
-    switch (controllerName)
+    switch (controllerName.ToLower())
     {
-        case "Admin":
+        case "admin":
             layoutFile = "~/Views/Shared/_GOV.UKAdminLayout.cshtml";
             break;
         default:

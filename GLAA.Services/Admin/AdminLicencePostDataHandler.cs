@@ -28,6 +28,10 @@ namespace GLAA.Services.Admin
                 .Select(y => repository.GetById<LicenceStatusChangeLicensingStandard>(y.Id)).ToList();
 
             repository.Upsert(statusChange);
+
+            //Update the current status for the Licence.
+            statusChange.Licence.CurrentStatusChange = statusChange;
+            repository.Upsert(statusChange.Licence);
         }
     }
 }
