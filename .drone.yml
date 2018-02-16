@@ -12,7 +12,6 @@ pipeline:
       - docker build -t glaa-db-setup ./kube-db-setup/
 
     when:
-      branch: [*]
       event: push
 
   build_images:
