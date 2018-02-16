@@ -298,7 +298,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var expectedIsDirector = true;
             var expectedPreviousExperience = "previous XP";
-            var expectedHasPreviousTradingNames = true;
             var expectedPreviousTradingName = new PreviousTradingName
             {
                 BusinessName = "name",
