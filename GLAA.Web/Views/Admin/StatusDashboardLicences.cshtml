@@ -9,7 +9,7 @@
 <h2 class="heading-large admin-page-title">Status Dashboard Licences</h2>
 
 <h3 class="heading-medium">
-    Status @Model.LicenceStatusViewModel.Id - @Model.LicenceStatusViewModel.InternalStatus @(string.IsNullOrWhiteSpace(Model.LicenceStatusViewModel.InternalDescription)) ? "" : "<span>(@Model.LicenceStatusViewModel.InternalDescription)</span>";
+    Status @Model.LicenceStatusViewModel.Id - @Model.LicenceStatusViewModel.InternalStatus @(string.IsNullOrWhiteSpace(Model.LicenceStatusViewModel.InternalDescription) ? "" : "(" + Model.LicenceStatusViewModel.InternalDescription + ")")
 </h3>
 
 <table>
@@ -24,12 +24,12 @@
     <tbody>
         @foreach (var licence in Model.LicenceApplicationViewModels)
         {
-        <tr>
-            <td>@licence.Id</td>
-            <td>@licence.OrganisationDetails?.BusinessName?.BusinessName</td>
-            <td>@licence.OrganisationDetails?.BusinessName?.TradingName</td>
-            <td>@licence.OrganisationDetails?.Address?.Country</td>
-        </tr>
+            <tr>
+                <td>@licence.Id</td>
+                <td>@licence.OrganisationDetails?.BusinessName?.BusinessName</td>
+                <td>@licence.OrganisationDetails?.BusinessName?.TradingName</td>
+                <td>@licence.OrganisationDetails?.Address?.Country</td>
+            </tr>
         }
     </tbody>
 </table>
