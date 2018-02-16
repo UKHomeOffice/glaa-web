@@ -125,7 +125,14 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool IsUk { get; set; }
     }
-    
+
+    public class SocialSecurityNumberViewModel
+    {
+        [Display(Name = "Social Security Number")]
+        public string SocialSecurityNumber { get; set; }
+
+    }
+
     public class NationalityViewModel
     {
         [Required]

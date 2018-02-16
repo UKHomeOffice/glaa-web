@@ -158,6 +158,8 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool?>("RequiresVisa");
 
+                    b.Property<string>("SocialSecurityNumber");
+
                     b.Property<string>("TownOfBirth");
 
                     b.Property<string>("VisaDescription");
@@ -275,6 +277,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<int?>("PrincipalAuthorityId");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 
@@ -877,6 +881,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("PreviousLicenceDescription");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 

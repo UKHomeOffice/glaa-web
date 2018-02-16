@@ -365,6 +365,7 @@ namespace GLAA.Domain.Migrations
                     PersonalMobileNumber = table.Column<string>(nullable: true),
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
+                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true)
                 },
@@ -414,6 +415,7 @@ namespace GLAA.Domain.Migrations
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     PrincipalAuthorityId = table.Column<int>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
+                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true)
                 },
@@ -793,6 +795,7 @@ namespace GLAA.Domain.Migrations
                     PreviousExperience = table.Column<string>(nullable: true),
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
+                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true),
                     VisaNumber = table.Column<string>(nullable: true),

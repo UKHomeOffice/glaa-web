@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180214124749_InitialCreate")]
+    [Migration("20180216115142_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,6 +159,8 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<bool?>("RequiresVisa");
 
+                    b.Property<string>("SocialSecurityNumber");
+
                     b.Property<string>("TownOfBirth");
 
                     b.Property<string>("VisaDescription");
@@ -276,6 +278,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<int?>("PrincipalAuthorityId");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 
@@ -878,6 +882,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("PreviousLicenceDescription");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 
