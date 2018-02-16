@@ -1,5 +1,18 @@
 pipeline:
 
+  test:
+
+    image: docker:17.09.1
+
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+
+    commands:
+      - docker build -t glaa-test ./Tests/
+
+    when:
+      event: pull_request
+
   build_images:
 
     image: docker:17.09.1
@@ -13,14 +26,14 @@ pipeline:
 
     when:
       branch: master
-      event: push 
+      event: push
 
   image_to_quay:
 
     image: docker:17.09.1
 
     secrets:
-      - docker_password    
+      - docker_password
 
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375

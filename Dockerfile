@@ -7,11 +7,13 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 
 COPY . .
+WORKDIR /app/
+RUN dotnet test
 WORKDIR /app/GLAA.Web
 RUN npm install webpack -g
 RUN npm install
 RUN webpack
-RUN dotnet restore && dotnet build && dotnet test && dotnet publish -c Release -o ./out
+RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
 
 
 FROM microsoft/dotnet:latest
