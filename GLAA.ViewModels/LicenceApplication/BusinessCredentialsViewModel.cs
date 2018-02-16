@@ -12,20 +12,17 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessCredentialsViewModel()
         {
             CompaniesHouseRegistrationViewModel = new CompaniesHouseRegistrationViewModel();
-            VATStatusViewModel = new VATStatusViewModel();
-            TaxReferenceViewModel = new TaxReferenceViewModel();
-            PAYEStatusViewModel = new PAYEStatusViewModel();
         }
 
         public LegalStatusEnum LegalStatus { get; set; }
 
         public CompaniesHouseRegistrationViewModel CompaniesHouseRegistrationViewModel { get; set; }
 
-        public VATStatusViewModel VATStatusViewModel { get; set; }
+        public VATStatusViewModel VATStatusViewModel { get; set; } = new VATStatusViewModel();
 
-        public PAYEStatusViewModel PAYEStatusViewModel { get; set; }
+        public PAYEStatusViewModel PAYEStatusViewModel { get; set; } = new PAYEStatusViewModel();
 
-        public TaxReferenceViewModel TaxReferenceViewModel { get; set; }
+        public TaxReferenceViewModel TaxReferenceViewModel { get; set; } = new TaxReferenceViewModel();
 
         public bool IsValid { get; set; }
 
