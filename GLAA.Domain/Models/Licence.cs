@@ -17,7 +17,9 @@ namespace GLAA.Domain.Models
         public bool? SuppliesWorkers { get; set; }
         public bool? ContinueApplication { get; set; }
         public bool EmailAlreadyRegistered { get; set; }
-
+        public LicenceStatusChange CurrentStatusChange { get; set; }
+        public LicenceStatusChange CurrentSubmittedStatusChange { get; set; }
+        public LicenceStatusChange CurrentCommencementStatusChange { get; set; }
         #region Declaration            
         public string SignatoryName { get; set; }
         public DateTime? SignatureDate { get; set; }
