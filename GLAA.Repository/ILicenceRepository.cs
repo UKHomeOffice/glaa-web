@@ -7,6 +7,7 @@ namespace GLAA.Repository
     {
         Licence GetById(int id);
         Licence GetByApplicationId(string applicationId);
+        IEnumerable<Licence> GetAllLicencesForPublicRegister();
         IEnumerable<Licence> GetAllLicences();
         IEnumerable<Licence> GetAllApplications();
         IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress();

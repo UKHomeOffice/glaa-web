@@ -1,16 +1,16 @@
 ﻿@{
-    ViewBag.Title = "Do you have a PAYE number?";
+    ViewBag.Title = "Business credentials for your company";
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PAYEERNStatusViewModel
+@model GLAA.ViewModels.LicenceApplication.BusinessCredentialsViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "10" } })
 
-@using (Html.BeginForm("SavePAYEERNStatus", "OrganisationDetails"))
+@using (Html.BeginForm("SaveBusinessCredentials", "OrganisationDetails"))
 {
     <div class="grid-row">
-        <div class="column-two-thirds">
+        <div class="column-full">
             @Html.Partial("_GdsValidationSummary")
         </div>
         <div class="column-full">
@@ -18,31 +18,170 @@
                 @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">
+    </div>
+    <div class="grid-row">
+        @Html.HiddenFor(x => x.LegalStatus)
+        @if (Model.LegalStatus == GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany)
+        {
             <div class="form-group">
-                <fieldset>
+                <div class="column-half">
+                    @Html.LabelWithHintFor(x => x.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber)
+                    @Html.TextBoxFor(x => x.CompaniesHouseRegistrationViewModel.CompaniesHouseNumber, new { @class = "form-control" })
+                </div>
+                <div class="column-half">
+                    @Html.DateFormGroupFor(x => x.CompaniesHouseRegistrationViewModel.CompanyRegistrationDate)
+                </div>
+            </div>
+        }
+    </div>
+    <hr />
+    <div class="grid-row">
+        <div class="column-full">
+            <div class="form-group">
+                <fieldset class="inline">
                     <legend>
-                        <span class="body-text"></span>
+                        <h1 class="heading-medium">
+                            Do you have a VAT number?
+                        </h1>
                     </legend>
                     @foreach (var option in Model.YesNo)
                     {
-                        <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPAYEERNNumber, option.Value)
+                        <div class="multiple-choice vat">
+                            @Html.RadioButtonFor(x => x.VATStatusViewModel.HasVATNumber, option.Value)
                             @Html.Label(option.Text)
                         </div>
-
-                        if (option.Value == switchValue)
-                        {
-                            <div class="panel panel-border-narrow js-hidden" id="PAYE-details">
-                                @Html.TextFormGroupFor(x => x.PAYEERNNumber)
-                                @Html.DateFormGroupFor(x => x.PAYEERNRegistrationDate)
-                            </div>
-                        }
                     }
                 </fieldset>
             </div>
         </div>
+        <div class="js-hidden" id="VAT-details">
+            <div class="column-half">
+                @Html.TextFormGroupFor(x => x.VATStatusViewModel.VATNumber)
+            </div>
+            <div class="column-half">
+                @Html.DateFormGroupFor(x => x.VATStatusViewModel.VATRegistrationDate)
+            </div>
+        </div>
     </div>
+    <hr />
+    <div class="grid-row">
+        <div class="column-full">
+            <div class="form-group">
+                <fieldset class="inline">
+                    <legend>
+                        <h1 class="heading-medium">
+                            Do you have a PAYE number?
+                        </h1>
+                    </legend>
+                    @foreach (var option in Model.YesNo)
+                    {
+                        <div class="multiple-choice paye">
+                            @Html.RadioButtonFor(x => x.PAYEStatusViewModel.HasPAYENumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
+                    }
+                </fieldset>
+            </div>
+        </div>
+
+        @for (var i = 0; i < Model.PAYEStatusViewModel.PAYENumbers.Count; i++)
+        {
+            <div class="grid-row">
+                @Html.HiddenFor(x => x.PAYEStatusViewModel.PAYENumbers[i].Id)
+
+                <div class="column-one-third">
+                    @Html.TextFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYENumber)
+                </div>
+                <div class="column-one-third">
+                    @Html.DateFormGroupFor(x => x.PAYEStatusViewModel.PAYENumbers[i].PAYERegistrationDate)
+                </div>
+                <div class="column-one-third">
+                    @if (Model.PAYEStatusViewModel.PAYENumbers.Count() > 0)
+                    {
+                        <button class="link-button cancel" asp-controller="OrganisationDetails" asp-action="RemovePAYENumber" asp-route-id="@i">Remove this</button>
+                    }
+                </div>
+            </div>
+        }
+        <div class="grid-row">
+            <div class="column-full">
+                <div class="form-group">
+                    <button class="button button-add-another cancel" asp-controller="OrganisationDetails" asp-action="AddPAYENumber">Add another</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="grid-row">
+        <div class="column-full">
+            <div class="form-group">
+                <fieldset class="inline">
+                    <legend>
+                        <h1 class="heading-medium">
+                        @{
+                            var header = string.Empty;
+                            switch (Model.LegalStatus)
+                            {
+                                case GLAA.Domain.Models.LegalStatusEnum.SoleTrader:
+                                    header = "What is your Personal Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany:
+                                    header = "What is your Company Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.Partnership:
+                                    header = "What is your Business Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.UnincorporateAssociation:
+                                    header = "What is your Unique Tax Reference?";
+                                    break;
+                                case GLAA.Domain.Models.LegalStatusEnum.Other:
+                                    header = "What is your Unique Tax Reference?";
+                                    break;
+                                default:
+                                    header = "What is your Unique Tax Reference?";
+                                    break;
+                            }
+                        }
+                        @header
+                        </h1>
+                    </legend>
+                    @*@foreach (var option in Model.YesNo)
+                    {
+                        <div class="multiple-choice tax">
+                            @Html.RadioButtonFor(x => x.TaxReferenceViewModel.HasTaxReferenceNumber, option.Value)
+                            @Html.Label(option.Text)
+                        </div>
+                    }*@
+                </fieldset>
+            </div>
+            <div id="TAX-details">
+                @{
+                    switch (Model.LegalStatus)
+                    {
+                        case GLAA.Domain.Models.LegalStatusEnum.SoleTrader:
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.SoleTraderTaxReference)
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.RegisteredCompany:
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.RegisteredCompanyTaxReference)
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.Partnership:
+                            @Html.TextFormGroupFor(x => x.TaxReferenceViewModel.PartnershipTaxReference)
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.UnincorporateAssociation:
+                            Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber);
+                            break;
+                        case GLAA.Domain.Models.LegalStatusEnum.Other:
+                            Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber);
+                            break;
+                        default:
+                            Html.TextFormGroupFor(x => x.TaxReferenceViewModel.TaxReferenceNumber);
+                            break;
+                    }
+                }                
+            </div>
+        </div>
+    </div>
+
     <button type="submit" class="button">Save and continue</button>
 }
 
@@ -51,7 +190,9 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#PAYE-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice.paye input', '#PAYE-details', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice.vat input', '#VAT-details', @switchValue);
+            //branchedQuestion.toggleBranch('.multiple-choice.tax input', '#TAX-details', @switchValue);
         });
     </script>
 }

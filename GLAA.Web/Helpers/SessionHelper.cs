@@ -1,5 +1,6 @@
 ﻿using GLAA.Web.FormLogic;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace GLAA.Web.Helpers
 {
@@ -180,6 +181,20 @@ namespace GLAA.Web.Helpers
         public static bool GetCurrentUserIsAdmin(ISession session)
         {
             return GetBool(session, CurrentUserIsAdmin);
+        }
+
+        public T Get<T>(string key) where T : new()
+        {
+            var objectString = session.GetString(key);
+
+            return session.GetString(key) == null ? new T() : JsonConvert.DeserializeObject<T>(objectString);
+        }
+
+        public void Set<T>(string key, T instance)
+        {
+            var objectString = JsonConvert.SerializeObject(instance);
+
+            SetString(key, objectString);
         }
     }
 }

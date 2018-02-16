@@ -34,6 +34,7 @@ namespace GLAA.Domain
         public DbSet<PreviousTradingName> PreviousTradingNames { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<County> Counties { get; set; }
+        public DbSet<PAYENumber> PAYENumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            

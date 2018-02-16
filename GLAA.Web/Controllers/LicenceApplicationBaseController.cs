@@ -40,7 +40,7 @@ namespace GLAA.Web.Controllers
             var sectionLength = FormDefinition.GetSectionLength(section);
             var nextPageId = submittedPageId + 1;
 
-            if (submittedPageId + 1 != sectionLength)
+            if (nextPageId != sectionLength)
             {
                 var parent = FindParentSection(section, licenceId);
 

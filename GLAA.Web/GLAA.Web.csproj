@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\sass\NewFolder\**" />
+    <Content Remove="wwwroot\sass\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\sass\NewFolder\**" />
+    <None Remove="wwwroot\sass\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\images\icon-button-remove.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Helpers\HtmlHelpers.cs" />
   </ItemGroup>
 
@@ -49,6 +60,10 @@
     <Folder Include="Views\NamedIndividual\" />
     <Folder Include="Views\NamedIndividuals\" />
     <Folder Include="Views\Organisation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\icon-button-remove.png" />
   </ItemGroup>
 
   <ItemGroup>

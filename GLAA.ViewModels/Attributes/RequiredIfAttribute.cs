@@ -21,7 +21,7 @@ namespace GLAA.ViewModels.Core.Attributes
                 return ValidationResult.Success;
             }
 
-            return new ValidationResult($"Incorrect usage of {nameof(GetType)}");
+            return new ValidationResult($"Incorrect usage of {GetType()}");
         }
     }
 }

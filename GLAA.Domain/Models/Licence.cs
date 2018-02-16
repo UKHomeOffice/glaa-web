@@ -18,14 +18,7 @@ namespace GLAA.Domain.Models
         public bool? ContinueApplication { get; set; }
         public bool EmailAlreadyRegistered { get; set; }
 
-        #region Declaration
-        
-        public bool? AgreedToStatementOne { get; set; }        
-        public bool? AgreedToStatementTwo { get; set; }        
-        public bool? AgreedToStatementThree { get; set; }        
-        public bool? AgreedToStatementFour { get; set; }        
-        public bool? AgreedToStatementFive { get; set; }        
-        public bool? AgreedToStatementSix { get; set; }        
+        #region Declaration            
         public string SignatoryName { get; set; }
         public DateTime? SignatureDate { get; set; }
         #endregion
@@ -44,6 +37,7 @@ namespace GLAA.Domain.Models
 
         public LegalStatusEnum? LegalStatus { get; set; }
 
+        public string OtherLegalStatus { get; set; }
         public string BusinessPhoneNumber { get; set; }
         public string BusinessMobileNumber { get; set; }
         public string BusinessEmailAddress { get; set; }
@@ -52,12 +46,13 @@ namespace GLAA.Domain.Models
 
         public string CompaniesHouseNumber { get; set; }
         public DateTime? CompanyRegistrationDate { get; set; }
-        public bool? HasPAYEERNNumber { get; set; }
-        public string PAYEERNNumber { get; set; }
-        public DateTime? PAYEERNRegistrationDate { get; set; }
+        public bool? HasPAYENumber { get; set; }
+        public virtual ICollection<PAYENumber> PAYENumbers { get; set; } = new Collection<PAYENumber>();
+
         public bool? HasVATNumber { get; set; }
         public string VATNumber { get; set; }
         public DateTime? VATRegistrationDate { get; set; }
+        public bool? HasTaxReferenceNumber { get; set; }
         public string TaxReferenceNumber { get; set; }
 
         public virtual ICollection<LicenceIndustry> OperatingIndustries { get; set; } = new Collection<LicenceIndustry>();

@@ -1,28 +1,36 @@
-﻿@{
-    ViewBag.Title = "What is your estimated business turnover?";
+﻿@using GLAA.Web.Helpers
+@model GLAA.ViewModels.LicenceApplication.OrganisationDetailsViewModel
+
+@{
+    ViewBag.Title = "Business Details Summary";
 }
 
-@model GLAA.ViewModels.LicenceApplication.TurnoverViewModel
-
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "15" } })
-
-@using (Html.BeginForm("SaveTurnover", "OrganisationDetails"))
-{
+<main id="content" role="main">
     <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
-        </div>
         <div class="column-full">
+            <br />
+            @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
+            {
+                <p>
+                    @Html.ActionLink("Return to Task List", "TaskList", "Licence")
+                </p>
+            }
+            else
+            {
+                <p>
+                    @Html.ActionLink("Return to overview", "Licence", "Admin", new { id = SessionHelper.GetCurrentLicenceId(Context.Session) }, new { })
+                </p>
+            }
             <h1 class="heading-large">
-                @ViewBag.Title
+                Check your answers for this section
             </h1>
-        </div>
-
-        <div class="column-two-thirds">
-            @Html.RadioButtonFormGroupFor(x => x.TurnoverBand, Model.AvailableTurnoverBands, "Select the item which matches most closely your turnover")
+            @Html.DisplayFor(m => m)
+            @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
+            {
+                <p>
+                    @Html.ActionLink("Go to next section", "Part", "PrincipalAuthority", new {id = 1}, new {@class = "button"})
+                </p>
+            }
         </div>
     </div>
-
-    <button type="submit" class="button">Save and continue</button>
-}
-
+</main>
