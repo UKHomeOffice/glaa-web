@@ -8,8 +8,7 @@ pipeline:
       - DOCKER_HOST=tcp://172.17.0.1:2375
 
     commands:
-      - docker build -t glaa-web .
-      - docker build -t glaa-db-setup ./kube-db-setup/
+      - docker build -t glaa-test ./Tests/
 
     when:
       event: pull_request
