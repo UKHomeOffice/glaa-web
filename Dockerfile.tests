@@ -1,8 +1,8 @@
-FROM microsoft/dotnet:sdk as builder
+FROM microsoft/dotnet:sdk
 WORKDIR /app
 
 COPY . .
 WORKDIR /app/
-RUN nuget.exe sources add -Name Bintray -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
+RUN nuget sources add -Name Bintray -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
 RUN dotnet test
 
