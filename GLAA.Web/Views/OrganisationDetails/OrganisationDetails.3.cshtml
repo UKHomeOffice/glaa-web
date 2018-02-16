@@ -18,6 +18,11 @@
             </h1>
         </div>
         <div class="column-two-thirds">
+            @Html.TextBoxFor(x => x.Postcode)
+            <a href="#">Enter address manually</a>
+            <a href="#">I have an address outside the UK</a>
+        </div>
+        <div class="column-two-thirds">
             @Html.EditorFor(x => x)
         </div>
     </div>

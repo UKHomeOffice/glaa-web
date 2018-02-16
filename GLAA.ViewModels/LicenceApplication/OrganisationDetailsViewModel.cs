@@ -17,7 +17,7 @@ namespace GLAA.ViewModels.LicenceApplication
             OperatingCountries = new OperatingCountriesViewModel();
             Turnover = new TurnoverViewModel();
             CommunicationPreference = new CommunicationPreferenceViewModel();
-            Address = new AddressViewModel();
+            Address = new AddressPageViewModel();
             BusinessPhoneNumber = new BusinessPhoneNumberViewModel();
             BusinessMobileNumber = new BusinessMobileNumberViewModel();
             BusinessEmailAddress = new BusinessEmailAddressViewModel();
@@ -33,7 +33,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public OperatingCountriesViewModel OperatingCountries { get; set; }
         public TurnoverViewModel Turnover { get; set; }
         public CommunicationPreferenceViewModel CommunicationPreference { get; set; }
-        public AddressViewModel Address { get; set; }
+        public AddressPageViewModel Address { get; set; }
         public BusinessPhoneNumberViewModel BusinessPhoneNumber { get; set; }
         public BusinessMobileNumberViewModel BusinessMobileNumber { get; set; }
         public BusinessEmailAddressViewModel BusinessEmailAddress { get; set; }

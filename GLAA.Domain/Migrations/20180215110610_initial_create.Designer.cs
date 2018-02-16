@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180209151945_initial_create")]
+    [Migration("20180215110610_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

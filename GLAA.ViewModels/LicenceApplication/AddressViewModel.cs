@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class AddressViewModel : IId, INeedCountries, INeedCounties
+    public class AddressViewModel : IValidatable, IId, INeedCountries, INeedCounties
     {
         public int Id { get; set; }
         [Required]
@@ -31,5 +31,57 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public IEnumerable<SelectListItem> Countries { get; set; }
         public IEnumerable<SelectListItem> Counties { get; set; }
+        public void Validate()
+        {
+            if (NonUK)
+            {
+                IsValid = !string.IsNullOrEmpty(AddressLine1) &&
+                          !string.IsNullOrEmpty(AddressLine2) &&
+                          !string.IsNullOrEmpty(Postcode);
+            }
+            else
+            {
+                IsValid = !string.IsNullOrEmpty(AddressLine1) &&
+                          !string.IsNullOrEmpty(AddressLine2) &&
+                          !string.IsNullOrEmpty(Postcode) &&
+                          !string.IsNullOrEmpty(Town);
+            }
+        }
+
+        public bool IsValid { get; set; }
+    }
+
+    public class AddressPageViewModel : INeedCountries, INeedCounties, IValidatable
+    {
+        [Required]
+        [Display(Name = "Postcode")]
+        public string PostCodeLookup { get; set; }
+
+        public AddressViewModel Address { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            get => Address.Countries;
+            set => Address.Countries = value;
+        }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            get => Address.Counties;
+            set => Address.Counties = value;
+        }
+        public void Validate()
+        {
+            Address?.Validate();
+
+            if (string.IsNullOrEmpty(PostCodeLookup) && (!Address?.IsValid ?? false))
+            {
+                IsValid = false;
+            }
+
+            IsValid = true;
+        }
+
+        public bool IsValid { get; set; }
     }
 }

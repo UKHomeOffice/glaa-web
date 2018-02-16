@@ -2,11 +2,22 @@ using System.Collections.Generic;
 using System.Linq;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Controllers;
+using Microsoft.AspNetCore.Http;
 
 namespace GLAA.Web.FormLogic
 {
     public class FieldConfiguration : IFieldConfiguration
     {
+        //public static object BuildAddress(object parent, IQueryCollection query)
+        //{
+        //    if (parent is IAddressable addressable)
+        //    {
+        //        var address = addressable.Address;
+        //    }
+
+        //    return parent;
+        //}
+
         public FieldConfiguration()
         {
             Fields =
