@@ -12,7 +12,7 @@ pipeline:
       - docker build -t glaa-db-setup ./kube-db-setup/
 
     when:
-      event: push
+      event: pull_request
 
   build_images:
 
