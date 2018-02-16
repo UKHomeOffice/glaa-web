@@ -3,6 +3,5 @@ WORKDIR /app
 
 COPY . .
 WORKDIR /app/
-RUN nuget sources add -Name Bintray -Source https://api.bintray.com/nuget/gov-uk-notify/nuget
 RUN dotnet test
 
