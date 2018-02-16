@@ -403,7 +403,7 @@ namespace GLAA.Services.Tests.Core.Validation
         }
 
         [TestMethod]
-        private void a_model_with_no_source_is_invalid()
+        public void a_model_with_no_source_is_invalid()
         {
             model.SourcingWorkersViewModel.WorkerSource = null;
 
