@@ -27,7 +27,7 @@
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.IsPSCControlled, Model.IsPSCControlled ?? false)
+                            @Html.RadioButtonFor(x => x.IsPSCControlled, option.Value)
                             @Html.Label(option.Text)
                         </div>
 

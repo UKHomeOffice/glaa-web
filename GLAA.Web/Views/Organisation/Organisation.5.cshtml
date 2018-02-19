@@ -21,13 +21,10 @@
         <div class="column-two-thirds">
             <div class="form-group">
                 <fieldset>
-                    <legend>
-                        <span class="body-text">Please refer to the guidance for the definition of PSC</span>
-                    </legend>
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasMultiples, Model.HasMultiples ?? false)
+                            @Html.RadioButtonFor(x => x.HasMultiples, option.Value)
                             @Html.Label(option.Text)
                         </div>
 
@@ -64,7 +61,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input[type="radio"]', '#multiple-types', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input[type="radio"]', '#multiple-types', '@switchValue');
         });
     </script>
 }
