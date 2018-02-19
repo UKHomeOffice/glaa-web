@@ -1,7 +1,8 @@
-FROM microsoft/dotnet:sdk as builder
+FROM microsoft/dotnet:sdk
 WORKDIR /app
 
 COPY . .
 WORKDIR /app/
+
 RUN dotnet test
 
