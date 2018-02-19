@@ -102,10 +102,10 @@ namespace GLAA.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IFormDefinition, LicenceApplicationFormDefinition>();
             services.AddTransient<IFieldConfiguration, FieldConfiguration>();
-            services.AddTransient<ISessionHelper, SessionHelper>();
+            services.AddScoped<ISessionHelper, SessionHelper>();
 
             // automapper
-            services.AddTransient<IMapper>(x => new AutoMapperConfig().Configure().CreateMapper());
+            services.AddSingleton<IMapper>(x => new AutoMapperConfig().Configure().CreateMapper());
 
             // http session
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -136,6 +136,7 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
+            services.AddTransient<IAdminStatusRecordsViewModelBuilder, AdminStatusRecordsViewModelBuilder>();
 
             // Public Reigster
             services.AddTransient<IPublicRegisterViewModelBuilder, PublicRegisterViewModelBuilder>();

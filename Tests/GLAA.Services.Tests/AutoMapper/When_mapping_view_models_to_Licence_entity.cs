@@ -558,18 +558,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 },
                 PAYEStatusViewModel = new PAYEStatusViewModel
                 {
-                    HasPAYENumber = true,
-                    PAYENumbers = new List<PAYENumberRow>
-                    {
-                        new PAYENumberRow
-                        {
-                            PAYENumber = "121243",
-                            PAYERegistrationDate = new DateViewModel
-                            {
-                                Date = new DateTime(2017, 1, 3)
-                            }
-                        }
-                    }
+                    HasPAYENumber = true
+                    // numbers are mapped via a seperate mapping call
                 }
             };
 
@@ -582,10 +572,31 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.VATStatusViewModel.VATNumber, result.VATNumber);
             Assert.AreEqual(input.VATStatusViewModel.VATRegistrationDate.Date, result.VATRegistrationDate);
 
-            Assert.AreEqual(input.PAYEStatusViewModel.HasPAYENumber, result.HasPAYENumber);
-            // TODO: Why is this failing?
-            Assert.AreEqual(input.PAYEStatusViewModel.PAYENumbers.First().PAYENumber, result.PAYENumbers.First().Number);
-            Assert.AreEqual(input.PAYEStatusViewModel.PAYENumbers.First().PAYERegistrationDate.Date, result.PAYENumbers.First().RegistrationDate);
+            Assert.AreEqual(input.PAYEStatusViewModel.HasPAYENumber, result.HasPAYENumber);            
+        }
+
+        public void it_should_map_payenumbers_to_the_licence_entity()
+        {
+            var input = new PAYEStatusViewModel
+            {
+                HasPAYENumber = true,
+                PAYENumbers = new List<PAYENumberRow>
+                {
+                    new PAYENumberRow
+                    {
+                        PAYENumber = "121243",
+                        PAYERegistrationDate = new DateViewModel
+                        {
+                            Date = new DateTime(2017, 1, 3)
+                        }
+                    }
+                }
+            };
+
+            var result = mapper.Map<Licence>(input.PAYENumbers);
+
+            Assert.AreEqual(input.PAYENumbers.First().PAYENumber, result.PAYENumbers.First().Number);
+            Assert.AreEqual(input.PAYENumbers.First().PAYERegistrationDate.Date, result.PAYENumbers.First().RegistrationDate);
         }
     }
 }

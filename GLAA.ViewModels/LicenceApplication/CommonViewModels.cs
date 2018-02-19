@@ -67,7 +67,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Display(Name = "Country of birth", Description = "This will be shown on your birth certificate")]
         public int? CountryOfBirthId { get; set; }
 
-        public IEnumerable<SelectListItem> Countries { get; set; }
+        public IEnumerable<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
     }
 
     public class JobTitleViewModel

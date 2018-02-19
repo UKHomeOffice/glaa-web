@@ -32,8 +32,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = new County{Name = "county"},
-                Country = new Country { Name = "country" },
+                County = new County{ Name = "county", Id = 1 },
+                Country = new Country { Name = "country", Id = 1 },
                 Town = "town",
                 Postcode = "postcode"
             };
@@ -298,7 +298,6 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var expectedIsDirector = true;
             var expectedPreviousExperience = "previous XP";
-            var expectedHasPreviousTradingNames = true;
             var expectedPreviousTradingName = new PreviousTradingName
             {
                 BusinessName = "name",
@@ -326,6 +325,9 @@ namespace GLAA.Services.Tests.AutoMapper
             var input = new AlternativeBusinessRepresentative();
 
             AddPersonData(input);
+
+            var conf = new MapperConfiguration(cfg => cfg.CreateMap<Country, Country>());
+            var exec = conf.BuildExecutionPlan(typeof(Country), typeof(Country));
 
             var result = this.mapper.Map<AlternativeBusinessRepresentativeViewModel>(input);
 

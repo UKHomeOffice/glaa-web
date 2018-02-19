@@ -11,7 +11,7 @@ namespace GLAA.Domain
     public class GLAAContext : IdentityDbContext<GLAAUser, GLAARole, string>
     {
         public GLAAContext(DbContextOptions<GLAAContext> options) : base(options)
-        {            
+        {
         }
 
         public DbSet<StatusReason> StatusReasons { get; set; }
@@ -106,6 +106,11 @@ namespace GLAA.Domain
                 .HasOne(x => x.LicenceStatus)
                 .WithMany(x => x.NextStatuses)
                 .HasForeignKey(x => x.NextStatusId);
+
+            modelBuilder.Entity<LicenceStatusChange>()
+                .HasOne(x => x.Licence)
+                .WithMany(x => x.LicenceStatusHistory)
+                .HasForeignKey("LicenceId");
 
             //modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             //modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);

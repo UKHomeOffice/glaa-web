@@ -32,6 +32,14 @@ namespace GLAA.Services.Automapper
             CreateMappings();
         }
 
+        public static CountryOfBirthViewModel CobResolver(Country country)
+        {
+            return new CountryOfBirthViewModel
+            {
+                CountryOfBirthId = country.Id
+            };
+        }
+
         private void CreateMappings()
         {
 
@@ -42,10 +50,6 @@ namespace GLAA.Services.Automapper
             CreateMap<int, CountryOfBirthViewModel>()
                 .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y))
                 .ForAllOtherMembers(opt => opt.Ignore());
-
-            //CreateMap<Person, CountryOfBirthViewModel>()
-            //    .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthId))
-            //    .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<string, JobTitleViewModel>()
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y));
