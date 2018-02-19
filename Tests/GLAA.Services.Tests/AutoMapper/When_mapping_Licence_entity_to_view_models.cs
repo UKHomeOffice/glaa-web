@@ -685,7 +685,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.BusinessEmailAddress, result.BusinessEmailAddress.BusinessEmailAddress);
             Assert.AreEqual(input.BusinessEmailAddressConfirmation, result.BusinessEmailAddress.BusinessEmailAddressConfirmation);            
 
-            AssertAddress(expectedAddress, result.Address.Address);
+            AssertAddress(expectedAddress, result.Address);
 
             Assert.AreEqual(input.LegalStatus, result.LegalStatus.LegalStatus);
         }

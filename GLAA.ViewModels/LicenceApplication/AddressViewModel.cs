@@ -57,43 +57,4 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool IsValid { get; set; }
     }
-
-    public class AddressPageViewModel : INeedCountries, INeedCounties, IValidatable
-    {
-        public AddressPageViewModel()
-        {
-            Address = new AddressViewModel();
-        }
-
-        [Required]
-        [Display(Name = "Postcode")]
-        public string PostCodeLookup { get; set; }
-
-        public AddressViewModel Address { get; set; }
-
-        public IEnumerable<SelectListItem> Countries
-        {
-            get => Address.Countries;
-            set => Address.Countries = value;
-        }
-
-        public IEnumerable<SelectListItem> Counties
-        {
-            get => Address.Counties;
-            set => Address.Counties = value;
-        }
-        public void Validate()
-        {
-            Address?.Validate();
-
-            if (string.IsNullOrEmpty(PostCodeLookup) && (!Address?.IsValid ?? false))
-            {
-                IsValid = false;
-            }
-
-            IsValid = true;
-        }
-
-        public bool IsValid { get; set; }
-    }
 }

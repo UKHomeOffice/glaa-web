@@ -405,10 +405,7 @@ namespace GLAA.Services.Tests.AutoMapper
                 {
                     BusinessEmailAddress = "e@mail.com"
                 },
-                Address = new AddressPageViewModel
-                {
-                    Address = expectedAddress
-                },
+                Address = expectedAddress,
                 LegalStatus = new LegalStatusViewModel
                 {
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
