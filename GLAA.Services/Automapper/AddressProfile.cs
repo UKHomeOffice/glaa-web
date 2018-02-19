@@ -11,6 +11,7 @@ namespace GLAA.Services.Automapper
             CreateMap<Address, AddressViewModel>()
                 .ForMember(x => x.CountryId, opt => opt.MapFrom(y => y.Country.Id))
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(y => y.County.Id))
+                .ForMember(x => x.NonUK, opt => opt.MapFrom(y => !y.Country.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
                 .ForMember(x => x.Counties, opt => opt.Ignore())
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
@@ -36,7 +37,6 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Postcode, opt => opt.MapFrom(y => y.Address.Postcode))
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(y => y.Address.CountyId))
                 .ForMember(x => x.CountryId, opt => opt.MapFrom(y => y.Address.CountryId))
-                .ForMember(x => x.NonUK, opt => opt.MapFrom(y => y.Address.NonUK))
                 .ForMember(x => x.Country, opt => opt.Ignore())
                 .ForMember(x => x.County, opt => opt.Ignore());
         }

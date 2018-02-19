@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180219122301_initial_create")]
+    [Migration("20180219134922_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,6 +212,8 @@ namespace GLAA.Domain.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsUk");
 
                     b.Property<string>("Name");
 

@@ -212,6 +212,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsUk");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");

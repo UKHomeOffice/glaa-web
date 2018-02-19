@@ -751,7 +751,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = $"FA{rnd.Next(1, 99)} {rnd.Next(1, 9)}KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         HasNamedIndividuals = true,
                         NamedIndividualType = NamedIndividualType.PersonalDetails,
@@ -863,7 +862,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -967,7 +965,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -1034,7 +1031,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -1161,7 +1157,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
@@ -1233,7 +1228,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
@@ -1322,7 +1316,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1411,7 +1404,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1488,7 +1480,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
@@ -1560,7 +1551,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
@@ -1649,7 +1639,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1719,7 +1708,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -1795,7 +1783,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
@@ -1866,7 +1853,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
@@ -1955,7 +1941,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -2025,7 +2010,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -2093,7 +2077,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -2169,7 +2152,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
@@ -2241,7 +2223,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
@@ -2330,7 +2311,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -2400,7 +2380,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -2468,7 +2447,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -2591,7 +2569,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
@@ -2663,7 +2640,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
@@ -2752,7 +2728,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -2822,7 +2797,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -2890,7 +2864,6 @@ namespace GLAA.Domain
                                 County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
                                 Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                                NonUK = false
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
@@ -3048,7 +3021,6 @@ namespace GLAA.Domain
                         County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                        NonUK = false
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
@@ -3120,7 +3092,6 @@ namespace GLAA.Domain
                             County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
                             Country = context.Countries.Single(c => c.Name.Equals("UK England")),
-                            NonUK = false
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",

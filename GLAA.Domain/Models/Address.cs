@@ -23,8 +23,6 @@ namespace GLAA.Domain.Models
 
         public int? CountyId { get; set; }
         [ForeignKey(nameof(CountyId))]
-        public virtual County County { get; set; }
-
-        public bool NonUK { get; set; }            
+        public virtual County County { get; set; }        
     }
 }

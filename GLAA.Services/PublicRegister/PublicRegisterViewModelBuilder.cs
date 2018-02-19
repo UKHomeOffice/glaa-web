@@ -78,7 +78,7 @@ namespace GLAA.Services.PublicRegister
                     if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
                         licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.Country.Name.Contains(y)));
                     else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
-                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.NonUK));
+                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => !x.Address.Country.IsUk));
                     else
                         licences = licences.Where(x => x.Address != null && publicRegisterSearchCriteria.CountriesSelected.Any(y => y == x.Address.Country.Name));
 

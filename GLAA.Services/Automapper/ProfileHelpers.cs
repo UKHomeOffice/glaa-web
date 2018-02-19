@@ -127,7 +127,7 @@ namespace GLAA.Services.Automapper
             return new NationalInsuranceNumberViewModel
             {
                 NationalInsuranceNumber = person.NationalInsuranceNumber,
-                IsUk = person.Address?.NonUK == false
+                IsUk = person.Address?.Country.IsUk ?? false
             };
         }
 
