@@ -27,7 +27,7 @@ namespace GLAA.Services.PublicRegister
             _licenceRepository = licenceRepository;
 
             _ukCountries = repository.GetAll<Country>().Select(x =>
-                new SelectListItem { Value = x.Name, Text = x.Name }).ToList();
+                new SelectListItem { Value = x.Name, Text = x.Name }).OrderBy(y => y.Text).ToList();
         }
 
         public PublicRegisterLicenceListViewModel BuildAllLicences()
