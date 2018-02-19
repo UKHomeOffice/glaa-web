@@ -3,9 +3,9 @@
 @if (Model?.SuppliesWorkersOutsideLicensableAreas != null && Model.SuppliesWorkersOutsideLicensableAreas.Value)
 {
     @Html.DisplayFor(m => m.SelectedSectors, "ListCheckboxListItem")
-    if (!string.IsNullOrEmpty(Model.OtherSector))
+    if (Model.SelectedSectors.Any(x => x.Name == "Other" && x.Checked) && !string.IsNullOrEmpty(Model.OtherSector))
     {
-        var sep = Model.SelectedSectors.Any() ? ", " : string.Empty;
+        var sep = Model.SelectedSectors.Any() ? ", - " : string.Empty;
         var other = $"{sep}{Model.OtherSector}";
         @other
     }
