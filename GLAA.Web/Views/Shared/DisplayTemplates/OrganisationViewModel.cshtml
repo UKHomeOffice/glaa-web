@@ -28,19 +28,19 @@
             }
         </tr>
         <tr>
-            <td>@Html.LabelFor(m => m.MultipleBranchViewModel.HasMultiples)</td>
-            <td>@Html.DisplayFor(m => m.MultipleBranchViewModel)</td>
-            @if (isEditable)
-            {
-              <td class="change-answer"><a href="@Url.Action("Part", "Organisation", new { id = 4 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.MultipleBranchViewModel.HasMultiples)</span></a></td>
-            }
-        </tr>
-        <tr>
             <td>@Html.LabelFor(m => m.PscControlledViewModel.IsPSCControlled)</td>
             <td>@Html.DisplayFor(m => m.PscControlledViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "Organisation", new { id = 5 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PscControlledViewModel.IsPSCControlled)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "Organisation", new { id = 4 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PscControlledViewModel.IsPSCControlled)</span></a></td>
+            }
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.MultipleBranchViewModel.HasMultiples)</td>
+            <td>@Html.DisplayFor(m => m.MultipleBranchViewModel)</td>
+            @if (isEditable)
+            {
+                <td class="change-answer"><a href="@Url.Action("Part", "Organisation", new { id = 5 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.MultipleBranchViewModel.HasMultiples)</span></a></td>
             }
         </tr>
         <tr>
