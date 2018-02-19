@@ -428,7 +428,7 @@ namespace GLAA.Domain
 
             if (!context.Countries.Any())
             {
-                context.Countries.AddRange(countries.Select(c => new Country {Name = c}));
+                context.Countries.AddRange(countries.Select(c => new Country {Name = c, IsUk = c.StartsWith("UK ")}));
                 context.SaveChanges();
             }
 

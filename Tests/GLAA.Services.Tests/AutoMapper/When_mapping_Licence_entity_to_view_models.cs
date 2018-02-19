@@ -88,6 +88,7 @@ namespace GLAA.Services.Tests.AutoMapper
             inputPerson.DateOfBirth = expectedDateOfBirth;
             inputPerson.TownOfBirth = expectedTown;
             inputPerson.CountryOfBirthId = expectedCountry;
+            inputPerson.CountryOfBirth = new Country {Id = expectedCountry, IsUk = true};
             inputPerson.JobTitle = expectedJobTitle;
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension = expectedBusExt;
@@ -137,6 +138,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth.DateOfBirth.Date);
             Assert.AreEqual(expected.TownOfBirth, actual.TownOfBirth.TownOfBirth);
             Assert.AreEqual(expected.CountryOfBirthId, actual.CountryOfBirth.CountryOfBirthId);
+            Assert.AreEqual(expected.CountryOfBirth.IsUk, actual.IsUk);
             Assert.AreEqual(expected.JobTitle, actual.JobTitle.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber, actual.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension, actual.BusinessExtension.BusinessExtension);

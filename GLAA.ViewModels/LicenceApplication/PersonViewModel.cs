@@ -31,6 +31,8 @@ namespace GLAA.ViewModels.LicenceApplication
             PreviousLicenceViewModel = new PreviousLicenceViewModel();
         }
 
+        public bool IsUk { get; set; }
+
         public FullNameViewModel FullName { get; set; }
         public AlternativeFullNameViewModel AlternativeName { get; set; }
         public DateOfBirthViewModel DateOfBirth { get; set; }

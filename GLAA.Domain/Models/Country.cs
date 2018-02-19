@@ -10,6 +10,8 @@ namespace GLAA.Domain.Models
 
         public string Name { get; set; }
 
+        public bool IsUk { get; set; }
+
         public virtual ICollection<Address> Addresses { get; set; }
     }
 }
