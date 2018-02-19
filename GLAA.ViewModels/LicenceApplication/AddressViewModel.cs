@@ -7,6 +7,12 @@ namespace GLAA.ViewModels.LicenceApplication
 {
     public class AddressViewModel : IValidatable, IId, INeedCountries, INeedCounties
     {
+        public AddressViewModel()
+        {
+            Countries = new List<SelectListItem>();
+            Counties = new List<SelectListItem>();
+        }
+
         public int Id { get; set; }
         [Required]
         [Display(Name = "Postcode")]
@@ -31,6 +37,7 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public IEnumerable<SelectListItem> Countries { get; set; }
         public IEnumerable<SelectListItem> Counties { get; set; }
+
         public void Validate()
         {
             if (NonUK)
@@ -53,6 +60,11 @@ namespace GLAA.ViewModels.LicenceApplication
 
     public class AddressPageViewModel : INeedCountries, INeedCounties, IValidatable
     {
+        public AddressPageViewModel()
+        {
+            Address = new AddressViewModel();
+        }
+
         [Required]
         [Display(Name = "Postcode")]
         public string PostCodeLookup { get; set; }

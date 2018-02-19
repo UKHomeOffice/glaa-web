@@ -583,6 +583,7 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.VATStatusViewModel.VATRegistrationDate.Date, result.VATRegistrationDate);
 
             Assert.AreEqual(input.PAYEStatusViewModel.HasPAYENumber, result.HasPAYENumber);
+            // TODO: Why is this failing?
             Assert.AreEqual(input.PAYEStatusViewModel.PAYENumbers.First().PAYENumber, result.PAYENumbers.First().Number);
             Assert.AreEqual(input.PAYEStatusViewModel.PAYENumbers.First().PAYERegistrationDate.Date, result.PAYENumbers.First().RegistrationDate);
         }

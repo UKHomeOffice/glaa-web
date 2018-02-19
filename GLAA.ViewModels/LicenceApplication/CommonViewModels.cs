@@ -16,7 +16,16 @@ namespace GLAA.ViewModels.LicenceApplication
             new SelectListItem { Text = "No", Value = "false"}
         };
     }
-    
+
+    public class ValidatableYesNoViewModel : Validatable
+    {
+        public List<SelectListItem> YesNo { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Yes", Value = "true"},
+            new SelectListItem { Text = "No", Value = "false"}
+        };
+    }
+
     public class FullNameViewModel 
     {
         [Required]

@@ -14,6 +14,7 @@ namespace GLAA.ViewModels.LicenceApplication
             CompaniesHouseRegistrationViewModel = new CompaniesHouseRegistrationViewModel();
             VATStatusViewModel = new VATStatusViewModel();
             TaxReferenceViewModel = new TaxReferenceViewModel();
+            PAYEStatusViewModel = new PAYEStatusViewModel();
         }
 
         public LegalStatusEnum LegalStatus { get; set; }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class PersonViewModel : IPersonViewModel, INeedCountries, INeedCounties
+    public class PersonViewModel : Validatable, IPersonViewModel, INeedCountries, INeedCounties
     {
         private IEnumerable<SelectListItem> countries;
 
