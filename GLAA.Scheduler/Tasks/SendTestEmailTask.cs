@@ -25,17 +25,17 @@ namespace GLAA.Scheduler.Tasks
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            logger.LogTimestamped(LogLevel.Information, $"Task Started: Send Test Email");
+            logger.LogWithTimestamp(LogLevel.Information, $"Task Started: Send Test Email");
             var msg = new NotifyMailMessage("dmcdonald@bmtdsl.co.uk", new Dictionary<string, dynamic>
             {
                 {"full_name", "Doug"},
-                {"confirm_email_link", "megh"}
+                {"confirm_email_link", "na"}
             });
 
             var template = configuration.GetSection("GOVNotify:EmailTemplates")["ConfirmEmail"];
             var success = emailService.Send(msg, template);
             var successMessage = success ? "SUCCESS" : "FAILED";
-            logger.LogTimestamped(LogLevel.Information, $"Task Completed: Send Test Email : {successMessage}");
+            logger.LogWithTimestamp(LogLevel.Information, $"Task Completed: Send Test Email : {successMessage}");
         }
     }
 }

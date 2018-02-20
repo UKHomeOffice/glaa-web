@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Notify.Client;
 using Notify.Exceptions;
 using GLAA.ViewModels;
@@ -29,13 +28,13 @@ namespace GLAA.Services
                     null,
                     null);
 
-                logger.LogTimestamped(LogLevel.Information, $"Email sent to GOV.Notify : Address : {msg.To} : Success");
+                logger.LogWithTimestamp(LogLevel.Information, $"Email sent to GOV.Notify : Address : {msg.To} : Success");
                 return true;
 
             }
             catch (NotifyClientException ex)
             {
-                logger.LogTimestamped(LogLevel.Error, $"Email sending to GOV.Notify FAILED : Message: {ex.Message}", ex);
+                logger.LogWithTimestamp(LogLevel.Error, $"Email sending to GOV.Notify FAILED : Message: {ex.Message}", ex);
                 return false;
             }
         }
