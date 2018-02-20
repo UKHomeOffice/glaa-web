@@ -67,6 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GLAA.Scheduler\GLAA.Scheduler.csproj" />
     <ProjectReference Include="..\GLAA.Services\GLAA.Services.csproj" />
     <ProjectReference Include="..\GLAA.ViewModels\GLAA.ViewModels.csproj" />
   </ItemGroup>
