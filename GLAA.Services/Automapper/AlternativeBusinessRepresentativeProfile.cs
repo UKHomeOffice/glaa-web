@@ -24,11 +24,9 @@ namespace GLAA.Services.Automapper
             
             CreateMap<AlternativeBusinessRepresentative, AlternativeBusinessRepresentativeViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
-                .ForMember(x => x.NationalInsuranceNumber, opt => opt.ResolveUsing(ProfileHelpers.NationalInsuranceNumberResolver))
+                .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver))
                 .ForMember(x => x.FullName, opt => opt.ResolveUsing(ProfileHelpers.FullNameResolver))
                 .ForMember(x => x.AlternativeName, opt => opt.ResolveUsing(ProfileHelpers.AlternativeFullNameResolver))
-                .ForMember(x => x.TownOfBirth, opt => opt.ResolveUsing(ProfileHelpers.TownOfBirthResolver))
-                .ForMember(x => x.CountryOfBirth, opt => opt.ResolveUsing(ProfileHelpers.CountryOfBirthResolver))
                 .ForMember(x => x.JobTitle, opt => opt.ResolveUsing(ProfileHelpers.JobTitleResolver))
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.ResolveUsing(ProfileHelpers.BusinessPhoneNumberResolver))
                 .ForMember(x => x.BusinessExtension, opt => opt.ResolveUsing(ProfileHelpers.BusinessExtensionResolver))
@@ -47,8 +45,14 @@ namespace GLAA.Services.Automapper
             CreateMap<AlternativeBusinessRepresentative, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);
 
-            CreateMap<AlternativeBusinessRepresentative, NationalInsuranceNumberViewModel>()
-                .ConvertUsing(ProfileHelpers.NationalInsuranceNumberResolver);
+            CreateMap<AlternativeBusinessRepresentative, BirthDetailsViewModel>()
+                .ConvertUsing(ProfileHelpers.BirthDetailsResolver);
+
+            //CreateMap<AlternativeBusinessRepresentative, NationalInsuranceNumberViewModel>()
+            //    .ConvertUsing(ProfileHelpers.NationalInsuranceNumberResolver);
+
+            //CreateMap<AlternativeBusinessRepresentative, SocialSecurityNumberViewModel>()
+            //    .ConvertUsing(ProfileHelpers.SocialSecurityNumberResolver);
 
             CreateMap<AlternativeBusinessRepresentativeViewModel, AlternativeBusinessRepresentative>()
                 .ForMember(x => x.Licence, opt => opt.Ignore())
@@ -58,14 +62,15 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasAlternativeName, opt => opt.MapFrom(y => y.AlternativeName.HasAlternativeName))
                 .ForMember(x => x.AlternativeName, opt => opt.MapFrom(y => y.AlternativeName.AlternativeName))
                 .ForMember(x => x.DateOfBirth, opt => opt.MapFrom(y => y.DateOfBirth.DateOfBirth.Date))
-                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.TownOfBirth.TownOfBirth))
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.CountryOfBirth.CountryOfBirth))
+                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth))
+                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth))
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y.JobTitle.JobTitle))
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.MapFrom(y => y.BusinessPhoneNumber.BusinessPhoneNumber))
                 .ForMember(x => x.BusinessExtension, opt => opt.MapFrom(y => y.BusinessExtension.BusinessExtension))
                 .ForMember(x => x.PersonalEmailAddress, opt => opt.MapFrom(y => y.PersonalEmailAddress.PersonalEmailAddress))
                 .ForMember(x => x.PersonalMobileNumber, opt => opt.MapFrom(y => y.PersonalMobileNumber.PersonalMobileNumber))                
-                .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumber.NationalInsuranceNumber))
+                .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber))
+                .ForMember(x => x.SocialSecurityNumber, opt => opt.MapFrom(y => y.BirthDetailsViewModel.SocialSecurityNumberViewModel.SocialSecurityNumber))
                 .ForMember(x => x.Nationality, opt => opt.MapFrom(y => y.Nationality.Nationality))
                 .ForMember(x => x.HasPassport, opt => opt.MapFrom(y => y.PassportViewModel.HasPassport))
                 .ForMember(x => x.RequiresVisa, opt => opt.MapFrom(y => y.RightToWorkViewModel.RequiresVisa))
@@ -127,6 +132,10 @@ namespace GLAA.Services.Automapper
 
             CreateMap<NationalInsuranceNumberViewModel, AlternativeBusinessRepresentative>()
                 .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumber))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            CreateMap<SocialSecurityNumberViewModel, AlternativeBusinessRepresentative>()
+                .ForMember(x => x.SocialSecurityNumber, opt => opt.MapFrom(y => y.SocialSecurityNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<NationalityViewModel, AlternativeBusinessRepresentative>()

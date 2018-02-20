@@ -1,56 +1,28 @@
-﻿@using GLAA.Web.FormLogic
-@model GLAA.ViewModels.LicenceApplication.OffencesAwaitingTrialViewModel
+﻿@model GLAA.ViewModels.LicenceApplication.DirectorOrPartnerViewModel
 
 @{
-    ViewBag.Title = "Offences that are awaiting trial or decisions on an alternative sanctions or penalties";
-    var conjunction = Model.OffencesAwaitingTrial.Any() ? "another" : "an";
+    ViewBag.Title = "Director or Partner Summary";
 }
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "24" } })
-
-@using (Html.BeginForm("ReviewDirectorOrPartnerOffencesAwaitingTrial", "DirectorOrPartner", FormMethod.Post))
+@using (Html.BeginForm("DeleteDirectorOrPartner", "DirectorOrPartner"))
 {
-    <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
+    <main id="content" role="main">
+        <div class="grid-row">
+            <div class="column-two-thirds">
+                @Html.Partial("_GdsValidationSummary")
+            </div>
+            <div class="column-full">
+                <h1 class="heading-large">
+                    Check your answers for this person
+                </h1>
+                <p><button type="submit" class="button button-add-another">Remove this person</button></p>
+                @Html.DisplayFor(m => m)
+                <h2 class="heading-medium">Complete this section</h2>
+                <p class="text">Once you are happy with your answers for this director or partner, review your answers for the section.</p>
+                <div class="form-group">
+                    <a href="@Url.Action("Part", "DirectorsOrPartners", new { id = 3 })">Return to directors and partners list</a>
+                </div>
+            </div>
         </div>
-        <div class="column-full">
-            <h1 class="heading-large">
-                @ViewBag.Title
-            </h1>
-        </div>
-    </div>
-    <table class="check-your-answers" id="OffencesAwaitingTrial">
-        <thead>
-            <tr>
-                <th colspan="3">Alleged offences / sanctions / penalties</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var uc in Model.OffencesAwaitingTrial)
-            {
-                <tr>
-                    <td>@uc.Description</td>
-                    <td>@uc.Date.ToString()</td>
-                    <td class="change-answer"><a href="@Url.Action("AddOffenceAwaitingTrial", "Licence", new { section = FormSection.DirectorOrPartner, id = uc.Id })">Change or remove<span class="visually-hidden"> @uc.Description</span></a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <div class="grid-row">
-        <div class="column-full">
-            <p>
-                <a class="button button-add-another" href="@Url.Action("AddOffenceAwaitingTrial", "Licence", new { section = FormSection.DirectorOrPartner, id = 0 })">Add @conjunction offence, alternative sanction or penalty</a>
-            </p>
-        </div>
-    </div>
-    <div class="grid-row">
-        <div class="column-full">
-            <p>
-                <button type="submit" class="button">Save and continue</button>
-            </p>
-        </div>
-    </div>
-    @Html.HiddenFor(m => m.HasOffencesAwaitingTrial)
+    </main>
 }
-

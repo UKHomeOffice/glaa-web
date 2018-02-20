@@ -130,12 +130,31 @@ namespace GLAA.Services.Automapper
             };
         }
 
+        public static BirthDetailsViewModel BirthDetailsResolver(Person person)
+        {
+            return new BirthDetailsViewModel
+            {
+                NationalInsuranceNumberViewModel = NationalInsuranceNumberResolver(person),
+                CountryOfBirthViewModel = CountryOfBirthResolver(person),
+                TownOfBirthViewModel = TownOfBirthResolver(person),
+                SocialSecurityNumberViewModel = SocialSecurityNumberResolver(person)
+            };
+        }
+
         public static NationalInsuranceNumberViewModel NationalInsuranceNumberResolver(Person person)
         {
             return new NationalInsuranceNumberViewModel
             {
                 NationalInsuranceNumber = person.NationalInsuranceNumber,
                 IsUk = person.Address?.NonUK == false
+            };
+        }
+
+        public static SocialSecurityNumberViewModel SocialSecurityNumberResolver(Person person)
+        {
+            return new SocialSecurityNumberViewModel
+            {
+                SocialSecurityNumber=  person.SocialSecurityNumber,
             };
         }
 

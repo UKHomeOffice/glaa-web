@@ -2,7 +2,7 @@
     ViewBag.Title = "Alternative Business Representative - Part 4";
 }
 
-@model GLAA.ViewModels.LicenceApplication.TownOfBirthViewModel
+@model GLAA.ViewModels.LicenceApplication.BirthDetailsViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "4" } })
 
@@ -18,7 +18,36 @@
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.TownOfBirth)
+            @Html.TextFormGroupFor(x => x.TownOfBirthViewModel.TownOfBirth)
+        </div>
+    </div>
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                What country were you born in?
+            </h1>
+        </div>
+        <div class="column-two-thirds">
+            @Html.TextFormGroupFor(x => x.CountryOfBirthViewModel.CountryOfBirth)
+        </div>
+    </div>
+
+    @*@Html.HiddenFor(x => x.IsUk)*@
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                What is your national insurance number?
+            </h1>
+        </div>
+        <div class="column-two-thirds">
+            @Html.TextFormGroupFor(x => x.NationalInsuranceNumberViewModel.NationalInsuranceNumber)
         </div>
     </div>
 

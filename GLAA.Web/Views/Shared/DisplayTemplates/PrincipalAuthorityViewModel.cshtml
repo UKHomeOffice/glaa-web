@@ -47,19 +47,35 @@
         }
     </tr>
     <tr>
-        <td>@Html.LabelFor(m => m.TownOfBirth.TownOfBirth)</td>
-        <td>@Html.DisplayFor(m => m.TownOfBirth.TownOfBirth)</td>
+        <td>@Html.LabelFor(m => m.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth)</td>
+        <td>@Html.DisplayFor(m => m.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 7 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.TownOfBirth.TownOfBirth)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 7 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth)</span></a></td>
         }
     </tr>
     <tr>
-        <td>@Html.LabelFor(m => m.CountryOfBirth.CountryOfBirth)</td>
-        <td>@Html.DisplayFor(m => m.CountryOfBirth.CountryOfBirth)</td>
+        <td>@Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth)</td>
+        <td>@Html.DisplayFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 8 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.CountryOfBirth.CountryOfBirth)</span></a></td>
+            <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 7 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth)</span></a></td>
+        }
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber)</td>
+        <td>@Html.DisplayFor(m => m.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber)</td>
+        @if (isEditable)
+        {
+            <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 7 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber)</span></a></td>
+        }
+    </tr>
+    <tr>
+        <td>@Html.LabelFor(m => m.BirthDetailsViewModel.SocialSecurityNumberViewModel.SocialSecurityNumber)</td>
+        <td>@Html.DisplayFor(m => m.BirthDetailsViewModel.SocialSecurityNumberViewModel.SocialSecurityNumber)</td>
+        @if (isEditable)
+        {
+            <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 7 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.SocialSecurityNumberViewModel.SocialSecurityNumber)</span></a></td>
         }
     </tr>
     <tr>
@@ -67,7 +83,7 @@
         <td>@Html.DisplayFor(m => m.JobTitle.JobTitle)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 9 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.JobTitle.JobTitle)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 8 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.JobTitle.JobTitle)</span></a></td>
         }
     </tr>
     <tr>
@@ -75,7 +91,7 @@
         <td>@Html.DisplayFor(m => m.Address)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 10 })">Change<span class="visually-hidden"> Address</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 9 })">Change<span class="visually-hidden"> Address</span></a></td>
         }
     </tr>
     <tr>
@@ -83,7 +99,7 @@
         <td>@Html.DisplayFor(m => m.BusinessPhoneNumber.BusinessPhoneNumber)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 11 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessPhoneNumber.BusinessPhoneNumber)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 10 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessPhoneNumber.BusinessPhoneNumber)</span></a></td>
         }
     </tr>
     <tr>
@@ -91,7 +107,7 @@
         <td>@Html.DisplayFor(m => m.BusinessExtension.BusinessExtension)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 12 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessExtension.BusinessExtension)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 11 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessExtension.BusinessExtension)</span></a></td>
         }
     </tr>
     <tr>
@@ -99,7 +115,7 @@
         <td>@Html.DisplayFor(m => m.PersonalMobileNumber.PersonalMobileNumber)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 13 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PersonalMobileNumber.PersonalMobileNumber)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 12 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PersonalMobileNumber.PersonalMobileNumber)</span></a></td>
         }
     </tr>
     <tr>
@@ -107,15 +123,7 @@
         <td>@Html.DisplayFor(m => m.PersonalEmailAddress.PersonalEmailAddress)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 14 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PersonalEmailAddress.PersonalEmailAddress)</span></a></td>
-        }
-    </tr>
-    <tr>
-        <td>@Html.LabelFor(m => m.NationalInsuranceNumber.NationalInsuranceNumber)</td>
-        <td>@Html.DisplayFor(m => m.NationalInsuranceNumber.NationalInsuranceNumber)</td>
-        @if (isEditable)
-        {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 15 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.NationalInsuranceNumber.NationalInsuranceNumber)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 13 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PersonalEmailAddress.PersonalEmailAddress)</span></a></td>
         }
     </tr>
     <tr>
@@ -123,7 +131,7 @@
         <td>@Html.DisplayFor(m => m.Nationality.Nationality)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 16 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Nationality.Nationality)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 14 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.Nationality.Nationality)</span></a></td>
         }
     </tr>
     <tr>
@@ -131,7 +139,7 @@
         <td>@Html.DisplayFor(m => m.PassportViewModel)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 17 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PassportViewModel.HasPassport)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 15 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PassportViewModel.HasPassport)</span></a></td>
         }
     </tr>
     <tr>
@@ -139,7 +147,7 @@
         <td>@Html.DisplayFor(m => m.PrincipalAuthorityRightToWorkViewModel)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 18 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PrincipalAuthorityRightToWorkViewModel.RightToWorkInUk)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 16 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PrincipalAuthorityRightToWorkViewModel.RightToWorkInUk)</span></a></td>
         }
     </tr>
     <tr>
@@ -147,7 +155,7 @@
         <td>@Html.DisplayFor(m => m.UndischargedBankruptViewModel)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 19 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.UndischargedBankruptViewModel.IsUndischargedBankrupt)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 17 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.UndischargedBankruptViewModel.IsUndischargedBankrupt)</span></a></td>
         }
     </tr>
     <tr>
@@ -155,7 +163,7 @@
         <td>@Html.DisplayFor(m => m.DisqualifiedDirectorViewModel)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 20 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 18 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
         }
     </tr>
     <tr>
@@ -163,7 +171,7 @@
         <td>@Html.DisplayFor(m => m.RestraintOrdersViewModel.HasRestraintOrders, "NullableBoolean")</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 21 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 19 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
         }
     </tr>
     @if (Model.RestraintOrdersViewModel.CanView(Model))
@@ -173,7 +181,7 @@
             <td>@Html.DisplayFor(m => m.RestraintOrdersViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 22 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 20 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
             }
         </tr>
     }
@@ -182,7 +190,7 @@
         <td>@Html.DisplayFor(m => m.UnspentConvictionsViewModel.HasUnspentConvictions, "NullableBoolean")</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 23 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 21 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
         }
     </tr>
     @if (Model.UnspentConvictionsViewModel.CanView(Model))
@@ -192,7 +200,7 @@
             <td>@Html.DisplayFor(m => m.UnspentConvictionsViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 24 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 22 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
             }
         </tr>
     }
@@ -201,7 +209,7 @@
         <td>@Html.DisplayFor(m => m.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial, "NullableBoolean")</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 25 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 23 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
         }
     </tr>
     @if (Model.OffencesAwaitingTrialViewModel.CanView(Model))
@@ -211,7 +219,7 @@
             <td>@Html.DisplayFor(m => m.OffencesAwaitingTrialViewModel)</td>
             @if (isEditable)
             {
-              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 26 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+              <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 24 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
             }
         </tr>
     }
@@ -220,7 +228,7 @@
         <td>@Html.DisplayFor(m => m.PreviousLicenceViewModel)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 27 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 25 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.DisqualifiedDirectorViewModel.IsDisqualifiedDirector)</span></a></td>
         }
     </tr>
     <tr>
@@ -228,7 +236,7 @@
         <td>@Html.DisplayFor(m => m.PreviousExperience.PreviousExperience)</td>
         @if (isEditable)
         {
-          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 28 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PreviousExperience.PreviousExperience)</span></a></td>
+          <td class="change-answer"><a href="@Url.Action("Part", "PrincipalAuthority", new { id = 26 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.PreviousExperience.PreviousExperience)</span></a></td>
         }
     </tr>
     </tbody>

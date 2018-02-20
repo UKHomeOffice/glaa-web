@@ -46,6 +46,12 @@ namespace GLAA.Web.Controllers
                 Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value, true);
             }
 
+            if (ViewData["IsSubmitted"] == null)
+            {
+                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
+            }
+
             return View(GetLastViewPath(FormSection.DirectorOrPartner), model);
         }
 

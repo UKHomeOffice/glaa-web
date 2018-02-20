@@ -429,7 +429,7 @@ namespace GLAA.Domain
                 var submittedStatus = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(submittedStatus);
@@ -722,7 +722,6 @@ namespace GLAA.Domain
                     {
                         submittedStatus
                     },
-                    CurrentSubmittedStatusChange = submittedStatus,
                     CurrentStatusChange = submittedStatus
                 };
 
