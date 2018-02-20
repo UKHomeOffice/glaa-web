@@ -266,7 +266,7 @@ namespace GLAA.ViewModels.LicenceApplication
                 new CheckboxListItem {Id = 2, Name = "Horticulture", Checked = false},
                 new CheckboxListItem {Id = 3, Name = "Food Packaging and Processing", Checked = false},
                 new CheckboxListItem {Id = 4, Name = "Shellfish Gathering", Checked = false},
-                new CheckboxListItem {Id = 5, Name = "Other", Checked = false},
+                new CheckboxListItem {Id = 5, Name = "Other", Checked = false}
             };
         }
 
