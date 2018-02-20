@@ -24,7 +24,7 @@
             @Model.AddressLine2
         }
 
-        if (!string.IsNullOrWhiteSpace(Model.AddressLine2))
+        if (!string.IsNullOrWhiteSpace(Model.AddressLine3))
         {
             <br />
             @Model.AddressLine3
@@ -36,13 +36,13 @@
             @Model.Town
         }
         <br />
-        @Model.County
+        @(Model.Counties.SingleOrDefault(c => int.Parse(c.Value) == Model.CountyId)?.Text ?? string.Empty)
         <br />
         @Model.Postcode
         if (Model.NonUK)
         {
             <br />
-            @Model.Country
+            @(Model.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.CountryId)?.Text ?? string.Empty)
         }
     }
 }

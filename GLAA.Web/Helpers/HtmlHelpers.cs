@@ -72,6 +72,13 @@ namespace GLAA.Web.Core.Helpers
             return BuildFormGroupForControl(html, expression, html.EditorFor(expression, "_NullableTimeSpan"));
         }
 
+        public static IHtmlContent DropDownFormGroupFor<TModel, TResult>(this IHtmlHelper<TModel> html,
+            Expression<Func<TModel, TResult>> expression, IEnumerable<SelectListItem> items)
+        {
+            var ddl = html.DropDownListFor(expression, items.OrderBy(i => i.Text).ToArray(), "", new { @class = "form-control"});
+            return BuildFormGroupForControl(html, expression, ddl);
+        }
+
         public static IHtmlContent RequiredCheckbox<TModel>(this IHtmlHelper<TModel> html,
             Expression<Func<TModel, bool>> expression)
         {

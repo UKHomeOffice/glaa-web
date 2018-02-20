@@ -1,9 +1,12 @@
-﻿using GLAA.Domain;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class PersonViewModel : IPersonViewModel
+    public class PersonViewModel : Validatable, IPersonViewModel, INeedCountries, INeedCounties
     {
+        private IEnumerable<SelectListItem> countries;
+
         public PersonViewModel()
         {
             FullName = new FullNameViewModel();
@@ -28,6 +31,8 @@ namespace GLAA.ViewModels.LicenceApplication
             PreviousLicenceViewModel = new PreviousLicenceViewModel();
         }
 
+        public bool IsUk { get; set; }
+
         public FullNameViewModel FullName { get; set; }
         public AlternativeFullNameViewModel AlternativeName { get; set; }
         public DateOfBirthViewModel DateOfBirth { get; set; }
@@ -49,5 +54,22 @@ namespace GLAA.ViewModels.LicenceApplication
         public UnspentConvictionsViewModel UnspentConvictionsViewModel { get; set; }
         public OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
         public PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            set => Address.Counties = value;
+            get => Address.Counties;
+        }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            get => countries;
+            set
+            {
+                countries = value;
+                Address.Countries = value;
+                CountryOfBirth.Countries = value;
+            }
+        }
     }
 }

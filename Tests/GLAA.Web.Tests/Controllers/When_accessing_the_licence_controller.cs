@@ -21,7 +21,7 @@ namespace GLAA.Web.Tests.Controllers
 
             licenceStatusViewModelBuilder.BuildRandomStatus().Returns(x => new LicenceStatusViewModel());
 
-            controller = new LicenceController(null, licenceViewModelBuilder, null, licenceStatusViewModelBuilder, null, new ConstantService(), null);
+            controller = new LicenceController(null, licenceViewModelBuilder, null, licenceStatusViewModelBuilder, null, new ConstantService(), null, null);
         }
     }
 }

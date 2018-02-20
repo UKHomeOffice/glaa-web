@@ -32,8 +32,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
-                Country = "country",
+                County = new County{ Name = "county", Id = 1 },
+                Country = new Country { Name = "country", Id = 1 },
                 Town = "town",
                 Postcode = "postcode"
             };
@@ -43,7 +43,7 @@ namespace GLAA.Services.Tests.AutoMapper
             var expectedHasAltName = true;
             var expectedDateOfBirth = new DateTime(2000, 1, 1);
             var expectedTown = "town";
-            var expectedCountry = "country";
+            var expectedCountry = 1;
             var expectedJobTitle = "job";
 
             var expectedBusPhoneNo = "1";
@@ -87,7 +87,8 @@ namespace GLAA.Services.Tests.AutoMapper
             inputPerson.HasAlternativeName = expectedHasAltName;
             inputPerson.DateOfBirth = expectedDateOfBirth;
             inputPerson.TownOfBirth = expectedTown;
-            inputPerson.CountryOfBirth = expectedCountry;
+            inputPerson.CountryOfBirthId = expectedCountry;
+            inputPerson.CountryOfBirth = new Country {Id = expectedCountry, IsUk = true};
             inputPerson.JobTitle = expectedJobTitle;
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension = expectedBusExt;
@@ -136,7 +137,8 @@ namespace GLAA.Services.Tests.AutoMapper
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth.DateOfBirth.Date);
             Assert.AreEqual(expected.TownOfBirth, actual.TownOfBirth.TownOfBirth);
-            Assert.AreEqual(expected.CountryOfBirth, actual.CountryOfBirth.CountryOfBirth);
+            Assert.AreEqual(expected.CountryOfBirthId, actual.CountryOfBirth.CountryOfBirthId);
+            Assert.AreEqual(expected.CountryOfBirth.IsUk, actual.IsUk);
             Assert.AreEqual(expected.JobTitle, actual.JobTitle.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber, actual.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension, actual.BusinessExtension.BusinessExtension);
@@ -172,8 +174,8 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AddressLine1, actual.AddressLine1);
             Assert.AreEqual(expected.AddressLine2, actual.AddressLine2);
             Assert.AreEqual(expected.AddressLine3, actual.AddressLine3);
-            Assert.AreEqual(expected.Country, actual.Country);
-            Assert.AreEqual(expected.County, actual.County);
+            Assert.AreEqual(expected.Country.Id, actual.CountryId);
+            Assert.AreEqual(expected.County.Id, actual.CountyId);
             Assert.AreEqual(expected.Postcode, actual.Postcode);
             Assert.AreEqual(expected.Town, actual.Town);
         }
@@ -181,13 +183,13 @@ namespace GLAA.Services.Tests.AutoMapper
         [TestMethod]
         public void it_should_map_the_country_entity_to_the_country_view_model()
         {
-            var country = new Country
+            var country = new WorkerCountry
             {
                 Id = 1,
                 Name = "Test Country"
             };
 
-            var result = this.mapper.Map<CountryViewModel>(country);
+            var result = this.mapper.Map<WorkerCountryViewModel>(country);
 
             Assert.AreEqual(country.Id, result.Id);
             Assert.AreEqual(country.Name, result.Name);
@@ -265,8 +267,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
-                Country = "country",
+                County = new County{Name = "county"},
+                Country = new Country {Name = "country"},
                 Town = "town",
                 Postcode = "postcode"
             };
@@ -325,6 +327,9 @@ namespace GLAA.Services.Tests.AutoMapper
             var input = new AlternativeBusinessRepresentative();
 
             AddPersonData(input);
+
+            var conf = new MapperConfiguration(cfg => cfg.CreateMap<Country, Country>());
+            var exec = conf.BuildExecutionPlan(typeof(Country), typeof(Country));
 
             var result = this.mapper.Map<AlternativeBusinessRepresentativeViewModel>(input);
 
@@ -580,12 +585,12 @@ namespace GLAA.Services.Tests.AutoMapper
                         IndustryId = expectedIndustry
                     }
                 },
-                OperatingCountries = new List<LicenceCountry>
+                OperatingCountries = new List<LicenceWorkerCountry>
                 {
-                    new LicenceCountry
+                    new LicenceWorkerCountry
                     {
                         LicenceId = licenceId,
-                        CountryId = expectedCountry
+                        WorkerCountryId = expectedCountry
                     }
                 }
             };
@@ -620,8 +625,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
-                Country = "country",
+                County = new County{Name = "county"},
+                Country = new Country { Name = "country" },
                 Town = "town",
                 Postcode = "postcode"
             };

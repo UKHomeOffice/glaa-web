@@ -18,7 +18,8 @@ namespace GLAA.Domain
 
         string CountyOfBirth { get; set; }
 
-        string CountryOfBirth { get; set; }
+        int? CountryOfBirthId { get; set; }
+        Country CountryOfBirth { get; set; }
 
         string JobTitle { get; set; }
 

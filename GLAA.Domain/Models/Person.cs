@@ -22,7 +22,9 @@ namespace GLAA.Domain.Models
 
         public string CountyOfBirth { get; set; }
 
-        public string CountryOfBirth { get; set; }
+        public int? CountryOfBirthId { get; set; }
+        [ForeignKey(nameof(CountryOfBirthId))]
+        public virtual Country CountryOfBirth { get; set; }
 
         public string JobTitle { get; set; }
 
