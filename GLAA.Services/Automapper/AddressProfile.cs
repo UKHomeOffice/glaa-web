@@ -13,8 +13,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(y => y.County.Id))
                 .ForMember(x => x.NonUK, opt => opt.MapFrom(y => !y.Country.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore())
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore());
 
             CreateMap<AddressViewModel, Address>()
                 .ForMember(x => x.Id, opt => opt.Ignore())

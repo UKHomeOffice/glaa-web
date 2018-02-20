@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
@@ -17,8 +16,8 @@ namespace GLAA.Web.Controllers
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(session, licenceApplicationViewModelBuilder,
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, rdp)
         {
         }
 
@@ -39,6 +38,8 @@ namespace GLAA.Web.Controllers
         private IActionResult OrganisationDetailsPost<T>(T model, int submittedPageId)
         {
             Session.SetSubmittedPage(FormSection.OrganisationDetails, submittedPageId);
+
+            model = RepopulateDropdowns(model);
 
             if (!ModelState.IsValid)
             {
