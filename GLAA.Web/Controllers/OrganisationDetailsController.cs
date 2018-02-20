@@ -23,7 +23,6 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        //public IActionResult Part(int id, bool? back = false, bool? nonuk = null, bool? manual = null)
         public IActionResult Part(int id, bool? back = false)
         {
             Session.SetLoadedPage(id);
