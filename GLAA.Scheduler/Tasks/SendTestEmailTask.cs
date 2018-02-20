@@ -13,19 +13,19 @@ namespace GLAA.Scheduler.Tasks
     {
         private IEmailService emailService;
         private IConfiguration configuration;
-        private ILogger logger;
-        public SendTestEmailTask(IEmailService emailService, IConfiguration configuration, ILoggerFactory loggerFactory)
+        private ILogger<SendTestEmailTask> logger;
+        public SendTestEmailTask(IEmailService emailService, IConfiguration configuration, ILogger<SendTestEmailTask> logger)
         {
             this.emailService = emailService;
             this.configuration = configuration;
-            logger = loggerFactory.CreateLogger<SendTestEmailTask>();
+            this.logger = logger;
         }
 
         public string Schedule => "* * * * *";
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            logger.LogWithTimestamp(LogLevel.Information, $"Task Started: Send Test Email");
+            logger.TimedLog(LogLevel.Information, $"Task Started: Send Test Email");
             var msg = new NotifyMailMessage("dmcdonald@bmtdsl.co.uk", new Dictionary<string, dynamic>
             {
                 {"full_name", "Doug"},
@@ -35,7 +35,7 @@ namespace GLAA.Scheduler.Tasks
             var template = configuration.GetSection("GOVNotify:EmailTemplates")["ConfirmEmail"];
             var success = emailService.Send(msg, template);
             var successMessage = success ? "SUCCESS" : "FAILED";
-            logger.LogWithTimestamp(LogLevel.Information, $"Task Completed: Send Test Email : {successMessage}");
+            logger.TimedLog(LogLevel.Information, $"Task Completed: Send Test Email : {successMessage}");
         }
     }
 }

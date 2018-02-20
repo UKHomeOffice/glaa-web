@@ -5,9 +5,9 @@ namespace GLAA.Services.Extensions
 {
     public static class ILoggerExtensions
     {
-        public static void LogWithTimestamp(this ILogger logger, LogLevel level, string message, Exception exception = null)
+        public static void TimedLog<T>(this ILogger<T> logger, LogLevel level, string message, Exception exception = null)
         {
-            logger.Log(level, 1, message, exception, (s, e) => DateTime.Now + " " + s.ToString());
+            logger.Log(level, 1, message, exception, (s, e) => $"{s}, {e}");
         }
     }
 }

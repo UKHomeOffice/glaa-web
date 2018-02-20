@@ -9,12 +9,12 @@ namespace GLAA.Services
     public class EmailService : IEmailService
     {
         private readonly NotificationClient client;
-        private readonly ILogger logger;
+        private readonly ILogger<EmailService> logger;
 
-        public EmailService(ILoggerFactory loggerFactory, string apiKey)
+        public EmailService(ILogger<EmailService> logger, string apiKey)
         {
             client = new NotificationClient(apiKey);
-            logger = loggerFactory.CreateLogger<EmailService>();            
+            this.logger = logger;            
         }
 
         public bool Send(NotifyMailMessage msg, string messageTemplate)
@@ -28,13 +28,13 @@ namespace GLAA.Services
                     null,
                     null);
 
-                logger.LogWithTimestamp(LogLevel.Information, $"Email sent to GOV.Notify : Address : {msg.To} : Success");
+                logger.TimedLog(LogLevel.Information, $"Email sent to GOV.Notify : Address : {msg.To} : Success");
                 return true;
 
             }
             catch (NotifyClientException ex)
             {
-                logger.LogWithTimestamp(LogLevel.Error, $"Email sending to GOV.Notify FAILED : Message: {ex.Message}", ex);
+                logger.TimedLog(LogLevel.Error, $"Email sending to GOV.Notify FAILED : Message: {ex.Message}", ex);
                 return false;
             }
         }

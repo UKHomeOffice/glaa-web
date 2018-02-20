@@ -137,7 +137,7 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
             services.AddTransient<IAdminStatusRecordsViewModelBuilder, AdminStatusRecordsViewModelBuilder>();
 
-            // Public Reigster
+            // public register
             services.AddTransient<IPublicRegisterViewModelBuilder, PublicRegisterViewModelBuilder>();
             services.AddTransient<IPublicRegisterPostDataHandler, PublicRegisterPostDataHandler>();
 
@@ -145,7 +145,7 @@ namespace GLAA.Web
 
             // notify
             services.AddTransient<IEmailService>(x => new EmailService(
-                services.BuildServiceProvider().GetService<ILoggerFactory>(),
+                services.BuildServiceProvider().GetService<ILogger<EmailService>>(),
                 Configuration.GetSection("GOVNotify")["APIKEY"]));
 
             // scheduled tasks
@@ -155,6 +155,9 @@ namespace GLAA.Web
                 Console.Write(args.Exception.Message);
                 args.SetObserved();
             });
+
+            // replace the default logged with a timed logger
+            services.Replace(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(TimedLogger<>)));
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
