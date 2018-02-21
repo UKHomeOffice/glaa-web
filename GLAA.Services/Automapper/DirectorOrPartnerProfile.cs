@@ -54,12 +54,6 @@ namespace GLAA.Services.Automapper
             CreateMap<DirectorOrPartner, BirthDetailsViewModel>()
                 .ConvertUsing(ProfileHelpers.BirthDetailsResolver);
 
-            //CreateMap<DirectorOrPartner, NationalInsuranceNumberViewModel>()
-            //    .ConvertUsing(ProfileHelpers.NationalInsuranceNumberResolver);
-
-            //CreateMap<DirectorOrPartner, SocialSecurityNumberViewModel>()
-            //    .ConvertUsing(ProfileHelpers.SocialSecurityNumberResolver);
-
             CreateMap<AlternativeFullNameViewModel, DirectorOrPartner>()                
                 .ForMember(x => x.AlternativeName, opt => opt.MapFrom(y => y.AlternativeName))
                 .ForMember(x => x.HasAlternativeName, opt => opt.MapFrom(y => y.HasAlternativeName))

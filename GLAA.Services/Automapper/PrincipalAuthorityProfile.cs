@@ -99,12 +99,6 @@ namespace GLAA.Services.Automapper
             CreateMap<PrincipalAuthority, BirthDetailsViewModel>()
                 .ConvertUsing(ProfileHelpers.BirthDetailsResolver);
 
-            //CreateMap<PrincipalAuthority, NationalInsuranceNumberViewModel>()
-            //    .ConvertUsing(ProfileHelpers.NationalInsuranceNumberResolver);
-
-            //CreateMap<PrincipalAuthority, SocialSecurityNumberViewModel>()
-            //    .ConvertUsing(ProfileHelpers.SocialSecurityNumberResolver);
-
             CreateMap<PrincipalAuthority, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);
 
