@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GLAA.Domain.Migrations
 {
-    public partial class initial_create : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -154,7 +154,6 @@ namespace GLAA.Domain.Migrations
                     AddressLine3 = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
                     CountyId = table.Column<int>(nullable: true),
-                    NonUK = table.Column<bool>(nullable: false),
                     Postcode = table.Column<string>(nullable: true),
                     Town = table.Column<string>(nullable: true)
                 },
@@ -404,6 +403,7 @@ namespace GLAA.Domain.Migrations
                     PersonalMobileNumber = table.Column<string>(nullable: true),
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
+                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true)
                 },
@@ -459,6 +459,7 @@ namespace GLAA.Domain.Migrations
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     PrincipalAuthorityId = table.Column<int>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
+                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true)
                 },
@@ -844,6 +845,7 @@ namespace GLAA.Domain.Migrations
                     PreviousExperience = table.Column<string>(nullable: true),
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
+                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true),
                     VisaNumber = table.Column<string>(nullable: true),

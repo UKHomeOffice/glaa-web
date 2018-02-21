@@ -14,41 +14,23 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What town were you born in?
+                @ViewBag.Title
             </h1>
         </div>
-        <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.TownOfBirthViewModel.TownOfBirth)
-        </div>
-    </div>
-
-    <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
-        </div>
-        <div class="column-full">
-            <h1 class="heading-large">
-                What country were you born in?
-            </h1>
-        </div>
-        <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.CountryOfBirthViewModel.CountryOfBirth)
-        </div>
-    </div>
-
-    @*@Html.HiddenFor(x => x.IsUk)*@
-    <div class="grid-row">
-        <div class="column-two-thirds">
-            @Html.Partial("_GdsValidationSummary")
-        </div>
-        <div class="column-full">
-            <h1 class="heading-large">
-                What is your national insurance number?
-            </h1>
-        </div>
-        <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.NationalInsuranceNumberViewModel.NationalInsuranceNumber)
-        </div>
+        <fieldset>
+            <div class="column-two-thirds">
+                @Html.TextFormGroupFor(x => x.TownOfBirthViewModel.TownOfBirth)
+            </div>
+            <div class="column-full">
+                @Html.DropDownFormGroupFor(x => x.CountryOfBirthViewModel.CountryOfBirthId, Model.CountryOfBirthViewModel.Countries)
+            </div>
+            <div class="column-full">
+                @Html.TextFormGroupFor(x => x.NationalInsuranceNumberViewModel.NationalInsuranceNumber, Model.NationalInsuranceNumberViewModel)
+            </div>
+            <div class="column-full">
+                @Html.TextFormGroupFor(x => x.SocialSecurityNumberViewModel.SocialSecurityNumber)
+            </div>
+        </fieldset>
     </div>
 
     <button type="submit" class="button">Save and continue</button>

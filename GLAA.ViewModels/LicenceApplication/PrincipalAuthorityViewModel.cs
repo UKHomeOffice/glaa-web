@@ -124,12 +124,4 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool IsRequired => RightToWorkInUk == PermissionToWorkEnum.HasVisa;
     }
-
-    public class BirthDetailsViewModel
-    {
-        public TownOfBirthViewModel TownOfBirthViewModel { get; set; }
-        public CountryOfBirthViewModel CountryOfBirthViewModel { get; set; }
-        public NationalInsuranceNumberViewModel NationalInsuranceNumberViewModel { get; set; }
-        public SocialSecurityNumberViewModel SocialSecurityNumberViewModel { get; set; }
-    }
 }

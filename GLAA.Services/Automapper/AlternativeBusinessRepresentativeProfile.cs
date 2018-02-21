@@ -24,7 +24,7 @@ namespace GLAA.Services.Automapper
             
             CreateMap<AlternativeBusinessRepresentative, AlternativeBusinessRepresentativeViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
-                .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver))
+                .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver<AlternativeBusinessRepresentativeViewModel>))
                 .ForMember(x => x.FullName, opt => opt.ResolveUsing(ProfileHelpers.FullNameResolver))
                 .ForMember(x => x.AlternativeName, opt => opt.ResolveUsing(ProfileHelpers.AlternativeFullNameResolver))
                 .ForMember(x => x.JobTitle, opt => opt.ResolveUsing(ProfileHelpers.JobTitleResolver))
@@ -66,7 +66,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.AlternativeName, opt => opt.MapFrom(y => y.AlternativeName.AlternativeName))
                 .ForMember(x => x.DateOfBirth, opt => opt.MapFrom(y => y.DateOfBirth.DateOfBirth.Date))
                 .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth))
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth))
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId))
+                .ForMember(x => x.CountryOfBirth, opt => opt.Ignore())
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y.JobTitle.JobTitle))
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.MapFrom(y => y.BusinessPhoneNumber.BusinessPhoneNumber))
                 .ForMember(x => x.BusinessExtension, opt => opt.MapFrom(y => y.BusinessExtension.BusinessExtension))
@@ -105,12 +106,11 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.DateOfBirth, opt => opt.MapFrom(y => y.DateOfBirth.Date))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<TownOfBirthViewModel, AlternativeBusinessRepresentative>()
-                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.TownOfBirth))
-                .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<CountryOfBirthViewModel, AlternativeBusinessRepresentative>()
-                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthId))
+            CreateMap<BirthDetailsViewModel, AlternativeBusinessRepresentative>()
+                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.TownOfBirthViewModel.TownOfBirth))
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthViewModel.CountryOfBirthId))
+                .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumberViewModel.NationalInsuranceNumber))
+                .ForMember(x => x.SocialSecurityNumber, opt => opt.MapFrom(y => y.SocialSecurityNumberViewModel.SocialSecurityNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<JobTitleViewModel, AlternativeBusinessRepresentative>()
@@ -131,14 +131,6 @@ namespace GLAA.Services.Automapper
 
             CreateMap<BusinessExtensionViewModel, AlternativeBusinessRepresentative>()
                 .ForMember(x => x.BusinessExtension, opt => opt.MapFrom(y => y.BusinessExtension))
-                .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<NationalInsuranceNumberViewModel, AlternativeBusinessRepresentative>()
-                .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumber))
-                .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<SocialSecurityNumberViewModel, AlternativeBusinessRepresentative>()
-                .ForMember(x => x.SocialSecurityNumber, opt => opt.MapFrom(y => y.SocialSecurityNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<NationalityViewModel, AlternativeBusinessRepresentative>()

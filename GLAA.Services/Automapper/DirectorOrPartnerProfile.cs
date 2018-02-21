@@ -25,7 +25,7 @@ namespace GLAA.Services.Automapper
             CreateMap<DirectorOrPartner, DirectorOrPartnerViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
-                .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver))
+                .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver<DirectorOrPartnerViewModel>))
                 .ForMember(x => x.FullName, opt => opt.ResolveUsing(ProfileHelpers.FullNameResolver))
                 .ForMember(x => x.AlternativeName, opt => opt.ResolveUsing(ProfileHelpers.AlternativeFullNameResolver))
                 .ForMember(x => x.JobTitle, opt => opt.ResolveUsing(ProfileHelpers.JobTitleResolver))
@@ -76,7 +76,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.AlternativeName, opt => opt.MapFrom(y => y.AlternativeName.AlternativeName))
                 .ForMember(x => x.DateOfBirth, opt => opt.MapFrom(y => y.DateOfBirth.DateOfBirth.Date))
                 .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth))
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth))
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId))
+                .ForMember(x => x.CountryOfBirth, opt => opt.Ignore())
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y.JobTitle.JobTitle))
                 .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
                 .ForMember(x => x.BusinessPhoneNumber, opt => opt.MapFrom(y => y.BusinessPhoneNumber.BusinessPhoneNumber))
@@ -127,12 +128,11 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.DateOfBirth, opt => opt.MapFrom(y => y.DateOfBirth.Date))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
-            CreateMap<TownOfBirthViewModel, DirectorOrPartner>()
-                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.TownOfBirth))
-                .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<CountryOfBirthViewModel, DirectorOrPartner>()
-                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthId))
+            CreateMap<BirthDetailsViewModel, DirectorOrPartner>()
+                .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y.TownOfBirthViewModel.TownOfBirth))
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthViewModel.CountryOfBirthId))
+                .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumberViewModel.NationalInsuranceNumber))
+                .ForMember(x => x.SocialSecurityNumber, opt => opt.MapFrom(y => y.SocialSecurityNumberViewModel.SocialSecurityNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<JobTitleViewModel, DirectorOrPartner>()
@@ -153,14 +153,6 @@ namespace GLAA.Services.Automapper
 
             CreateMap<BusinessExtensionViewModel, DirectorOrPartner>()
                 .ForMember(x => x.BusinessExtension, opt => opt.MapFrom(y => y.BusinessExtension))
-                .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<NationalInsuranceNumberViewModel, DirectorOrPartner>()
-                .ForMember(x => x.NationalInsuranceNumber, opt => opt.MapFrom(y => y.NationalInsuranceNumber))
-                .ForAllOtherMembers(opt => opt.Ignore());
-
-            CreateMap<SocialSecurityNumberViewModel, DirectorOrPartner>()
-                .ForMember(x => x.SocialSecurityNumber, opt => opt.MapFrom(y => y.SocialSecurityNumber))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<NationalityViewModel, DirectorOrPartner>()

@@ -122,14 +122,43 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static BirthDetailsViewModel BirthDetailsResolver(Person person)
+        public static BirthDetailsViewModel BirthDetailsResolver<T>(Person person, T viewModel) where T: PersonViewModel
         {
             return new BirthDetailsViewModel
             {
                 NationalInsuranceNumberViewModel = NationalInsuranceNumberResolver(person),
-                CountryOfBirthViewModel = CountryOfBirthResolver(person),
+                CountryOfBirthViewModel = CountryOfBirthResolver<T>(person, viewModel),
                 TownOfBirthViewModel = TownOfBirthResolver(person),
-                SocialSecurityNumberViewModel = SocialSecurityNumberResolver(person)
+                SocialSecurityNumberViewModel = SocialSecurityNumberResolver(person),
+            };
+        }
+
+        public static BirthDetailsViewModel BirthDetailsResolver(Person person, BirthDetailsViewModel viewModel) 
+        {
+            return new BirthDetailsViewModel
+            {
+                NationalInsuranceNumberViewModel = NationalInsuranceNumberResolver(person),
+                CountryOfBirthViewModel = CountryOfBirthResolver(person, viewModel),
+                TownOfBirthViewModel = TownOfBirthResolver(person),
+                SocialSecurityNumberViewModel = SocialSecurityNumberResolver(person),
+            };
+        }
+
+        public static CountryOfBirthViewModel CountryOfBirthResolver<T>(Person person, T viewModel) where T : PersonViewModel
+        {
+            return new CountryOfBirthViewModel
+            {
+                CountryOfBirthId = person.CountryOfBirthId,
+                Countries = viewModel.BirthDetailsViewModel.CountryOfBirthViewModel.Countries
+            };
+        }
+
+        public static CountryOfBirthViewModel CountryOfBirthResolver(Person person, BirthDetailsViewModel viewModel)
+        {
+            return new CountryOfBirthViewModel
+            {
+                CountryOfBirthId = person.CountryOfBirthId,
+                Countries = viewModel.CountryOfBirthViewModel.Countries
             };
         }
 

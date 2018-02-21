@@ -72,7 +72,7 @@ namespace GLAA.ViewModels.LicenceApplication
             {
                 countries = value;
                 Address.Countries = value;
-                CountryOfBirth.Countries = value;
+                BirthDetailsViewModel.CountryOfBirthViewModel.Countries = value;
             }
         }
     }
