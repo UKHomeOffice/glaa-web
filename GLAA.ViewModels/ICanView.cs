@@ -8,7 +8,7 @@
     public interface ICanView<in TParent>
     {
         /// <summary>
-        /// Can the model be viewed?
+        /// Can this child model be viewed?
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
