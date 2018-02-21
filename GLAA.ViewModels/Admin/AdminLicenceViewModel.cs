@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using GLAA.ViewModels.Core;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

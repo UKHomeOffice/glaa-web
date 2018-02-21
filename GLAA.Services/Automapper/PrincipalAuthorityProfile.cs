@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System.Linq;
 using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.ViewModels.LicenceApplication;
@@ -86,7 +84,10 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.UnspentConvictionsViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.OffencesAwaitingTrialViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
-                .ForMember(x => x.PreviousExperience, opt => opt.ResolveUsing(PreviousExperienceResolver));
+                .ForMember(x => x.PreviousExperience, opt => opt.ResolveUsing(PreviousExperienceResolver))
+                .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.Countries, opt => opt.Ignore());
 
             CreateMap<PrincipalAuthority, IsDirectorViewModel>()
                 .ForMember(x => x.IsDirector, opt => opt.MapFrom(y => y.IsDirector))
@@ -146,7 +147,7 @@ namespace GLAA.Services.Automapper
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<CountryOfBirthViewModel, PrincipalAuthority>()
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.CountryOfBirth))
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthId))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<JobTitleViewModel, PrincipalAuthority>()

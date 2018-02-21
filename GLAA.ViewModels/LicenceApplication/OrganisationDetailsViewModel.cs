@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class OrganisationDetailsViewModel : Validatable
+    public class OrganisationDetailsViewModel : Validatable, INeedCountries, INeedCounties, IViewModelAddressable
     {
         public OrganisationDetailsViewModel()
         {
@@ -38,6 +38,18 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
         public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            set => Address.Countries = value;
+            get => Address.Countries;
+        }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            set => Address.Counties = value;
+            get => Address.Counties;
+        }
     }
 
 
@@ -246,7 +258,7 @@ namespace GLAA.ViewModels.LicenceApplication
     }
 
 
-    public class PAYEStatusViewModel : YesNoViewModel, IRequiredIf, IValidatable
+    public class PAYEStatusViewModel : YesNoViewModel, IValidatable
     {
         public PAYEStatusViewModel()
         {
@@ -259,13 +271,10 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public List<PAYENumberRow> PAYENumbers { get; set; }
 
-        public bool IsRequired => HasPAYENumber ?? false;
-
         public bool IsValid { get; set; }
 
         public void Validate()
         {
-
             if (HasPAYENumber.HasValue == false)
             {
                 IsValid = false;
@@ -278,7 +287,6 @@ namespace GLAA.ViewModels.LicenceApplication
             }
 
             IsValid = PAYENumbers.All(x => x.IsValid);
-
         }
     }
 
@@ -302,7 +310,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public DateViewModel PAYERegistrationDate { get; set; }
     }
 
-    public class VATStatusViewModel : YesNoViewModel, IRequiredIf, IValidatable
+    public class VATStatusViewModel : ValidatableYesNoViewModel, IRequiredIf
     {
         public VATStatusViewModel()
         {
@@ -326,40 +334,6 @@ namespace GLAA.ViewModels.LicenceApplication
         public DateViewModel VATRegistrationDate { get; set; }
 
         public bool IsRequired => HasVATNumber ?? false;
-
-        public bool IsValid { get; set; }
-
-        public void Validate()
-        {
-            var invalidModelFields = new List<string>();
-            foreach (var prop in GetType().GetProperties())
-            {
-                var obj = prop.GetValue(this) ?? string.Empty;
-
-                var validatable = obj as IValidatable;
-
-                bool propertyIsValid;
-
-                if (validatable != null)
-                {
-                    // Use the defined validate method if one is defined
-                    validatable.Validate();
-                    propertyIsValid = validatable.IsValid;
-                }
-                else
-                {
-                    // Use the validation context for properties
-                    var context = new ValidationContext(obj, null);
-                    propertyIsValid = Validator.TryValidateObject(obj, context, null, true);
-                }
-
-                if (!propertyIsValid)
-                {
-                    invalidModelFields.Add(prop.Name);
-                }
-            }
-            IsValid = !invalidModelFields.Any();
-        }
     }
 
     public class TaxReferenceViewModel : Validatable

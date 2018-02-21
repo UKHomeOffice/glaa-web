@@ -35,7 +35,7 @@ namespace GLAA.ViewModels.PublicRegister
         //    }
         //}
         public string BusinessPhoneNumber { get; set; }
-        public bool CanOperateAcrossUk => Address.Country == "Northern Ireland" && OperatingCountries.Any(x => x.Country.Name != "Norther Ireland");
+        public bool CanOperateAcrossUk => Address.Countries.Single(c => c.Value == Address.CountryId.ToString()).Text.EndsWith("Northern Ireland") && OperatingCountries.Any(x => x.Country.Name != "Northern Ireland");
         public List<LicenceCountryViewModel> OperatingCountries { get; set; }
         public AddressViewModel Address { get; set; }
         public DateTime? ApplicationDate => MostRecentLicenceIssuedStatus?.DateCreated;

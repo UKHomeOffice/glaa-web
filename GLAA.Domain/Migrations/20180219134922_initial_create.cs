@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GLAA.Domain.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial_create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,27 +13,21 @@ namespace GLAA.Domain.Migrations
                 name: "dbo");
 
             migrationBuilder.CreateTable(
-                name: "Address",
+                name: "Country",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AddressLine1 = table.Column<string>(nullable: true),
-                    AddressLine2 = table.Column<string>(nullable: true),
-                    AddressLine3 = table.Column<string>(nullable: true),
-                    Country = table.Column<string>(nullable: true),
-                    County = table.Column<string>(nullable: true),
-                    NonUK = table.Column<bool>(nullable: false),
-                    Postcode = table.Column<string>(nullable: true),
-                    Town = table.Column<string>(nullable: true)
+                    IsUk = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.Id);
+                    table.PrimaryKey("PK_Country", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Country",
+                name: "County",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -42,7 +36,7 @@ namespace GLAA.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.Id);
+                    table.PrimaryKey("PK_County", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +114,19 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkerCountry",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkerCountry", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 schema: "dbo",
                 columns: table => new
@@ -137,39 +144,33 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                schema: "dbo",
+                name: "Address",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    AddressId = table.Column<int>(nullable: true),
-                    CommunicationPreference = table.Column<int>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    MiddleName = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddressLine1 = table.Column<string>(nullable: true),
+                    AddressLine2 = table.Column<string>(nullable: true),
+                    AddressLine3 = table.Column<string>(nullable: true),
+                    CountryId = table.Column<int>(nullable: true),
+                    CountyId = table.Column<int>(nullable: true),
+                    NonUK = table.Column<bool>(nullable: false),
+                    Postcode = table.Column<string>(nullable: true),
+                    Town = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_Address", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Address_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Address",
+                        name: "FK_Address_Country_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Country",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Address_County_CountyId",
+                        column: x => x.CountyId,
+                        principalTable: "County",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -240,6 +241,44 @@ namespace GLAA.Domain.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    AddressId = table.Column<int>(nullable: true),
+                    CommunicationPreference = table.Column<int>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    MiddleName = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -344,7 +383,7 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     DisqualificationDetails = table.Column<string>(nullable: true),
@@ -365,7 +404,6 @@ namespace GLAA.Domain.Migrations
                     PersonalMobileNumber = table.Column<string>(nullable: true),
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
-                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true)
                 },
@@ -376,6 +414,12 @@ namespace GLAA.Domain.Migrations
                         name: "FK_AlternativeBusinessRepresentative_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AlternativeBusinessRepresentative_Country_CountryOfBirthId",
+                        column: x => x.CountryOfBirthId,
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -392,7 +436,7 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     DisqualificationDetails = table.Column<string>(nullable: true),
@@ -415,7 +459,6 @@ namespace GLAA.Domain.Migrations
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     PrincipalAuthorityId = table.Column<int>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
-                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true)
                 },
@@ -426,6 +469,12 @@ namespace GLAA.Domain.Migrations
                         name: "FK_DirectorOrPartner_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DirectorOrPartner_Country_CountryOfBirthId",
+                        column: x => x.CountryOfBirthId,
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -522,30 +571,6 @@ namespace GLAA.Domain.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LicenceCountry",
-                columns: table => new
-                {
-                    LicenceId = table.Column<int>(nullable: false),
-                    CountryId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LicenceCountry", x => new { x.LicenceId, x.CountryId });
-                    table.ForeignKey(
-                        name: "FK_LicenceCountry_Country_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Country",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LicenceCountry_Licence_LicenceId",
-                        column: x => x.LicenceId,
-                        principalTable: "Licence",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -652,6 +677,30 @@ namespace GLAA.Domain.Migrations
                         principalTable: "LicenceStatus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LicenceWorkerCountry",
+                columns: table => new
+                {
+                    LicenceId = table.Column<int>(nullable: false),
+                    WorkerCountryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LicenceWorkerCountry", x => new { x.LicenceId, x.WorkerCountryId });
+                    table.ForeignKey(
+                        name: "FK_LicenceWorkerCountry_Licence_LicenceId",
+                        column: x => x.LicenceId,
+                        principalTable: "Licence",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LicenceWorkerCountry_WorkerCountry_WorkerCountryId",
+                        column: x => x.WorkerCountryId,
+                        principalTable: "WorkerCountry",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -765,7 +814,7 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
-                    CountryOfBirth = table.Column<string>(nullable: true),
+                    CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
                     DirectorOrPartnerId = table.Column<int>(nullable: true),
@@ -795,7 +844,6 @@ namespace GLAA.Domain.Migrations
                     PreviousExperience = table.Column<string>(nullable: true),
                     PreviousLicenceDescription = table.Column<string>(nullable: true),
                     RequiresVisa = table.Column<bool>(nullable: true),
-                    SocialSecurityNumber = table.Column<string>(nullable: true),
                     TownOfBirth = table.Column<string>(nullable: true),
                     VisaDescription = table.Column<string>(nullable: true),
                     VisaNumber = table.Column<string>(nullable: true),
@@ -808,6 +856,12 @@ namespace GLAA.Domain.Migrations
                         name: "FK_PrincipalAuthority_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PrincipalAuthority_Country_CountryOfBirthId",
+                        column: x => x.CountryOfBirthId,
+                        principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -977,9 +1031,24 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Address_CountryId",
+                table: "Address",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Address_CountyId",
+                table: "Address",
+                column: "CountyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AlternativeBusinessRepresentative_AddressId",
                 table: "AlternativeBusinessRepresentative",
                 column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AlternativeBusinessRepresentative_CountryOfBirthId",
+                table: "AlternativeBusinessRepresentative",
+                column: "CountryOfBirthId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AlternativeBusinessRepresentative_LicenceId",
@@ -1032,6 +1101,11 @@ namespace GLAA.Domain.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DirectorOrPartner_CountryOfBirthId",
+                table: "DirectorOrPartner",
+                column: "CountryOfBirthId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DirectorOrPartner_LicenceId",
                 table: "DirectorOrPartner",
                 column: "LicenceId");
@@ -1065,11 +1139,6 @@ namespace GLAA.Domain.Migrations
                 name: "IX_Licence_UserId",
                 table: "Licence",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LicenceCountry_CountryId",
-                table: "LicenceCountry",
-                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LicenceIndustry_IndustryId",
@@ -1122,6 +1191,11 @@ namespace GLAA.Domain.Migrations
                 column: "NextStatusId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LicenceWorkerCountry_WorkerCountryId",
+                table: "LicenceWorkerCountry",
+                column: "WorkerCountryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NamedIndividual_LicenceId",
                 table: "NamedIndividual",
                 column: "LicenceId");
@@ -1165,6 +1239,11 @@ namespace GLAA.Domain.Migrations
                 name: "IX_PrincipalAuthority_AddressId",
                 table: "PrincipalAuthority",
                 column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrincipalAuthority_CountryOfBirthId",
+                table: "PrincipalAuthority",
+                column: "CountryOfBirthId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrincipalAuthority_DirectorOrPartnerId",
@@ -1281,6 +1360,22 @@ namespace GLAA.Domain.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_Address_Country_CountryId",
+                table: "Address");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_DirectorOrPartner_Country_CountryOfBirthId",
+                table: "DirectorOrPartner");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_PrincipalAuthority_Country_CountryOfBirthId",
+                table: "PrincipalAuthority");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Address_County_CountyId",
+                table: "Address");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_DirectorOrPartner_Address_AddressId",
                 table: "DirectorOrPartner");
 
@@ -1332,9 +1427,6 @@ namespace GLAA.Domain.Migrations
                 name: "Conviction");
 
             migrationBuilder.DropTable(
-                name: "LicenceCountry");
-
-            migrationBuilder.DropTable(
                 name: "LicenceIndustry");
 
             migrationBuilder.DropTable(
@@ -1348,6 +1440,9 @@ namespace GLAA.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "LicenceStatusNextStatus");
+
+            migrationBuilder.DropTable(
+                name: "LicenceWorkerCountry");
 
             migrationBuilder.DropTable(
                 name: "NamedJobTitle");
@@ -1369,9 +1464,6 @@ namespace GLAA.Domain.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Country");
-
-            migrationBuilder.DropTable(
                 name: "Industry");
 
             migrationBuilder.DropTable(
@@ -1384,10 +1476,19 @@ namespace GLAA.Domain.Migrations
                 name: "LicensingStandard");
 
             migrationBuilder.DropTable(
+                name: "WorkerCountry");
+
+            migrationBuilder.DropTable(
                 name: "AlternativeBusinessRepresentative");
 
             migrationBuilder.DropTable(
                 name: "NamedIndividual");
+
+            migrationBuilder.DropTable(
+                name: "Country");
+
+            migrationBuilder.DropTable(
+                name: "County");
 
             migrationBuilder.DropTable(
                 name: "Address");

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using GLAA.Domain.Core.Models;
 using GLAA.Domain.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GLAA.Domain
@@ -20,6 +19,424 @@ namespace GLAA.Domain
             var _companyPart2 = new[] { "Solutions", "Solutions Ltd.", "Sourcing", "Sourcing Ltd.", "Services", "Services Ltd.", "Informantics Ltd", "Synergystics" };
             var _firstNames = new[] { "Aaron", "Abdul", "Abe", "Abel", "Abraham", "Adam", "Adan", "Adrian", "Abby", "Abigail", "Adele", "Christina", "Doug", "Chantelle", "Adam", "Luke", "Conrad", "Moray" };
             var _lastNames = new[] { "Abbott", "Acosta", "Adams", "Adkins", "Aguilar", "Aguilara", "McDonald", "MacDonald", "Danson", "Spokes", "Grinnell", "Jackson" };
+
+            var countries = new[]
+            {
+                "Afghanistan",
+                "Ajman",
+                "Aland Islands",
+                "Alaska",
+                "Albania",
+                "Algeria",
+                "American Polynesia & Oceania",
+                "American Samoa",
+                "Andorra",
+                "Angola",
+                "Anguilla",
+                "Antarctica",
+                "Antigua & Barbuda",
+                "Argentina",
+                "Armenia",
+                "Aruba",
+                "Ascension",
+                "Australia",
+                "Austria",
+                "Azerbaijan",
+                "Azores",
+                "Bahamas",
+                "Bahrain",
+                "Baker Island",
+                "Bangledesh",
+                "Barbados",
+                "Belarus",
+                "Belgium",
+                "Belize",
+                "Benin",
+                "Bermuda",
+                "Bhutan",
+                "Bolivia",
+                "Bonaire",
+                "Bosnia & Herzegovina",
+                "Botswana",
+                "Bouvet Island",
+                "Brazil",
+                "British Virgin Islands",
+                "Brunei",
+                "Bulgaria",
+                "Burkina Faso",
+                "Burundi",
+                "Cambodia (Kampuchea)",
+                "Cameroon",
+                "Canada",
+                "Canary Islands",
+                "Cape Verde",
+                "Caroline Islands",
+                "Cayman Islands",
+                "Central African Republic",
+                "Ceuta",
+                "Chad",
+                "Chile",
+                "China",
+                "Christmas Island",
+                "Cocos Islands",
+                "Columbia",
+                "Comoroa",
+                "Congo",
+                "Cook Islands",
+                "Corn Islands",
+                "Costa Rica",
+                "Croatia",
+                "Cuba",
+                "Curacao",
+                "Cyprus",
+                "Czech Republic",
+                "Denmark",
+                "Desirade",
+                "Djibouti",
+                "Dominica",
+                "Dominica Republic",
+                "Dubai",
+                "East Timor",
+                "Ecuador",
+                "Egypt",
+                "El Salvador",
+                "Equatorial Guinea",
+                "Eritrea",
+                "Estonia",
+                "Ethiopia",
+                "Falkland Islands",
+                "Faros Islands",
+                "Fiji",
+                "Finland",
+                "France",
+                "French Guiana",
+                "French Polynesia",
+                "French Southern Territory",
+                "Fujairah",
+                "Gabon",
+                "Gambia",
+                "Gaza",
+                "Georgia",
+                "Germany",
+                "Ghana",
+                "Gibraltar",
+                "Golan Heights",
+                "Greece",
+                "Greenland",
+                "Grenada",
+                "Guadeloupe",
+                "Guam",
+                "Guatemala",
+                "Guernsey",
+                "Guinea",
+                "Guinea Bissau",
+                "Guyana",
+                "Haiti",
+                "Hawaii",
+                "Heard & McDonald Islands",
+                "Honduras",
+                "Hong Kong",
+                "Howland Islands",
+                "Hungary",
+                "Iceland",
+                "Iles des Saintes",
+                "India",
+                "Indonesia",
+                "Iran",
+                "Iraq",
+                "Irish Republic",
+                "Isle of Man",
+                "Israel",
+                "Italy",
+                "Ivory Coast",
+                "Jamaica",
+                "Japan",
+                "Jarvis Islands",
+                "Jersey",
+                "Johnston Islands",
+                "Jordan",
+                "Kazakhstan",
+                "Keeling Islands",
+                "Kenya",
+                "Kiribati",
+                "Korea, North",
+                "Korea, South",
+                "Kuwait",
+                "Kyrgyzstan",
+                "Laos",
+                "Latvia",
+                "Lebanon",
+                "Lesotho",
+                "Liberia",
+                "Libya",
+                "Liechtenstein",
+                "Lithuania",
+                "Luxembourg",
+                "Macao",
+                "Macedonia",
+                "Madagascar",
+                "Maderia",
+                "Malawi",
+                "Malaysia",
+                "Maldives",
+                "Mali",
+                "Malta",
+                "Maria-Galante",
+                "Marshall Islands",
+                "Martinique",
+                "Mauritania",
+                "Mauritius",
+                "Mayotte",
+                "Melilla",
+                "Mexico",
+                "Micronesia",
+                "Moldova",
+                "Mongolia",
+                "Monserrat",
+                "Morocco",
+                "Mozambique",
+                "Myanmar (Burma)",
+                "Namibia",
+                "Nauru",
+                "Nepal",
+                "Netherlands",
+                "New Caledonia & Dependencies",
+                "New Zealand",
+                "Nicaragua",
+                "Niger",
+                "Nigeria",
+                "Niue Island",
+                "Norfolk Island",
+                "Northern Mariana Islands",
+                "Norway",
+                "Oman",
+                "Paira Island",
+                "Pakistan",
+                "Palau",
+                "Palestinian State",
+                "Panama",
+                "Papua New Guinea",
+                "Paraguay",
+                "Peru",
+                "Phillipines",
+                "Pitcairn Island",
+                "Poland",
+                "Portugal",
+                "Puerto Rico",
+                "Qatar",
+                "Ras al Khaimah",
+                "Reunion",
+                "Romania",
+                "Ross dependency",
+                "Russia",
+                "Rwanda",
+                "Saba",
+                "Sabah",
+                "Samoa",
+                "San Marino",
+                "Sao Tome & Principe",
+                "Sarawak",
+                "Saudi Arabia",
+                "Senegal",
+                "Seychelles",
+                "Sharjah",
+                "Sierra Leone",
+                "Singapore",
+                "Slovakia",
+                "Slovenia",
+                "Soloman Islands",
+                "Somalia",
+                "South Africa",
+                "South Georgia & South Sandwich",
+                "South Korea",
+                "Spain",
+                "Sri Lanka",
+                "St Barthelemy",
+                "St Eustatius",
+                "St Helena",
+                "St Kitts & Nevis",
+                "St Lucia",
+                "St Martin",
+                "St Pierre & Miquelon",
+                "St Vincent & the Grenedines",
+                "Sudan",
+                "Surinam",
+                "Svalbard Archipelago",
+                "Swan Islands",
+                "Swaziland",
+                "Sweden",
+                "Switzerland",
+                "Syria",
+                "Taiwan",
+                "Tajikistan",
+                "Tanzania",
+                "Thailand",
+                "Togo",
+                "Tokelau Islands",
+                "Tonga",
+                "Trinidad & Tobago",
+                "Tristan da Cunha",
+                "Tunisia",
+                "Turkey",
+                "Turkmenistan",
+                "Turks & Caicos Islands",
+                "Tuvula",
+                "U A E",
+                "Uganda",
+                "UK England",
+                "UK Northern Ireland",
+                "UK Scotland",
+                "UK Wales",
+                "Ukraine",
+                "Umm al Qaiwain",
+                "Uruguay",
+                "USA",
+                "Uzebekistan",
+                "Vanuatu",
+                "Vatican City",
+                "Venezuela",
+                "Vietnam",
+                "Virgin Islands of USA",
+                "Wake Island",
+                "Wallis & Futuna",
+                "West Bank",
+                "Windward Isles",
+                "Yemen",
+                "Yugoslavia, Montenegro & Serbia",
+                "Zaire",
+                "Zambia",
+                "Zimbabwe"
+            };
+
+            var counties = new[]
+            {
+                "Bedfordshire",
+                "Berkshire",
+                "Bristol & Avon",
+                "Buckinghamshire",
+                "Cambridgeshire",
+                "Cheshire",
+                "Cleveland",
+                "Cornwall",
+                "County Durham",
+                "County Unknown",
+                "Cumberland",
+                "Cumbria",
+                "Derbyshire",
+                "Devon",
+                "Dorset",
+                "East Riding",
+                "East Sussex",
+                "East Yorkshire",
+                "Essex",
+                "Gloucestershire",
+                "Hampshire",
+                "Herefordshire",
+                "Hertfordshire",
+                "Humberside",
+                "Huntingdonshire",
+                "Isle of Wight",
+                "Kent",
+                "Lancashire",
+                "Leicestershire",
+                "Lincolnshire",
+                "London",
+                "Merseyside",
+                "Middlesex",
+                "Norfolk",
+                "North Yorkshire",
+                "Northamptonshire",
+                "Northumberland",
+                "Nottinghamshire",
+                "Oxfordshire",
+                "Rutland",
+                "Shropshire",
+                "Somerset",
+                "South Yorkshire",
+                "Staffordshire",
+                "Suffolk",
+                "Surrey",
+                "Tyne and Wear",
+                "Warwickshire",
+                "West Midlands",
+                "West Sussex",
+                "West Yorkshire",
+                "Westmorland",
+                "Wiltshire",
+                "Worcestershire",
+                "Aberdeenshire",
+                "Angus",
+                "Argyll & Bute",
+                "Clackmannanshire",
+                "Comhairle nan Eilean Siar",
+                "Dumfries & Galloway",
+                "Dundee",
+                "East Ayrshire",
+                "East Dunbartonshire",
+                "East Lothian",
+                "East Renfrewshire",
+                "Edinburgh",
+                "Falkirk",
+                "Fife",
+                "Glasgow",
+                "Highland",
+                "Inverclyde",
+                "Midlothian",
+                "Moray",
+                "North Ayrshire",
+                "North Lanarkshire",
+                "Orkney",
+                "Perth & Kinross",
+                "Renfrewshire",
+                "Scottish Borders",
+                "Shetland",
+                "South Ayrshire",
+                "South Lanarkshire",
+                "Stirling",
+                "West Dunbartonshire",
+                "West Lothian",
+                "Anglesey",
+                "Brecknockshire",
+                "Caernarfonshire",
+                "Cardiganshire",
+                "Carmarthenshire",
+                "Ceredigion",
+                "Clwyd",
+                "Conwy",
+                "Denbighshire",
+                "Dyfed",
+                "Flintshire",
+                "Glamorgan",
+                "Gwent",
+                "Gwynedd",
+                "Merioneth",
+                "Mid Glamorgan",
+                "Monmouthshire",
+                "Montgomeryshire",
+                "Pembrokeshire",
+                "Powys",
+                "Radnorshire",
+                "Vale of Glamorgan",
+                "West Glamorgan",
+                "Antrim",
+                "Armagh",
+                "Down",
+                "Fermanagh",
+                "Londonderry",
+                "Tyrone"
+            };
+
+            if (!context.Countries.Any())
+            {
+                context.Countries.AddRange(countries.Select(c => new Country {Name = c, IsUk = c.StartsWith("UK ")}));
+                context.SaveChanges();
+            }
+
+            if (!context.Counties.Any())
+            {
+                context.Counties.AddRange(counties.Select(c => new County {Name = c}));
+                context.SaveChanges();
+            }
 
             IEnumerable<LicensingStandard> defaultLicensingStandards = new[]
             {
@@ -146,29 +563,29 @@ namespace GLAA.Domain
                 context.Industries.AddRange(defaultIndustries);
             }
 
-            if (!context.Countries.Any())
+            if (!context.WorkerCountries.Any())
             {
-                var defaultCountries = new List<Country>
+                var defaultCountries = new List<WorkerCountry>
                 {
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "England"
                     },
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "Scotland"
                     },
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "Wales"
                     },
-                    new Country
+                    new WorkerCountry
                     {
                         Name = "Northern Ireland"
                     }
                 };
 
-                context.Countries.AddRange(defaultCountries);
+                context.WorkerCountries.AddRange(defaultCountries);
             }
 
             if (!context.Multiples.Any())
@@ -252,7 +669,7 @@ namespace GLAA.Domain
                         context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Licence issued – full");
                     var submittedStatus = context.LicenceStatuses.FirstOrDefault(x => x.InternalStatus == "Submitted on-line");
                     var country = string.Empty;
-                    var operatingCountries = new List<Country>();
+                    var operatingCountries = new List<WorkerCountry>();
                     var submittedStatusChange = new LicenceStatusChange
                     {
                         DateCreated = new DateTime(2017, 6 + rnd.Next(3), 1 + rnd.Next(29)),
@@ -278,20 +695,20 @@ namespace GLAA.Domain
                             break;
                         case 1:
                             country = "Northern Ireland";
-                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            operatingCountries.Add(context.WorkerCountries.FirstOrDefault(x => x.Name == "England"));
                             break;
                         case 2:
                             country = "Wales";
-                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            operatingCountries.Add(context.WorkerCountries.FirstOrDefault(x => x.Name == "England"));
                             break;
                         case 3:
                             country = "Scotland";
-                            operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == "England"));
+                            operatingCountries.Add(context.WorkerCountries.FirstOrDefault(x => x.Name == "England"));
                             break;
                     }
 
                     //This adds another country into the operating countries address, so we have two to filter on.
-                    operatingCountries.Add(context.Countries.FirstOrDefault(x => x.Name == country));
+                    operatingCountries.Add(context.WorkerCountries.FirstOrDefault(x => x.Name == country));
 
                     completedLicences.Add(new Licence
                     {
@@ -331,10 +748,9 @@ namespace GLAA.Domain
                             AddressLine1 = rnd.Next(9999) + " Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = $"FA{rnd.Next(1, 99)} {rnd.Next(1, 9)}KE",
-                            Country = country,
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         HasNamedIndividuals = true,
                         NamedIndividualType = NamedIndividualType.PersonalDetails,
@@ -402,12 +818,12 @@ namespace GLAA.Domain
 
                         if (completedLicence != null)
                         {
-                            completedLicence.OperatingCountries = new List<LicenceCountry>
+                            completedLicence.OperatingCountries = new List<LicenceWorkerCountry>
                             {
-                                new LicenceCountry
+                                new LicenceWorkerCountry
                                 {
-                                    Country = operatingCountry,
-                                    CountryId = operatingCountry.Id,
+                                    WorkerCountry = operatingCountry,
+                                    WorkerCountryId = operatingCountry.Id,
                                     Licence = completedLicences.LastOrDefault(),
                                     LicenceId = completedLicence.Id
                                 }
@@ -443,10 +859,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -475,9 +890,9 @@ namespace GLAA.Domain
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     NumberOfMultiples = 3,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -547,15 +962,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Dave Bloggs",
@@ -614,15 +1028,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Fred Bloggs",
@@ -740,15 +1153,14 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
-                    CountryOfBirth = "Peru",
+                    CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
                     FullName = "Joe Bloggs",
@@ -812,15 +1224,14 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
-                            Country = "UK",
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
                         BusinessPhoneNumber = "07777777777",
-                        CountryOfBirth = "Peru",
+                        CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                         CountyOfBirth = "Wiltshire",
                         DateOfBirth = DateTime.Now,
                         FullName = "Joe Bloggs",
@@ -901,10 +1312,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -929,9 +1339,9 @@ namespace GLAA.Domain
                     HasVATNumber = true,
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -990,10 +1400,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1018,9 +1427,9 @@ namespace GLAA.Domain
                     HasVATNumber = true,
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -1067,15 +1476,14 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
-                    CountryOfBirth = "Peru",
+                    CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
                     FullName = "Joe Bloggs",
@@ -1139,15 +1547,14 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
-                            Country = "UK",
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
                         BusinessPhoneNumber = "07777777777",
-                        CountryOfBirth = "Peru",
+                        CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                         CountyOfBirth = "Wiltshire",
                         DateOfBirth = DateTime.Now,
                         FullName = "Joe Bloggs",
@@ -1228,10 +1635,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1256,9 +1662,9 @@ namespace GLAA.Domain
                     HasVATNumber = true,
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -1298,15 +1704,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Dave Bloggs",
@@ -1374,15 +1779,14 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
-                    CountryOfBirth = "Peru",
+                    CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
                     FullName = "Joe Bloggs",
@@ -1445,15 +1849,14 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
-                            Country = "UK",
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
                         BusinessPhoneNumber = "07777777777",
-                        CountryOfBirth = "Peru",
+                        CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                         CountyOfBirth = "Wiltshire",
                         DateOfBirth = DateTime.Now,
                         FullName = "Joe Bloggs",
@@ -1534,10 +1937,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1562,9 +1964,9 @@ namespace GLAA.Domain
                     HasVATNumber = true,
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -1604,15 +2006,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Dave Bloggs",
@@ -1672,15 +2073,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Fred Bloggs",
@@ -1748,15 +2148,14 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
-                    CountryOfBirth = "Peru",
+                    CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
                     FullName = "Joe Bloggs",
@@ -1820,15 +2219,14 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
-                            Country = "UK",
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
                         BusinessPhoneNumber = "07777777777",
-                        CountryOfBirth = "Peru",
+                        CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                         CountyOfBirth = "Wiltshire",
                         DateOfBirth = DateTime.Now,
                         FullName = "Joe Bloggs",
@@ -1909,10 +2307,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -1937,9 +2334,9 @@ namespace GLAA.Domain
                     HasVATNumber = true,
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -1979,15 +2376,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Dave Bloggs",
@@ -2047,15 +2443,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Fred Bloggs",
@@ -2170,15 +2565,14 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
-                    CountryOfBirth = "Peru",
+                    CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
                     FullName = "Joe Bloggs",
@@ -2242,15 +2636,14 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
-                            Country = "UK",
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
                         BusinessPhoneNumber = "07777777777",
-                        CountryOfBirth = "Peru",
+                        CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                         CountyOfBirth = "Wiltshire",
                         DateOfBirth = DateTime.Now,
                         FullName = "Joe Bloggs",
@@ -2331,10 +2724,9 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     BusinessEmailAddress = "joe@example.com",
                     BusinessEmailAddressConfirmation = "joe@example.com",
@@ -2359,9 +2751,9 @@ namespace GLAA.Domain
                     HasVATNumber = true,
                     LegalStatus = LegalStatusEnum.RegisteredCompany,
                     OperatingCountries =
-                        new List<LicenceCountry>
+                        new List<LicenceWorkerCountry>
                         {
-                            new LicenceCountry {Country = context.Countries.Find(1)}
+                            new LicenceWorkerCountry {WorkerCountry = context.WorkerCountries.Find(1)}
                         },
                     OperatingIndustries =
                         new List<LicenceIndustry>
@@ -2401,15 +2793,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Dave Bloggs",
@@ -2469,15 +2860,14 @@ namespace GLAA.Domain
                                 AddressLine1 = "123 Fake Street",
                                 AddressLine2 = "Fake Grove",
                                 Town = "Faketon",
-                                County = "Fakeshire",
+                                County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                                 Postcode = "FA2 4KE",
-                                Country = "UK",
-                                NonUK = false
+                                Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                             },
                             AlternativeName = "Alan Smithee",
                             BusinessExtension = "999",
                             BusinessPhoneNumber = "07777777777",
-                            CountryOfBirth = "Peru",
+                            CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                             CountyOfBirth = "Wiltshire",
                             DateOfBirth = DateTime.Now,
                             FullName = "Fred Bloggs",
@@ -2627,15 +3017,14 @@ namespace GLAA.Domain
                         AddressLine1 = "123 Fake Street",
                         AddressLine2 = "Fake Grove",
                         Town = "Faketon",
-                        County = "Fakeshire",
+                        County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                         Postcode = "FA2 4KE",
-                        Country = "UK",
-                        NonUK = false
+                        Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
                     AlternativeName = "Alan Smithee",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
-                    CountryOfBirth = "Peru",
+                    CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
                     FullName = "Joe Bloggs",
@@ -2699,15 +3088,14 @@ namespace GLAA.Domain
                             AddressLine1 = "123 Fake Street",
                             AddressLine2 = "Fake Grove",
                             Town = "Faketon",
-                            County = "Fakeshire",
+                            County = context.Counties.Single(c => c.Name.Equals("Nottinghamshire")),
                             Postcode = "FA2 4KE",
-                            Country = "UK",
-                            NonUK = false
+                            Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                         },
                         AlternativeName = "Alan Smithee",
                         BusinessExtension = "999",
                         BusinessPhoneNumber = "07777777777",
-                        CountryOfBirth = "Peru",
+                        CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                         CountyOfBirth = "Wiltshire",
                         DateOfBirth = DateTime.Now,
                         FullName = "Joe Bloggs",

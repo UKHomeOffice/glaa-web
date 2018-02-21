@@ -1,10 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using GLAA.Domain.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class AddressViewModel : IId
+    public class AddressViewModel : IValidatable, IId, INeedCountries, INeedCounties
     {
+        public AddressViewModel()
+        {
+            Countries = new List<SelectListItem>();
+            Counties = new List<SelectListItem>();
+        }
+
         public int Id { get; set; }
         [Required]
         [Display(Name = "Postcode")]
@@ -19,10 +27,34 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         public string Town { get; set; }
         [Required]
-        public string County { get; set; }
+        [Display(Name = "County")]
+        public int CountyId { get; set; }
         [Required]
-        public string Country { get; set; }
+        [Display(Name = "Country")]
+        public int CountryId { get; set; }
         [Display(Name = "Non UK Address")]
         public bool NonUK { get; set; }
+
+        public IEnumerable<SelectListItem> Countries { get; set; }
+        public IEnumerable<SelectListItem> Counties { get; set; }
+
+        public void Validate()
+        {
+            if (NonUK)
+            {
+                IsValid = !string.IsNullOrEmpty(AddressLine1) &&
+                          !string.IsNullOrEmpty(AddressLine2) &&
+                          !string.IsNullOrEmpty(Postcode);
+            }
+            else
+            {
+                IsValid = !string.IsNullOrEmpty(AddressLine1) &&
+                          !string.IsNullOrEmpty(AddressLine2) &&
+                          !string.IsNullOrEmpty(Postcode) &&
+                          !string.IsNullOrEmpty(Town);
+            }
+        }
+
+        public bool IsValid { get; set; }
     }
 }

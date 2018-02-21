@@ -16,7 +16,16 @@ namespace GLAA.ViewModels.LicenceApplication
             new SelectListItem { Text = "No", Value = "false"}
         };
     }
-    
+
+    public class ValidatableYesNoViewModel : Validatable
+    {
+        public List<SelectListItem> YesNo { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Yes", Value = "true"},
+            new SelectListItem { Text = "No", Value = "false"}
+        };
+    }
+
     public class FullNameViewModel 
     {
         [Required]
@@ -52,11 +61,13 @@ namespace GLAA.ViewModels.LicenceApplication
         public string TownOfBirth { get; set; }
     }
 
-    public class CountryOfBirthViewModel
+    public class CountryOfBirthViewModel : INeedCountries
     {
         [Required]
         [Display(Name = "Country of birth", Description = "This will be shown on your birth certificate")]
-        public string CountryOfBirth { get; set; }
+        public int? CountryOfBirthId { get; set; }
+
+        public IEnumerable<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
     }
 
     public class JobTitleViewModel

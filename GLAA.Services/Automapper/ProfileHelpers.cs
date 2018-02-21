@@ -41,14 +41,6 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static CountryOfBirthViewModel CountryOfBirthResolver(Person person)
-        {
-            return new CountryOfBirthViewModel
-            {
-                CountryOfBirth = person.CountryOfBirth
-            };
-        }
-
         public static JobTitleViewModel JobTitleResolver(Person person)
         {
             return new JobTitleViewModel
@@ -146,7 +138,7 @@ namespace GLAA.Services.Automapper
             return new NationalInsuranceNumberViewModel
             {
                 NationalInsuranceNumber = person.NationalInsuranceNumber,
-                IsUk = person.Address?.NonUK == false
+                IsUk = person.Address?.Country?.IsUk != null && person.Address.Country.IsUk
             };
         }
 

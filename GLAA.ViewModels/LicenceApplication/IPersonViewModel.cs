@@ -2,6 +2,8 @@
 {
     public interface IPersonViewModel
     {
+        bool IsUk { get; set; }
+
         FullNameViewModel FullName { get; set; }
         AlternativeFullNameViewModel AlternativeName { get; set; }
         DateOfBirthViewModel DateOfBirth { get; set; }

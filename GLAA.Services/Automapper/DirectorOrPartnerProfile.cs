@@ -43,7 +43,10 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.RestraintOrdersViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.UnspentConvictionsViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.OffencesAwaitingTrialViewModel, opt => opt.MapFrom(y => y))
-                .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver));
+                .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
+                .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
+                .ForMember(x => x.Countries, opt => opt.Ignore())
+                .ForMember(x => x.Counties, opt => opt.Ignore());
 
             CreateMap<DirectorOrPartner, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);
@@ -129,7 +132,7 @@ namespace GLAA.Services.Automapper
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<CountryOfBirthViewModel, DirectorOrPartner>()
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y.CountryOfBirth))
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y.CountryOfBirthId))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<JobTitleViewModel, DirectorOrPartner>()

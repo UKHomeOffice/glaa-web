@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using GLAA.ViewModels.LicenceApplication;
-using GLAA.Web.Controllers;
 
 namespace GLAA.Web.FormLogic
 {
