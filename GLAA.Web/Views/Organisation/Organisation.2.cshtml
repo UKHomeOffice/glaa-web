@@ -46,7 +46,9 @@
                                         </div>
                                     </fieldset>
                                 </div>
-                                @Html.TextFormGroupFor(x => x.OtherSector)
+                                <div class="panel panel-border-narrow js-hidden" id="other-sector-detail">
+                                    @Html.TextFormGroupFor(x => x.OtherSector)
+                                </div>
                             </div>
                         }
                     }
@@ -64,6 +66,7 @@
         $(document).ready(function () {
             hiddenContent.hideContent();
             branchedQuestion.toggleBranch('.multiple-choice input[type="radio"]', '#unlicensed-sectors', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input[name="SelectedSectors[4].Checked"]', '#other-sector-detail', "Other");
         });
     </script>
 }

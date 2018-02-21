@@ -628,6 +628,10 @@ namespace GLAA.Domain
                     new Sector
                     {
                         Name = "Shellfish Gathering"
+                    },
+                    new Sector
+                    {
+                        Name = "Other"
                     }
                 };
 
