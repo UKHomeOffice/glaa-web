@@ -70,11 +70,14 @@ namespace GLAA.ViewModels.LicenceApplication
         public IEnumerable<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
     }
 
-    public class BirthDetailsViewModel
+    public class BirthDetailsViewModel : Validatable
     {
         public BirthDetailsViewModel()
         {
+            TownOfBirthViewModel = new TownOfBirthViewModel();
             CountryOfBirthViewModel = new CountryOfBirthViewModel();
+            NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel();
+            SocialSecurityNumberViewModel = new SocialSecurityNumberViewModel();
         }
 
         public TownOfBirthViewModel TownOfBirthViewModel { get; set; }
