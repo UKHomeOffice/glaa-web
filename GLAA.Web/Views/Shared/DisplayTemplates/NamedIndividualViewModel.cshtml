@@ -1,7 +1,7 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.NamedIndividualViewModel
 
 @{
-    var isEditable = !(bool)ViewData["IsSubmitted"];
+    var isEditable = !(bool)(ViewData["IsSubmitted"] ?? false);
 }
 
 <table class="check-your-answers">
