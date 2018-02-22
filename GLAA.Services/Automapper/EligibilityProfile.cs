@@ -14,7 +14,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.EmailAddress, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Password, opt => opt.MapFrom(y => y))
-                .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
+                .ForMember(x => x.Address, opt => opt.Condition(y => y.Address != null))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
                 .ForMember(x => x.Counties, opt => opt.Ignore())
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
