@@ -8,7 +8,7 @@
     }
     else
     {
-        nonUk = Model.NonUK;
+        nonUk = Model?.NonUK;
     }
 
     bool? manual = null;
@@ -26,7 +26,7 @@
     <a href="?NonUK=true">I have an address outside the UK</a>
 </div>
 
-@if ((manual ?? false) || !string.IsNullOrEmpty(Model.Postcode))
+@if ((manual ?? false) || !string.IsNullOrEmpty(Model?.Postcode))
 {
     <div class="form-group">
         @Html.LabelWithHintFor(x => x.AddressLine1)
