@@ -1,4 +1,5 @@
 ﻿using System;
+using GLAA.Services;
 using GLAA.Services.AccountCreation;
 using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
@@ -19,8 +20,8 @@ namespace GLAA.Web.Controllers
 
         public SignUpController(ISessionHelper session,
             IAccountCreationViewModelBuilder accountCreationViewModelBuilder, IFormDefinition formDefinition,
-            IAccountCreationPostDataHandler accountCreationPostDataHandler)
-            : base(formDefinition)
+            IAccountCreationPostDataHandler accountCreationPostDataHandler, IReferenceDataProvider rdp)
+            : base(formDefinition, rdp)
         {
             this.session = session;
             this.accountCreationViewModelBuilder = accountCreationViewModelBuilder;
