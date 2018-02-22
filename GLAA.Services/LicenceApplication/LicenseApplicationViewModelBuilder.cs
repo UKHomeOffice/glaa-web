@@ -124,6 +124,13 @@ namespace GLAA.Services.LicenceApplication
             return model;
         }
 
+        public T BuildCountriesFor<T>(T model) where T : INeedCountries
+        {
+            model.Countries = referenceDataProvider.GetCountries();
+
+            return model;
+        }
+
         public IList<LicenceApplicationViewModel> BuildLicencesForUser(string userId)
         {
             var licences = licenceRepository.GetAllApplications().Where(x => x.UserId == userId);

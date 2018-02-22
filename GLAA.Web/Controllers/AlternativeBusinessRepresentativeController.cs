@@ -50,6 +50,12 @@ namespace GLAA.Web.Controllers
                 Session.SetCurrentAbrId(model.Id.Value);
             }
 
+            if (ViewData["IsSubmitted"] == null)
+            {
+                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
+            }
+
             Session.SetLoadedPage(id);
             return model;
         }
@@ -74,6 +80,8 @@ namespace GLAA.Web.Controllers
             Session.SetCurrentAbrId(id);
 
             var model = abrs.AlternativeBusinessRepresentatives.Single(a => a.Id == id);
+            LicenceApplicationViewModelBuilder.BuildCountriesFor(model);
+
 
             if (ViewData["IsSubmitted"] == null)
             {

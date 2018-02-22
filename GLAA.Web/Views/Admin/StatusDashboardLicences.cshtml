@@ -28,7 +28,7 @@
                 <td>@licence.Id</td>
                 <td>@licence.OrganisationDetails?.BusinessName?.BusinessName</td>
                 <td>@licence.OrganisationDetails?.BusinessName?.TradingName</td>
-                <td>@licence.OrganisationDetails?.Address?.Country</td>
+                <td>@(Model.Countries?.SingleOrDefault(c => int.Parse(c.Value) == licence.OrganisationDetails?.Address?.CountryId)?.Text ?? string.Empty)</td>
             </tr>
         }
     </tbody>

@@ -38,6 +38,7 @@ namespace GLAA.Web.Controllers
             }
 
             var model = dops.DirectorsOrPartners.Single(a => a.Id == id);
+            LicenceApplicationViewModelBuilder.BuildCountriesFor(model);
 
             Session.SetCurrentDopStatus(id, model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false);
 
@@ -98,6 +99,12 @@ namespace GLAA.Web.Controllers
             {
                 Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value,
                     model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false);
+            }
+
+            if (ViewData["IsSubmitted"] == null)
+            {
+                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
             }
 
             Session.SetLoadedPage(id);
