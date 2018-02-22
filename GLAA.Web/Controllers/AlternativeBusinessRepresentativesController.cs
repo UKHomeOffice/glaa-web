@@ -15,8 +15,8 @@ namespace GLAA.Web.Controllers
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(session, licenceApplicationViewModelBuilder,
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, rdp)
         {
         }
 
@@ -42,6 +42,8 @@ namespace GLAA.Web.Controllers
         public IActionResult SaveAlternativeBusinessRepresentatives(AlternativeBusinessRepresentativeCollectionViewModel model)
         {
             Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentatives, 2);
+
+            model = RepopulateDropdowns(model);
 
             if (!ModelState.IsValid)
             {

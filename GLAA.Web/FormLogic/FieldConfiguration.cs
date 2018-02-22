@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using GLAA.ViewModels.LicenceApplication;
-using GLAA.Web.Controllers;
 
 namespace GLAA.Web.FormLogic
 {
@@ -184,7 +183,7 @@ namespace GLAA.Web.FormLogic
             new FormPageDefinition(nameof(AlternativeFullNameViewModel.AlternativeName)),
             new FormPageDefinition(nameof(DateOfBirthViewModel.DateOfBirth)),
             new FormPageDefinition(nameof(TownOfBirthViewModel.TownOfBirth)),
-            new FormPageDefinition(nameof(CountryOfBirthViewModel.CountryOfBirth)),
+            new FormPageDefinition("CountryOfBirth"),
             new FormPageDefinition(nameof(JobTitleViewModel.JobTitle)),
             new FormPageDefinition("Address"),
             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),

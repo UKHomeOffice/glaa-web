@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GLAA.Domain\GLAA.Domain.csproj" />
+    <ProjectReference Include="..\GLAA.Repository\GLAA.Repository.csproj" />
   </ItemGroup>
 
 </Project>

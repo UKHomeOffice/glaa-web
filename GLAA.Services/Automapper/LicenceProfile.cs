@@ -23,11 +23,21 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Organisation, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.NewLicenceStatus, opt => opt.Ignore())
                 .ForMember(x => x.YesNo, opt => opt.Ignore())
-                .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.ApplicationFee, opt => opt.ResolveUsing(GetApplicationFee))
-                .ForMember(x => x.InspectionFee, opt => opt.ResolveUsing(GetInspectionFee));
+                .ForMember(x => x.InspectionFee, opt => opt.ResolveUsing(GetInspectionFee))
+                .ForMember(x => x.IsValid, opt => opt.Ignore())
+                .ForMember(x => x.Countries, opt => opt.Ignore())
+                .ForMember(x => x.Counties, opt => opt.Ignore());
 
             CreateMappings();
+        }
+
+        public static CountryOfBirthViewModel CobResolver(Country country)
+        {
+            return new CountryOfBirthViewModel
+            {
+                CountryOfBirthId = country.Id
+            };
         }
 
         private void CreateMappings()
@@ -37,8 +47,9 @@ namespace GLAA.Services.Automapper
             CreateMap<string, TownOfBirthViewModel>()
                 .ForMember(x => x.TownOfBirth, opt => opt.MapFrom(y => y));
 
-            CreateMap<string, CountryOfBirthViewModel>()
-                .ForMember(x => x.CountryOfBirth, opt => opt.MapFrom(y => y));
+            CreateMap<int, CountryOfBirthViewModel>()
+                .ForMember(x => x.CountryOfBirthId, opt => opt.MapFrom(y => y))
+                .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<string, JobTitleViewModel>()
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y));
@@ -75,7 +86,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.Licences, opt => opt.Ignore())
                 .ReverseMap();
 
-            CreateMap<CountryViewModel, Country>()
+            CreateMap<WorkerCountryViewModel, WorkerCountry>()
                 .ForMember(x => x.Licences, opt => opt.Ignore())
                 .ReverseMap();
 
@@ -115,8 +126,8 @@ namespace GLAA.Services.Automapper
                 .ForAllMembers(opt => opt.Ignore());
 
             //Licence Country
-            CreateMap<LicenceCountry, LicenceCountryViewModel>()
-                .ForMember(x => x.Country, opt => opt.MapFrom(y => y.Country))
+            CreateMap<LicenceWorkerCountry, LicenceCountryViewModel>()
+                .ForMember(x => x.Country, opt => opt.MapFrom(y => y.WorkerCountry))
                 .ForMember(x => x.Licence, opt => opt.MapFrom(y => y.Licence))
                 .ReverseMap()
                 .ForAllOtherMembers(opt => opt.Ignore());

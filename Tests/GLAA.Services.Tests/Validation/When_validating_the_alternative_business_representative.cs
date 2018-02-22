@@ -38,7 +38,7 @@ namespace GLAA.Services.Tests.Validation
                 },
                 CountryOfBirth = new CountryOfBirthViewModel
                 {
-                    CountryOfBirth = "country"
+                    CountryOfBirthId = 1
                 },
                 JobTitle = new JobTitleViewModel
                 {
@@ -49,8 +49,8 @@ namespace GLAA.Services.Tests.Validation
                     AddressLine1 = "1",
                     AddressLine2 = "2",
                     Town = "Perutown",
-                    County = "County",
-                    Country = "Peru",
+                    CountyId = 1,
+                    CountryId = 1,
                     Postcode = "postcode",
                     NonUK = false
                 },

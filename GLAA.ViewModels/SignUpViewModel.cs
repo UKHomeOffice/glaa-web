@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using GLAA.ViewModels.Attributes;
 using GLAA.ViewModels.LicenceApplication;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels
 {
-    public class SignUpViewModel : Validatable
+    public class SignUpViewModel : Validatable, INeedCountries, INeedCounties
     {
         public SignUpViewModel()
         {
@@ -22,6 +23,18 @@ namespace GLAA.ViewModels
         public AddressViewModel Address { get; set; }
         public CommunicationPreferenceViewModel CommunicationPreference { get; set; }
         public PasswordViewModel Password { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            set => Address.Countries = value;
+            get => Address.Countries;
+        }
+
+        public IEnumerable<SelectListItem> Counties
+        {
+            set => Address.Counties = value;
+            get => Address.Counties;
+        }
     }
 
     //TODO Replace FullNameViewModel with this
