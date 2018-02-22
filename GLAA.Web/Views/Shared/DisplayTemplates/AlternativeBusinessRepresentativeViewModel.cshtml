@@ -43,7 +43,7 @@
         </tr>
         <tr>
             <td>@Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)</td>
-            <td>@Html.DisplayFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)</td>
+            <td>@(Model.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)?.Text ?? string.Empty)</td>
             @if (isEditable)
             {
                 <td class="change-answer"><a href="@Url.Action("Part", "AlternativeBusinessRepresentative", new { id = 4 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)</span></a></td>
