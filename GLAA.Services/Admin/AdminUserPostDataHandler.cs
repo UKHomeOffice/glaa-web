@@ -78,9 +78,7 @@ namespace GLAA.Services.Admin
 
         public bool Exists(AdminUserViewModel model)
         {
-            var result = userManager.FindByEmailAsync(model.Email).GetAwaiter().GetResult();
-
-            return result != null;
+            return userManager.FindByEmailAsync(model.Email).GetAwaiter().GetResult() != null;
         }
     }
 }
