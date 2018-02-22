@@ -62,19 +62,17 @@ namespace GLAA.Web.Controllers
             return model;
         }
 
-        protected IActionResult CheckParentValidityAndRedirect(FormSection section, int submittedPageId)
+        protected IActionResult CheckParentValidityAndRedirect(FormSection section, string actionName)
         {
             var licenceId = Session.GetCurrentLicenceId();
-            var sectionLength = FormDefinition.GetSectionLength(section);
-            var nextPageId = submittedPageId + 1;
 
-            if (nextPageId != sectionLength)
+            if (!FormDefinition.IsNextPageLastPage(section, actionName))
             {
                 var parent = FindParentSection(section, licenceId);
 
                 return parent == null
                     ? RedirectToAction("TaskList", "Licence")
-                    : ValidateParentAndRedirect(parent, section, nextPageId);
+                    : ValidateParentAndRedirect(parent, section, actionName);
             }
 
             return RedirectToLastAction(section);
@@ -125,40 +123,44 @@ namespace GLAA.Web.Controllers
             return parent;
         }
 
-        protected IActionResult ValidateParentAndRedirect(IValidatable parent, FormSection section, int nextPageId)
+        protected IActionResult ValidateParentAndRedirect(IValidatable parent, FormSection section, string actionName)
         {
             parent.Validate();
 
-            return parent.IsValid ? RedirectToLastAction(section) : RedirectToAction(section, nextPageId);
+            if (parent.IsValid)
+            {
+                return RedirectToLastAction(section);
+            }
+
+            var nextAction = FormDefinition.GetNextPage(section, actionName).ActionName;
+            return RedirectToAction(section, nextAction);
         }
 
-        protected IActionResult CheckParentValidityAndRedirectBack(FormSection section, int submittedPageId)
+        protected IActionResult CheckParentValidityAndRedirectBack(FormSection section, string actionName)
         {
             var licenceId = Session.GetCurrentLicenceId();
-            var nextPageId = submittedPageId - 1;
+            var previousAction = FormDefinition.GetPreviousPage(section, actionName);
             var parent = FindParentSection(section, licenceId);
 
-            return parent == null && nextPageId > 0
-                ? RedirectBackToAction(section, nextPageId)
-                : ValidateParentAndRedirectBack(parent, section, nextPageId);
+            return parent == null
+                ? RedirectBackToAction(section, previousAction.ActionName)
+                : ValidateParentAndRedirectBack(parent, section, previousAction.ActionName);
         }
 
-        protected IActionResult ValidateParentAndRedirectBack(IValidatable parent, FormSection section, int nextPageId)
+        protected IActionResult ValidateParentAndRedirectBack(IValidatable parent, FormSection section, string actionName)
         {
             parent.Validate();
-
-            return nextPageId > 0
-                ? (parent.IsValid ? RedirectToLastAction(section) : RedirectBackToAction(section, nextPageId))
-                : RedirectToLastAction(section);
+            
+            return parent.IsValid ? RedirectToLastAction(section) : RedirectBackToAction(section, actionName);
         }
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Back(FormSection section, int submittedPageId, bool isSecurityPart = false)
+        public IActionResult Back(FormSection section, string actionName, bool isSecurityPart = false)
         {
             return isSecurityPart
-                ? RedirectBackToAction(section, submittedPageId)
-                : CheckParentValidityAndRedirectBack(section, submittedPageId);
+                ? RedirectBackToAction(section, actionName)
+                : CheckParentValidityAndRedirectBack(section, actionName);
         }
     }
 }

@@ -13,67 +13,69 @@ namespace GLAA.Web.Controllers
             FormDefinition = formDefinition;
         }
 
-        protected virtual string GetViewPath(FormSection section, int id)
+        protected virtual string GetViewPath(FormSection section, string actionName)
         {
-            return $"{section.ToString()}.{id}";
+            return actionName;
         }
 
         protected virtual string GetLastViewPath(FormSection section)
         {
-            return GetViewPath(section, FormDefinition.GetSectionLength(section));
+            return GetViewPath(section, FormDefinition.GetLastPage(section).ActionName);
         }
 
-        protected ActionResult GetPreviousView<T>(int id, FormSection section, T model) where T : IValidatable
+        protected ActionResult GetPreviousView<T>(FormSection section, string actionName, T model) where T : IValidatable
         {
-            if (!FormDefinition.CanViewPage(section, id, model))
-                return RedirectToPreviousPossibleView(id, section, model);
+            if (!FormDefinition.CanViewPage(section, actionName, model))
+            {
+                return RedirectToPreviousPossibleView(section, actionName, model);
+            }
+            
+            var viewModel = FormDefinition.GetViewModel(section, actionName, model);
 
-            var viewPath = GetViewPath(section, id);
-            var viewModel = FormDefinition.GetViewModel(section, id, model);
-
-            return View(viewPath, viewModel);
+            return View(actionName, viewModel);
         }
 
-        protected ActionResult RedirectToPreviousPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
+        protected ActionResult RedirectToPreviousPossibleView<T>(FormSection section, string actionName, T model) where T : IValidatable
         {
-            while (!FormDefinition.CanViewPage(section, id, model))
-                id--;
+            var action = FormDefinition.GetPreviousPossibleAction(section, actionName, model);
 
-            return RedirectBackToAction(section, id);
+            return RedirectBackToAction(section, action.ActionName);
         }
 
-        protected ActionResult GetNextView<T>(int id, FormSection section, T model) where T : IValidatable
+        protected ActionResult GetNextView<T>(FormSection section, string actionName, T model) where T : IValidatable
         {
-            if (!FormDefinition.CanViewPage(section, id, model))
-                return RedirectToNextPossibleView(id, section, model);
+            if (!FormDefinition.CanViewPage(section, actionName, model))
+            {
+                return RedirectToNextPossibleView(section, actionName, model);
+            }
+            
+            var viewModel = FormDefinition.GetViewModel(section, actionName, model);
 
-            var viewPath = GetViewPath(section, id);
-            var viewModel = FormDefinition.GetViewModel(section, id, model);
-
-            return View(viewPath, viewModel);
+            return View(actionName, viewModel);
         }
 
-        protected ActionResult RedirectToNextPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
+        protected ActionResult RedirectToNextPossibleView<T>(FormSection section, string actionName, T model) where T : IValidatable
         {
-            while (!FormDefinition.CanViewPage(section, id, model))
-                id++;
-
-            return RedirectToAction(section, id);
+            var action = FormDefinition.GetNextPossibleAction(section, actionName, model);
+            
+            return RedirectToAction(section, action.ActionName);
         }
 
-        protected virtual ActionResult RedirectToAction(FormSection section, int id)
+        protected virtual ActionResult RedirectToAction(FormSection section, string actionName)
         {
-            return RedirectToAction("Part", section.ToString(), new {id});
+            return RedirectToAction(actionName, section.ToString());
         }
 
-        protected virtual ActionResult RedirectBackToAction(FormSection section, int id)
+        protected virtual ActionResult RedirectBackToAction(FormSection section, string actionName)
         {
-            return RedirectToAction("Part", section.ToString(), new { id, back = true });
+            return RedirectToAction(actionName, section.ToString(), new { back = true });
         }
 
         protected virtual ActionResult RedirectToLastAction(FormSection section)
         {
-            return RedirectToAction("Part", section.ToString(), new {id = FormDefinition.GetSectionLength(section)});
+            var last = FormDefinition.GetLastPage(section);
+
+            return RedirectToAction(last.ActionName, section.ToString());
         }
     }
 }

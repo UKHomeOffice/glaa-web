@@ -31,5 +31,43 @@ namespace GLAA.Web.FormLogic
         /// <param name="section">The form section.</param>
         /// <returns>The number of pages in the specified section.</returns>
         int GetSectionLength(FormSection section);
+
+        /// <summary>
+        /// Gets the page definition for the last page in the section.
+        /// </summary>
+        /// <param name="section">The form section.</param>
+        /// <returns>The page definition for the last page in the section.</returns>
+        FormPageDefinition GetLastPage(FormSection section);
+
+        /// <summary>
+        /// Checks if the next page in the section is the final page.
+        /// </summary>
+        /// <remarks>
+        /// i.e. if the next page in the section is the final page, full-section validation will not need to be performed to decide where to go next.
+        /// </remarks>
+        /// <param name="section">The form section.</param>
+        /// <param name="actionName">The action name to check.</param>
+        /// <returns></returns>
+        bool IsNextPageLastPage(FormSection section, string actionName);
+
+        /// <summary>
+        /// Gets the name of the next action in the form.
+        /// </summary>
+        /// <param name="section">The current form section.</param>
+        /// <param name="actionName">The current action name.</param>
+        /// <returns>The next action name.</returns>
+        FormPageDefinition GetNextPage(FormSection section, string actionName);
+
+        /// <summary>
+        /// Gets the name of the previous action in the form.
+        /// </summary>
+        /// <param name="section">The current form section.</param>
+        /// <param name="actionName">The current action name.</param>
+        /// <returns>The previous action name.</returns>
+        FormPageDefinition GetPreviousPage(FormSection section, string actionName);
+
+        FormPageDefinition GetNextPossibleAction<TParent>(FormSection section, string actionName, TParent parent);
+
+        FormPageDefinition GetPreviousPossibleAction<TParent>(FormSection section, string actionName, TParent parent);
     }
 }
