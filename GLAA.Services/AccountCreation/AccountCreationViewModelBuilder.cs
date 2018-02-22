@@ -25,8 +25,7 @@ namespace GLAA.Services.AccountCreation
                 Countries = referenceDataProvider.GetCountries(),
                 Counties = referenceDataProvider.GetCounties()
             };
-
-
+            
             var user = userManager.FindCompleteUserByEmail(email);
 
             if (user != null)

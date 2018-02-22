@@ -1,6 +1,6 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.AlternativeBusinessRepresentativeViewModel
 @{
-    var isEditable = !(bool)ViewData["IsSubmitted"];
+    var isEditable = !(bool)(ViewData["IsSubmitted"] ?? false);
 }
 <table class="check-your-answers">
     <thead>
@@ -42,11 +42,11 @@
             }
         </tr>
         <tr>
-            <td>@Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth)</td>
-            <td>@Html.DisplayFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth)</td>
+            <td>@Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)</td>
+            <td>@(Model.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)?.Text ?? string.Empty)</td>
             @if (isEditable)
             {
-                <td class="change-answer"><a href="@Url.Action("Part", "AlternativeBusinessRepresentative", new { id = 4 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirth)</span></a></td>
+                <td class="change-answer"><a href="@Url.Action("Part", "AlternativeBusinessRepresentative", new { id = 4 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId)</span></a></td>
             }
         </tr>
         <tr>
