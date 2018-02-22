@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Directors Or Partners";
+    var isSubmitted = ViewData["IsSubmitted"];
 }
 
 <main id="content" role="main">
@@ -26,13 +27,13 @@
             </h1>
         </div>
     </div>
-    @Html.DisplayFor(m => m)
+    @Html.DisplayFor(m => m, new { IsSubmitted = isSubmitted })
     @if (!SessionHelper.GetCurrentUserIsAdmin(Context.Session))
     {
         <div class="grid-row">
             <div class="column-full">
                 <p>
-                    @Html.ActionLink("Go to next section", "Part", "NamedIndividuals", 1, new {@class = "button"})
+                    @Html.ActionLink("Go to next section", "Part", "NamedIndividuals", 1, new { @class = "button" })
                 </p>
             </div>
         </div>

@@ -2,11 +2,11 @@
     ViewBag.Title = "Alternative Business Representative - Part 10";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PersonalMobileNumberViewModel
+@model GLAA.ViewModels.LicenceApplication.PersonalEmailAddressViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "10" } })
 
-@using (Html.BeginForm("SavePersonalMobileNumber", "AlternativeBusinessRepresentative"))
+@using (Html.BeginForm("SavePersonalEmailAddress", "AlternativeBusinessRepresentative"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -14,11 +14,11 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your personal mobile phone number?
+                What is your personal email address?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.PersonalMobileNumber)
+            @Html.TextFormGroupFor(x => x.PersonalEmailAddress)
         </div>
     </div>
 

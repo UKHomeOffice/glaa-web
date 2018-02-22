@@ -34,7 +34,7 @@ namespace GLAA.Services.LicenceApplication
         {
             var licence = licenceRepository.GetById(licenceId);
 
-            var latestStatus = licence.LicenceStatusHistory.OrderByDescending(l => l.DateCreated).FirstOrDefault();
+            var latestStatus = licence.CurrentStatusChange.Status;
 
             var model = mapper.Map<LicenceStatusViewModel>(latestStatus);
 

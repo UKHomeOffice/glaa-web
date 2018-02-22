@@ -62,15 +62,15 @@ namespace GLAA.Services.Tests.AutoMapper
                     Date = expectedDateOfBirth
                 }
             };
-            inputPerson.TownOfBirth.TownOfBirth = expectedTown;
-            inputPerson.CountryOfBirth.CountryOfBirthId = expectedCountry;
+            inputPerson.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth = expectedTown;
+            inputPerson.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId = expectedCountry;
             inputPerson.JobTitle.JobTitle = expectedJobTitle;
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension.BusinessExtension = expectedBusExt;
             inputPerson.BusinessPhoneNumber.BusinessPhoneNumber = expectedBusPhoneNo;
             inputPerson.PersonalEmailAddress.PersonalEmailAddress = expectedEmail;
             inputPerson.PersonalMobileNumber.PersonalMobileNumber = expectedMobile;
-            inputPerson.NationalInsuranceNumber.NationalInsuranceNumber = expectedNatIns;
+            inputPerson.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber = expectedNatIns;
         }
 
         private void AssertPerson(IPersonViewModel expected, IPerson actual)
@@ -79,14 +79,14 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AlternativeName.AlternativeName, actual.AlternativeName);
             Assert.AreEqual(expected.AlternativeName.HasAlternativeName, actual.HasAlternativeName);
             Assert.AreEqual(expected.DateOfBirth.DateOfBirth.Date, actual.DateOfBirth);
-            Assert.AreEqual(expected.TownOfBirth.TownOfBirth, actual.TownOfBirth);
-            Assert.AreEqual(expected.CountryOfBirth.CountryOfBirthId, actual.CountryOfBirthId);
+            Assert.AreEqual(expected.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth, actual.TownOfBirth);
+            Assert.AreEqual(expected.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId, actual.CountryOfBirthId);
             Assert.AreEqual(expected.JobTitle.JobTitle, actual.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber.BusinessPhoneNumber, actual.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension.BusinessExtension, actual.BusinessExtension);
             Assert.AreEqual(expected.PersonalEmailAddress.PersonalEmailAddress, actual.PersonalEmailAddress);
             Assert.AreEqual(expected.PersonalMobileNumber.PersonalMobileNumber, actual.PersonalMobileNumber);
-            Assert.AreEqual(expected.NationalInsuranceNumber.NationalInsuranceNumber, actual.NationalInsuranceNumber);
+            Assert.AreEqual(expected.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber, actual.NationalInsuranceNumber);
 
             AssertAddress(expected.Address, actual.Address);
         }

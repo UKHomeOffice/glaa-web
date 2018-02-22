@@ -38,6 +38,8 @@ namespace GLAA.Domain.Models
 
         public string NationalInsuranceNumber { get; set; }
 
+        public string SocialSecurityNumber{ get; set; }
+
         [ForeignKey(nameof(AddressId))] 
         public virtual Address Address { get; set; }
 

@@ -182,15 +182,13 @@ namespace GLAA.Web.FormLogic
             new FormPageDefinition(nameof(FullNameViewModel.FullName)),
             new FormPageDefinition(nameof(AlternativeFullNameViewModel.AlternativeName)),
             new FormPageDefinition(nameof(DateOfBirthViewModel.DateOfBirth)),
-            new FormPageDefinition(nameof(TownOfBirthViewModel.TownOfBirth)),
-            new FormPageDefinition("CountryOfBirth"),
+            new FormPageDefinition(nameof(BirthDetailsViewModel)),
             new FormPageDefinition(nameof(JobTitleViewModel.JobTitle)),
             new FormPageDefinition("Address"),
             new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
             new FormPageDefinition(nameof(BusinessExtensionViewModel.BusinessExtension)),
             new FormPageDefinition(nameof(PersonalMobileNumberViewModel.PersonalMobileNumber)),
             new FormPageDefinition(nameof(PersonalEmailAddressViewModel.PersonalEmailAddress)),
-            new FormPageDefinition(nameof(NationalInsuranceNumberViewModel.NationalInsuranceNumber)),
         };
 
         private static readonly FormPageDefinition[] PersonSecurityFields =

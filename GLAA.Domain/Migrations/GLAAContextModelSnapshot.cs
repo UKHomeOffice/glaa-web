@@ -88,8 +88,6 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("CountyId");
 
-                    b.Property<bool>("NonUK");
-
                     b.Property<string>("Postcode");
 
                     b.Property<string>("Town");
@@ -161,6 +159,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("PreviousLicenceDescription");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 
@@ -295,6 +295,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<int?>("PrincipalAuthorityId");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 
@@ -899,6 +901,8 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("PreviousLicenceDescription");
 
                     b.Property<bool?>("RequiresVisa");
+
+                    b.Property<string>("SocialSecurityNumber");
 
                     b.Property<string>("TownOfBirth");
 

@@ -1,14 +1,14 @@
 ﻿@using GLAA.Web.FormLogic
-@model GLAA.ViewModels.LicenceApplication.UnspentConvictionsViewModel
+@model GLAA.ViewModels.LicenceApplication.OffencesAwaitingTrialViewModel
 
 @{
-    ViewBag.Title = "Unspent criminal convictions, or alternative sanctions or penalties for proven offences";
-    var conjunction = Model.UnspentConvictions.Any() ? "another" : "an";
+    ViewBag.Title = "Offences that are awaiting trial or decisions on an alternative sanctions or penalties";
+    var conjunction = Model.OffencesAwaitingTrial.Any() ? "another" : "an";
 }
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "24" } })
 
-@using (Html.BeginForm("ReviewPrincipalAuthorityUnspentConvictions", "PrincipalAuthority", FormMethod.Post))
+@using (Html.BeginForm("ReviewPrincipalAuthorityOffencesAwaitingTrial", "PrincipalAuthority", FormMethod.Post))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -20,19 +20,19 @@
             </h1>
         </div>
     </div>
-    <table class="check-your-answers" id="UnspentConvictions">
+    <table class="check-your-answers" id="OffencesAwaitingTrial">
         <thead>
             <tr>
-                <th colspan="3">Unspent criminal convictions, or alternative sanctions or penalties</th>
+                <th colspan="3">Alleged offences / sanctions / penalties</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var uc in Model.UnspentConvictions)
+            @foreach (var uc in Model.OffencesAwaitingTrial)
             {
                 <tr>
                     <td>@uc.Description</td>
                     <td>@uc.Date.ToString()</td>
-                    <td class="change-answer"><a href="@Url.Action("AddConviction", "Licence", new { section = FormSection.PrincipalAuthority, id = uc.Id })">Change or remove<span class="visually-hidden"> @uc.Description</span></a></td>
+                    <td class="change-answer"><a href="@Url.Action("AddOffenceAwaitingTrial", "Licence", new { section = FormSection.PrincipalAuthority, id = uc.Id })">Change or remove<span class="visually-hidden"> @uc.Description</span></a></td>
                 </tr>
             }
         </tbody>
@@ -40,7 +40,7 @@
     <div class="grid-row">
         <div class="column-full">
             <p>
-                <a class="button button-add-another" href="@Url.Action("AddConviction", "Licence", new { section = FormSection.PrincipalAuthority, id = 0 })">Add @conjunction unspent conviction, alternative sanction or penalty</a>
+                <a class="button button-add-another" href="@Url.Action("AddOffenceAwaitingTrial", "Licence", new { section = FormSection.PrincipalAuthority, id = 0 })">Add @conjunction offence, alternative sanction or penalty</a>
             </p>
         </div>
     </div>
@@ -51,5 +51,6 @@
             </p>
         </div>
     </div>
-    @Html.HiddenFor(m => m.HasUnspentConvictions)
+    @Html.HiddenFor(m => m.HasOffencesAwaitingTrial)
 }
+

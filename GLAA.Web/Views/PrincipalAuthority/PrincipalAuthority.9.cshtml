@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Principal Authority - Part 7";
+    ViewBag.Title = "Principal Authority - Part 8";
 }
 
-@model GLAA.ViewModels.LicenceApplication.JobTitleViewModel
+@model GLAA.ViewModels.LicenceApplication.AddressViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "9" } })
 
-@using (Html.BeginForm("SaveJobTitle", "PrincipalAuthority"))
+@using (Html.BeginForm("SaveAddress", "PrincipalAuthority"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -14,11 +14,11 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your job title?
+                What is your address?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.JobTitle)
+            @Html.EditorFor(x => x)
         </div>
     </div>
 
