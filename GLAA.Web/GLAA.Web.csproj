@@ -52,9 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\AlternativeBusinessRepresentative\" />
     <Folder Include="Views\AlternativeBusinessRepresentatives\" />
-    <Folder Include="Views\DirectorOrPartner\" />
     <Folder Include="Views\DirectorsOrPartners\" />
     <Folder Include="Views\JobTitle\" />
     <Folder Include="Views\NamedIndividual\" />

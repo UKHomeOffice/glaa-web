@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "What country were you born in?";
+    ViewBag.Title = "Principal Authority - Part 7";
 }
 
-@model GLAA.ViewModels.LicenceApplication.CountryOfBirthViewModel
+@model GLAA.ViewModels.LicenceApplication.JobTitleViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "8" } })
 
-@using (Html.BeginForm("SaveCountryOfBirth", "PrincipalAuthority"))
+@using (Html.BeginForm("SaveJobTitle", "PrincipalAuthority"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -14,13 +14,15 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                @ViewBag.Title
+                What is your job title?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.DropDownFormGroupFor(x => x.CountryOfBirthId, Model.Countries)
-            <button type="submit" class="button">Save and continue</button>
+            @Html.TextFormGroupFor(x => x.JobTitle)
         </div>
     </div>
 
+    <button type="submit" class="button">Save and continue</button>
 }
+
+

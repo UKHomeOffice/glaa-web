@@ -125,7 +125,7 @@ namespace GLAA.Web
             services.AddTransient<IFormDefinition, LicenceApplicationFormDefinition>();
             services.AddTransient<IFieldConfiguration, FieldConfiguration>();
             services.AddTransient<IConstantService, ConstantService>();
-            services.AddTransient<IReferenceDataProvider, ReferenceDataProvider>();
+            services.AddScoped<IReferenceDataProvider, ReferenceDataProvider>();
 
             // admin profile
             services.AddTransient<ILicenceRepository, LicenceRepository>();

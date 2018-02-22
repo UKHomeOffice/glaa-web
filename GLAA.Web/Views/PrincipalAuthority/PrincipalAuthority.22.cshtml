@@ -1,14 +1,14 @@
 ﻿@using GLAA.Web.FormLogic
-@model GLAA.ViewModels.LicenceApplication.RestraintOrdersViewModel
+@model GLAA.ViewModels.LicenceApplication.UnspentConvictionsViewModel
 
 @{
-    ViewBag.Title = "Restraint or confiscation orders, or civil recoveries";
-    var conjunction = Model.RestraintOrders.Any() ? "another" : "a";
+    ViewBag.Title = "Unspent criminal convictions, or alternative sanctions or penalties for proven offences";
+    var conjunction = Model.UnspentConvictions.Any() ? "another" : "an";
 }
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "22" } })
 
-@using (Html.BeginForm("ReviewPrincipalAuthorityRestraintOrders", "PrincipalAuthority", FormMethod.Post))
+@using (Html.BeginForm("ReviewPrincipalAuthorityUnspentConvictions", "PrincipalAuthority", FormMethod.Post))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -20,19 +20,19 @@
             </h1>
         </div>
     </div>
-    <table class="check-your-answers" id="RestraintOrders">
+    <table class="check-your-answers" id="UnspentConvictions">
         <thead>
             <tr>
-                <th colspan="3">Restraint or confiscation orders, or civil recoveries</th>
+                <th colspan="3">Unspent criminal convictions, or alternative sanctions or penalties</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var ro in Model.RestraintOrders)
+            @foreach (var uc in Model.UnspentConvictions)
             {
                 <tr>
-                    <td>@ro.Description</td>
-                    <td>@ro.Date.ToString()</td>
-                    <td class="change-answer"><a href="@Url.Action("AddRestraintOrder", "Licence", new { section = FormSection.PrincipalAuthority, id = ro.Id })">Change or remove<span class="visually-hidden"> @ro.Description</span></a></td>
+                    <td>@uc.Description</td>
+                    <td>@uc.Date.ToString()</td>
+                    <td class="change-answer"><a href="@Url.Action("AddConviction", "Licence", new { section = FormSection.PrincipalAuthority, id = uc.Id })">Change or remove<span class="visually-hidden"> @uc.Description</span></a></td>
                 </tr>
             }
         </tbody>
@@ -40,7 +40,7 @@
     <div class="grid-row">
         <div class="column-full">
             <p>
-                <a class="button button-add-another" href="@Url.Action("AddRestraintOrder", "Licence", new { section = FormSection.PrincipalAuthority, id = 0 })">Add @conjunction restraint order</a>
+                <a class="button button-add-another" href="@Url.Action("AddConviction", "Licence", new { section = FormSection.PrincipalAuthority, id = 0 })">Add @conjunction unspent conviction, alternative sanction or penalty</a>
             </p>
         </div>
     </div>
@@ -51,5 +51,5 @@
             </p>
         </div>
     </div>
-    @Html.HiddenFor(m => m.HasRestraintOrders)
+    @Html.HiddenFor(m => m.HasUnspentConvictions)
 }

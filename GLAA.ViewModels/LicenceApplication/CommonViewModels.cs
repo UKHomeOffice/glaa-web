@@ -26,7 +26,7 @@ namespace GLAA.ViewModels.LicenceApplication
         };
     }
 
-    public class FullNameViewModel 
+    public class FullNameViewModel
     {
         [Required]
         [Display(Name = "Full name", Description = "Your given and surname<br/>E.g John Smith")]
@@ -38,10 +38,10 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Are you known by any alternative names?")]
         public bool? HasAlternativeName { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Alternative full name field is required.")]
         [Display(Name = "Alternative full name", Description = "E.g John Smith")]
-        public string AlternativeName  { get; set; }
+        public string AlternativeName { get; set; }
 
         public bool IsRequired => HasAlternativeName ?? false;
     }
@@ -68,6 +68,22 @@ namespace GLAA.ViewModels.LicenceApplication
         public int? CountryOfBirthId { get; set; }
 
         public IEnumerable<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
+    }
+
+    public class BirthDetailsViewModel : Validatable
+    {
+        public BirthDetailsViewModel()
+        {
+            TownOfBirthViewModel = new TownOfBirthViewModel();
+            CountryOfBirthViewModel = new CountryOfBirthViewModel();
+            NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel();
+            SocialSecurityNumberViewModel = new SocialSecurityNumberViewModel();
+        }
+
+        public TownOfBirthViewModel TownOfBirthViewModel { get; set; }
+        public CountryOfBirthViewModel CountryOfBirthViewModel { get; set; }
+        public NationalInsuranceNumberViewModel NationalInsuranceNumberViewModel { get; set; }
+        public SocialSecurityNumberViewModel SocialSecurityNumberViewModel { get; set; }
     }
 
     public class JobTitleViewModel
@@ -98,7 +114,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string BusinessPhoneNumber { get; set; }
     }
 
-    public class BusinessExtensionViewModel 
+    public class BusinessExtensionViewModel
     {
         [Display(Name = "Extension Number")]
         public string BusinessExtension { get; set; }
@@ -111,7 +127,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string PersonalMobileNumber { get; set; }
     }
 
-    public class PersonalEmailAddressViewModel 
+    public class PersonalEmailAddressViewModel
     {
         [EmailAddress]
         [Display(Name = "Personal Email Address")]
@@ -133,10 +149,16 @@ namespace GLAA.ViewModels.LicenceApplication
         [RequiredIfUkAddress]
         [Display(Name = "National Insurance Number", Description = "For example QQ123456A")]
         public string NationalInsuranceNumber { get; set; }
-
         public bool IsUk { get; set; }
     }
-    
+
+    public class SocialSecurityNumberViewModel
+    {
+        [Display(Name = "Social Security Number")]
+        public string SocialSecurityNumber { get; set; }
+
+    }
+
     public class NationalityViewModel
     {
         [Required]
@@ -156,7 +178,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Does this person require a visa or work permit to work in the UK?")]
         public bool? RequiresVisa { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The description field is required.")]
         [Display(Name = "Brief description of the immigration status and the visa / work permit(s) held by this person")]
         public string VisaDescription { get; set; }
@@ -174,12 +196,12 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Are you an undischarged bankrupt?")]
         public bool? IsUndischargedBankrupt { get; set; }
-        
+
         [UIHint("_NullableDateTime")]
         [RequiredIf(ErrorMessage = "The Bankruptcy Date field is required.")]
         [Display(Name = "Give the date of the bankruptcy")]
         public DateViewModel BankruptcyDate { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Bankruptcy Number field is required.")]
         [Display(Name = "Bankruptcy number", Description = "For example DRO1234567 or 1234567")]
         [RegularExpression(@"([a-zA-Z]{3}|[A-Z]{0})\d{7}", ErrorMessage = "Please enter a valid bankruptcy number.")]
@@ -193,7 +215,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Are you disqualified as a company director?")]
         public bool? IsDisqualifiedDirector { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Disqualification description field is required.")]
         [Display(Name = "Give a brief description of the disqualification")]
         public string DisqualificationDetails { get; set; }
@@ -264,7 +286,7 @@ namespace GLAA.ViewModels.LicenceApplication
     public class RestraintOrderViewModel : Validatable
     {
         public int Id { get; set; }
-        
+
         [UIHint("_NullableDateTime")]
         [DateRequired(ErrorMessage = "The date of the restraint, confiscation order or civil recovery field is required.")]
         [Display(Name = "Give the date of the restraint, confiscation order or civil recovery")]
@@ -337,7 +359,7 @@ namespace GLAA.ViewModels.LicenceApplication
     public class UnspentConvictionViewModel : Validatable
     {
         public int Id { get; set; }
-        
+
         [UIHint("_NullableDateTime")]
         [DateRequired(ErrorMessage = "The date of the convictions / sanctions / penalties field is required.")]
         [Display(Name = "Give the date of the convictions / sanctions / penalties")]
@@ -410,7 +432,7 @@ namespace GLAA.ViewModels.LicenceApplication
     public class OffenceAwaitingTrialViewModel : Validatable
     {
         public int Id { get; set; }
-        
+
         [UIHint("_NullableDateTime")]
         [DateRequired(ErrorMessage = "The date of the alleged offence / sanction / penalty field is required.")]
         [Display(Name = "Give the date of the alleged offence / sanction / penalty")]
@@ -426,7 +448,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Have you previously held or currently hold a GLA/GLAA licence, been named on another GLA/GLAA licence, worked for another GLA/GLAA licence holder or advised another GLA/GLAA licence holder within the last 10 years?")]
         public bool? HasPreviouslyHeldLicence { get; set; }
-        
+
         [RequiredIf(ErrorMessage = "The Licence Details field is required.")]
         [Display(Name = "Give details of the previously held GLAA licence")]
         public string PreviousLicenceDescription { get; set; }

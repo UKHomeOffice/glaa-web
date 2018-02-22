@@ -2,11 +2,11 @@
     ViewBag.Title = "Alternative Business Representative - Part 6";
 }
 
-@model GLAA.ViewModels.LicenceApplication.JobTitleViewModel
+@model GLAA.ViewModels.LicenceApplication.AddressViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "6" } })
 
-@using (Html.BeginForm("SaveJobTitle", "AlternativeBusinessRepresentative"))
+@using (Html.BeginForm("SaveAddress", "AlternativeBusinessRepresentative"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -14,11 +14,19 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                What is your job title?
+                What is your postcode?
             </h1>
         </div>
         <div class="column-two-thirds">
-            @Html.TextFormGroupFor(x => x.JobTitle)
+            @Html.EditorFor(x => x)
+            @*<p class="lede">We can try to lookup your address if you are a UK based organisation.</p>
+                @Html.TextFormGroupFor(x => x.Postcode)
+                <div class="form-group">
+                    <div class="multiple-choice">
+                        @Html.CheckBoxFor(x => x.NonUK)
+                        @Html.Label("Non UK")
+                    </div>
+                </div>*@
         </div>
     </div>
 

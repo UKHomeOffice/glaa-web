@@ -1,13 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Do you have a passport?";
+    ViewBag.Title = "Principal Authority - Part 17";
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PassportViewModel
+@model GLAA.ViewModels.LicenceApplication.UndischargedBankruptViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "15" } })
 
-@using (Html.BeginForm("SavePassport", "DirectorOrPartner"))
+@using (Html.BeginForm("SaveUndischargedBankrupt", "DirectorOrPartner"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,7 +15,7 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Do you have a passport?
+                Are you an un-discharged bankrupt?
             </h1>
         </div>
         <div class="column-two-thirds">
@@ -27,18 +27,18 @@
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.HasPassport, option.Value)
+                            @Html.RadioButtonFor(x => x.IsUndischargedBankrupt, option.Value)
                             @Html.Label(option.Text)
                         </div>
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="passport-detail">
-                                You will be required to download a copy of your passport prior to submitting this application form.
+                            <div class="panel panel-border-narrow js-hidden" id="bankrupt-detail">
+                                @Html.DateFormGroupFor(x => x.BankruptcyDate)
+                                @Html.TextFormGroupFor(x => x.BankruptcyNumber)
                             </div>
                         }
                     }
-
                 </fieldset>
             </div>
         </div>
@@ -52,7 +52,9 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#passport-detail', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#bankrupt-detail', @switchValue);
         });
     </script>
 }
+
+

@@ -32,13 +32,21 @@ namespace GLAA.Services.Tests.Validation
                         Date = DateTime.Now
                     }
                 },
-                TownOfBirth = new TownOfBirthViewModel
+                BirthDetailsViewModel =  new BirthDetailsViewModel
                 {
-                    TownOfBirth = "town"
-                },
-                CountryOfBirth = new CountryOfBirthViewModel
-                {
-                    CountryOfBirthId = 1
+                    TownOfBirthViewModel = new TownOfBirthViewModel
+                    {
+                        TownOfBirth = "town"
+                    },
+                    CountryOfBirthViewModel = new CountryOfBirthViewModel
+                    {
+                        CountryOfBirthId = 1
+                    },
+                    NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
+                    {
+                        NationalInsuranceNumber = "JT123456A",
+                        IsUk = true // This property it mapped via automapper in real life
+                    }
                 },
                 JobTitle = new JobTitleViewModel
                 {
@@ -61,11 +69,6 @@ namespace GLAA.Services.Tests.Validation
                 BusinessExtension = new BusinessExtensionViewModel
                 {
                     BusinessExtension = "456"
-                },
-                NationalInsuranceNumber = new NationalInsuranceNumberViewModel
-                {
-                    NationalInsuranceNumber = "JT123456A",
-                    IsUk = true // This property it mapped via automapper in real life
                 },
                 Nationality = new NationalityViewModel
                 {

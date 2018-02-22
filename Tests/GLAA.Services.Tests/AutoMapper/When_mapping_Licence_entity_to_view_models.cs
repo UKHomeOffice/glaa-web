@@ -136,15 +136,15 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expectedYesNoList.Count, actual.AlternativeName.YesNo.Count);
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth.DateOfBirth.Date);
-            Assert.AreEqual(expected.TownOfBirth, actual.TownOfBirth.TownOfBirth);
-            Assert.AreEqual(expected.CountryOfBirthId, actual.CountryOfBirth.CountryOfBirthId);
+            Assert.AreEqual(expected.TownOfBirth, actual.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth);
+            Assert.AreEqual(expected.CountryOfBirthId, actual.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId);
             Assert.AreEqual(expected.CountryOfBirth.IsUk, actual.IsUk);
             Assert.AreEqual(expected.JobTitle, actual.JobTitle.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber, actual.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension, actual.BusinessExtension.BusinessExtension);
             Assert.AreEqual(expected.PersonalEmailAddress, actual.PersonalEmailAddress.PersonalEmailAddress);
             Assert.AreEqual(expected.PersonalMobileNumber, actual.PersonalMobileNumber.PersonalMobileNumber);
-            Assert.AreEqual(expected.NationalInsuranceNumber, actual.NationalInsuranceNumber.NationalInsuranceNumber);
+            Assert.AreEqual(expected.NationalInsuranceNumber, actual.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber);
 
             AssertAddress(expected.Address, actual.Address);
 
