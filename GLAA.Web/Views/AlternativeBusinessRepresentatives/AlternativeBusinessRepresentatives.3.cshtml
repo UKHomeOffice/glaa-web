@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Alternative Business Representatives";
+    var isSubmitted = ViewData["IsSubmitted"];
 }
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentatives" }, { "submittedPageId", "3" } })
@@ -20,7 +21,7 @@
             else
             {
                 <p>
-                    @Html.ActionLink("Return to overview", "Licence", "Admin", new { id = SessionHelper.GetCurrentLicenceId(Context.Session) }, new { })
+                    @Html.ActionLink("Return to overview", "Licence", "Admin", new { id = SessionHelper.GetCurrentLicenceId(Context.Session), IsSubmitted = isSubmitted }, new { })
                 </p>
             }
             <h1 class="heading-large">
@@ -34,7 +35,7 @@
         <div class="grid-row">
             <div class="column-full">
                 <p>
-                    @Html.ActionLink("Go to next section", "Part", "DirectorsOrPartners", 1, new { @class = "button" })
+                    @Html.ActionLink("Go to next section", "Part", "DirectorsOrPartners", new { id = 1 }, new { @class = "button" })
                 </p>
             </div>
         </div>

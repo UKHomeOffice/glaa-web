@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Mail;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Notify.Client;
 using Notify.Exceptions;
 using GLAA.ViewModels;
+using GLAA.Services.Extensions;
 
 namespace GLAA.Services
 {
     public class EmailService : IEmailService
     {
         private readonly NotificationClient client;
-        private readonly ILogger logger;
+        private readonly ILogger<EmailService> logger;
 
-        public EmailService(ILoggerFactory loggerFactory, string apiKey)
+        public EmailService(ILogger<EmailService> logger, string apiKey)
         {
             client = new NotificationClient(apiKey);
-            logger = loggerFactory.CreateLogger("Email Log");            
+            this.logger = logger;            
         }
 
         public bool Send(NotifyMailMessage msg, string messageTemplate)
@@ -30,14 +28,13 @@ namespace GLAA.Services
                     null,
                     null);
 
-                logger.LogInformation($"Email sent to Notify : {DateTime.UtcNow.ToFileTimeUtc()} : {msg.To}");
-
+                logger.TimedLog(LogLevel.Information, $"Email sent to GOV.Notify : Address : {msg.To} : Success");
                 return true;
 
             }
             catch (NotifyClientException ex)
             {
-                logger.LogError(ex.Message, ex);
+                logger.TimedLog(LogLevel.Error, $"Email sending to GOV.Notify FAILED : Message: {ex.Message}", ex);
                 return false;
             }
         }

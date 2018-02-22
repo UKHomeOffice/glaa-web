@@ -1,13 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Principal Authority - Part 18";
-    var switchValue = "";
+    ViewBag.Title = "Principal Authority - Part 19";
+    var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.PrincipalAuthorityRightToWorkViewModel
+@model GLAA.ViewModels.LicenceApplication.DisqualifiedDirectorViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "18" } })
 
-@using (Html.BeginForm("SavePrincipalAuthorityRightToWork", "PrincipalAuthority"))
+@using (Html.BeginForm("SaveDisqualifiedDirector", "PrincipalAuthority"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,31 +15,26 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Do you have the right to work in the UK?
+                Are you disqualified as a company director?
             </h1>
         </div>
         <div class="column-two-thirds">
             <div class="form-group">
                 <fieldset>
                     <legend>
-                        <span class="error-message">
-                            <span class="field-validation-valid" data-valmsg-for="radio_list" data-valmsg-replace="true"></span>
-                        </span>
+                        <span class="body-text"></span>
                     </legend>
-                    @foreach (var status in Model.AvailablePermissionToWork)
+                    @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonForEnum(x => x.RightToWorkInUk, status.Name, Model.AvailablePermissionToWork)
-                            @Html.Label(status.Name)
+                            @Html.RadioButtonFor(x => x.IsDisqualifiedDirector, option.Value, new { id = $"IsDisqualifiedDirector_{option.Text}" })
+                            @Html.LabelFor(x => x.IsDisqualifiedDirector, option.Text, new { @for = $"IsDisqualifiedDirector_{option.Text}" })
                         </div>
-                        if (status.Name == "Yes - I have a visa, work permit or other form of clearance to work")
+
+                        if (option.Value == switchValue)
                         {
-                            switchValue = status.EnumMappedTo.HasValue ? status.EnumMappedTo.Value.ToString() : string.Empty;
-                            <div class="panel panel-border-narrow js-hidden" id="visa-info">
-                                @Html.TextFormGroupFor(x => x.VisaNumber)
-                                @Html.TimeSpanFormGroupFor(x => x.LengthOfUKWork)
-                                @Html.TextFormGroupFor(x => x.ImmigrationStatus)
-                                @Html.DateFormGroupFor(x => x.LeaveToRemainTo)
+                            <div class="panel panel-border-narrow js-hidden" id="disqualification-detail">
+                                @Html.TextAreaFormGroupFor(x => x.DisqualificationDetails)
                             </div>
                         }
                     }
@@ -56,7 +51,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#visa-info', '@switchValue');
+            branchedQuestion.toggleBranch('.multiple-choice input', '#disqualification-detail', @switchValue);
         });
     </script>
 }

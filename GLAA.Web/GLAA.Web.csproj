@@ -52,9 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\AlternativeBusinessRepresentative\" />
     <Folder Include="Views\AlternativeBusinessRepresentatives\" />
-    <Folder Include="Views\DirectorOrPartner\" />
     <Folder Include="Views\DirectorsOrPartners\" />
     <Folder Include="Views\JobTitle\" />
     <Folder Include="Views\NamedIndividual\" />
@@ -67,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GLAA.Scheduler\GLAA.Scheduler.csproj" />
     <ProjectReference Include="..\GLAA.Services\GLAA.Services.csproj" />
     <ProjectReference Include="..\GLAA.ViewModels\GLAA.ViewModels.csproj" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using GLAA.ViewModels;
+﻿using GLAA.Services;
+using GLAA.ViewModels;
 using GLAA.Web.FormLogic;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,39 @@ namespace GLAA.Web.Controllers
     public class DefaultController : Controller
     {
         protected readonly IFormDefinition FormDefinition;
+        protected readonly IReferenceDataProvider ReferenceDataProvider;
 
-        public DefaultController(IFormDefinition formDefinition)
+        public DefaultController(IFormDefinition formDefinition, IReferenceDataProvider rdp)
         {
             FormDefinition = formDefinition;
+            ReferenceDataProvider = rdp;
+        }
+
+        private T RepopulateCountries<T>(T model) where T : INeedCountries
+        {
+            model.Countries = ReferenceDataProvider.GetCountries();
+            return model;
+        }
+
+        private T RepopulateCounties<T>(T model) where T : INeedCounties
+        {
+            model.Counties = ReferenceDataProvider.GetCounties();
+            return model;
+        }
+
+        protected T RepopulateDropdowns<T>(T model)
+        {
+            if (model is INeedCountries needsCountries)
+            {
+                model = (T)RepopulateCountries(needsCountries);
+            }
+
+            if (model is INeedCounties needsCounties)
+            {
+                model = (T)RepopulateCounties(needsCounties);
+            }
+
+            return model;
         }
 
         protected virtual string GetViewPath(FormSection section, string actionName)

@@ -40,13 +40,21 @@ namespace GLAA.Services.Tests.Validation
                         Date = DateTime.Now
                     }
                 },
-                TownOfBirth = new TownOfBirthViewModel
+                BirthDetailsViewModel = new BirthDetailsViewModel
                 {
-                    TownOfBirth = "town"
-                },
-                CountryOfBirth = new CountryOfBirthViewModel
-                {
-                    CountryOfBirthId = 1
+                    TownOfBirthViewModel = new TownOfBirthViewModel
+                    {
+                        TownOfBirth = "town"
+                    },
+                    CountryOfBirthViewModel = new CountryOfBirthViewModel
+                    {
+                        CountryOfBirthId = 1
+                    },
+                    NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
+                    {
+                        NationalInsuranceNumber = "JT123456A",
+                        IsUk = true // This property it mapped via automapper in real life
+                    }
                 },
                 JobTitle = new JobTitleViewModel
                 {
@@ -69,11 +77,6 @@ namespace GLAA.Services.Tests.Validation
                 BusinessExtension = new BusinessExtensionViewModel
                 {
                     BusinessExtension = "456"
-                },
-                NationalInsuranceNumber = new NationalInsuranceNumberViewModel
-                {
-                    NationalInsuranceNumber = "JT123456A",
-                    IsUk = true // This property it mapped via automapper in real life
                 },
                 PrincipalAuthorityConfirmation = new PrincipalAuthorityConfirmationViewModel
                 {
@@ -201,7 +204,7 @@ namespace GLAA.Services.Tests.Validation
             // in this test, we're not checking the automapping of the address.NonUk > ni_number.IsUk
             // it's shown here for info
             model.Address.NonUK = false;
-            model.NationalInsuranceNumber = new NationalInsuranceNumberViewModel
+            model.BirthDetailsViewModel.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
             {
                 IsUk = true,
                 NationalInsuranceNumber = null
@@ -342,7 +345,7 @@ namespace GLAA.Services.Tests.Validation
             // in this test, we're not checking the automapping of the address.NonUk > ni_number.IsUk
             // it's shown here for info
             model.Address.NonUK = false;
-            model.NationalInsuranceNumber = new NationalInsuranceNumberViewModel
+            model.BirthDetailsViewModel.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
             {
                 IsUk = true,
                 NationalInsuranceNumber = "JT123456A"
@@ -359,7 +362,7 @@ namespace GLAA.Services.Tests.Validation
             // in this test, we're not checking the automapping of the address.NonUk > ni_number.IsUk
             // it's shown here for info
             model.Address.NonUK = true;
-            model.NationalInsuranceNumber = new NationalInsuranceNumberViewModel
+            model.BirthDetailsViewModel.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
             {
                 IsUk = false,
                 NationalInsuranceNumber = null

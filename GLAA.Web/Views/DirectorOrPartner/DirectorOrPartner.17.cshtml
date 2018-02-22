@@ -1,13 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Principal Authority - Part 19";
-    var switchValue = "true";
+    ViewBag.Title = "Are you/have you been the subject of a restraint or confiscation order, or civil recovery under the Proceeds of Crime Act 2002?";
 }
 
-@model GLAA.ViewModels.LicenceApplication.UndischargedBankruptViewModel
+@model GLAA.ViewModels.LicenceApplication.RestraintOrdersViewModel
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "DirectorOrPartner" }, { "submittedPageId", "17" } })
 
-@using (Html.BeginForm("SaveUndischargedBankrupt", "DirectorOrPartner"))
+@using (Html.BeginForm("SaveRestraintOrders", "DirectorOrPartner"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,7 +14,7 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Are you an un-discharged bankrupt?
+                @ViewBag.Title
             </h1>
         </div>
         <div class="column-two-thirds">
@@ -27,17 +26,9 @@
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.IsUndischargedBankrupt, option.Value)
+                            @Html.RadioButtonFor(x => x.HasRestraintOrders, option.Value)
                             @Html.Label(option.Text)
                         </div>
-
-                        if (option.Value == switchValue)
-                        {
-                            <div class="panel panel-border-narrow js-hidden" id="bankrupt-detail">
-                                @Html.DateFormGroupFor(x => x.BankruptcyDate)
-                                @Html.TextFormGroupFor(x => x.BankruptcyNumber)
-                            </div>
-                        }
                     }
                 </fieldset>
             </div>
@@ -46,15 +37,3 @@
 
     <button type="submit" class="button">Save and continue</button>
 }
-
-@section scripts
-    {
-    <script>
-        $(document).ready(function () {
-            hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#bankrupt-detail', @switchValue);
-        });
-    </script>
-}
-
-

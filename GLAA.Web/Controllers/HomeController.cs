@@ -9,8 +9,8 @@ namespace GLAA.Web.Controllers
     {
         private readonly IFileUploadService fileUploadService;
 
-        public HomeController(IFormDefinition formDefinition, IFileUploadService fileUploadService)
-            : base(formDefinition)
+        public HomeController(IFormDefinition formDefinition, IFileUploadService fileUploadService, IReferenceDataProvider rdp)
+            : base(formDefinition, rdp)
         {
             this.fileUploadService = fileUploadService;
         }

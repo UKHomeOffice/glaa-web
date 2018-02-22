@@ -20,12 +20,18 @@ namespace GLAA.Services.AccountCreation
 
         public SignUpViewModel Build(string email)
         {
-            var model = new SignUpViewModel();
-
-            model.Countries = referenceDataProvider.GetCountries();
-
+            var model = new SignUpViewModel
+            {
+                Countries = referenceDataProvider.GetCountries(),
+                Counties = referenceDataProvider.GetCounties()
+            };
+            
             var user = userManager.FindCompleteUserByEmail(email);
-            model = mapper.Map(user, model);
+
+            if (user != null)
+            {
+                model = mapper.Map(user, model);
+            }
 
             return model;
         }

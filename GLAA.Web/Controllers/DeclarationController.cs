@@ -1,4 +1,5 @@
-﻿using GLAA.Services.LicenceApplication;
+﻿using GLAA.Services;
+using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
@@ -12,8 +13,10 @@ namespace GLAA.Web.Controllers
         private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModel;
         private readonly ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler;
 
-        public DeclarationController(IFormDefinition formDefinition, ISessionHelper session, 
-            ILicenceApplicationViewModelBuilder licenceApplicationViewModel, ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler) : base(formDefinition)
+        public DeclarationController(IFormDefinition formDefinition, ISessionHelper session,
+            ILicenceApplicationViewModelBuilder licenceApplicationViewModel,
+            ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler, IReferenceDataProvider rdp) : base(
+            formDefinition, rdp)
         {
             this.session = session;
             this.licenceApplicationViewModel = licenceApplicationViewModel;

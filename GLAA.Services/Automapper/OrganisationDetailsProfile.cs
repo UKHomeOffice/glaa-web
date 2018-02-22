@@ -11,6 +11,7 @@ namespace GLAA.Services.Automapper
         public OrganisationDetailsProfile()
         {
             CreateMap<Licence, OrganisationDetailsViewModel>()
+                .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
                 .ForMember(x => x.BusinessEmailAddress, opt => opt.ResolveUsing(EmailResolver))
                 .ForMember(x => x.OperatingIndustries, opt => opt.ResolveUsing(ProfileHelpers.OperatingIndustriesResolver))
                 .ForMember(x => x.OperatingCountries, opt => opt.ResolveUsing(OperatingCountriesResolver))

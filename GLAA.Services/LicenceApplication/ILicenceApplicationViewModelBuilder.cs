@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GLAA.Domain.Models;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Services.LicenceApplication
@@ -18,5 +19,7 @@ namespace GLAA.Services.LicenceApplication
         T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : new() where U : new();
 
         T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : new();
+
+        T BuildCountriesFor<T>(T model) where T : INeedCountries;
     }
 }
