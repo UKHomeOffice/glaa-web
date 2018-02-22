@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GLAA.ViewModels.LicenceApplication;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.Admin
 {
@@ -13,5 +14,7 @@ namespace GLAA.ViewModels.Admin
         public LicenceStatusViewModel LicenceStatusViewModel { get; set; }
 
         public List<LicenceApplicationViewModel> LicenceApplicationViewModels { get; set; }
+
+        public IEnumerable<SelectListItem> Countries { get; set; }
     }
 }

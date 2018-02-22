@@ -13,15 +13,18 @@ namespace GLAA.Services.Admin
         private readonly IMapper _mapper;
         private readonly IEntityFrameworkRepository _repository;
         private readonly ILicenceRepository _licenceRepository;
+        private readonly IReferenceDataProvider _referenceDataProvider;
 
         public AdminStatusRecordsViewModelBuilder(
             IMapper mapper,
             IEntityFrameworkRepository repository,
-            ILicenceRepository licenceRepository)
+            ILicenceRepository licenceRepository,
+            IReferenceDataProvider referenceDataProvider)
         {
             _mapper = mapper;
             _repository = repository;
             _licenceRepository = licenceRepository;
+            _referenceDataProvider = referenceDataProvider;
         }
 
         public AdminStatusDashboardViewModel Build()
@@ -50,13 +53,15 @@ namespace GLAA.Services.Admin
             return new AdminStatusLicencesViewModel
             {
                 LicenceApplicationViewModels = GetLicencesByStatus(id).ToList(),
-                LicenceStatusViewModel = _mapper.Map<LicenceStatusViewModel>(_repository.GetById<LicenceStatus>(id))
+                LicenceStatusViewModel = _mapper.Map<LicenceStatusViewModel>(_repository.GetById<LicenceStatus>(id)),
+                Countries = _referenceDataProvider.GetCountries()
             };
         }
 
         private IEnumerable<LicenceApplicationViewModel> GetLicencesByStatus(int statusId)
         {
-            return _licenceRepository.GetAllEntriesWithStatusesAndAddress().Where(x => x.CurrentStatusChange.Status.Id == statusId)
+            return _licenceRepository.GetAllEntriesWithStatusesAndAddress()
+                .Where(x => x.CurrentStatusChange.Status.Id == statusId)
                 .Select(_mapper.Map<LicenceApplicationViewModel>);
         }
     }

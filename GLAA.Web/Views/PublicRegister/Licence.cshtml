@@ -100,8 +100,8 @@
                         <br />
                     }
 
-                    @Model.Address.County
-                    @if (!string.IsNullOrWhiteSpace(Model.Address.County))
+                    @(Model.Address.Counties.SingleOrDefault(c => int.Parse(c.Value) == Model.Address.CountyId)?.Text ?? string.Empty)
+                    @if (Model.Address.CountyId != 0)
                     {
                         <br />
                     }
@@ -115,7 +115,7 @@
             </tr>
             <tr>
                 <td>Country</td>
-                <td>@Model.Address.Country</td>
+                <td>@(Model.Address.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.Address.CountryId)?.Text ?? string.Empty)</td>
             </tr>
             <tr>
                 <td>Phone</td>
