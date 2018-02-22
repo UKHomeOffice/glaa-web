@@ -150,124 +150,117 @@ namespace GLAA.Web.Controllers
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveTownOfBirth(TownOfBirthViewModel model)
+        public IActionResult SaveTownOfBirth(BirthDetailsViewModel model)
         {
             return AlternativeBusinessRepresentativePost(model, 4);
         }
 
+        //[HttpPost]
+        //[ExportModelState]
+        //public IActionResult SaveCountryOfBirth(CountryOfBirthViewModel model)
+        //{
+        //    return AlternativeBusinessRepresentativePost(model, 5);
+        //}
+
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveCountryOfBirth(CountryOfBirthViewModel model)
+        public IActionResult SaveJobTitle(JobTitleViewModel model)
         {
             return AlternativeBusinessRepresentativePost(model, 5);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveJobTitle(JobTitleViewModel model)
-        {
-            return AlternativeBusinessRepresentativePost(model, 6);
-        }
-
-        [HttpPost]
-        [ExportModelState]
         public IActionResult SaveAddress(AddressViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 7);
+            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 6);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 7), model);
+                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 6), model);
             }
 
             LicenceApplicationPostDataHandler.UpdateAddress(Session.GetCurrentLicenceId(),
                 x => x.AlternativeBusinessRepresentatives.Single(abr => abr.Id == Session.GetCurrentAbrId()), model);
 
-            return CheckParentValidityAndRedirect(FormSection.AlternativeBusinessRepresentative, 7);
+            return CheckParentValidityAndRedirect(FormSection.AlternativeBusinessRepresentative, 6);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveBusinessPhoneNumber(BusinessPhoneNumberViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 8);
+            return AlternativeBusinessRepresentativePost(model, 7);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveBusinessExtension(BusinessExtensionViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 9);
+            return AlternativeBusinessRepresentativePost(model, 8);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SavePersonalMobileNumber(PersonalMobileNumberViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 10);
+            return AlternativeBusinessRepresentativePost(model, 9);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SavePersonalEmailAddress(PersonalEmailAddressViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 11);
-        }
-
-        [HttpPost]
-        [ExportModelState]
-        public IActionResult SaveNationalInsuranceNumber(NationalInsuranceNumberViewModel model)
-        {
-            return AlternativeBusinessRepresentativePost(model, 12);
+            return AlternativeBusinessRepresentativePost(model, 10);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveNationality(NationalityViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 13);
+            return AlternativeBusinessRepresentativePost(model, 11);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SavePassport(PassportViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 14);
+            return AlternativeBusinessRepresentativePost(model, 12);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveRightToWork(RightToWorkViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 15);
+            return AlternativeBusinessRepresentativePost(model, 13);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveUndischargedBankrupt(UndischargedBankruptViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 16);
+            return AlternativeBusinessRepresentativePost(model, 14);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveDisqualifiedDirector(DisqualifiedDirectorViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 17);
+            return AlternativeBusinessRepresentativePost(model, 15);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveRestraintOrders(RestraintOrdersViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 18);
+            return AlternativeBusinessRepresentativePost(model, 16);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult ReviewAlternativeBusinessRepresentativeRestraintOrders(RestraintOrdersViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 19);
+            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 17);
 
             var licenceId = Session.GetCurrentLicenceId();
             var parent =
@@ -279,24 +272,24 @@ namespace GLAA.Web.Controllers
             {
                 ModelState.AddModelError(nameof(model.RestraintOrders), "Please enter details of the restraint or confiscation orders or civil recoveries that you have been the subject of.");
                 ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 19), model);
+                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 17), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.AlternativeBusinessRepresentative, 20);
+            return ValidateParentAndRedirect(parent, FormSection.AlternativeBusinessRepresentative, 18);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveUnspentConvictions(UnspentConvictionsViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 20);
+            return AlternativeBusinessRepresentativePost(model, 18);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult ReviewAlternativeBusinessRepresentativeUnspentConvictions(UnspentConvictionsViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 21);
+            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 19);
 
             var licenceId = Session.GetCurrentLicenceId();
             var parent =
@@ -308,24 +301,24 @@ namespace GLAA.Web.Controllers
             {
                 ModelState.AddModelError(nameof(model.UnspentConvictions), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
                 ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 21), model);
+                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 19), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.AlternativeBusinessRepresentative, 22);
+            return ValidateParentAndRedirect(parent, FormSection.AlternativeBusinessRepresentative, 20);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SaveOffencesAwaitingTrial(OffencesAwaitingTrialViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 22);
+            return AlternativeBusinessRepresentativePost(model, 20);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult ReviewAlternativeBusinessRepresentativeOffencesAwaitingTrial(OffencesAwaitingTrialViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 23);
+            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, 21);
 
             var licenceId = Session.GetCurrentLicenceId();
             var parent =
@@ -337,17 +330,17 @@ namespace GLAA.Web.Controllers
             {
                 ModelState.AddModelError(nameof(model.OffencesAwaitingTrial), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
                 ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 23), model);
+                return View(GetViewPath(FormSection.AlternativeBusinessRepresentative, 21), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.AlternativeBusinessRepresentative, 24);
+            return ValidateParentAndRedirect(parent, FormSection.AlternativeBusinessRepresentative, 22);
         }
 
         [HttpPost]
         [ExportModelState]
         public IActionResult SavePreviousLicence(PreviousLicenceViewModel model)
         {
-            return AlternativeBusinessRepresentativePost(model, 24);
+            return AlternativeBusinessRepresentativePost(model, 22);
         }
     }
 }

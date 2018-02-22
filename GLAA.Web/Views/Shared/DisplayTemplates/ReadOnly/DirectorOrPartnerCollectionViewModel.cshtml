@@ -1,7 +1,7 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.DirectorOrPartnerCollectionViewModel
 
 @{
-    var isEditable = !(bool)ViewData["IsSubmitted"];
+    var isEditable = !(bool)(ViewData["IsSubmitted"] ?? false);
     var num = Model.NumberOfDirectorsOrPartners?.ToString() ?? string.Empty;
 }
 
