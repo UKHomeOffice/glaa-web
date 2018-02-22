@@ -23,11 +23,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Amazon.S3;
-using Amazon.Runtime.CredentialManagement;
-using Amazon;
 using Amazon.Runtime;
 using GLAA.Services.AccountCreation;
 using GLAA.Services.PublicRegister;
+using GLAA.Scheduler.Tasks;
+using GLAA.Scheduler.Scheduling;
 
 namespace GLAA.Web
 {
@@ -138,7 +138,7 @@ namespace GLAA.Web
             services.AddTransient<IAdminUserPostDataHandler, AdminUserPostDataHandler>();
             services.AddTransient<IAdminStatusRecordsViewModelBuilder, AdminStatusRecordsViewModelBuilder>();
 
-            // Public Reigster
+            // public register
             services.AddTransient<IPublicRegisterViewModelBuilder, PublicRegisterViewModelBuilder>();
             services.AddTransient<IPublicRegisterPostDataHandler, PublicRegisterPostDataHandler>();
 
@@ -146,8 +146,19 @@ namespace GLAA.Web
 
             // notify
             services.AddTransient<IEmailService>(x => new EmailService(
-                services.BuildServiceProvider().GetService<ILoggerFactory>(),
+                services.BuildServiceProvider().GetService<ILogger<EmailService>>(),
                 Configuration.GetSection("GOVNotify")["APIKEY"]));
+
+            // scheduled tasks
+            services.AddSingleton<IScheduledTask, SendTestEmailTask>();
+            services.AddScheduler((sender, args) =>
+            {
+                Console.Write(args.Exception.Message);
+                args.SetObserved();
+            });
+
+            // replace the default logged with a timed logger
+            services.Replace(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(TimedLogger<>)));
 
             // Adds a default in-memory implementation of IDistributedCache.
             services.AddDistributedMemoryCache();
