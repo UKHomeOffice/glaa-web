@@ -21,7 +21,7 @@ namespace GLAA.Scheduler.Tasks
             this.logger = logger;
         }
 
-        public string Schedule => "* * * * *";
+        public string Schedule => "0 0 * * *";
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {

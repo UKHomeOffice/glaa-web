@@ -1,6 +1,6 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.AlternativeBusinessRepresentativeViewModel
 @{
-    var isEditable = !(bool)ViewData["IsSubmitted"];
+    var isEditable = !(bool)(ViewData["IsSubmitted"] ?? false);
 }
 <table class="check-your-answers">
     <thead>
