@@ -18,8 +18,8 @@ namespace GLAA.Web.Controllers
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(session, licenceApplicationViewModelBuilder,
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, rdp)
         {
         }
 
@@ -75,6 +75,12 @@ namespace GLAA.Web.Controllers
 
             var model = abrs.AlternativeBusinessRepresentatives.Single(a => a.Id == id);
 
+            if (ViewData["IsSubmitted"] == null)
+            {
+                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
+            }
+
             return View(GetLastViewPath(FormSection.AlternativeBusinessRepresentative), model);
         }
 
@@ -98,6 +104,8 @@ namespace GLAA.Web.Controllers
             Func<T, bool> modelIsInvalid)
         {
             Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentative, submittedPageId);
+
+            model = RepopulateDropdowns(model);
 
             if (modelIsInvalid(model))
             {

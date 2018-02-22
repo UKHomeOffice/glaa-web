@@ -47,10 +47,10 @@ namespace GLAA.Web.Core.Helpers
         }
 
         public static IHtmlContent TextFormGroupFor<TModel, TValue>(this IHtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> expression)
+            Expression<Func<TModel, TValue>> expression, IUkOnly UkOnlyModel = null)
         {
             var control = html.TextBoxFor(expression, new { @class = "form-control" });
-            return BuildFormGroupForControl(html, expression, control);
+            return BuildFormGroupForControl(html, expression, control, UkOnlyModel);
         }
 
         public static IHtmlContent TextAreaFormGroupFor<TModel, TValue>(this IHtmlHelper<TModel> html,
@@ -70,6 +70,13 @@ namespace GLAA.Web.Core.Helpers
             Expression<Func<TModel, TimeSpanViewModel>> expression)
         {
             return BuildFormGroupForControl(html, expression, html.EditorFor(expression, "_NullableTimeSpan"));
+        }
+
+        public static IHtmlContent DropDownFormGroupFor<TModel, TResult>(this IHtmlHelper<TModel> html,
+            Expression<Func<TModel, TResult>> expression, IEnumerable<SelectListItem> items)
+        {
+            var ddl = html.DropDownListFor(expression, items.OrderBy(i => i.Text).ToArray(), "", new { @class = "form-control" });
+            return BuildFormGroupForControl(html, expression, ddl);
         }
 
         public static IHtmlContent RequiredCheckbox<TModel>(this IHtmlHelper<TModel> html,
@@ -287,7 +294,7 @@ namespace GLAA.Web.Core.Helpers
             return checkBoxListItem != null ? html.RadioButtonFor(expression, checkBoxListItem.EnumMappedTo) : null;
         }
 
-        public static IHtmlContent LabelWithHintFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static IHtmlContent LabelWithHintFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IUkOnly ukOnlyModel = null)
         {
             var htmlFieldName = ExpressionHelper.GetExpressionText(expression);
             var metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider).Metadata;
@@ -300,7 +307,7 @@ namespace GLAA.Web.Core.Helpers
                 IsAssertThat(expression) ||
                 IsRequireTrue(expression) ||
                 IsRequiredForShellfish(expression, html.ViewData.Model as IShellfishSection) ||
-                IsRequiredIfUk(expression, html.ViewData.Model as IUkOnly) ? string.Empty : "(optional)";
+                IsRequiredIfUk(expression, ukOnlyModel ?? html.ViewData.Model as IUkOnly) ? string.Empty : "(optional)";
 
             return new HtmlContentBuilder()
                 .AppendHtml(
@@ -308,7 +315,7 @@ namespace GLAA.Web.Core.Helpers
                     $"<span class='form-hint'>{metadata.Description}</span></label>");
         }
 
-        private static IHtmlContent BuildFormGroupForControl<TModel, TValue>(IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IHtmlContent control)
+        private static IHtmlContent BuildFormGroupForControl<TModel, TValue>(IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IHtmlContent control, IUkOnly UkOnlyModel = null)
         {
             var fieldName =
                 html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
@@ -321,7 +328,7 @@ namespace GLAA.Web.Core.Helpers
                     : "<div class='form-group'>")
                 .AppendHtml("<fieldset>")
                 .AppendHtml($"<legend id='{GenerateLegendId(html, expression)}'>")
-                .AppendHtml(html.LabelWithHintFor(expression))
+                .AppendHtml(html.LabelWithHintFor(expression, UkOnlyModel))
                 .AppendHtml("<span class=\'error-message\'>")
                 .AppendHtml(html.ValidationMessageFor(expression))
                 .AppendHtml("</span>")

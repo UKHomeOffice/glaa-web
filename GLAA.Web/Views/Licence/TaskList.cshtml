@@ -1,5 +1,6 @@
 ﻿@{
-    ViewBag.Title = "Apply for a Licence";        
+    ViewBag.Title = "Apply for a Licence";
+    var isSubmitted = Html.ViewData["IsSubmitted"] ?? false;
 }
 
 @model GLAA.ViewModels.LicenceApplication.LicenceApplicationViewModel
@@ -25,8 +26,8 @@
                                 </a>
                                 @if (Model.Declaration.IsValid)
                                 {
-                                    <strong class="task-completed" id="read-declaration-completed">Completed</strong>   
-                                }                                
+                                    <strong class="task-completed" id="read-declaration-completed">Completed</strong>
+                                }
                             </li>
                         </ul>
                     </li>
@@ -54,7 +55,7 @@
                             <li class="task-list-item">
                                 @if (Model.PrincipalAuthority != null && Model.PrincipalAuthority.IsValid)
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "PrincipalAuthority", new { id = 29 })">
+                                    <a class="task-name" href="@Url.Action("Part", "PrincipalAuthority", new { id = 27 })">
                                         Your Principal Authority details
                                     </a>
                                     <strong class="task-completed" id="principal-authority-details-completed">Completed</strong>

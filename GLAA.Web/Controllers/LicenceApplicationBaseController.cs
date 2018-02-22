@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
@@ -19,19 +18,48 @@ namespace GLAA.Web.Controllers
         protected readonly ILicenceApplicationPostDataHandler LicenceApplicationPostDataHandler;
         protected readonly ILicenceStatusViewModelBuilder LicenceStatusViewModelBuilder;
         protected readonly IConstantService ConstantService;
+        protected readonly IReferenceDataProvider ReferenceDataProvider;
 
         public LicenceApplicationBaseController(ISessionHelper session,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(formDefinition)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(formDefinition)
         {
             Session = session;
             LicenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
             LicenceApplicationPostDataHandler = licenceApplicationPostDataHandler;
             LicenceStatusViewModelBuilder = licenceStatusViewModelBuilder;
             ConstantService = constantService;
+            ReferenceDataProvider = rdp;
+        }
+
+        private T RepopulateCountries<T>(T model) where T : INeedCountries
+        {
+            model.Countries = ReferenceDataProvider.GetCountries();
+            return model;
+        }
+
+        private T RepopulateCounties<T>(T model) where T : INeedCounties
+        {
+            model.Counties = ReferenceDataProvider.GetCounties();
+            return model;
+        }
+
+        protected T RepopulateDropdowns<T>(T model)
+        {
+            if (model is INeedCountries needsCountries)
+            {
+                model = (T)RepopulateCountries(needsCountries);
+            }
+
+            if (model is INeedCounties needsCounties)
+            {
+                model = (T)RepopulateCounties(needsCounties);
+            }
+
+            return model;
         }
 
         protected IActionResult CheckParentValidityAndRedirect(FormSection section, int submittedPageId)
@@ -104,7 +132,7 @@ namespace GLAA.Web.Controllers
             return parent.IsValid ? RedirectToLastAction(section) : RedirectToAction(section, nextPageId);
         }
 
-        protected IActionResult CheckParentValidityAndRedirectBack(FormSection section, int submittedPageId)
+        protected IActionResult CheckParentValidityAndRedirectBack(FormSection section, int submittedPageId, FormSection? parentSection = null)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var nextPageId = submittedPageId - 1;
@@ -112,25 +140,25 @@ namespace GLAA.Web.Controllers
 
             return parent == null && nextPageId > 0
                 ? RedirectBackToAction(section, nextPageId)
-                : ValidateParentAndRedirectBack(parent, section, nextPageId);
+                : ValidateParentAndRedirectBack(parent, section, nextPageId, parentSection);
         }
 
-        protected IActionResult ValidateParentAndRedirectBack(IValidatable parent, FormSection section, int nextPageId)
+        protected IActionResult ValidateParentAndRedirectBack(IValidatable parent, FormSection section, int nextPageId, FormSection? parentSection = null)
         {
             parent.Validate();
 
             return nextPageId > 0
-                ? (parent.IsValid ? RedirectToLastAction(section) : RedirectBackToAction(section, nextPageId))
+                ? (parent.IsValid ? RedirectToLastAction(parentSection ?? section) : RedirectBackToAction(section, nextPageId))
                 : RedirectToLastAction(section);
         }
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Back(FormSection section, int submittedPageId, bool isSecurityPart = false)
+        public IActionResult Back(FormSection section, int submittedPageId, bool isSecurityPart = false, FormSection? parentSection = null)
         {
             return isSecurityPart
                 ? RedirectBackToAction(section, submittedPageId)
-                : CheckParentValidityAndRedirectBack(section, submittedPageId);
+                : CheckParentValidityAndRedirectBack(section, submittedPageId, parentSection);
         }
     }
 }

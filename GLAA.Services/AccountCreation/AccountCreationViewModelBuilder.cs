@@ -9,22 +9,23 @@ namespace GLAA.Services.AccountCreation
     {
         private readonly IMapper mapper;
         private readonly UserManager<GLAAUser> userManager;
+        private readonly IReferenceDataProvider referenceDataProvider;
 
-        public AccountCreationViewModelBuilder(IMapper mp, UserManager<GLAAUser> um)
+        public AccountCreationViewModelBuilder(IMapper mp, UserManager<GLAAUser> um, IReferenceDataProvider rdp)
         {
             mapper = mp;
             userManager = um;
+            referenceDataProvider = rdp;
         }
 
         public SignUpViewModel Build(string email)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return new SignUpViewModel();
-            }
+            var model = new SignUpViewModel();
+
+            model.Countries = referenceDataProvider.GetCountries();
 
             var user = userManager.FindCompleteUserByEmail(email);
-            var model = mapper.Map<SignUpViewModel>(user);
+            model = mapper.Map(user, model);
 
             return model;
         }

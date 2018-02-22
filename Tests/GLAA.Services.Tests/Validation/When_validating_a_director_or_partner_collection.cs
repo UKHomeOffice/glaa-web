@@ -32,13 +32,21 @@ namespace GLAA.Services.Tests.Validation
                         Date = DateTime.Now
                     }
                 },
-                TownOfBirth = new TownOfBirthViewModel
+                BirthDetailsViewModel = new BirthDetailsViewModel
                 {
-                    TownOfBirth = "town"
-                },
-                CountryOfBirth = new CountryOfBirthViewModel
-                {
-                    CountryOfBirth = "country"
+                    TownOfBirthViewModel = new TownOfBirthViewModel
+                    {
+                        TownOfBirth = "town"
+                    },
+                    CountryOfBirthViewModel = new CountryOfBirthViewModel
+                    {
+                        CountryOfBirthId = 1
+                    },
+                    NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
+                    {
+                        NationalInsuranceNumber = "JT123456A",
+                        IsUk = true // This property it mapped via automapper in real life
+                    }
                 },
                 JobTitle = new JobTitleViewModel
                 {
@@ -49,8 +57,8 @@ namespace GLAA.Services.Tests.Validation
                     AddressLine1 = "1",
                     AddressLine2 = "2",
                     Town = "Perutown",
-                    County = "County",
-                    Country = "Peru",
+                    CountyId = 1,
+                    CountryId = 1,
                     Postcode = "postcode",
                     NonUK = false
                 },
@@ -61,11 +69,6 @@ namespace GLAA.Services.Tests.Validation
                 BusinessExtension = new BusinessExtensionViewModel
                 {
                     BusinessExtension = "456"
-                },
-                NationalInsuranceNumber = new NationalInsuranceNumberViewModel
-                {
-                    NationalInsuranceNumber = "JT123456A",
-                    IsUk = true // This property it mapped via automapper in real life
                 },
                 IsPreviousPrincipalAuthority = new IsPreviousPrincipalAuthorityViewModel
                 {
@@ -158,7 +161,7 @@ namespace GLAA.Services.Tests.Validation
             var vm = new DirectorOrPartnerCollectionViewModel
             {
                 NumberOfDirectorsOrPartners = null,
-                DirectorsOrPartners = new[] {validModel}
+                DirectorsOrPartners = new[] { validModel }
             };
 
             vm.Validate();
@@ -173,7 +176,7 @@ namespace GLAA.Services.Tests.Validation
             {
                 DirectorsRequired = true,
                 NumberOfDirectorsOrPartners = null,
-                DirectorsOrPartners = new[] {validModel}
+                DirectorsOrPartners = new[] { validModel }
             };
 
             vm.Validate();
@@ -203,7 +206,7 @@ namespace GLAA.Services.Tests.Validation
             {
                 DirectorsRequired = false,
                 NumberOfDirectorsOrPartners = null,
-                DirectorsOrPartners = new[] {validModel}
+                DirectorsOrPartners = new[] { validModel }
             };
 
             vm.Validate();
@@ -218,7 +221,7 @@ namespace GLAA.Services.Tests.Validation
             {
                 DirectorsRequired = false,
                 NumberOfDirectorsOrPartners = 0,
-                DirectorsOrPartners = new[] {validModel}
+                DirectorsOrPartners = new[] { validModel }
             };
 
             vm.Validate();
@@ -234,7 +237,7 @@ namespace GLAA.Services.Tests.Validation
             {
                 DirectorsRequired = false,
                 NumberOfDirectorsOrPartners = 2,
-                DirectorsOrPartners = new[] {validModel, validModel}
+                DirectorsOrPartners = new[] { validModel, validModel }
             };
 
             vm.Validate();
@@ -250,7 +253,7 @@ namespace GLAA.Services.Tests.Validation
             {
                 DirectorsRequired = true,
                 NumberOfDirectorsOrPartners = 1,
-                DirectorsOrPartners = new[] {validModel}
+                DirectorsOrPartners = new[] { validModel }
             };
 
             vm.Validate();
@@ -266,7 +269,7 @@ namespace GLAA.Services.Tests.Validation
             {
                 DirectorsRequired = false,
                 NumberOfDirectorsOrPartners = 1,
-                DirectorsOrPartners = new[] {validModel}
+                DirectorsOrPartners = new[] { validModel }
             };
 
             vm.Validate();

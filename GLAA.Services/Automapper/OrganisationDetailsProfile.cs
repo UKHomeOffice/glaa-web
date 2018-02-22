@@ -19,7 +19,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Turnover, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.BusinessName, opt => opt.ResolveUsing(BusinessNameResolver))
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                .ForMember(x => x.IsValid, opt => opt.Ignore())
+                .ForMember(x => x.Countries, opt => opt.Ignore())
+                .ForMember(x => x.Counties, opt => opt.Ignore());
 
             CreateMap<Licence, BusinessEmailAddressViewModel>()
                 .ForMember(x => x.BusinessEmailAddress, opt => opt.MapFrom(y => y.BusinessEmailAddress))
@@ -68,7 +70,7 @@ namespace GLAA.Services.Automapper
             CreateMap<Industry, IndustryViewModel>()
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
-            CreateMap<Country, CountryViewModel>()
+            CreateMap<WorkerCountry, WorkerCountryViewModel>()
                 .ForMember(x => x.Checked, opt => opt.Ignore());
 
             CreateMap<ICollection<Industry>, OperatingIndustriesViewModel>()
@@ -219,7 +221,7 @@ namespace GLAA.Services.Automapper
             {
                 foreach (var country in licence.OperatingCountries)
                 {
-                    var match = vm.OperatingCountries.Single(x => x.Id == country.CountryId);
+                    var match = vm.OperatingCountries.Single(x => x.Id == country.WorkerCountryId);
                     match.Checked = true;
                 }
             }

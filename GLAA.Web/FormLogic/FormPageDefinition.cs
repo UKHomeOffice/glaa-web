@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http;
 
 namespace GLAA.Web.FormLogic
 {
@@ -21,7 +22,7 @@ namespace GLAA.Web.FormLogic
 
         public bool OverrideViewCondition { get; }
 
-        public object GetViewModelExpressionForPage<TParent>(TParent parent)
+        public object GetViewModelExpressionForPage<TParent>(TParent parent, IQueryCollection query = null)
         {
             if (string.IsNullOrEmpty(SubModelName))
             {

@@ -18,8 +18,8 @@ namespace GLAA.Web.Controllers
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(session, licenceApplicationViewModelBuilder,
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, rdp)
         {
         }
 
@@ -91,6 +91,8 @@ namespace GLAA.Web.Controllers
         private IActionResult NamedIndividualPost<T>(T model, int submittedPageId, Func<T, bool> modelIsInvalid)
         {
             Session.SetSubmittedPage(FormSection.NamedIndividual, submittedPageId);
+
+            model = RepopulateDropdowns(model);
 
             if (modelIsInvalid(model))
             {

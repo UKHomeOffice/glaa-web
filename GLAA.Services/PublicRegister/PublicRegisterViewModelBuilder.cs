@@ -27,7 +27,7 @@ namespace GLAA.Services.PublicRegister
             _licenceRepository = licenceRepository;
 
             _ukCountries = repository.GetAll<Country>().Select(x =>
-                new SelectListItem { Value = x.Name, Text = x.Name }).ToList();
+                new SelectListItem { Value = x.Name, Text = x.Name }).OrderBy(y => y.Text).ToList();
         }
 
         public PublicRegisterLicenceListViewModel BuildAllLicences()
@@ -65,22 +65,22 @@ namespace GLAA.Services.PublicRegister
                 case SupplierWho.Supply:
                     if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
                         licences = licences.Where(x =>
-                            ukCountryNames.Any(y => x.OperatingCountries.Any(z => z.Country.Name == y)));
+                            ukCountryNames.Any(y => x.OperatingCountries.Any(z => z.WorkerCountry.Name == y)));
                     else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
                         licences = licences.Where(x =>
-                            ukCountryNames.Any(y => x.OperatingCountries.All(z => z.Country.Name != y)));
+                            ukCountryNames.Any(y => x.OperatingCountries.All(z => z.WorkerCountry.Name != y)));
                     else
                         licences = licences.Where(x => x.OperatingCountries.Any(y =>
-                            publicRegisterSearchCriteria.CountriesSelected.Any(z => y.Country.Name.Contains(z))));
+                            publicRegisterSearchCriteria.CountriesSelected.Any(z => y.WorkerCountry.Name.Contains(z))));
 
                     break;
                 case SupplierWho.AreLocated:
                     if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
-                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.Country.Contains(y)));
+                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.Country.Name.Contains(y)));
                     else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
-                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => x.Address.NonUK));
+                        licences = licences.Where(x => x.Address != null && ukCountryNames.Any(y => !x.Address.Country.IsUk));
                     else
-                        licences = licences.Where(x => x.Address != null && publicRegisterSearchCriteria.CountriesSelected.Any(y => y == x.Address.Country));
+                        licences = licences.Where(x => x.Address != null && publicRegisterSearchCriteria.CountriesSelected.Any(y => y == x.Address.Country.Name));
 
                     break;
                 default:

@@ -4,6 +4,7 @@ using GLAA.Domain;
 using GLAA.Domain.Models;
 using GLAA.Services.Automapper;
 using GLAA.ViewModels.LicenceApplication;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,11 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
-                Country = "country",
+                CountyId = 1,
+                CountryId = 1,
                 Town = "town",
-                Postcode = "postcode"
+                Postcode = "postcode",
+                Countries = new[] {new SelectListItem {Value = "1", Text = "country"}}
             };
 
             var expectedFullName = "fullname";
@@ -41,7 +43,7 @@ namespace GLAA.Services.Tests.AutoMapper
             var expectedHasAltName = true;
             var expectedDateOfBirth = new DateTime(2000, 1, 1);
             var expectedTown = "town";
-            var expectedCountry = "country";
+            var expectedCountry = 1;
             var expectedJobTitle = "job";
 
             var expectedBusPhoneNo = "1";
@@ -60,15 +62,15 @@ namespace GLAA.Services.Tests.AutoMapper
                     Date = expectedDateOfBirth
                 }
             };
-            inputPerson.TownOfBirth.TownOfBirth = expectedTown;
-            inputPerson.CountryOfBirth.CountryOfBirth = expectedCountry;
+            inputPerson.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth = expectedTown;
+            inputPerson.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId = expectedCountry;
             inputPerson.JobTitle.JobTitle = expectedJobTitle;
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension.BusinessExtension = expectedBusExt;
             inputPerson.BusinessPhoneNumber.BusinessPhoneNumber = expectedBusPhoneNo;
             inputPerson.PersonalEmailAddress.PersonalEmailAddress = expectedEmail;
             inputPerson.PersonalMobileNumber.PersonalMobileNumber = expectedMobile;
-            inputPerson.NationalInsuranceNumber.NationalInsuranceNumber = expectedNatIns;
+            inputPerson.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber = expectedNatIns;
         }
 
         private void AssertPerson(IPersonViewModel expected, IPerson actual)
@@ -77,14 +79,14 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AlternativeName.AlternativeName, actual.AlternativeName);
             Assert.AreEqual(expected.AlternativeName.HasAlternativeName, actual.HasAlternativeName);
             Assert.AreEqual(expected.DateOfBirth.DateOfBirth.Date, actual.DateOfBirth);
-            Assert.AreEqual(expected.TownOfBirth.TownOfBirth, actual.TownOfBirth);
-            Assert.AreEqual(expected.CountryOfBirth.CountryOfBirth, actual.CountryOfBirth);
+            Assert.AreEqual(expected.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth, actual.TownOfBirth);
+            Assert.AreEqual(expected.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId, actual.CountryOfBirthId);
             Assert.AreEqual(expected.JobTitle.JobTitle, actual.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber.BusinessPhoneNumber, actual.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension.BusinessExtension, actual.BusinessExtension);
             Assert.AreEqual(expected.PersonalEmailAddress.PersonalEmailAddress, actual.PersonalEmailAddress);
             Assert.AreEqual(expected.PersonalMobileNumber.PersonalMobileNumber, actual.PersonalMobileNumber);
-            Assert.AreEqual(expected.NationalInsuranceNumber.NationalInsuranceNumber, actual.NationalInsuranceNumber);
+            Assert.AreEqual(expected.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber, actual.NationalInsuranceNumber);
 
             AssertAddress(expected.Address, actual.Address);
         }
@@ -95,8 +97,8 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AddressLine1, actual.AddressLine1);
             Assert.AreEqual(expected.AddressLine2, actual.AddressLine2);
             Assert.AreEqual(expected.AddressLine3, actual.AddressLine3);
-            Assert.AreEqual(expected.Country, actual.Country);
-            Assert.AreEqual(expected.County, actual.County);
+            Assert.AreEqual(expected.CountryId, actual.CountryId);
+            Assert.AreEqual(expected.CountyId, actual.CountyId);
             Assert.AreEqual(expected.Postcode, actual.Postcode);
             Assert.AreEqual(expected.Town, actual.Town);
         }
@@ -107,8 +109,8 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AddressLine1, actual.AddressLine1);
             Assert.AreEqual(expected.AddressLine2, actual.AddressLine2);
             Assert.AreEqual(expected.AddressLine3, actual.AddressLine3);
-            Assert.AreEqual(expected.Country, actual.Country);
-            Assert.AreEqual(expected.County, actual.County);
+            Assert.AreEqual(expected.CountryId, actual.CountryId);
+            Assert.AreEqual(expected.CountyId, actual.CountyId);
             Assert.AreEqual(expected.Postcode, actual.Postcode);
             Assert.AreEqual(expected.Town, actual.Town);
         }
@@ -116,13 +118,13 @@ namespace GLAA.Services.Tests.AutoMapper
         [TestMethod]
         public void it_should_map_the_country_view_model_to_the_country_entity()
         {
-            var vm = new CountryViewModel
+            var vm = new WorkerCountryViewModel
             {
                 Id = 1,
                 Name = "Test Country"
             };
 
-            var result = this.mapper.Map<Country>(vm);
+            var result = this.mapper.Map<WorkerCountry>(vm);
 
             Assert.AreEqual(vm.Id, result.Id);
             Assert.AreEqual(vm.Name, result.Name);
@@ -203,8 +205,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
-                Country = "country",
+                CountyId = 1,
+                CountryId = 1,
                 Town = "town",
                 Postcode = "postcode"
             };
@@ -372,8 +374,8 @@ namespace GLAA.Services.Tests.AutoMapper
                 AddressLine1 = "1",
                 AddressLine2 = "2",
                 AddressLine3 = "3",
-                County = "county",
-                Country = "country",
+                CountyId = 1,
+                CountryId = 1,
                 Town = "town",
                 Postcode = "postcode"
             };

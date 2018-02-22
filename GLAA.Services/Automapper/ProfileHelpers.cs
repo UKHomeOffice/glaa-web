@@ -41,14 +41,6 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static CountryOfBirthViewModel CountryOfBirthResolver(Person person)
-        {
-            return new CountryOfBirthViewModel
-            {
-                CountryOfBirth = person.CountryOfBirth
-            };
-        }
-
         public static JobTitleViewModel JobTitleResolver(Person person)
         {
             return new JobTitleViewModel
@@ -130,12 +122,60 @@ namespace GLAA.Services.Automapper
             };
         }
 
+        public static BirthDetailsViewModel BirthDetailsResolver<T>(Person person, T viewModel) where T: PersonViewModel
+        {
+            return new BirthDetailsViewModel
+            {
+                NationalInsuranceNumberViewModel = NationalInsuranceNumberResolver(person),
+                CountryOfBirthViewModel = CountryOfBirthResolver<T>(person, viewModel),
+                TownOfBirthViewModel = TownOfBirthResolver(person),
+                SocialSecurityNumberViewModel = SocialSecurityNumberResolver(person),
+            };
+        }
+
+        public static BirthDetailsViewModel BirthDetailsResolver(Person person, BirthDetailsViewModel viewModel) 
+        {
+            return new BirthDetailsViewModel
+            {
+                NationalInsuranceNumberViewModel = NationalInsuranceNumberResolver(person),
+                CountryOfBirthViewModel = CountryOfBirthResolver(person, viewModel),
+                TownOfBirthViewModel = TownOfBirthResolver(person),
+                SocialSecurityNumberViewModel = SocialSecurityNumberResolver(person),
+            };
+        }
+
+        public static CountryOfBirthViewModel CountryOfBirthResolver<T>(Person person, T viewModel) where T : PersonViewModel
+        {
+            return new CountryOfBirthViewModel
+            {
+                CountryOfBirthId = person.CountryOfBirthId,
+                Countries = viewModel.BirthDetailsViewModel.CountryOfBirthViewModel.Countries
+            };
+        }
+
+        public static CountryOfBirthViewModel CountryOfBirthResolver(Person person, BirthDetailsViewModel viewModel)
+        {
+            return new CountryOfBirthViewModel
+            {
+                CountryOfBirthId = person.CountryOfBirthId,
+                Countries = viewModel.CountryOfBirthViewModel.Countries
+            };
+        }
+
         public static NationalInsuranceNumberViewModel NationalInsuranceNumberResolver(Person person)
         {
             return new NationalInsuranceNumberViewModel
             {
                 NationalInsuranceNumber = person.NationalInsuranceNumber,
-                IsUk = person.Address?.NonUK == false
+                IsUk = person.Address?.Country?.IsUk != null && person.Address.Country.IsUk
+            };
+        }
+
+        public static SocialSecurityNumberViewModel SocialSecurityNumberResolver(Person person)
+        {
+            return new SocialSecurityNumberViewModel
+            {
+                SocialSecurityNumber=  person.SocialSecurityNumber,
             };
         }
 

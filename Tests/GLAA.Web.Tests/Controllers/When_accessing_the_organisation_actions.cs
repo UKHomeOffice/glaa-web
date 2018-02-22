@@ -21,6 +21,7 @@ namespace GLAA.Web.Tests.Controllers
         private ILicenceApplicationViewModelBuilder licenceViewModelBuilder;
         private ISessionHelper session;
         private IFormDefinition formDefinition;
+        private IReferenceDataProvider referenceDataProvider;
 
         [TestInitialize]
         public void Setup()
@@ -30,10 +31,11 @@ namespace GLAA.Web.Tests.Controllers
             licencePostDataHandler = Substitute.For<ILicenceApplicationPostDataHandler>();
             session = Substitute.For<ISessionHelper>();
             formDefinition = new LicenceApplicationFormDefinition(new FieldConfiguration());
+            referenceDataProvider = Substitute.For<IReferenceDataProvider>();
 
             licenceStatusViewModelBuilder.BuildRandomStatus().Returns(x => new LicenceStatusViewModel());
 
-            controller = new OrganisationDetailsController(session, licenceViewModelBuilder, licencePostDataHandler, licenceStatusViewModelBuilder, formDefinition, new ConstantService());
+            controller = new OrganisationDetailsController(session, licenceViewModelBuilder, licencePostDataHandler, licenceStatusViewModelBuilder, formDefinition, new ConstantService(), referenceDataProvider);
         }
 
         [TestMethod]

@@ -54,15 +54,15 @@ namespace GLAA.Services.Tests.PostDataHandler
         {
             const int expectedId = 1;
             const string expectedLine1 = "Line 1";
-            const string expectedCounty = "Somerset";
-            const string expectedCountry = "UK";
+            const int expectedCounty = 1;
+            const int expectedCountry = 1;
             const string expectedPostcode = "BA2 3DQ";
             var licence = new Licence {Id = expectedId, Address = new Address()};
             var model = new AddressViewModel
             {
                 AddressLine1 = expectedLine1,
-                County = expectedCounty,
-                Country = expectedCountry,
+                CountyId = expectedCounty,
+                CountryId = expectedCountry,
                 Postcode = expectedPostcode
             };
 
@@ -73,8 +73,8 @@ namespace GLAA.Services.Tests.PostDataHandler
 
             repository.Received(0).Create<Address>();
             repository.Received(1).Upsert(Arg.Is<Licence>(l =>
-                l.Address.AddressLine1.Equals(expectedLine1) && l.Address.County.Equals(expectedCounty) &&
-                l.Address.Country.Equals(expectedCountry) && l.Address.Postcode.Equals(expectedPostcode)));
+                l.Address.AddressLine1.Equals(expectedLine1) && l.Address.CountyId == expectedCounty &&
+                l.Address.CountryId == expectedCountry && l.Address.Postcode.Equals(expectedPostcode)));
         }
 
         [TestMethod]
@@ -82,15 +82,15 @@ namespace GLAA.Services.Tests.PostDataHandler
         {
             const int expectedId = 1;
             const string expectedLine1 = "Line 1";
-            const string expectedCounty = "Somerset";
-            const string expectedCountry = "UK";
+            const int expectedCounty = 1;
+            const int expectedCountry = 1;
             const string expectedPostcode = "BA2 3DQ";
             var licence = new Licence { Id = expectedId, Address = null };
             var model = new AddressViewModel
             {
                 AddressLine1 = expectedLine1,
-                County = expectedCounty,
-                Country = expectedCountry,
+                CountyId = expectedCounty,
+                CountryId = expectedCountry,
                 Postcode = expectedPostcode
             };
 
@@ -102,8 +102,8 @@ namespace GLAA.Services.Tests.PostDataHandler
 
             repository.Received(1).Create<Address>();
             repository.Received(1).Upsert(Arg.Is<Licence>(l =>
-                l.Address.AddressLine1.Equals(expectedLine1) && l.Address.County.Equals(expectedCounty) &&
-                l.Address.Country.Equals(expectedCountry) && l.Address.Postcode.Equals(expectedPostcode)));
+                l.Address.AddressLine1.Equals(expectedLine1) && l.Address.CountyId == expectedCounty &&
+                l.Address.CountryId == expectedCountry && l.Address.Postcode.Equals(expectedPostcode)));
         }
 
         [TestMethod]

@@ -18,8 +18,8 @@ namespace GLAA.Web.Controllers
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService) : base(session, licenceApplicationViewModelBuilder,
-            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(session, licenceApplicationViewModelBuilder,
+            licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, rdp)
         {
         }
 
@@ -44,6 +44,12 @@ namespace GLAA.Web.Controllers
             if ((model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false) && model.PrincipalAuthorityId.HasValue)
             {
                 Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value, true);
+            }
+
+            if (ViewData["IsSubmitted"] == null)
+            {
+                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
             }
 
             return View(GetLastViewPath(FormSection.DirectorOrPartner), model);
@@ -106,6 +112,8 @@ namespace GLAA.Web.Controllers
         private IActionResult DirectorOrPartnerPost<T>(T model, int submittedPageId, bool doPaLinking, Func<T, bool> modelIsInvalid)
         {
             Session.SetSubmittedPage(FormSection.DirectorOrPartner, submittedPageId);
+
+            model = RepopulateDropdowns(model);
 
             if (modelIsInvalid(model))
             {
