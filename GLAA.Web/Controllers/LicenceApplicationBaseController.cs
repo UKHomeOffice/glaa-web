@@ -18,48 +18,19 @@ namespace GLAA.Web.Controllers
         protected readonly ILicenceApplicationPostDataHandler LicenceApplicationPostDataHandler;
         protected readonly ILicenceStatusViewModelBuilder LicenceStatusViewModelBuilder;
         protected readonly IConstantService ConstantService;
-        protected readonly IReferenceDataProvider ReferenceDataProvider;
 
         public LicenceApplicationBaseController(ISessionHelper session,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ILicenceApplicationPostDataHandler licenceApplicationPostDataHandler,
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
-            IConstantService constantService, IReferenceDataProvider rdp) : base(formDefinition)
+            IConstantService constantService, IReferenceDataProvider rdp) : base(formDefinition, rdp)
         {
             Session = session;
             LicenceApplicationViewModelBuilder = licenceApplicationViewModelBuilder;
             LicenceApplicationPostDataHandler = licenceApplicationPostDataHandler;
             LicenceStatusViewModelBuilder = licenceStatusViewModelBuilder;
             ConstantService = constantService;
-            ReferenceDataProvider = rdp;
-        }
-
-        private T RepopulateCountries<T>(T model) where T : INeedCountries
-        {
-            model.Countries = ReferenceDataProvider.GetCountries();
-            return model;
-        }
-
-        private T RepopulateCounties<T>(T model) where T : INeedCounties
-        {
-            model.Counties = ReferenceDataProvider.GetCounties();
-            return model;
-        }
-
-        protected T RepopulateDropdowns<T>(T model)
-        {
-            if (model is INeedCountries needsCountries)
-            {
-                model = (T)RepopulateCountries(needsCountries);
-            }
-
-            if (model is INeedCounties needsCounties)
-            {
-                model = (T)RepopulateCounties(needsCounties);
-            }
-
-            return model;
         }
 
         protected IActionResult CheckParentValidityAndRedirect(FormSection section, int submittedPageId)
