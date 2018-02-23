@@ -19,9 +19,9 @@ namespace GLAA.ViewModels.Admin
 
         public ICollection<LicenceStatusViewModel> LicenceStatusHistory { get; set; }
 
-        public LicenceStatusViewModel LatestStatus => LicenceStatusHistory.OrderByDescending(l => l.DateCreated).First();
+        public LicenceStatusViewModel LatestStatus => LicenceStatusHistory?.OrderByDescending(l => l.DateCreated).First();
 
-        public IEnumerable<SelectListItem> NextStatusDropDown => PleaseSelectItem.Concat(LatestStatus.NextStatuses.Select(s => s.DropDownItem));
+        public IEnumerable<SelectListItem> NextStatusDropDown => LatestStatus != null ? PleaseSelectItem.Concat(LatestStatus.NextStatuses?.Select(s => s.DropDownItem)) : null;
 
         public List<CheckboxListItem> StandardCheckboxes { get; set; }
 

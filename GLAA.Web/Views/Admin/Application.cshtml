@@ -20,6 +20,7 @@
 {
     <div>
         @Html.HiddenFor(m => m.Licence.Id)
+        
         <div class="grid-row">
             <div class="column-two-thirds">
                 <h1 class="heading-large">@(ViewBag.Title) @Model.Licence.ApplicationId</h1>
@@ -27,7 +28,7 @@
                 @Html.ExternalStatusFor(Model.LatestStatus)
                 <div class="grid-row">
                     @if (Model.LatestStatus.NextStatuses.Any())
-                {
+                    {
                         <div class="column-half">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.NewLicenceStatus, new { @class = "form-label" })

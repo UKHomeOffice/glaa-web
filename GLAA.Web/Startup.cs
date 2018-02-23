@@ -218,7 +218,7 @@ namespace GLAA.Web
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var logger = app.ApplicationServices.GetRequiredService<TimedLogger<Startup>>();                
+                var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();                
 
                 logger.TimedLog(LogLevel.Information, "Getting statuses from secrets");
 

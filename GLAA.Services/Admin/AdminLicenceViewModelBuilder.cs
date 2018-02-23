@@ -12,12 +12,17 @@ namespace GLAA.Services.Admin
         private readonly ILicenceRepository licenceRepository;
         private readonly IStatusRepository statusRepository;
         private readonly IMapper mapper;
+        private readonly IReferenceDataProvider rdp;
 
-        public AdminLicenceViewModelBuilder(ILicenceRepository licenceRepository, IStatusRepository statusRepository, IMapper mapper)
+        public AdminLicenceViewModelBuilder(ILicenceRepository licenceRepository, 
+            IStatusRepository statusRepository, 
+            IMapper mapper,
+            IReferenceDataProvider rdp)
         {
             this.licenceRepository = licenceRepository;
             this.statusRepository = statusRepository;
             this.mapper = mapper;
+            this.rdp = rdp;
         }
 
         public AdminLicenceViewModel New()
@@ -29,22 +34,32 @@ namespace GLAA.Services.Admin
         {
             var licence = licenceRepository.GetById(id);
 
-            var licenceModel = mapper.Map<LicenceApplicationViewModel>(licence);           
+            var licenceModel = mapper.Map<LicenceApplicationViewModel>(licence);            
 
             var standards = statusRepository.GetAll<LicensingStandard>();
 
-            return new AdminLicenceViewModel
+            var counties = rdp.GetCounties();
+            var countries = rdp.GetCounties();
+
+            var pa = mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());
+            pa.Address = new AddressViewModel();
+            pa.Counties = counties;
+            pa.Countries = countries;
+
+            var model = new AdminLicenceViewModel
             {
                 Licence = licenceModel,
                 OrganisationDetails = mapper.Map<OrganisationDetailsViewModel>(licence),
-                PrincipalAuthority = mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault()),
+                PrincipalAuthority = pa,
                 AlternativeBusinessRepresentatives = mapper.Map<AlternativeBusinessRepresentativeCollectionViewModel>(licence),
                 DirectorsOrPartners = mapper.Map<DirectorOrPartnerCollectionViewModel>(licence),
                 NamedIndividuals = mapper.Map<NamedIndividualCollectionViewModel>(licence),
                 Organisation = mapper.Map<OrganisationViewModel>(licence),
-                LicenceStatusHistory = licence.LicenceStatusHistory.Select(x => mapper.Map<LicenceStatusViewModel>(x)).ToList(),
+                LicenceStatusHistory = licence.LicenceStatusHistory.Select(x => mapper.Map<LicenceStatusViewModel>(x)).ToList(),           
                 StandardCheckboxes = standards.Select(s => new CheckboxListItem { Id = s.Id, Name = s.Name }).ToList()
             };
+
+            return model;
         }
     }
 }
