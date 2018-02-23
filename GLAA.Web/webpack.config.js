@@ -20,10 +20,12 @@ module.exports = {
             './wwwroot/js/frontend-toolkit/stick-at-top-when-scrolling.js',
             './wwwroot/sass/glaa.scss',
             './wwwroot/sass/govuk-overrides.scss',
-            './wwwroot/sass/sidebar-navigation.scss'
+            './wwwroot/sass/sidebar-navigation.scss'            
         ],
-        'admin': [
-            './wwwroot/sass/admin/index.scss'
+        'admin': [            
+            './wwwroot/sass/admin/application-list.scss',
+            './wwwroot/sass/admin/dashboard.scss',
+            './wwwroot/sass/admin/layout.scss'
         ]
     },
     externals: {

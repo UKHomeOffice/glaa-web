@@ -87,9 +87,9 @@ textarea.form-control {
 
 .button {
     background-color: #8f23b3;
-    -webkit-box-shadow: 0 0 0 #8f23b3;
-    -moz-box-shadow: 0 0 0 #8f23b3;
-    box-shadow: 0 0 0 #8f23b3;
+    -webkit-box-shadow: 0 2px 0 #57156D;
+    -moz-box-shadow: 0 2px 0 #57156D;
+    box-shadow: 0 2px 0 #57156D;
 }
 
 .button:visited {
@@ -101,9 +101,9 @@ textarea.form-control {
 }
 
 .button:active {
-    -webkit-box-shadow: 0 0 0 #8f23b3;
-    -moz-box-shadow: 0 0 0 #8f23b3;
-    box-shadow: 0 0 0 #8f23b3;
+    -webkit-box-shadow: 0 2px 0 #57156D;
+    -moz-box-shadow: 0 2px 0 #57156D;
+    box-shadow: 0 2px 0 #57156D;
 }
 
 .button.disabled:hover, .button[disabled="disabled"]:hover, .button[disabled]:hover {
