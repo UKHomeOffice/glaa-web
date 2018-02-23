@@ -132,7 +132,6 @@ namespace GLAA.Web
             services.AddTransient<ILicenceRepository, LicenceRepository>();
             services.AddTransient<IAdminHomeViewModelBuilder, AdminHomeViewModelBuilder>();
             services.AddTransient<IAdminLicenceListViewModelBuilder, AdminLicenceListViewModelBuilder>();
-            services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();

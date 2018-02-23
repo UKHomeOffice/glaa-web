@@ -16,7 +16,6 @@ namespace GLAA.Web.Controllers
         private readonly ISessionHelper session;
         private readonly IAdminHomeViewModelBuilder homeBuilder;
         private readonly IAdminLicenceListViewModelBuilder listBuilder;
-        //private readonly IAdminLicenceViewModelBuilder licenceBuilder;
         private readonly IAdminLicencePostDataHandler postDataHandler;
         private readonly IAdminUserListViewModelBuilder userListBuilder;
         private readonly IAdminUserViewModelBuilder userBuilder;
