@@ -29,7 +29,7 @@
                 var name = person.FullName?.FullName ?? "Name not set";
                 <tr>
                     <td>@name</td>
-                    <td class="change-answer"><a href="@Url.Action("Part", "NamedIndividual", new {id = person.Id})">Change or remove<span class="visually-hidden">@name</span></a></td>
+                    <td class="change-answer"><a href="@Url.Action("Review", "NamedIndividual", new {id = person.Id})">Change or remove<span class="visually-hidden">@name</span></a></td>
                 </tr>
             }
         </tbody>

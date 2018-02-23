@@ -45,14 +45,17 @@ namespace GLAA.ViewModels
 
         [Required]
         [Display(Name = "First name")]
+        [MaxLength(20, ErrorMessage = "The First name must be less than 20 characters.")]
         public string FirstName { get; set; }
 
         [HiddenOptional]
         [Display(Name = "Middle names")]
+        [MaxLength(20, ErrorMessage = "The Middle name must be less than 20 characters.")]
         public string MiddleName { get; set; }
 
         [Required]
         [Display(Name = "Last name")]
+        [MaxLength(20, ErrorMessage = "The Last name must be less than 20 characters.")]
         public string LastName { get; set; }
 
         [Display(Name = "Full name")]
