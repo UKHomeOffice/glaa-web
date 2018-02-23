@@ -38,25 +38,25 @@ namespace GLAA.Services.Admin
 
             var standards = statusRepository.GetAll<LicensingStandard>();
 
-            var counties = rdp.GetCounties();
-            var countries = rdp.GetCounties();
+            //var counties = rdp.GetCounties();
+            //var countries = rdp.GetCountries();
 
-            var pa = mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());
-            pa.Address = new AddressViewModel();
-            pa.Counties = counties;
-            pa.Countries = countries;
+            //var pa = ;
+            //pa.Address = new AddressViewModel();
+            //pa.Counties = counties;
+            //pa.Countries = countries;
 
             var model = new AdminLicenceViewModel
             {
                 Licence = licenceModel,
                 OrganisationDetails = mapper.Map<OrganisationDetailsViewModel>(licence),
-                PrincipalAuthority = pa,
+                PrincipalAuthority = mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault()),
                 AlternativeBusinessRepresentatives = mapper.Map<AlternativeBusinessRepresentativeCollectionViewModel>(licence),
                 DirectorsOrPartners = mapper.Map<DirectorOrPartnerCollectionViewModel>(licence),
                 NamedIndividuals = mapper.Map<NamedIndividualCollectionViewModel>(licence),
                 Organisation = mapper.Map<OrganisationViewModel>(licence),
-                LicenceStatusHistory = licence.LicenceStatusHistory.Select(x => mapper.Map<LicenceStatusViewModel>(x)).ToList(),           
-                StandardCheckboxes = standards.Select(s => new CheckboxListItem { Id = s.Id, Name = s.Name }).ToList()
+                LicenceStatusHistory = licence.LicenceStatusHistory.Select(x => mapper.Map<LicenceStatusViewModel>(x)).ToList()           
+                //StandardCheckboxes = standards.Select(s => new CheckboxListItem { Id = s.Id, Name = s.Name }).ToList()
             };
 
             return model;

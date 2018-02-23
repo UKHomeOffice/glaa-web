@@ -24,7 +24,7 @@ namespace GLAA.Services.Admin
             statusChange.DateCreated = dateTimeProvider.Now();
             statusChange.Status = repository.GetById<LicenceStatus>(model.NewLicenceStatus);
             statusChange.Reason = repository.GetById<StatusReason>(model.NewStatusReason);
-            statusChange.NonCompliantStandards = model.StandardCheckboxes.Where(x => x.Checked)
+            statusChange.NonCompliantStandards = model.Standards.Where(x => x.Checked)
                 .Select(y => repository.GetById<LicenceStatusChangeLicensingStandard>(y.Id)).ToList();
             statusChange.Licence.CurrentStatusChange = statusChange;
             repository.Upsert(statusChange.Licence);
