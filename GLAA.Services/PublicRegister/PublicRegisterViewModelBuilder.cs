@@ -65,41 +65,43 @@ namespace GLAA.Services.PublicRegister
 
             var countries = _referenceDataProvider.GetCountries();
 
-            switch (Enum.Parse<SupplierWho>(publicRegisterSearchCriteria.SupplierWho))
-            {
-                case SupplierWho.Supply:
-                    if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
-                        licences = licences.Where(x =>
-                            ukCountryNames.Any(y => x.OperatingCountries.Any(z => 
-                            countries.Single(c => int.Parse(c.Value) == z.WorkerCountryId).Text == y)));
-                    else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
-                        licences = licences.Where(x =>
-                            ukCountryNames.Any(y => x.OperatingCountries.All(z => 
-                            countries.Single(c => int.Parse(c.Value) == z.WorkerCountryId).Text  != y)));
-                    else
-                        licences = licences.Where(x => x.OperatingCountries.Any(y => y != null &&
-                            publicRegisterSearchCriteria.CountriesSelected.Any(z => 
-                            countries.Single(c => 
-                            int.Parse(c.Value) == y.WorkerCountryId).Text.Contains(z))));
+            if (publicRegisterSearchCriteria.CountriesSelected != null && publicRegisterSearchCriteria.CountriesSelected.Count > 0) { 
+                switch (Enum.Parse<SupplierWho>(publicRegisterSearchCriteria.SupplierWho))
+                {
+                    case SupplierWho.Supply:
+                        if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
+                            licences = licences.Where(x =>
+                                ukCountryNames.Any(y => x.OperatingCountries.Any(z => 
+                                countries.Single(c => int.Parse(c.Value) == z.WorkerCountryId).Text == y)));
+                        else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
+                            licences = licences.Where(x =>
+                                ukCountryNames.Any(y => x.OperatingCountries.All(z => 
+                                countries.Single(c => int.Parse(c.Value) == z.WorkerCountryId).Text  != y)));
+                        else
+                            licences = licences.Where(x => x.OperatingCountries.Any(y => y != null &&
+                                publicRegisterSearchCriteria.CountriesSelected.Any(z => 
+                                countries.Single(c => 
+                                int.Parse(c.Value) == y.WorkerCountryId).Text.Contains(z))));
                     
-                    break;
-                case SupplierWho.AreLocated:
-                    if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
-                        licences = licences.Where(x =>
-                            x.Address != null && ukCountryNames.Any(y =>
-                            countries.Single(c => int.Parse(c.Value) == x.Address.CountryId).Text.Contains(y)));
-                    else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
-                        licences = licences.Where(x =>
-                            x.Address != null && ukCountryNames.Any(y => !x.Address.Country.IsUk));
-                    else
-                        licences = licences.Where(x =>
-                            x.Address != null &&
-                            publicRegisterSearchCriteria.CountriesSelected.Any(y =>
-                                y == countries.Single(c => int.Parse(c.Value) == x.Address.CountryId).Text));
+                        break;
+                    case SupplierWho.AreLocated:
+                        if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "UK"))
+                            licences = licences.Where(x =>
+                                x.Address != null && ukCountryNames.Any(y =>
+                                countries.Single(c => int.Parse(c.Value) == x.Address.CountryId).Text.Contains(y)));
+                        else if (publicRegisterSearchCriteria.CountriesSelected.Any(x => x == "Outside UK"))
+                            licences = licences.Where(x =>
+                                x.Address != null && ukCountryNames.Any(y => !x.Address.Country.IsUk));
+                        else
+                            licences = licences.Where(x =>
+                                x.Address != null &&
+                                publicRegisterSearchCriteria.CountriesSelected.Any(y =>
+                                    y == countries.Single(c => int.Parse(c.Value) == x.Address.CountryId).Text));
 
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(publicRegisterSearchCriteria.SupplierWho));
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException(nameof(publicRegisterSearchCriteria.SupplierWho));
+                }   
             }
 
             return new PublicRegisterLicenceListViewModel

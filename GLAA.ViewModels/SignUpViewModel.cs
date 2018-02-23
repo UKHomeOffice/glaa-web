@@ -27,13 +27,13 @@ namespace GLAA.ViewModels
         public IEnumerable<SelectListItem> Countries
         {
             set => Address.Countries = value;
-            get => Address.Countries;
+            get => Address?.Countries ?? new List<SelectListItem>();
         }
 
         public IEnumerable<SelectListItem> Counties
         {
             set => Address.Counties = value;
-            get => Address.Counties;
+            get => Address?.Counties ?? new List<SelectListItem>();
         }
     }
 

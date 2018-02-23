@@ -22,11 +22,16 @@ namespace GLAA.Services.AccountCreation
         {
             var model = new SignUpViewModel
             {
-                Countries = referenceDataProvider.GetCountries()
+                Countries = referenceDataProvider.GetCountries(),
+                Counties = referenceDataProvider.GetCounties()
             };
-
+            
             var user = userManager.FindCompleteUserByEmail(email);
-            model = mapper.Map(user, model);
+
+            if (user != null)
+            {
+                model = mapper.Map(user, model);
+            }
 
             return model;
         }

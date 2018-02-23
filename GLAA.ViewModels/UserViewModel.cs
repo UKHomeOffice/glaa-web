@@ -10,8 +10,21 @@ namespace GLAA.ViewModels
         public string Id { get; set; }
 
         [Required]
-        [Display(Name = "Full name")]
-        public string FullName { get; set; }
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public string FullName => (string.IsNullOrEmpty(Title) ? string.Empty : $"{Title} ") +
+                                  (string.IsNullOrEmpty(FirstName) ? string.Empty : $"{FirstName} ") +
+                                  (string.IsNullOrEmpty(MiddleName) ? string.Empty : $"{MiddleName} ") +
+                                  (string.IsNullOrEmpty(LastName) ? string.Empty : $"{LastName} ");
 
         [Required]
         [EmailAddress]

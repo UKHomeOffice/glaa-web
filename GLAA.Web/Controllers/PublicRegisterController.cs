@@ -82,9 +82,7 @@ namespace GLAA.Web.Controllers
                     break;
             }
 
-            if (searchViewModel.SearchActive &&
-                (searchViewModel.CountriesSelected != null && searchViewModel.CountriesSelected.Count > 0 ||
-                 !string.IsNullOrWhiteSpace(searchViewModel.BusinessName)))
+            if (searchViewModel.SearchActive)
             {
                 publicRegisterLicenceListViewModel =
                     publicRegisterViewModelBuilder.BuildSearchForLicences(_currentPublicRegisterSearchCriteria);
