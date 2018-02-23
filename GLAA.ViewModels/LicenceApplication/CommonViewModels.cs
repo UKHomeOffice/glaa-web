@@ -70,7 +70,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public IEnumerable<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
     }
 
-    public class BirthDetailsViewModel : Validatable
+    public class BirthDetailsViewModel : Validatable, INeedCountries
     {
         public BirthDetailsViewModel()
         {
@@ -84,6 +84,12 @@ namespace GLAA.ViewModels.LicenceApplication
         public CountryOfBirthViewModel CountryOfBirthViewModel { get; set; }
         public NationalInsuranceNumberViewModel NationalInsuranceNumberViewModel { get; set; }
         public SocialSecurityNumberViewModel SocialSecurityNumberViewModel { get; set; }
+
+        public IEnumerable<SelectListItem> Countries
+        {
+            get => CountryOfBirthViewModel.Countries;
+            set => CountryOfBirthViewModel.Countries = value;
+        }
     }
 
     public class JobTitleViewModel
