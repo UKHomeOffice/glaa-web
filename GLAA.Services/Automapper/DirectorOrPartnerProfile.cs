@@ -24,7 +24,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<DirectorOrPartner, DirectorOrPartnerViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
-                .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address))
+                .ForMember(x => x.Address, opt => opt.Condition(y => y.Address != null))
                 .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver<DirectorOrPartnerViewModel>))
                 .ForMember(x => x.FullName, opt => opt.ResolveUsing(ProfileHelpers.FullNameResolver))
                 .ForMember(x => x.AlternativeName, opt => opt.ResolveUsing(ProfileHelpers.AlternativeFullNameResolver))
