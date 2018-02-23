@@ -8,11 +8,11 @@ namespace GLAA.Repository
 {
     public class EntityFrameworkRepositoryBase : IEntityFrameworkRepository
     {
-        protected readonly GLAAContext Context;        
+        protected readonly GLAAContext Context;
 
         public EntityFrameworkRepositoryBase(GLAAContext context)
         {
-            this.Context = context;              
+            this.Context = context;
         }
 
         public TEntity GetById<TEntity>(int id) where TEntity : class, IId
@@ -30,10 +30,11 @@ namespace GLAA.Repository
             return Context.Set<TEntity>().ToList();
         }
 
-        public void Delete<TEntity>(int id) where TEntity : class, IId
+        public void Delete<TEntity>(int id) where TEntity : class, IId, IDeletable
         {
             var entity = GetById<TEntity>(id);
-            Context.Set<TEntity>().Remove(entity);
+            entity.Deleted = true;
+            entity.DateDeleted = DateTime.Now;
             Context.SaveChanges();
         }
 

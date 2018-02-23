@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
-    public class NamedIndividual : IId, ILinkedToLicence
+    public class NamedIndividual : IId, ILinkedToLicence, IDeletable
     {
         [Key]
         public int Id { get; set; }
@@ -52,5 +52,7 @@ namespace GLAA.Domain.Models
         public bool? HasPreviouslyHeldLicence { get; set; }
 
         public string PreviousLicenceDescription { get; set; }
+        public bool Deleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

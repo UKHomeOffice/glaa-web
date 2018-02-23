@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GLAA.Domain;
 using GLAA.Domain.Models;
 
 namespace GLAA.Repository
@@ -11,6 +12,6 @@ namespace GLAA.Repository
         TEntity GetById<TEntity>(int id) where TEntity : class, IId;
         TEntity Find<TEntity>(Func<TEntity, bool> predicate) where TEntity : class;
         IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class;
-        void Delete<TEntity>(int id) where TEntity : class, IId;
+        void Delete<TEntity>(int id) where TEntity : class, IId, IDeletable;
     }
 }

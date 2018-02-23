@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
+using GLAA.Domain;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.ViewModels.LicenceApplication;
@@ -48,7 +49,7 @@ namespace GLAA.Services.LicenceApplication
             return licence.Id;
         }
 
-        public void Delete<T>(int id) where T : class, IId
+        public void Delete<T>(int id) where T : class, IId, IDeletable
         {
             // TODO: soft deletes?
             repository.Delete<T>(id);
@@ -123,7 +124,7 @@ namespace GLAA.Services.LicenceApplication
         }
 
         public void UpdateAll<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, IEnumerable<U> models)
-            where T : class, IId, new() where U : IId
+            where T : class, IId, IDeletable, new() where U : IId
         {
             var licence = licenceRepository.GetById(licenceId);
 

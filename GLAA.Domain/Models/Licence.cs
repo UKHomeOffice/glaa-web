@@ -7,7 +7,7 @@ using GLAA.Domain.Core.Models;
 
 namespace GLAA.Domain.Models
 {
-    public class Licence : IId, IAddressable
+    public class Licence : IId, IAddressable, IDeletable
     {
         [Key]
         public int Id { get; set; }
@@ -137,5 +137,7 @@ namespace GLAA.Domain.Models
         public virtual ICollection<NamedIndividual> NamedIndividuals { get; set; } = new List<NamedIndividual>();
 
         public virtual ICollection<NamedJobTitle> NamedJobTitles { get; set; } = new List<NamedJobTitle>();
+        public bool Deleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using GLAA.Domain;
 using GLAA.Domain.Models;
 using GLAA.ViewModels.LicenceApplication;
 
@@ -10,7 +11,7 @@ namespace GLAA.Services.LicenceApplication
     {
         int Insert(LicenceApplicationViewModel model);
 
-        void Delete<T>(int id) where T : class, IId;
+        void Delete<T>(int id) where T : class, IId, IDeletable;
 
         void Update<T, U>(int licenceId, Func<Licence, U> objectSelector, T model) where U : class, IId, new();
 
@@ -26,7 +27,7 @@ namespace GLAA.Services.LicenceApplication
             where T : class, IId, new() where U : IId;
 
         void UpdateAll<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, IEnumerable<U> models)
-            where T : class, IId, new() where U : IId;
+            where T : class, IId, IDeletable, new() where U : IId;
 
         int Update<T, U>(int licenceId, Func<Licence, ICollection<T>> objectSelector, U model, int id)
             where T : class, IId, ILinkedToLicence, new();
