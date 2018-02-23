@@ -308,7 +308,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.HasPreviouslyHeldLicence))
                 .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription))
                 .ForMember(x => x.RequiresVisa, opt => opt.Ignore())
-                .ForMember(x => x.VisaDescription, opt => opt.Ignore());
+                .ForMember(x => x.VisaDescription, opt => opt.Ignore())
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
         }
     }
 }

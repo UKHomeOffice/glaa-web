@@ -97,7 +97,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasOffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial))
                 .ForMember(x => x.OffencesAwaitingTrial, opt => opt.Ignore())
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.HasPreviouslyHeldLicence))
-                .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription));
+                .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription))
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
 
             CreateMap<IsPreviousPrincipalAuthorityViewModel, DirectorOrPartner>()
                 .ForMember(x => x.IsPreviousPrincipalAuthority, opt => opt.MapFrom(y => y.IsPreviousPrincipalAuthority))

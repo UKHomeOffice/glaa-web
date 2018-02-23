@@ -56,14 +56,17 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.OffencesAwaitingTrial, opt => opt.Ignore())
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.HasPreviouslyHeldLicence))
                 .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription))
-                .ForAllOtherMembers(opt => opt.Ignore());
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
 
             CreateMap<NamedJobTitleViewModel, NamedJobTitle>()
                 .ForMember(x => x.Licence, opt => opt.Ignore())
                 .ForMember(x => x.LicenceId, opt => opt.Ignore())
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.JobTitle, opt => opt.MapFrom(y => y.JobTitle))
-                .ForMember(x => x.JobTitleNumber, opt => opt.MapFrom(y => y.JobTitleNumber));
+                .ForMember(x => x.JobTitleNumber, opt => opt.MapFrom(y => y.JobTitleNumber))
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
 
             CreateMap<NamedJobTitle, NamedJobTitleViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore());
