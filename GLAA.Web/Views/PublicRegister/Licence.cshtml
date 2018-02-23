@@ -82,32 +82,32 @@
             <tr>
                 <td>Location</td>
                 <td>
-                    @Model.Address.AddressLine1
-                    @if (!string.IsNullOrWhiteSpace(Model.Address.AddressLine1))
+                    @Model.Address?.AddressLine1
+                    @if (!string.IsNullOrWhiteSpace(Model.Address?.AddressLine1))
                     {
                         <br />
                     }
 
-                    @Model.Address.AddressLine2
-                    @if (!string.IsNullOrWhiteSpace(Model.Address.AddressLine2))
+                    @Model.Address?.AddressLine2
+                    @if (!string.IsNullOrWhiteSpace(Model.Address?.AddressLine2))
                     {
                         <br />
                     }
 
-                    @Model.Address.AddressLine3
-                    @if (!string.IsNullOrWhiteSpace(Model.Address.AddressLine3))
+                    @Model.Address?.AddressLine3
+                    @if (!string.IsNullOrWhiteSpace(Model.Address?.AddressLine3))
                     {
                         <br />
                     }
 
-                    @(Model.Address.Counties.SingleOrDefault(c => int.Parse(c.Value) == Model.Address.CountyId)?.Text ?? string.Empty)
-                    @if (Model.Address.CountyId != 0)
+                    @(Model.Address?.Counties.SingleOrDefault(c => int.Parse(c.Value) == Model.Address?.CountyId)?.Text ?? string.Empty)
+                    @if (Model.Address?.CountyId != 0)
                     {
                         <br />
                     }
 
-                    @Model.Address.Postcode
-                    @if (!string.IsNullOrWhiteSpace(Model.Address.Postcode))
+                    @Model.Address?.Postcode
+                    @if (!string.IsNullOrWhiteSpace(Model.Address?.Postcode))
                     {
                         <br />
                     }
@@ -115,7 +115,7 @@
             </tr>
             <tr>
                 <td>Country</td>
-                <td>@(Model.Address.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.Address.CountryId)?.Text ?? string.Empty)</td>
+                <td>@(Model.Address?.Countries.SingleOrDefault(c => int.Parse(c.Value) == Model.Address?.CountryId)?.Text ?? string.Empty)</td>
             </tr>
             <tr>
                 <td>Phone</td>

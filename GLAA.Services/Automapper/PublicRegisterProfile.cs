@@ -15,8 +15,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.MostRecentStatus, opt => opt.MapFrom(y => StatusProfile.MapLicenceStatusViewModel(LicenceRepository.GetLatestStatus(y))))
                 .ForMember(x => x.BusinessName, opt => opt.MapFrom(y => y.BusinessName))
                 .ForMember(x => x.TradingName, opt => opt.MapFrom(y => y.TradingName))
-                .ForMember(x => x.Country, opt => opt.MapFrom(y => y.Address.Country))
-                .ForMember(x => x.County, opt => opt.MapFrom(y => y.Address.County))
+                .ForMember(x => x.CountryId, opt => opt.MapFrom(y => y.Address.CountryId))
+                .ForMember(x => x.CountyId, opt => opt.MapFrom(y => y.Address.CountyId))
                 .ForMember(x => x.IsApplication, opt => opt.MapFrom(y => LicenceRepository.GetLatestStatus(y).Status.IsApplication))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
