@@ -1,10 +1,10 @@
 ﻿@model GLAA.ViewModels.LicenceApplication.NamedIndividualViewModel
 
 @{
-    ViewBag.Title = "Named Individual Summary";
+    ViewBag.Title = "Named Individual Summary123123";
 }
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividual" }, { "submittedPageId", "15" } }))
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "NamedIndividual" }, { "submittedPageId", "15" }, { "parentSection", "NamedIndividuals"} })
 
 @using (Html.BeginForm("DeleteNamedIndividual", "NamedIndividual"))
 {
