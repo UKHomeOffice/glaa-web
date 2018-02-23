@@ -1,4 +1,5 @@
 ﻿using System;
+using GLAA.Common;
 
 namespace GLAA.Services
 {

@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Amazon.S3;
 using Amazon.Runtime;
+using GLAA.Common;
 using GLAA.Services.AccountCreation;
 using GLAA.Services.PublicRegister;
 using GLAA.Scheduler.Tasks;

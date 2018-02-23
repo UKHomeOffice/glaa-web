@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GLAA.Common;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;

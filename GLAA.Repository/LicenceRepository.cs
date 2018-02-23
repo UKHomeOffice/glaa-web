@@ -2,14 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain;
+using GLAA.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace GLAA.Repository
 {
     public class LicenceRepository : EntityFrameworkRepositoryBase, ILicenceRepository
     {
-        public LicenceRepository(GLAAContext dbContext) : base(dbContext)
+        public LicenceRepository(GLAAContext dbContext, IDateTimeProvider dtp) : base(dbContext, dtp)
         {
         }
 

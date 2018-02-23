@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.Services.Automapper;

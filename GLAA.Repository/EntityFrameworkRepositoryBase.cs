@@ -3,16 +3,19 @@ using GLAA.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GLAA.Common;
 
 namespace GLAA.Repository
 {
     public class EntityFrameworkRepositoryBase : IEntityFrameworkRepository
     {
         protected readonly GLAAContext Context;
+        protected readonly IDateTimeProvider DateTimeProvider;
 
-        public EntityFrameworkRepositoryBase(GLAAContext context)
+        public EntityFrameworkRepositoryBase(GLAAContext context, IDateTimeProvider dtp)
         {
-            this.Context = context;
+            Context = context;
+            DateTimeProvider = dtp;
         }
 
         public TEntity GetById<TEntity>(int id) where TEntity : class, IId
@@ -34,7 +37,7 @@ namespace GLAA.Repository
         {
             var entity = GetById<TEntity>(id);
             entity.Deleted = true;
-            entity.DateDeleted = DateTime.Now;
+            entity.DateDeleted = DateTimeProvider.Now();
             Context.SaveChanges();
         }
 
