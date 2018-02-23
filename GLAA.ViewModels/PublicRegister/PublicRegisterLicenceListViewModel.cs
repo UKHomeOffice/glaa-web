@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.PublicRegister
 {
-    public class PublicRegisterLicenceListViewModel
+    public class PublicRegisterLicenceListViewModel : INeedCounties, INeedCountries
     {
         public PublicRegisterLicenceListViewModel()
         {
@@ -23,5 +23,7 @@ namespace GLAA.ViewModels.PublicRegister
             new PublicRegisterListItem<SupplierWho> {Value = SupplierWho.AreLocated.ToString(), Text = "Are Located", EnumMappedTo = SupplierWho.AreLocated}
         };
         public List<SelectListItem> AvailableCountries { get; set; }
+        public IEnumerable<SelectListItem> Counties { get; set; }
+        public IEnumerable<SelectListItem> Countries { get; set; }
     }
 }
