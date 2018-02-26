@@ -9,9 +9,9 @@ namespace GLAA.Repository
     {
         TEntity Create<TEntity>() where TEntity : class, IId, new();
         int Upsert<TEntity>(TEntity entity) where TEntity : class, IId;
-        TEntity GetById<TEntity>(int id) where TEntity : class, IId;
+        TEntity GetById<TEntity>(int id, bool includeDeleted = false) where TEntity : class, IId;
         TEntity Find<TEntity>(Func<TEntity, bool> predicate) where TEntity : class;
-        IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class;
+        IEnumerable<TEntity> GetAll<TEntity>(bool includeDeleted = false) where TEntity : class;
         /// <summary>
         /// Mark the entity with this ID as deleted and mark any of its properties 
         /// with the <see cref="CascadeDeleteAttribute"/> as deleted.

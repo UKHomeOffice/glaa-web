@@ -19,9 +19,19 @@ namespace GLAA.Repository
             DateTimeProvider = dtp;
         }
 
-        public TEntity GetById<TEntity>(int id) where TEntity : class, IId
+        public TEntity GetById<TEntity>(int id, bool includeDeleted = false) where TEntity : class, IId
         {
-            return Context.Set<TEntity>().Find(id);            
+            var match = Context.Set<TEntity>().Find(id);
+
+            if (match is IDeletable deletable)
+            {
+                if (deletable.Deleted)
+                {
+                    return includeDeleted ? match : null;
+                }
+            }
+
+            return match;
         }
 
         public TEntity Find<TEntity>(Func<TEntity, bool> predicate) where TEntity : class
@@ -29,9 +39,9 @@ namespace GLAA.Repository
             return Context.Set<TEntity>().FirstOrDefault(predicate);
         }
 
-        public IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class
+        public IEnumerable<TEntity> GetAll<TEntity>(bool includeDeleted = false) where TEntity : class
         {
-            return Context.Set<TEntity>().ToList();
+            return Context.Set<TEntity>().FilterDeletedEntities(includeDeleted).ToList();
         }
 
         public void Delete<TEntity>(int id) where TEntity : class, IId, IDeletable
