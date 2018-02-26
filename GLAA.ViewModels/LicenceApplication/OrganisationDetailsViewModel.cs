@@ -5,6 +5,7 @@ using GLAA.Domain.Models;
 using GLAA.ViewModels.Core;
 using GLAA.ViewModels.Core.Attributes;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
@@ -42,18 +43,17 @@ namespace GLAA.ViewModels.LicenceApplication
         public IEnumerable<SelectListItem> Countries
         {
             set => Address.Countries = value;
-            get => Address.Countries;
+            get => Address?.Countries ?? new List<SelectListItem>();
         }
 
         public IEnumerable<SelectListItem> Counties
         {
             set => Address.Counties = value;
-            get => Address.Counties;
+            get => Address?.Counties ?? new List<SelectListItem>();
         }
 
         public bool IsSubmitted { get; set; }
     }
-
 
     public class BusinessNameViewModel : YesNoViewModel, IValidatable, IRequiredIf
     {
@@ -73,7 +73,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [RequiredIf(ErrorMessage = "The Has Previous Trading Names field is required")]
         public bool? HasPreviousTradingName { get; set; }
 
-        public List<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
+        public List<PreviousTradingNameViewModel> PreviousTradingNames { get; set; } = new List<PreviousTradingNameViewModel>();
 
         public void Validate()
         {
