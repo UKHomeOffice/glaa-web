@@ -27,6 +27,7 @@ namespace GLAA.ViewModels.LicenceApplication
             UnspentConvictionsViewModel = new UnspentConvictionsViewModel();
             OffencesAwaitingTrialViewModel = new OffencesAwaitingTrialViewModel();
             PreviousLicenceViewModel = new PreviousLicenceViewModel();
+            Address = new AddressViewModel();
         }
 
         public bool IsUk { get; set; }

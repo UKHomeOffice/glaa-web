@@ -20,6 +20,7 @@
 {
     <div>
         @Html.HiddenFor(m => m.Licence.Id)
+        
         <div class="grid-row">
             <div class="column-two-thirds">
                 <h1 class="heading-large">@(ViewBag.Title) @Model.Licence.ApplicationId</h1>
@@ -27,7 +28,7 @@
                 @Html.ExternalStatusFor(Model.LatestStatus)
                 <div class="grid-row">
                     @if (Model.LatestStatus.NextStatuses.Any())
-                {
+                    {
                         <div class="column-half">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.NewLicenceStatus, new { @class = "form-label" })
@@ -43,15 +44,15 @@
 
                         <div class="column-full" id="standardCheckboxes" style="display: none">
                             <h1 class="heading-small">Select Non-compliant Standards</h1>
-                            @for (var i = 0; i < Model.StandardCheckboxes.Count; i++)
+                            @for (var i = 0; i < Model.Standards.Count; i++)
                             {
                                 <div class="column-one-third">
                                     <div class="form-group">
                                         <div class="multiple-choice">
-                                            @Html.HiddenFor(m => m.StandardCheckboxes[i].Id)
-                                            @Html.HiddenFor(m => m.StandardCheckboxes[i].Name)
-                                            @Html.CheckBoxFor(m => m.StandardCheckboxes[i].Checked)
-                                            @Html.LabelFor(m => m.StandardCheckboxes[i].Checked, Model.StandardCheckboxes[i].Name)
+                                            @Html.HiddenFor(m => m.Standards[i].Id)
+                                            @Html.HiddenFor(m => m.Standards[i].Name)
+                                            @Html.CheckBoxFor(m => m.Standards[i].Checked)
+                                            @Html.LabelFor(m => m.Standards[i].Checked, Model.Standards[i].Name)
                                         </div>
                                     </div>
                                 </div>

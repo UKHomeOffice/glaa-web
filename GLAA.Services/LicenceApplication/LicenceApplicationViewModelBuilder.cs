@@ -12,13 +12,15 @@ namespace GLAA.Services.LicenceApplication
     public class LicenceApplicationViewModelBuilder : ILicenceApplicationViewModelBuilder
     {
         private readonly ILicenceRepository licenceRepository;
+        private readonly IStatusRepository statusRepository;
         private readonly IMapper mapper;
         private readonly IReferenceDataProvider referenceDataProvider;
         private readonly IConstantService constantService;
 
-        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp, IConstantService constantService)
+        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp, IStatusRepository statusRepository, IConstantService constantService)
         {
             this.licenceRepository = licenceRepository;
+            this.statusRepository = statusRepository;
             this.mapper = mapper;
             this.referenceDataProvider = rdp;
             this.constantService = constantService;
@@ -36,6 +38,14 @@ namespace GLAA.Services.LicenceApplication
             if (model is INeedCounties countyModel)
             {
                 countyModel.Counties = referenceDataProvider.GetCounties();
+            }
+
+            if (model is INeedStandards standardModel)
+            {
+                standardModel.Standards = statusRepository
+                    .GetAll<LicensingStandard>()
+                    .Select(s => new CheckboxListItem { Id = s.Id, Name = s.Name })
+                    .ToList();
             }
 
             return model;

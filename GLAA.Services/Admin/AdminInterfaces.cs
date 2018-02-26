@@ -15,11 +15,6 @@ namespace GLAA.Services.Admin
         AdminLicenceListViewModel Build(LicenceOrApplication type);
     }
 
-    public interface IAdminLicenceViewModelBuilder : IViewModelBuilder<AdminLicenceViewModel>
-    {
-        AdminLicenceViewModel Build(int id);
-    }
-
     public interface IAdminLicencePostDataHandler : IPostDataHandler<AdminLicenceViewModel>
     {
         void UpdateStatus(AdminLicenceViewModel model);

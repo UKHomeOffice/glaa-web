@@ -553,7 +553,31 @@ namespace GLAA.Services.Tests.AutoMapper
                         FullName = "Person 1",
                         BusinessExtension = "123",
                         BusinessPhoneNumber = "01225 123456",
-                        DateOfBirth = new DateTime(2000, 1, 1)
+                        DateOfBirth = new DateTime(2000, 1, 1),
+                        RestraintOrders = new List<RestraintOrder> {
+                            new RestraintOrder
+                            {
+                                Id = 1,
+                                Date = new DateTime(1999, 9, 9),
+                                Description = "a restraint"
+                            }
+                        },
+                        UnspentConvictions = new List<Conviction> {
+                            new Conviction
+                            {
+                                Id = 1,
+                                Date = new DateTime(1999, 10, 10),
+                                Description = "a conviction"
+                            }
+                        },
+                        OffencesAwaitingTrial = new List<OffenceAwaitingTrial> {
+                            new OffenceAwaitingTrial
+                            {
+                                Id = 1,
+                                Date = new DateTime(1999, 11, 11),
+                                Description = "an offence"
+                            }
+                        }
                     }
                 }
             };

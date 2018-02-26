@@ -6,6 +6,7 @@ using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using GLAA.Services.LicenceApplication;
 
 namespace GLAA.Web.Controllers
 {
@@ -15,17 +16,20 @@ namespace GLAA.Web.Controllers
         private readonly ISessionHelper session;
         private readonly IAdminHomeViewModelBuilder homeBuilder;
         private readonly IAdminLicenceListViewModelBuilder listBuilder;
-        private readonly IAdminLicenceViewModelBuilder licenceBuilder;
         private readonly IAdminLicencePostDataHandler postDataHandler;
         private readonly IAdminUserListViewModelBuilder userListBuilder;
         private readonly IAdminUserViewModelBuilder userBuilder;
         private readonly IAdminUserPostDataHandler userPostDataHandler;
         private readonly IAdminStatusRecordsViewModelBuilder statusBuilder;
+        private readonly ILicenceApplicationViewModelBuilder licenceBuilder;
+
 
         public AdminController(ISessionHelper session, IAdminHomeViewModelBuilder homeBuilder,
             IAdminLicenceListViewModelBuilder listBuilder,
-            IAdminLicenceViewModelBuilder licenceBuilder, IAdminLicencePostDataHandler postDataHandler,
-            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder, IAdminUserPostDataHandler updh, IAdminStatusRecordsViewModelBuilder statusBuilder)
+            IAdminLicencePostDataHandler postDataHandler,
+            IAdminUserListViewModelBuilder userListBuilder, IAdminUserViewModelBuilder userBuilder, 
+            IAdminUserPostDataHandler updh, IAdminStatusRecordsViewModelBuilder statusBuilder,
+            ILicenceApplicationViewModelBuilder licenceBuilder)
         {
             this.session = session;
             this.homeBuilder = homeBuilder;
@@ -58,7 +62,7 @@ namespace GLAA.Web.Controllers
         {
             session.SetCurrentUserIsAdmin(true);
             session.SetCurrentLicenceId(id);
-            var model = licenceBuilder.Build(id);
+            var model = licenceBuilder.Build<AdminLicenceViewModel>(id);
             return View("Application", model);
         }
 
@@ -68,7 +72,7 @@ namespace GLAA.Web.Controllers
         {
             postDataHandler.UpdateStatus(model);
 
-            model = licenceBuilder.Build(model.Licence.Id);
+            model = licenceBuilder.Build<AdminLicenceViewModel>(model.Licence.Id);
 
             return View("Application", model);
         }
