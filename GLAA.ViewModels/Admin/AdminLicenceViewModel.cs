@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.Admin
 {
-    public class AdminLicenceViewModel : PleaseSelectViewModel, INeedCountries, INeedCounties, INeedStandards
+    public class AdminLicenceViewModel : PleaseSelectViewModel, INeedCountries, INeedCounties, INeedStandards, IIsSubmitted
     {
         public AdminLicenceViewModel()
         {
@@ -59,6 +59,7 @@ namespace GLAA.ViewModels.Admin
             }
         }
 
-        public List<CheckboxListItem> Standards { get; set; }        
+        public List<CheckboxListItem> Standards { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }
