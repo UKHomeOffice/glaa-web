@@ -93,7 +93,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public string JobTitle { get; set; }
     }
 
-    public class NamedJobTitleViewModel : Validatable
+    public class NamedJobTitleViewModel : Validatable, IIsSubmitted
     {
         public int Id { get; set; }
 
@@ -104,6 +104,8 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Number employed is this role")]
         public int? JobTitleNumber { get; set; }
+
+        public bool IsSubmitted { get; set; }
     }
 
     public class BusinessPhoneNumberViewModel
@@ -283,7 +285,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
     }
 
-    public class RestraintOrderViewModel : Validatable
+    public class RestraintOrderViewModel : Validatable, IIsSubmitted
     {
         public int Id { get; set; }
 
@@ -295,6 +297,8 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Give details of the restraint, confiscation order or civil recovery")]
         public string Description { get; set; }
+
+        public bool IsSubmitted { get; set; }
     }
 
     public class UnspentConvictionsViewModel : YesNoViewModel, IValidatable, ICanView<PrincipalAuthorityViewModel>,
@@ -356,7 +360,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
     }
 
-    public class UnspentConvictionViewModel : Validatable
+    public class UnspentConvictionViewModel : Validatable, IIsSubmitted
     {
         public int Id { get; set; }
 
@@ -368,6 +372,8 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Give details of the convictions / sanctions / penalties")]
         public string Description { get; set; }
+
+        public bool IsSubmitted { get; set; }
     }
 
     public class OffencesAwaitingTrialViewModel : YesNoViewModel, IValidatable, ICanView<PrincipalAuthorityViewModel>,
@@ -429,7 +435,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
     }
 
-    public class OffenceAwaitingTrialViewModel : Validatable
+    public class OffenceAwaitingTrialViewModel : Validatable, IIsSubmitted
     {
         public int Id { get; set; }
 
@@ -441,6 +447,8 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required]
         [Display(Name = "Give details of the alleged offence / sanction / penalty")]
         public string Description { get; set; }
+
+        public bool IsSubmitted { get; set; }
     }
 
     public class PreviousLicenceViewModel : YesNoViewModel, IRequiredIf

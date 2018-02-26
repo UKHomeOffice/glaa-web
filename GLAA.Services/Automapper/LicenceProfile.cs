@@ -27,7 +27,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.InspectionFee, opt => opt.ResolveUsing(GetInspectionFee))
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                //.ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing<IsSubmittedResolver<LicenceApplicationViewModel>>());
 
             CreateMappings();
         }

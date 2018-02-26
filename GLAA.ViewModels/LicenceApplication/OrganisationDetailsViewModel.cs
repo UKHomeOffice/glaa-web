@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class OrganisationDetailsViewModel : Validatable, INeedCountries, INeedCounties, IViewModelAddressable
+    public class OrganisationDetailsViewModel : Validatable, INeedCountries, INeedCounties, IViewModelAddressable, IIsSubmitted
     {
         public OrganisationDetailsViewModel()
         {
@@ -50,6 +50,8 @@ namespace GLAA.ViewModels.LicenceApplication
             set => Address.Counties = value;
             get => Address.Counties;
         }
+
+        public bool IsSubmitted { get; set; }
     }
 
 
@@ -105,7 +107,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public bool IsRequired => HasTradingName ?? false;
     }
 
-    public class PreviousTradingNameViewModel : Validatable, IId
+    public class PreviousTradingNameViewModel : Validatable, IId, IIsSubmitted
     {
         public int Id { get; set; }
 
@@ -120,6 +122,8 @@ namespace GLAA.ViewModels.LicenceApplication
         [Required(ErrorMessage = "The Previous Business Country field is required")]
         [Display(Name = "Country")]
         public string Country { get; set; }
+
+        public bool IsSubmitted { get; set; }
     }
 
     public class OperatingIndustriesViewModel : ICollectionViewModel, IRequiredIf

@@ -74,6 +74,7 @@ namespace GLAA.Web.Controllers
             Session.SetCurrentNamedIndividualId(id);
 
             var model = models.NamedIndividuals.Single(a => a.Id == id);
+            model.IsSubmitted = models.IsSubmitted;
 
             return View(GetLastViewPath(FormSection.NamedIndividual), model);
         }

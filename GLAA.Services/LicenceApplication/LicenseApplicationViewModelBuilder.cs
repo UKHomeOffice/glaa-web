@@ -14,12 +14,14 @@ namespace GLAA.Services.LicenceApplication
         private readonly ILicenceRepository licenceRepository;
         private readonly IMapper mapper;
         private readonly IReferenceDataProvider referenceDataProvider;
+        private readonly IConstantService constantService;
 
-        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp)
+        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp, IConstantService constantService)
         {
             this.licenceRepository = licenceRepository;
             this.mapper = mapper;
-            referenceDataProvider = rdp;
+            this.referenceDataProvider = rdp;
+            this.constantService = constantService;
         }
 
         public T New<T>() where T : new()
@@ -50,18 +52,19 @@ namespace GLAA.Services.LicenceApplication
 
             if (licence != null)
             {
-                model.Declaration = mapper.Map<DeclarationViewModel>(licence);                
+                model.Declaration = mapper.Map<DeclarationViewModel>(licence);
                 model.PrincipalAuthority =
                     mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());
                 model.AlternativeBusinessRepresentatives =
                     mapper.Map<AlternativeBusinessRepresentativeCollectionViewModel>(licence);
                 model.DirectorOrPartner = mapper.Map<DirectorOrPartnerCollectionViewModel>(licence);
                 model.NamedIndividuals = mapper.Map<NamedIndividualCollectionViewModel>(licence);
+                model.IsSubmitted = GetIsSubmitted(licence);
             }
 
             return model;
         }
-        
+
         public LicenceApplicationViewModel Build(string applicationId)
         {
             var licence = licenceRepository.GetByApplicationId(applicationId);
@@ -74,7 +77,7 @@ namespace GLAA.Services.LicenceApplication
             return BuildFromLicence(licence);
         }
 
-        public T Build<T>(int licenceId) where T : new()
+        public T Build<T>(int licenceId) where T : IIsSubmitted, new()
         {
             var licence = licenceRepository.GetById(licenceId);
 
@@ -82,13 +85,15 @@ namespace GLAA.Services.LicenceApplication
 
             model = mapper.Map(licence, model);
 
+            model.IsSubmitted = GetIsSubmitted(licence);
+
             return model;
         }
 
-        public T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : new() where U : new()
+        public T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : IIsSubmitted, new() where U : new()
         {
             var licence = licenceRepository.GetById(licenceId);
-
+            
             var source = objectSelector(licence);
 
             if (source == null)
@@ -105,10 +110,12 @@ namespace GLAA.Services.LicenceApplication
 
             mapper.Map(source, model);
 
+            model.IsSubmitted = GetIsSubmitted(licence);
+
             return model;
         }
 
-        public T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : new()
+        public T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : IIsSubmitted, new()
         {
             var licence = licenceRepository.GetById(licenceId);
 
@@ -119,7 +126,9 @@ namespace GLAA.Services.LicenceApplication
             if (source.Any())
             {
                 mapper.Map(source, model);
-            }            
+            }
+
+            model.IsSubmitted = GetIsSubmitted(licence);
 
             return model;
         }
@@ -136,6 +145,13 @@ namespace GLAA.Services.LicenceApplication
             var licences = licenceRepository.GetAllApplications().Where(x => x.UserId == userId);
 
             return mapper.Map<IList<LicenceApplicationViewModel>>(licences);
+        }
+
+        private bool GetIsSubmitted(Licence licence)
+        {
+            var currentStatus = licence.CurrentStatusChange.Status;
+
+            return currentStatus.Id == constantService.ApplicationSubmittedOnlineStatusId;
         }
     }
 }

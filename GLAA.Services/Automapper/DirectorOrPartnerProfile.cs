@@ -14,13 +14,15 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.DirectorsOrPartners, opt => opt.MapFrom(y => y.DirectorOrPartners))
                 .ForMember(x => x.NumberOfDirectorsOrPartners, opt => opt.MapFrom(y => y.NumberOfDirectorsOrPartners))
                 .ForMember(x => x.DirectorsRequired, opt => opt.ResolveUsing(ProfileHelpers.DirectorsRequiredResolver))
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                .ForMember(x => x.IsValid, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
 
             CreateMap<ICollection<DirectorOrPartner>, DirectorOrPartnerCollectionViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.NumberOfDirectorsOrPartners, opt => opt.Ignore())
                 .ForMember(x => x.DirectorsRequired, opt => opt.Ignore())
-                .ForMember(x => x.DirectorsOrPartners, opt => opt.MapFrom(y => y));
+                .ForMember(x => x.DirectorsOrPartners, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
 
             CreateMap<DirectorOrPartner, DirectorOrPartnerViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
@@ -46,7 +48,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
                 .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
 
             CreateMap<DirectorOrPartner, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);

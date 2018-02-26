@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class OrganisationViewModel : Validatable, IShellfishSection
+    public class OrganisationViewModel : Validatable, IShellfishSection, IIsSubmitted
     {
         public OrganisationViewModel()
         {
@@ -48,6 +48,8 @@ namespace GLAA.ViewModels.LicenceApplication
         {
             return true;
         }
+
+        public bool IsSubmitted { get; set; }
     }
 
     public class ShellfishWorkerNumberViewModel : ShellfishSection

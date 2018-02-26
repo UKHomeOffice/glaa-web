@@ -14,7 +14,8 @@ namespace GLAA.Services.Automapper
             CreateMap<Licence, DeclarationViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.SignatoryName, opt => opt.MapFrom(y => y.SignatoryName))
-                .ForMember(x => x.SignatureDate, opt => opt.ResolveUsing(x => DateTimeViewModelResolver(x.SignatureDate)));                
+                .ForMember(x => x.SignatureDate, opt => opt.ResolveUsing(x => DateTimeViewModelResolver(x.SignatureDate)))
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
 
             CreateMap<DeclarationViewModel, Licence>()
                 .ForMember(x => x.SignatoryName, opt => opt.MapFrom(y => y.SignatoryName))

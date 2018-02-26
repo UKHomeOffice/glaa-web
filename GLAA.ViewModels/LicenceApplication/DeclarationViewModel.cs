@@ -3,7 +3,7 @@ using GLAA.ViewModels.Attributes;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class DeclarationViewModel : IValidatable
+    public class DeclarationViewModel : IValidatable, IIsSubmitted
     {
         [Required]
         [Display(Name = "Signatory Name")]
@@ -26,5 +26,6 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public bool IsValid { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }

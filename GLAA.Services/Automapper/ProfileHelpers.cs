@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -122,7 +123,7 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static BirthDetailsViewModel BirthDetailsResolver<T>(Person person, T viewModel) where T: PersonViewModel
+        public static BirthDetailsViewModel BirthDetailsResolver<T>(Person person, T viewModel) where T : PersonViewModel
         {
             return new BirthDetailsViewModel
             {
@@ -133,7 +134,7 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static BirthDetailsViewModel BirthDetailsResolver(Person person, BirthDetailsViewModel viewModel) 
+        public static BirthDetailsViewModel BirthDetailsResolver(Person person, BirthDetailsViewModel viewModel)
         {
             return new BirthDetailsViewModel
             {
@@ -175,7 +176,7 @@ namespace GLAA.Services.Automapper
         {
             return new SocialSecurityNumberViewModel
             {
-                SocialSecurityNumber=  person.SocialSecurityNumber,
+                SocialSecurityNumber = person.SocialSecurityNumber,
             };
         }
 
@@ -240,7 +241,7 @@ namespace GLAA.Services.Automapper
         {
             return new UndischargedBankruptViewModel
             {
-                BankruptcyDate = new DateViewModel {Date = pa.BankruptcyDate},
+                BankruptcyDate = new DateViewModel { Date = pa.BankruptcyDate },
                 BankruptcyNumber = pa.BankruptcyNumber,
                 IsUndischargedBankrupt = pa.IsUndischargedBankrupt,
                 YesNo = YesNoList
@@ -270,7 +271,7 @@ namespace GLAA.Services.Automapper
         {
             return new UndischargedBankruptViewModel
             {
-                BankruptcyDate = new DateViewModel {Date = pa.BankruptcyDate},
+                BankruptcyDate = new DateViewModel { Date = pa.BankruptcyDate },
                 BankruptcyNumber = pa.BankruptcyNumber,
                 IsUndischargedBankrupt = pa.IsUndischargedBankrupt,
                 YesNo = YesNoList
@@ -337,4 +338,21 @@ namespace GLAA.Services.Automapper
             }) as ICollection<PreviousTradingName>;
         }
     }
+
+    //public class IsSubmittedResolver<TDestination> : IValueResolver<Licence, TDestination, bool>
+    //{
+    //    private readonly IConstantService _constantService;
+
+    //    public IsSubmittedResolver(IConstantService constantService)
+    //    {
+    //        _constantService = constantService;
+    //    }
+
+    //    public bool Resolve(Licence source, TDestination destination, bool destMember, ResolutionContext context)
+    //    {
+    //        var currentStatus = source.CurrentStatusChange.Status;
+
+    //        return currentStatus.Id == _constantService.ApplicationSubmittedOnlineStatusId;
+    //    }
+    //}
 }
