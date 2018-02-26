@@ -338,21 +338,4 @@ namespace GLAA.Services.Automapper
             }) as ICollection<PreviousTradingName>;
         }
     }
-
-    //public class IsSubmittedResolver<TDestination> : IValueResolver<Licence, TDestination, bool>
-    //{
-    //    private readonly IConstantService _constantService;
-
-    //    public IsSubmittedResolver(IConstantService constantService)
-    //    {
-    //        _constantService = constantService;
-    //    }
-
-    //    public bool Resolve(Licence source, TDestination destination, bool destMember, ResolutionContext context)
-    //    {
-    //        var currentStatus = source.CurrentStatusChange.Status;
-
-    //        return currentStatus.Id == _constantService.ApplicationSubmittedOnlineStatusId;
-    //    }
-    //}
 }
