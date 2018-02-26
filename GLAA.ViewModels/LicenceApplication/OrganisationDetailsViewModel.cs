@@ -32,7 +32,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public OperatingCountriesViewModel OperatingCountries { get; set; }
         public TurnoverViewModel Turnover { get; set; }
         public CommunicationPreferenceViewModel CommunicationPreference { get; set; }
-        public AddressViewModel Address { get; set; };
+        public AddressViewModel Address { get; set; }
         public BusinessPhoneNumberViewModel BusinessPhoneNumber { get; set; }
         public BusinessMobileNumberViewModel BusinessMobileNumber { get; set; }
         public BusinessEmailAddressViewModel BusinessEmailAddress { get; set; }
