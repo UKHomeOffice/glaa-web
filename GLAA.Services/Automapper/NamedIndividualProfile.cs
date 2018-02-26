@@ -14,8 +14,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.IsShellfish, opt => opt.MapFrom(y => y.IsShellfish))
                 .ForMember(x => x.TurnoverBand, opt => opt.MapFrom(y => y.TurnoverBand))
-                .ForMember(x => x.NamedIndividuals, opt => opt.MapFrom(y => y.NamedIndividuals))
-                .ForMember(x => x.NamedJobTitles, opt => opt.MapFrom(y => y.NamedJobTitles))
+                .ForMember(x => x.NamedIndividuals, opt => opt.MapFrom(y => y.NamedIndividuals.Where(z => !z.Deleted)))
+                .ForMember(x => x.NamedJobTitles, opt => opt.MapFrom(y => y.NamedJobTitles.Where(z => !z.Deleted)))
                 .ForMember(x => x.NamedIndividualType, opt => opt.MapFrom(y => y.NamedIndividualType))
                 .ForMember(x => x.IntroText, opt => opt.Ignore())                
                 .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore());
@@ -147,7 +147,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<NamedIndividual, RestraintOrdersViewModel>()
                 .ForMember(x => x.HasRestraintOrders, opt => opt.MapFrom(y => y.HasRestraintOrders))
-                .ForMember(x => x.RestraintOrders, opt => opt.MapFrom(y => y.RestraintOrders))
+                .ForMember(x => x.RestraintOrders, opt => opt.MapFrom(y => y.RestraintOrders.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<UnspentConvictionsViewModel, NamedIndividual>()
@@ -157,7 +157,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<NamedIndividual, UnspentConvictionsViewModel>()
                 .ForMember(x => x.HasUnspentConvictions, opt => opt.MapFrom(y => y.HasUnspentConvictions))
-                .ForMember(x => x.UnspentConvictions, opt => opt.MapFrom(y => y.UnspentConvictions))
+                .ForMember(x => x.UnspentConvictions, opt => opt.MapFrom(y => y.UnspentConvictions.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<OffencesAwaitingTrialViewModel, NamedIndividual>()
@@ -167,7 +167,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<NamedIndividual, OffencesAwaitingTrialViewModel>()
                 .ForMember(x => x.HasOffencesAwaitingTrial, opt => opt.MapFrom(y => y.HasOffencesAwaitingTrial))
-                .ForMember(x => x.OffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrial))
+                .ForMember(x => x.OffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrial.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<PreviousLicenceViewModel, NamedIndividual>()
