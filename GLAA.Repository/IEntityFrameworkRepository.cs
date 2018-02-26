@@ -12,6 +12,12 @@ namespace GLAA.Repository
         TEntity GetById<TEntity>(int id) where TEntity : class, IId;
         TEntity Find<TEntity>(Func<TEntity, bool> predicate) where TEntity : class;
         IEnumerable<TEntity> GetAll<TEntity>() where TEntity : class;
+        /// <summary>
+        /// Mark the entity with this ID as deleted and mark any of its properties 
+        /// with the <see cref="CascadeDeleteAttribute"/> as deleted.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity to delete</typeparam>
+        /// <param name="id">The ID of the entity to delete</param>
         void Delete<TEntity>(int id) where TEntity : class, IId, IDeletable;
     }
 }

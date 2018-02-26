@@ -52,7 +52,6 @@ namespace GLAA.Services.LicenceApplication
 
         public void Delete<T>(int id) where T : class, IId, IDeletable
         {
-            // TODO: soft deletes?
             repository.Delete<T>(id);
         }
 
