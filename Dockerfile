@@ -10,7 +10,7 @@ COPY . .
 WORKDIR /app/
 RUN dotnet test
 WORKDIR /app/GLAA.Web
-RUN npm install webpack -g
+RUN npm install webpack@v3.11.0 -g
 RUN npm install webpack-cli -g
 RUN npm install
 RUN webpack
