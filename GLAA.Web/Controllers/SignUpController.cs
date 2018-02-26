@@ -97,7 +97,8 @@ namespace GLAA.Web.Controllers
         public ActionResult SignUp(int id, bool? back = false)
         {
             session.SetLoadedPage(id);
-            var email = session.GetString(CurrentPaEmail);
+
+            var email = id != 1 ? session.GetString(CurrentPaEmail) : string.Empty;
 
             var model = accountCreationViewModelBuilder.Build(email);
 
