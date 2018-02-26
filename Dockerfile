@@ -11,6 +11,7 @@ WORKDIR /app/
 RUN dotnet test
 WORKDIR /app/GLAA.Web
 RUN npm install webpack -g
+RUN npm install webpack-cli -g
 RUN npm install
 RUN webpack
 RUN dotnet restore && dotnet build && dotnet publish -c Release -o ./out
