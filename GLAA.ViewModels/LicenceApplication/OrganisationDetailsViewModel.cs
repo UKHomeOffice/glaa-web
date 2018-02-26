@@ -71,7 +71,7 @@ namespace GLAA.ViewModels.LicenceApplication
         [RequiredIf(ErrorMessage = "The Has Previous Trading Names field is required")]
         public bool? HasPreviousTradingName { get; set; }
 
-        public List<PreviousTradingNameViewModel> PreviousTradingNames { get; set; }
+        public List<PreviousTradingNameViewModel> PreviousTradingNames { get; set; } = new List<PreviousTradingNameViewModel>();
 
         public void Validate()
         {
