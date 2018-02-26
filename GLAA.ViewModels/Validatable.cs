@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GLAA.ViewModels.LicenceApplication;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
