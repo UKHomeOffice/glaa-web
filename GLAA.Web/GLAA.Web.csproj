@@ -62,6 +62,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\images\icon-button-remove.png" />
+    <None Include="wwwroot\public\images\icon-button-remove.png" />
   </ItemGroup>
 
   <ItemGroup>
