@@ -186,6 +186,10 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
+                // have to repopulate dropdowns as lost during post
+                model.Countries = ReferenceDataProvider.GetCountries();
+                model.Counties = ReferenceDataProvider.GetCounties();
+
                 return View(GetViewPath(FormSection.SignUp, 3), model);
             }
 
