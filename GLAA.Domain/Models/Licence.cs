@@ -31,6 +31,7 @@ namespace GLAA.Domain.Models
         public bool? HasTradingName { get; set; }
         public string TradingName { get; set; }
         public bool? HasPreviousTradingName { get; set; }
+        [CascadeDelete]
         public virtual ICollection<PreviousTradingName> PreviousTradingNames { get; set; }
 
         public TurnoverBand? TurnoverBand { get; set; }
@@ -49,6 +50,7 @@ namespace GLAA.Domain.Models
         public string CompaniesHouseNumber { get; set; }
         public DateTime? CompanyRegistrationDate { get; set; }
         public bool? HasPAYENumber { get; set; }
+        [CascadeDelete]
         public virtual ICollection<PAYENumber> PAYENumbers { get; set; } = new Collection<PAYENumber>();
 
         public bool? HasVATNumber { get; set; }
@@ -65,6 +67,7 @@ namespace GLAA.Domain.Models
 
         public int? AddressId { get; set; }
 
+        [CascadeDelete]
         [ForeignKey(nameof(AddressId))]
         public virtual Address Address { get; set; }
 
@@ -128,14 +131,19 @@ namespace GLAA.Domain.Models
 
         public string UserId { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<PrincipalAuthority> PrincipalAuthorities { get; set; } = new List<PrincipalAuthority>();
 
+        [CascadeDelete]
         public virtual ICollection<AlternativeBusinessRepresentative> AlternativeBusinessRepresentatives { get; set; } = new List<AlternativeBusinessRepresentative>();
 
+        [CascadeDelete]
         public virtual ICollection<DirectorOrPartner> DirectorOrPartners { get; set; } = new List<DirectorOrPartner>();
 
+        [CascadeDelete]
         public virtual ICollection<NamedIndividual> NamedIndividuals { get; set; } = new List<NamedIndividual>();
 
+        [CascadeDelete]
         public virtual ICollection<NamedJobTitle> NamedJobTitles { get; set; } = new List<NamedJobTitle>();
         public bool Deleted { get; set; }
         public DateTime? DateDeleted { get; set; }

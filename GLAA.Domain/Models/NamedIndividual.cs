@@ -39,14 +39,17 @@ namespace GLAA.Domain.Models
 
         public bool? HasRestraintOrders { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<RestraintOrder> RestraintOrders { get; set; }
 
         public bool? HasUnspentConvictions { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<Conviction> UnspentConvictions { get; set; }
 
         public bool? HasOffencesAwaitingTrial { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<OffenceAwaitingTrial> OffencesAwaitingTrial { get; set; }
 
         public bool? HasPreviouslyHeldLicence { get; set; }
