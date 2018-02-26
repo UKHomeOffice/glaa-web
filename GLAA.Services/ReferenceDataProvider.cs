@@ -17,12 +17,22 @@ namespace GLAA.Services
 
         public IEnumerable<SelectListItem> GetCountries()
         {
-            return repository.GetAll<Country>().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name });
+            return repository
+                .GetAll<Country>()
+                .Select(c => new SelectListItem {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).OrderBy(x => x.Text);
         }
 
         public IEnumerable<SelectListItem> GetCounties()
         {
-            return repository.GetAll<County>().Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name });
+            return repository
+                .GetAll<County>()
+                .Select(c => new SelectListItem {
+                    Value = c.Id.ToString(),
+                    Text = c.Name 
+                 }).OrderBy(x => x.Text);
         }
     }
 }
