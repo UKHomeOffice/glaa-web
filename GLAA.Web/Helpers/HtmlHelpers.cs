@@ -238,6 +238,7 @@ namespace GLAA.Web.Core.Helpers
                 .AppendHtml(!string.IsNullOrEmpty(subHeading)
                     ? $"<span class='body-text'>{subHeading}</span>"
                     : string.Empty)
+                .AppendHtml($"</legend>")
                 .AppendHtml(html.LabelWithHintFor(expression))
                 .AppendHtml("<span class=\'error-message\'>")
                 .AppendHtml(html.ValidationMessageFor(expression))
