@@ -51,11 +51,6 @@ namespace GLAA.Services.LicenceApplication
             return model;
         }
 
-        public LicenceApplicationViewModel New()
-        {
-            return New<LicenceApplicationViewModel>();
-        }
-
         private LicenceApplicationViewModel BuildFromLicence(Licence licence)
         {
             var model = mapper.Map<LicenceApplicationViewModel>(licence);
@@ -69,7 +64,6 @@ namespace GLAA.Services.LicenceApplication
                     mapper.Map<AlternativeBusinessRepresentativeCollectionViewModel>(licence);
                 model.DirectorOrPartner = mapper.Map<DirectorOrPartnerCollectionViewModel>(licence);
                 model.NamedIndividuals = mapper.Map<NamedIndividualCollectionViewModel>(licence);
-                model.IsSubmitted = GetIsSubmitted(licence);
             }
 
             return model;
@@ -95,8 +89,6 @@ namespace GLAA.Services.LicenceApplication
 
             model = mapper.Map(licence, model);
 
-            model.IsSubmitted = GetIsSubmitted(licence);
-
             return model;
         }
 
@@ -120,8 +112,6 @@ namespace GLAA.Services.LicenceApplication
 
             mapper.Map(source, model);
 
-            model.IsSubmitted = GetIsSubmitted(licence);
-
             return model;
         }
 
@@ -138,8 +128,6 @@ namespace GLAA.Services.LicenceApplication
                 mapper.Map(source, model);
             }
 
-            model.IsSubmitted = GetIsSubmitted(licence);
-
             return model;
         }
 
@@ -155,13 +143,6 @@ namespace GLAA.Services.LicenceApplication
             var licences = licenceRepository.GetAllApplications().Where(x => x.UserId == userId);
 
             return mapper.Map<IList<LicenceApplicationViewModel>>(licences);
-        }
-
-        private bool GetIsSubmitted(Licence licence)
-        {
-            var currentStatus = licence.CurrentStatusChange.Status;
-
-            return currentStatus.Id == constantService.ApplicationSubmittedOnlineStatusId;
         }
     }
 }

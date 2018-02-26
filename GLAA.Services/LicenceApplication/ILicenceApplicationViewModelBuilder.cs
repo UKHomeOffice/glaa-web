@@ -6,7 +6,7 @@ using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Services.LicenceApplication
 {
-    public interface ILicenceApplicationViewModelBuilder : IViewModelBuilder<LicenceApplicationViewModel>
+    public interface ILicenceApplicationViewModelBuilder
     {
         LicenceApplicationViewModel Build(string applicationId);
 

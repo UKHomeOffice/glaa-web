@@ -28,7 +28,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.ShellfishWorkerNumberViewModel, opt => opt.ResolveUsing(ShellfishNumberResolver))
                 .ForMember(x => x.ShellfishWorkerNationalityViewModel, opt => opt.ResolveUsing(ShellfishNationalityResolver))
                 .ForMember(x => x.PreviouslyWorkedInShellfishViewModel, opt => opt.ResolveUsing(PreviouslyWorkedInShellfishResolver))
-                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<CheckboxListItem, ICheckboxListable>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(y => y.Id))

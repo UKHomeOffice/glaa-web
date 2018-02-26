@@ -15,7 +15,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasAlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.HasAlternativeBusinessRepresentatives))
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.YesNo, opt => opt.Ignore())
-                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<ICollection<AlternativeBusinessRepresentative>, AlternativeBusinessRepresentativeCollectionViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
@@ -46,7 +46,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
                 .ForMember(x => x.Counties, opt => opt.Ignore())
-                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
 
             CreateMap<AlternativeBusinessRepresentative, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);

@@ -81,7 +81,6 @@ namespace GLAA.Web.Controllers
 
             var model = abrs.AlternativeBusinessRepresentatives.Single(a => a.Id == id);
             LicenceApplicationViewModelBuilder.BuildCountriesFor(model);
-            model.IsSubmitted = abrs.IsSubmitted;
 
             return View(GetLastViewPath(FormSection.AlternativeBusinessRepresentative), model);
         }

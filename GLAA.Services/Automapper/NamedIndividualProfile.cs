@@ -19,7 +19,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.NamedIndividualType, opt => opt.MapFrom(y => y.NamedIndividualType))
                 .ForMember(x => x.IntroText, opt => opt.Ignore())                
                 .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore())
-                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<NamedIndividual, NamedIndividualViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
@@ -33,7 +33,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.UnspentConvictionsViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.OffencesAwaitingTrialViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
-                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
 
             CreateMap<NamedIndividualViewModel, NamedIndividual>()
                 .ForMember(x => x.Licence, opt => opt.Ignore())
@@ -69,7 +69,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<NamedJobTitle, NamedJobTitleViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
-                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
 
             CreateMap<ICollection<NamedIndividual>, NamedIndividualCollectionViewModel>()
                 .ForMember(x => x.IsShellfish, opt => opt.Ignore())

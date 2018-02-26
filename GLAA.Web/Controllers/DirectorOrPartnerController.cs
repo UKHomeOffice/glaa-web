@@ -47,8 +47,6 @@ namespace GLAA.Web.Controllers
                 Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value, true);
             }
 
-            model.IsSubmitted = dops.IsSubmitted;
-
             return View(GetLastViewPath(FormSection.DirectorOrPartner), model);
         }
 

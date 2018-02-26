@@ -337,5 +337,10 @@ namespace GLAA.Services.Automapper
                 Country = p.Country
             }) as ICollection<PreviousTradingName>;
         }
+
+        public static bool GetIsSubmitted(Licence licence)
+        {
+            return licence?.CurrentSubmittedStatusChange?.Status != null;
+        }
     }
 }
