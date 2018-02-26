@@ -54,7 +54,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public IEnumerable<SelectListItem> Counties
         {
             set => Address.Counties = value;
-            get => Address.Counties;
+            get => Address?.Counties ?? new List<SelectListItem>();
         }
 
         public IEnumerable<SelectListItem> Countries
