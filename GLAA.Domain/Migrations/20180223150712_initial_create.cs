@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GLAA.Domain.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial_create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -154,6 +154,8 @@ namespace GLAA.Domain.Migrations
                     AddressLine3 = table.Column<string>(nullable: true),
                     CountryId = table.Column<int>(nullable: true),
                     CountyId = table.Column<int>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     Postcode = table.Column<string>(nullable: true),
                     Town = table.Column<string>(nullable: true)
                 },
@@ -384,7 +386,9 @@ namespace GLAA.Domain.Migrations
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
                     CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     DisqualificationDetails = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
                     HasAlternativeName = table.Column<bool>(nullable: true),
@@ -438,7 +442,9 @@ namespace GLAA.Domain.Migrations
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
                     CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     DisqualificationDetails = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
                     HasAlternativeName = table.Column<bool>(nullable: true),
@@ -506,7 +512,9 @@ namespace GLAA.Domain.Migrations
                     CurrentCommencementStatusChangeId = table.Column<int>(nullable: true),
                     CurrentStatusChangeId = table.Column<int>(nullable: true),
                     CurrentSubmittedStatusChangeId = table.Column<int>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
                     DateOfBan = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     EmailAlreadyRegistered = table.Column<bool>(nullable: false),
                     GatheringDate = table.Column<DateTime>(nullable: true),
                     GatheringLocation = table.Column<string>(nullable: true),
@@ -714,7 +722,9 @@ namespace GLAA.Domain.Migrations
                     BankruptcyNumber = table.Column<string>(nullable: true),
                     BusinessExtension = table.Column<string>(nullable: true),
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     DisqualificationDetails = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
                     HasOffencesAwaitingTrial = table.Column<bool>(nullable: true),
@@ -745,6 +755,8 @@ namespace GLAA.Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     JobTitle = table.Column<string>(nullable: true),
                     JobTitleNumber = table.Column<int>(nullable: true),
                     LicenceId = table.Column<int>(nullable: false)
@@ -766,6 +778,8 @@ namespace GLAA.Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     LicenceId = table.Column<int>(nullable: true),
                     Number = table.Column<string>(nullable: true),
                     RegistrationDate = table.Column<DateTime>(nullable: false)
@@ -789,6 +803,8 @@ namespace GLAA.Domain.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BusinessName = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     LicenceId = table.Column<int>(nullable: true),
                     Town = table.Column<string>(nullable: true)
                 },
@@ -817,7 +833,9 @@ namespace GLAA.Domain.Migrations
                     BusinessPhoneNumber = table.Column<string>(nullable: true),
                     CountryOfBirthId = table.Column<int>(nullable: true),
                     CountyOfBirth = table.Column<string>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     DirectorOrPartnerId = table.Column<int>(nullable: true),
                     DisqualificationDetails = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
@@ -914,6 +932,8 @@ namespace GLAA.Domain.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AlternativeBusinessRepresentativeId = table.Column<int>(nullable: true),
                     Date = table.Column<DateTime>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     DirectorOrPartnerId = table.Column<int>(nullable: true),
                     NamedIndividualId = table.Column<int>(nullable: true),
@@ -956,6 +976,8 @@ namespace GLAA.Domain.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AlternativeBusinessRepresentativeId = table.Column<int>(nullable: true),
                     Date = table.Column<DateTime>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     DirectorOrPartnerId = table.Column<int>(nullable: true),
                     NamedIndividualId = table.Column<int>(nullable: true),
@@ -998,6 +1020,8 @@ namespace GLAA.Domain.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AlternativeBusinessRepresentativeId = table.Column<int>(nullable: true),
                     Date = table.Column<DateTime>(nullable: true),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     DirectorOrPartnerId = table.Column<int>(nullable: true),
                     NamedIndividualId = table.Column<int>(nullable: true),

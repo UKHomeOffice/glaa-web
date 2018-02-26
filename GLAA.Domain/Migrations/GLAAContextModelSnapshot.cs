@@ -88,6 +88,10 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("CountyId");
 
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
+
                     b.Property<string>("Postcode");
 
                     b.Property<string>("Town");
@@ -122,7 +126,11 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("CountyOfBirth");
 
+                    b.Property<DateTime?>("DateDeleted");
+
                     b.Property<DateTime?>("DateOfBirth");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("DisqualificationDetails");
 
@@ -185,6 +193,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<int?>("AlternativeBusinessRepresentativeId");
 
                     b.Property<DateTime?>("Date");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("Description");
 
@@ -254,7 +266,11 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("CountyOfBirth");
 
+                    b.Property<DateTime?>("DateDeleted");
+
                     b.Property<DateTime?>("DateOfBirth");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("DisqualificationDetails");
 
@@ -465,7 +481,11 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("CurrentSubmittedStatusChangeId");
 
+                    b.Property<DateTime?>("DateDeleted");
+
                     b.Property<DateTime?>("DateOfBan");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<bool>("EmailAlreadyRegistered");
 
@@ -706,7 +726,11 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("BusinessPhoneNumber");
 
+                    b.Property<DateTime?>("DateDeleted");
+
                     b.Property<DateTime?>("DateOfBirth");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("DisqualificationDetails");
 
@@ -744,6 +768,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
+
                     b.Property<string>("JobTitle");
 
                     b.Property<int?>("JobTitleNumber");
@@ -765,6 +793,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<int?>("AlternativeBusinessRepresentativeId");
 
                     b.Property<DateTime?>("Date");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("Description");
 
@@ -792,6 +824,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
+
                     b.Property<int?>("LicenceId");
 
                     b.Property<string>("Number");
@@ -813,6 +849,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<string>("BusinessName");
 
                     b.Property<string>("Country");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<int?>("LicenceId");
 
@@ -846,7 +886,11 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<string>("CountyOfBirth");
 
+                    b.Property<DateTime?>("DateDeleted");
+
                     b.Property<DateTime?>("DateOfBirth");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<int?>("DirectorOrPartnerId");
 
@@ -933,6 +977,10 @@ namespace GLAA.Domain.Migrations
                     b.Property<int?>("AlternativeBusinessRepresentativeId");
 
                     b.Property<DateTime?>("Date");
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("Description");
 
