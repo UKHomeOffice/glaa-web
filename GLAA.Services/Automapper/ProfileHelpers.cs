@@ -336,5 +336,10 @@ namespace GLAA.Services.Automapper
                 Country = p.Country
             }) as ICollection<PreviousTradingName>;
         }
+
+        public static bool HasPrincipalAuthoritySelected(DirectorOrPartner directorOrPartner)
+        {
+            return directorOrPartner.Licence.DirectorOrPartners.Any(x => x.IsPreviousPrincipalAuthority.HasValue && x.IsPreviousPrincipalAuthority.Value);
+        }
     }
 }

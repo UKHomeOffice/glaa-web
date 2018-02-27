@@ -15,10 +15,11 @@ namespace GLAA.ViewModels.LicenceApplication
         public IsPreviousPrincipalAuthorityViewModel IsPreviousPrincipalAuthority { get; set; }
 
         public int? PrincipalAuthorityId { get; set; }
-        
+
         public int? Id { get; set; }
 
         public RightToWorkViewModel RightToWorkViewModel { get; set; }
+        public bool HasPrincipalAuthoritySelected { get; set; }
     }
 
     public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel, ICanView<DirectorOrPartnerViewModel>
