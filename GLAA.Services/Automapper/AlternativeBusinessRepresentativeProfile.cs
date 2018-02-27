@@ -14,14 +14,16 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.AlternativeBusinessRepresentatives.Where(z => !z.Deleted)))
                 .ForMember(x => x.HasAlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.HasAlternativeBusinessRepresentatives))
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
-                .ForMember(x => x.YesNo, opt => opt.Ignore());
+                .ForMember(x => x.YesNo, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<ICollection<AlternativeBusinessRepresentative>, AlternativeBusinessRepresentativeCollectionViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.HasAlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.FirstOrDefault().Licence.HasAlternativeBusinessRepresentatives))
                 .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.Where(z => !z.Deleted)))
-                .ForMember(x => x.YesNo, opt => opt.Ignore());
-            
+                .ForMember(x => x.YesNo, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+
             CreateMap<AlternativeBusinessRepresentative, AlternativeBusinessRepresentativeViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver<AlternativeBusinessRepresentativeViewModel>))
@@ -43,7 +45,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
                 .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
 
             CreateMap<AlternativeBusinessRepresentative, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);

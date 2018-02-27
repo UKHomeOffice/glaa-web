@@ -14,14 +14,18 @@ module.exports = {
             'jquery-validation-unobtrusive',
             './wwwroot/js/site.js',
             './wwwroot/js/branchedQuestion.js',
-            './wwwroot/js/hiddenContent.js',
+            './wwwroot/js/hiddenContent.js',            
             './wwwroot/js/gdsValidation.js',
+            './wwwroot/js/frontend-toolkit/show-hide-content.js',
+            './wwwroot/js/frontend-toolkit/stick-at-top-when-scrolling.js',
             './wwwroot/sass/glaa.scss',
             './wwwroot/sass/govuk-overrides.scss',
-            './wwwroot/sass/sidebar-navigation.scss'
+            './wwwroot/sass/sidebar-navigation.scss'            
         ],
-        'admin': [
-            './wwwroot/sass/admin/index.scss'
+        'admin': [            
+            './wwwroot/sass/admin/application-list.scss',
+            './wwwroot/sass/admin/dashboard.scss',
+            './wwwroot/sass/admin/layout.scss'
         ]
     },
     externals: {

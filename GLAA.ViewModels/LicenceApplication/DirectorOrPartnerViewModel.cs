@@ -15,20 +15,26 @@ namespace GLAA.ViewModels.LicenceApplication
         public IsPreviousPrincipalAuthorityViewModel IsPreviousPrincipalAuthority { get; set; }
 
         public int? PrincipalAuthorityId { get; set; }
-        
+
         public int? Id { get; set; }
 
         public RightToWorkViewModel RightToWorkViewModel { get; set; }
+        public bool HasPrincipalAuthoritySelected { get; set; }
     }
 
-    public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel
+    public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel, ICanView<DirectorOrPartnerViewModel>
     {
         [Required]
         [Display(Name = "Principal Authority?")]
         public bool? IsPreviousPrincipalAuthority { get; set; }
+
+        public bool CanView(DirectorOrPartnerViewModel parent)
+        {
+            return !parent.HasPrincipalAuthoritySelected;
+        }
     }
 
-    public class DirectorOrPartnerCollectionViewModel : IValidatable
+    public class DirectorOrPartnerCollectionViewModel : IValidatable, IIsSubmitted
     {
         [Required]
         [Display(Name = "Number of Directors or Partners")]
@@ -69,5 +75,6 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public bool IsValid { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }

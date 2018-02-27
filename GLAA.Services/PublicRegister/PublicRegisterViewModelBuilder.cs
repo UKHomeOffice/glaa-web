@@ -108,7 +108,9 @@ namespace GLAA.Services.PublicRegister
             {
                 Licences = licences.Distinct().Select(BuildSummary),
                 PublicRegisterSearchCriteria = publicRegisterSearchCriteria,
-                AvailableCountries = BuildAvailableCountries()
+                AvailableCountries = BuildAvailableCountries(),
+                Countries = countries,
+                Counties = _referenceDataProvider.GetCounties()
             };
         }
 
@@ -123,7 +125,8 @@ namespace GLAA.Services.PublicRegister
         {
             var publicRegisterLicenceDetailViewModel = _mapper.Map<PublicRegisterLicenceDetailViewModel>(licence);
 
-            publicRegisterLicenceDetailViewModel.Address.Countries = _referenceDataProvider.GetCountries();
+            if (publicRegisterLicenceDetailViewModel.Address != null)
+                publicRegisterLicenceDetailViewModel.Address.Countries = _referenceDataProvider.GetCountries();
 
             return publicRegisterLicenceDetailViewModel;
         }

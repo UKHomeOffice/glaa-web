@@ -97,7 +97,8 @@ namespace GLAA.Web.Controllers
         public ActionResult SignUp(int id, bool? back = false)
         {
             session.SetLoadedPage(id);
-            var email = session.GetString(CurrentPaEmail);
+
+            var email = id != 1 ? session.GetString(CurrentPaEmail) : string.Empty;
 
             var model = accountCreationViewModelBuilder.Build(email);
 
@@ -185,6 +186,10 @@ namespace GLAA.Web.Controllers
 
             if (!ModelState.IsValid)
             {
+                // have to repopulate dropdowns as lost during post
+                model.Countries = ReferenceDataProvider.GetCountries();
+                model.Counties = ReferenceDataProvider.GetCounties();
+
                 return View(GetViewPath(FormSection.SignUp, 3), model);
             }
 

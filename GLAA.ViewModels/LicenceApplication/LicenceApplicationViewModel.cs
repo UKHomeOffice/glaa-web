@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class LicenceApplicationViewModel : YesNoViewModel, IViewModel<Licence>, IValidatable, INeedCountries, INeedCounties
+    public class LicenceApplicationViewModel : YesNoViewModel, IViewModel<Licence>, IValidatable, INeedCountries, INeedCounties, IIsSubmitted
     {
         public LicenceApplicationViewModel()
         {
@@ -80,5 +80,7 @@ namespace GLAA.ViewModels.LicenceApplication
             get => OrganisationDetails.Countries;
             set => OrganisationDetails.Countries = value;
         }
+
+        public bool IsSubmitted { get; set; }
     }
 }

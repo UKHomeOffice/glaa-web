@@ -62,8 +62,8 @@
                     <td>@licence.ApplicationId</td>
                     <td>@licence.BusinessName</td>
                     <td>@licence.TradingName</td>
-                    <td>@licence.Country</td>
-                    <td>@licence.County</td>
+                    <td>@(Model.Countries?.SingleOrDefault(x => int.Parse(x.Value) == licence.CountryId)?.Text ?? string.Empty)</td>
+                    <td>@(Model.Counties?.SingleOrDefault(x => int.Parse(x.Value) == licence.CountyId)?.Text ?? string.Empty)</td>
                     <td>Licensed</td>
                     <td><a href="@Url.Action("Licence", new {id = licence.Id})" class="link">view</a></td>
                 </tr>
