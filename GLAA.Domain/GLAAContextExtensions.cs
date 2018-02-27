@@ -1302,7 +1302,7 @@ namespace GLAA.Domain
                 var licenceStatusChange = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(licenceStatusChange);
@@ -1390,7 +1390,7 @@ namespace GLAA.Domain
                 var licenceStatusChange = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(licenceStatusChange);
@@ -1625,7 +1625,7 @@ namespace GLAA.Domain
                 var licenceStatusChange = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(licenceStatusChange);
@@ -1927,7 +1927,7 @@ namespace GLAA.Domain
                 var licenceStatusChange = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(licenceStatusChange);
@@ -2297,7 +2297,7 @@ namespace GLAA.Domain
                 var licenceStatusChange = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(licenceStatusChange);
@@ -2714,7 +2714,7 @@ namespace GLAA.Domain
                 var licenceStatusChange = new LicenceStatusChange
                 {
                     DateCreated = DateTime.Now,
-                    Status = context.LicenceStatuses.Find(110)
+                    Status = context.LicenceStatuses.Find(100)
                 };
 
                 context.LicenceStatusChanges.Add(licenceStatusChange);

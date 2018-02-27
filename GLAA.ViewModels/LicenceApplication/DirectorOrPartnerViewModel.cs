@@ -21,11 +21,16 @@ namespace GLAA.ViewModels.LicenceApplication
         public RightToWorkViewModel RightToWorkViewModel { get; set; }
     }
 
-    public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel
+    public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel, ICanView<DirectorOrPartnerViewModel>
     {
         [Required]
         [Display(Name = "Principal Authority?")]
         public bool? IsPreviousPrincipalAuthority { get; set; }
+
+        public bool CanView(DirectorOrPartnerViewModel parent)
+        {
+            return !parent.HasPrincipalAuthoritySelected;
+        }
     }
 
     public class DirectorOrPartnerCollectionViewModel : IValidatable

@@ -50,6 +50,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public UnspentConvictionsViewModel UnspentConvictionsViewModel { get; set; }
         public OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
         public PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
+        public bool HasPrincipalAuthoritySelected { get; set; }
 
         public IEnumerable<SelectListItem> Counties
         {
