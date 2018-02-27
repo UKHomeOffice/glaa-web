@@ -19,23 +19,19 @@ namespace GLAA.ViewModels.LicenceApplication
         public int? Id { get; set; }
 
         public RightToWorkViewModel RightToWorkViewModel { get; set; }
+
+        public bool HasPrincipalAuthoritySelected { get; set; }
     }
 
-    //public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel, ICanView<DirectorOrPartnerViewModel>, ICanView<LicenceApplicationViewModel>
-    public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel, ICanView<LicenceApplicationViewModel>
+    public class IsPreviousPrincipalAuthorityViewModel : YesNoViewModel, ICanView<DirectorOrPartnerViewModel>
     {
         [Required]
         [Display(Name = "Principal Authority?")]
         public bool? IsPreviousPrincipalAuthority { get; set; }
 
-        //public bool CanView(DirectorOrPartnerViewModel parent)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        public bool CanView(LicenceApplicationViewModel parent)
+        public bool CanView(DirectorOrPartnerViewModel parent)
         {
-            throw new System.NotImplementedException();
+            return !parent.HasPrincipalAuthoritySelected;
         }
     }
 
