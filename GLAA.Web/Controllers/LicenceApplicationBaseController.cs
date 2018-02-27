@@ -43,6 +43,9 @@ namespace GLAA.Web.Controllers
             {
                 var parent = FindParentSection(section, licenceId);
 
+                if (Session.GetCurrentUserIsAdmin())
+                    return RedirectToAction("Licence", "Admin", new {id = licenceId});
+
                 return parent == null
                     ? RedirectToAction("TaskList", "Licence")
                     : ValidateParentAndRedirect(parent, section, nextPageId);
