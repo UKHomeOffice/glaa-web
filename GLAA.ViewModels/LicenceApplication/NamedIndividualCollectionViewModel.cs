@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class NamedIndividualCollectionViewModel : IValidatable
+    public class NamedIndividualCollectionViewModel : IValidatable, IIsSubmitted
     {
         public string IntroText
         {
@@ -97,5 +97,6 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool IsValid { get; set; }
 
+        public bool IsSubmitted { get; set; }
     }
 }

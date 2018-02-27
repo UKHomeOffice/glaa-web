@@ -22,7 +22,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PleaseSelectItem, opt => opt.Ignore())
                 .ForMember(x => x.Standards, opt => opt.Ignore())
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
         }
     }
 }

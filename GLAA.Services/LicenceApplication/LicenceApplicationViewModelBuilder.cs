@@ -15,13 +15,15 @@ namespace GLAA.Services.LicenceApplication
         private readonly IStatusRepository statusRepository;
         private readonly IMapper mapper;
         private readonly IReferenceDataProvider referenceDataProvider;
+        private readonly IConstantService constantService;
 
-        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp, IStatusRepository statusRepository)
+        public LicenceApplicationViewModelBuilder(ILicenceRepository licenceRepository, IMapper mapper, IReferenceDataProvider rdp, IStatusRepository statusRepository, IConstantService constantService)
         {
             this.licenceRepository = licenceRepository;
             this.statusRepository = statusRepository;
             this.mapper = mapper;
-            referenceDataProvider = rdp;
+            this.referenceDataProvider = rdp;
+            this.constantService = constantService;
         }
 
         public T New<T>() where T : new()
@@ -49,18 +51,13 @@ namespace GLAA.Services.LicenceApplication
             return model;
         }
 
-        public LicenceApplicationViewModel New()
-        {
-            return New<LicenceApplicationViewModel>();
-        }
-
         private LicenceApplicationViewModel BuildFromLicence(Licence licence)
         {
             var model = mapper.Map<LicenceApplicationViewModel>(licence);
 
             if (licence != null)
             {
-                model.Declaration = mapper.Map<DeclarationViewModel>(licence);                
+                model.Declaration = mapper.Map<DeclarationViewModel>(licence);
                 model.PrincipalAuthority =
                     mapper.Map<PrincipalAuthorityViewModel>(licence.PrincipalAuthorities.FirstOrDefault());
                 model.AlternativeBusinessRepresentatives =
@@ -71,7 +68,7 @@ namespace GLAA.Services.LicenceApplication
 
             return model;
         }
-        
+
         public LicenceApplicationViewModel Build(string applicationId)
         {
             var licence = licenceRepository.GetByApplicationId(applicationId);
@@ -84,7 +81,7 @@ namespace GLAA.Services.LicenceApplication
             return BuildFromLicence(licence);
         }
 
-        public T Build<T>(int licenceId) where T : new()
+        public T Build<T>(int licenceId) where T : IIsSubmitted, new()
         {
             var licence = licenceRepository.GetById(licenceId);
 
@@ -95,10 +92,10 @@ namespace GLAA.Services.LicenceApplication
             return model;
         }
 
-        public T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : new() where U : new()
+        public T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : IIsSubmitted, new() where U : new()
         {
             var licence = licenceRepository.GetById(licenceId);
-
+            
             var source = objectSelector(licence);
 
             if (source == null)
@@ -118,7 +115,7 @@ namespace GLAA.Services.LicenceApplication
             return model;
         }
 
-        public T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : new()
+        public T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : IIsSubmitted, new()
         {
             var licence = licenceRepository.GetById(licenceId);
 
@@ -129,7 +126,7 @@ namespace GLAA.Services.LicenceApplication
             if (source.Any())
             {
                 mapper.Map(source, model);
-            }            
+            }
 
             return model;
         }
