@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLAA.Web.Tests", "Tests\GLA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLAA.Scheduler", "GLAA.Scheduler\GLAA.Scheduler.csproj", "{9330EFF2-E223-4747-BCB5-AEB9A694728A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLAA.Common", "GLAA.Common\GLAA.Common.csproj", "{10A25BBD-82C8-4B86-B912-96515C2C8B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GLAA.Common", "GLAA.Common\GLAA.Common.csproj", "{10A25BBD-82C8-4B86-B912-96515C2C8B39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLAA.Repository.Tests", "GLAA.Repository.Tests\GLAA.Repository.Tests.csproj", "{6AA3919E-F4D7-4914-B7E8-F87C2930E600}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{10A25BBD-82C8-4B86-B912-96515C2C8B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10A25BBD-82C8-4B86-B912-96515C2C8B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10A25BBD-82C8-4B86-B912-96515C2C8B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA3919E-F4D7-4914-B7E8-F87C2930E600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA3919E-F4D7-4914-B7E8-F87C2930E600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA3919E-F4D7-4914-B7E8-F87C2930E600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA3919E-F4D7-4914-B7E8-F87C2930E600}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
