@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using GLAA.Domain.Models;
 using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -122,7 +123,7 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static BirthDetailsViewModel BirthDetailsResolver<T>(Person person, T viewModel) where T: PersonViewModel
+        public static BirthDetailsViewModel BirthDetailsResolver<T>(Person person, T viewModel) where T : PersonViewModel
         {
             return new BirthDetailsViewModel
             {
@@ -133,7 +134,7 @@ namespace GLAA.Services.Automapper
             };
         }
 
-        public static BirthDetailsViewModel BirthDetailsResolver(Person person, BirthDetailsViewModel viewModel) 
+        public static BirthDetailsViewModel BirthDetailsResolver(Person person, BirthDetailsViewModel viewModel)
         {
             return new BirthDetailsViewModel
             {
@@ -175,7 +176,7 @@ namespace GLAA.Services.Automapper
         {
             return new SocialSecurityNumberViewModel
             {
-                SocialSecurityNumber=  person.SocialSecurityNumber,
+                SocialSecurityNumber = person.SocialSecurityNumber,
             };
         }
 
@@ -240,7 +241,7 @@ namespace GLAA.Services.Automapper
         {
             return new UndischargedBankruptViewModel
             {
-                BankruptcyDate = new DateViewModel {Date = pa.BankruptcyDate},
+                BankruptcyDate = new DateViewModel { Date = pa.BankruptcyDate },
                 BankruptcyNumber = pa.BankruptcyNumber,
                 IsUndischargedBankrupt = pa.IsUndischargedBankrupt,
                 YesNo = YesNoList
@@ -270,7 +271,7 @@ namespace GLAA.Services.Automapper
         {
             return new UndischargedBankruptViewModel
             {
-                BankruptcyDate = new DateViewModel {Date = pa.BankruptcyDate},
+                BankruptcyDate = new DateViewModel { Date = pa.BankruptcyDate },
                 BankruptcyNumber = pa.BankruptcyNumber,
                 IsUndischargedBankrupt = pa.IsUndischargedBankrupt,
                 YesNo = YesNoList
@@ -335,6 +336,11 @@ namespace GLAA.Services.Automapper
                 Town = p.Town,
                 Country = p.Country
             }) as ICollection<PreviousTradingName>;
+        }
+
+        public static bool GetIsSubmitted(Licence licence)
+        {
+            return licence?.CurrentSubmittedStatusChange?.Status != null;
         }
 
         public static bool HasPrincipalAuthoritySelected(DirectorOrPartner directorOrPartner)

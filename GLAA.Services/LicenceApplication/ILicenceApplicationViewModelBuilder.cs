@@ -6,7 +6,7 @@ using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Services.LicenceApplication
 {
-    public interface ILicenceApplicationViewModelBuilder : IViewModelBuilder<LicenceApplicationViewModel>
+    public interface ILicenceApplicationViewModelBuilder
     {
         LicenceApplicationViewModel Build(string applicationId);
 
@@ -14,11 +14,11 @@ namespace GLAA.Services.LicenceApplication
 
         IList<LicenceApplicationViewModel> BuildLicencesForUser(string userId);
 
-        T Build<T>(int licenceId) where T : new();
+        T Build<T>(int licenceId) where T : IIsSubmitted, new();
 
-        T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : new() where U : new();
+        T Build<T, U>(int licenceId, Func<Licence, U> objectSelector) where T : IIsSubmitted, new() where U : new();
 
-        T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : new();
+        T Build<T, U>(int licenceId, Func<Licence, ICollection<U>> objectSelector) where T : IIsSubmitted, new();
 
         T BuildCountriesFor<T>(T model) where T : INeedCountries;
     }

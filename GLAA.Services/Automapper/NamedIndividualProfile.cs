@@ -18,7 +18,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.NamedJobTitles, opt => opt.MapFrom(y => y.NamedJobTitles))
                 .ForMember(x => x.NamedIndividualType, opt => opt.MapFrom(y => y.NamedIndividualType))
                 .ForMember(x => x.IntroText, opt => opt.Ignore())                
-                .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore());
+                .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<NamedIndividual, NamedIndividualViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
@@ -31,7 +32,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.RestraintOrdersViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.UnspentConvictionsViewModel, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.OffencesAwaitingTrialViewModel, opt => opt.MapFrom(y => y))
-                .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver));
+                .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
 
             CreateMap<NamedIndividualViewModel, NamedIndividual>()
                 .ForMember(x => x.Licence, opt => opt.Ignore())
@@ -66,7 +68,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.JobTitleNumber, opt => opt.MapFrom(y => y.JobTitleNumber));
 
             CreateMap<NamedJobTitle, NamedJobTitleViewModel>()
-                .ForMember(x => x.IsValid, opt => opt.Ignore());
+                .ForMember(x => x.IsValid, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
 
             CreateMap<ICollection<NamedIndividual>, NamedIndividualCollectionViewModel>()
                 .ForMember(x => x.IsShellfish, opt => opt.Ignore())
@@ -77,7 +80,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.IntroText, opt => opt.Ignore())
                 .ForMember(x => x.NamedIndividualType, opt => opt.Ignore())
                 .ForMember(x => x.NamedIndividualType, opt => opt.MapFrom(y => y.FirstOrDefault().Licence.NamedIndividualType))
-                .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore());
+                .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
 
             CreateMap<ICollection<NamedJobTitle>, NamedIndividualCollectionViewModel>()
                 .ForMember(x => x.IsShellfish, opt => opt.Ignore())
@@ -87,7 +91,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.NamedJobTitles, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.IntroText, opt => opt.Ignore())
                 .ForMember(x => x.NamedIndividualType, opt => opt.Ignore())
-                .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore());
+                .ForMember(x => x.AvailableIndividualTypes, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
 
             CreateMap<FullNameViewModel, NamedIndividual>()
                 .ForMember(x => x.FullName, opt => opt.MapFrom(y => y.FullName))

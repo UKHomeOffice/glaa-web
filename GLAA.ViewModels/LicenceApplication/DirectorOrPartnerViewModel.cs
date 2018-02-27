@@ -34,7 +34,7 @@ namespace GLAA.ViewModels.LicenceApplication
         }
     }
 
-    public class DirectorOrPartnerCollectionViewModel : IValidatable
+    public class DirectorOrPartnerCollectionViewModel : IValidatable, IIsSubmitted
     {
         [Required]
         [Display(Name = "Number of Directors or Partners")]
@@ -75,5 +75,6 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public bool IsValid { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }
