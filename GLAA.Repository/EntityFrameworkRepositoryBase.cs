@@ -47,6 +47,12 @@ namespace GLAA.Repository
         public void Delete<TEntity>(int id) where TEntity : class, IId, IDeletable
         {
             var entity = GetById<TEntity>(id);
+
+            if (entity == null)
+            {
+                return;
+            }
+
             var now = DateTimeProvider.Now();
 
             // Delete the parent entity
