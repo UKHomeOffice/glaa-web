@@ -35,7 +35,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PersonalEmailAddress, opt => opt.ResolveUsing(ProfileHelpers.PersonalEmailAddressResolver))
                 .ForMember(x => x.Nationality, opt => opt.ResolveUsing(ProfileHelpers.NationalityResolver))
                 .ForMember(x => x.IsPreviousPrincipalAuthority, opt => opt.ResolveUsing(ProfileHelpers.IsPreviousPrincipalAuthorityResolver))
-                .ForMember(x => x.PrincipalAuthorityId, opt => opt.MapFrom(y => y.PrincipalAuthority.Id))
+                .ForMember(x => x.PrincipalAuthorityId, opt => opt.MapFrom(y => y.PrincipalAuthorityId))
                 .ForMember(x => x.PassportViewModel, opt => opt.ResolveUsing(ProfileHelpers.PassportViewModel))
                 .ForMember(x => x.RightToWorkViewModel, opt => opt.ResolveUsing(ProfileHelpers.RightToWorkResolver))
                 .ForMember(x => x.UndischargedBankruptViewModel, opt => opt.ResolveUsing(ProfileHelpers.UndischargedBankruptResolver))
