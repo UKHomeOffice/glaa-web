@@ -322,20 +322,85 @@ namespace GLAA.Services.Tests.AutoMapper
         }
 
         [TestMethod]
+        public void it_should_not_map_deleted_properties_to_the_principal_authority_view_model()
+        {
+            var input = new PrincipalAuthority();
+            AddPersonData(input);
+
+            foreach (var restraintOrder in input.RestraintOrders)
+            {
+                restraintOrder.Deleted = true;
+            }
+
+            foreach (var unspentConviction in input.UnspentConvictions)
+            {
+                unspentConviction.Deleted = true;
+            }
+
+            foreach (var offenceAwaitingTrial in input.OffencesAwaitingTrial)
+            {
+                offenceAwaitingTrial.Deleted = true;
+            }
+
+            var result = this.mapper.Map<PrincipalAuthorityViewModel>(input);
+
+            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
+        }
+
+        [TestMethod]
         public void it_should_map_the_alternative_business_representative_entity_to_the_alternative_business_representative_view_model()
         {
             var input = new AlternativeBusinessRepresentative();
 
             AddPersonData(input);
 
-            var conf = new MapperConfiguration(cfg => cfg.CreateMap<Country, Country>());
-            var exec = conf.BuildExecutionPlan(typeof(Country), typeof(Country));
-
             var result = this.mapper.Map<AlternativeBusinessRepresentativeViewModel>(input);
 
             AssertPerson(input, result);
             Assert.AreEqual(input.RequiresVisa, result.RightToWorkViewModel.RequiresVisa);
             Assert.AreEqual(input.VisaDescription, result.RightToWorkViewModel.VisaDescription);
+        }
+
+        [TestMethod]
+        public void it_should_not_map_deleted_properties_to_the_alternative_business_representative_view_model()
+        {
+            var input = new AlternativeBusinessRepresentative();
+            AddPersonData(input);
+
+            foreach (var restraintOrder in input.RestraintOrders)
+            {
+                restraintOrder.Deleted = true;
+            }
+
+            foreach (var unspentConviction in input.UnspentConvictions)
+            {
+                unspentConviction.Deleted = true;
+            }
+
+            foreach (var offenceAwaitingTrial in input.OffencesAwaitingTrial)
+            {
+                offenceAwaitingTrial.Deleted = true;
+            }
+
+            var result = this.mapper.Map<AlternativeBusinessRepresentativeViewModel>(input);
+
+            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
+        }
+
+        [TestMethod]
+        public void it_should_not_map_a_deleted_alternative_business_representative_entity_to_the_alternative_business_representative_collection_view_model()
+        {
+            var input = new List<AlternativeBusinessRepresentative>();
+            var person = new AlternativeBusinessRepresentative { Deleted = true };
+            input.Add(person);
+
+            var result = this.mapper.Map<AlternativeBusinessRepresentativeCollectionViewModel>(input);
+
+            Assert.AreEqual(0, result.AlternativeBusinessRepresentatives.Count());
         }
 
         [TestMethod]
@@ -383,6 +448,46 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.IsPreviousPrincipalAuthority, result.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority);
             Assert.AreEqual(input.RequiresVisa, result.RightToWorkViewModel.RequiresVisa);
             Assert.AreEqual(input.VisaDescription, result.RightToWorkViewModel.VisaDescription);
+        }
+
+        [TestMethod]
+        public void it_should_not_map_deleted_properties_to_the_director_or_partner_view_model()
+        {
+            var input = new DirectorOrPartner();
+            AddPersonData(input);
+
+            foreach (var restraintOrder in input.RestraintOrders)
+            {
+                restraintOrder.Deleted = true;
+            }
+
+            foreach (var unspentConviction in input.UnspentConvictions)
+            {
+                unspentConviction.Deleted = true;
+            }
+
+            foreach (var offenceAwaitingTrial in input.OffencesAwaitingTrial)
+            {
+                offenceAwaitingTrial.Deleted = true;
+            }
+
+            var result = this.mapper.Map<DirectorOrPartnerViewModel>(input);
+
+            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
+        }
+
+        [TestMethod]
+        public void it_should_not_map_a_deleted_director_or_partner_entity_to_the_director_or_partner_collection_view_model()
+        {
+            var input = new List<DirectorOrPartner>();
+            var person = new DirectorOrPartner { Deleted = true };
+            input.Add(person);
+
+            var result = this.mapper.Map<DirectorOrPartnerCollectionViewModel>(input);
+
+            Assert.AreEqual(0, result.DirectorsOrPartners.Count());
         }
 
         [TestMethod]
@@ -533,6 +638,18 @@ namespace GLAA.Services.Tests.AutoMapper
         }
 
         [TestMethod]
+        public void it_should_not_map_a_deleted_named_job_title_entity_to_the_named_individual_collection_view_model()
+        {
+            var input = new Licence { NamedJobTitles = new List<NamedJobTitle>() };
+            var jobTitle = new NamedJobTitle {Deleted = true};
+            input.NamedJobTitles.Add(jobTitle);
+
+            var result = this.mapper.Map<NamedIndividualCollectionViewModel>(input);
+
+            Assert.AreEqual(0, result.NamedJobTitles.Count());
+        }
+
+        [TestMethod]
         public void it_should_map_the_licence_entity_to_the_named_individual_collection_view_model()
         {
             var input = new Licence
@@ -563,6 +680,72 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(input.NamedJobTitles.Count, result.NamedJobTitles.Count());
             Assert.AreEqual(input.NamedIndividualType, result.NamedIndividualType);
             Assert.AreEqual(input.NamedIndividuals.Count, result.NamedIndividuals.Count());
+        }
+
+        [TestMethod]
+        public void it_should_not_map_a_deleted_named_individual_entity_to_the_named_individual_collection_view_model()
+        {
+            var input = new Licence {NamedIndividuals = new List<NamedIndividual>()};
+            var ni = new NamedIndividual { Deleted = true };
+            input.NamedIndividuals.Add(ni);
+
+            var result = this.mapper.Map<NamedIndividualCollectionViewModel>(input);
+
+            Assert.AreEqual(0, result.NamedIndividuals.Count());
+        }
+
+        [TestMethod]
+        public void it_should_not_map_deleted_properties_to_the_named_individual_view_model()
+        {
+            var input = new NamedIndividual
+            {
+                FullName = "Person 1",
+                BusinessExtension = "123",
+                BusinessPhoneNumber = "01225 123456",
+                DateOfBirth = new DateTime(2000, 1, 1),
+                RestraintOrders = new List<RestraintOrder>
+                {
+                    new RestraintOrder
+                    {
+                        Deleted = false
+                    }
+                },
+                UnspentConvictions = new List<Conviction>
+                {
+                    new Conviction
+                    {
+                        Deleted = false
+                    }
+                },
+                OffencesAwaitingTrial = new List<OffenceAwaitingTrial>
+                {
+                    new OffenceAwaitingTrial
+                    {
+                        Deleted = false
+                    }
+                },
+            };
+
+            foreach (var restraintOrder in input.RestraintOrders)
+            {
+                restraintOrder.Deleted = true;
+            }
+
+            foreach (var unspentConviction in input.UnspentConvictions)
+            {
+                unspentConviction.Deleted = true;
+            }
+
+            foreach (var offenceAwaitingTrial in input.OffencesAwaitingTrial)
+            {
+                offenceAwaitingTrial.Deleted = true;
+            }
+
+            var result = this.mapper.Map<NamedIndividualViewModel>(input);
+
+            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
         }
 
         [TestMethod]
