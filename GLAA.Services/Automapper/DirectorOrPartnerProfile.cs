@@ -49,7 +49,8 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
                 .ForMember(x => x.Counties, opt => opt.Ignore())
-                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)));
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)))
+                .ForMember(x => x.HasPrincipalAuthoritySelected, opt => opt.ResolveUsing(ProfileHelpers.HasPrincipalAuthoritySelected));
 
             CreateMap<DirectorOrPartner, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);

@@ -342,5 +342,12 @@ namespace GLAA.Services.Automapper
         {
             return licence?.CurrentSubmittedStatusChange?.Status != null;
         }
+
+        public static bool HasPrincipalAuthoritySelected(DirectorOrPartner directorOrPartner)
+        {
+            var hasPrincipalAuthoritySelected = directorOrPartner?.Licence?.DirectorOrPartners?.Any(x => x.IsPreviousPrincipalAuthority.HasValue && x.IsPreviousPrincipalAuthority.Value);
+
+            return hasPrincipalAuthoritySelected ?? false;
+        }
     }
 }
