@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GLAA.ViewModels;
 using GLAA.ViewModels.LicenceApplication;
 
 namespace GLAA.Web.FormLogic
@@ -22,11 +23,11 @@ namespace GLAA.Web.FormLogic
                         FormSection.SignUp,
                         new []
                         {
-                            new FormPageDefinition("EmailAddress"),
-                            new FormPageDefinition("FullName"),
-                            new FormPageDefinition("Address"),
-                            new FormPageDefinition("CommunicationPreference"),
-                            new FormPageDefinition("Password"),
+                            new FormPageDefinition(nameof(SignUpViewModel.EmailAddress)),
+                            new FormPageDefinition(nameof(SignUpViewModel.FullName)),
+                            new FormPageDefinition(nameof(SignUpViewModel.Address)),
+                            new FormPageDefinition(nameof(SignUpViewModel.CommunicationPreference)),
+                            new FormPageDefinition(nameof(SignUpViewModel.Password)),
                             new FormPageDefinition()
                         }
                     },
@@ -35,18 +36,18 @@ namespace GLAA.Web.FormLogic
                         new[]
                         {
                             new FormPageDefinition(),
-                            new FormPageDefinition(nameof(BusinessNameViewModel.BusinessName)),
-                            new FormPageDefinition("Address"),
-                            new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
-                            new FormPageDefinition(nameof(BusinessMobileNumberViewModel.BusinessMobileNumber)),
-                            new FormPageDefinition(nameof(BusinessEmailAddressViewModel.BusinessEmailAddress)),
-                            new FormPageDefinition(nameof(BusinessWebsiteViewModel.BusinessWebsite)),
-                            new FormPageDefinition(nameof(CommunicationPreferenceViewModel.CommunicationPreference)),
-                            new FormPageDefinition(nameof(LegalStatusViewModel.LegalStatus)),
-                            new FormPageDefinition(nameof(BusinessCredentialsViewModel), true),
-                            new FormPageDefinition(nameof(OperatingIndustriesViewModel.OperatingIndustries)),
-                            new FormPageDefinition("Turnover"),
-                            new FormPageDefinition(nameof(OperatingCountriesViewModel.OperatingCountries)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessName)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.Address)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessPhoneNumber)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessMobileNumber)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessEmailAddress)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessWebsite)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.CommunicationPreference)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.LegalStatus)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessCredentialsViewModel), true),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingIndustries)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.Turnover)),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingCountries)),
                             new FormPageDefinition()
                         }
                     },
@@ -55,24 +56,24 @@ namespace GLAA.Web.FormLogic
                         new[]
                         {
                             new FormPageDefinition(),
-                            new FormPageDefinition(nameof(IsDirectorViewModel.IsDirector)),
-                            new FormPageDefinition("PrincipalAuthorityConfirmation"),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.IsDirector)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.PrincipalAuthorityConfirmation)),
                         }
                         .Concat(BasicPersonFields)
                         .Concat(new [] {
-                            new FormPageDefinition(nameof(NationalityViewModel.Nationality)),
-                            new FormPageDefinition(nameof(PassportViewModel)),
-                            new FormPageDefinition(nameof(PrincipalAuthorityRightToWorkViewModel)),
-                            new FormPageDefinition(nameof(UndischargedBankruptViewModel)),
-                            new FormPageDefinition(nameof(DisqualifiedDirectorViewModel)),
-                            new FormPageDefinition(nameof(RestraintOrdersViewModel), true),
-                            new FormPageDefinition(nameof(RestraintOrdersViewModel)),
-                            new FormPageDefinition(nameof(UnspentConvictionsViewModel), true),
-                            new FormPageDefinition(nameof(UnspentConvictionsViewModel)),
-                            new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel), true),
-                            new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel)),
-                            new FormPageDefinition(nameof(PreviousLicenceViewModel)),
-                            new FormPageDefinition(nameof(PreviousExperienceViewModel.PreviousExperience)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.Nationality)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.PassportViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.PrincipalAuthorityRightToWorkViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.UndischargedBankruptViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.DisqualifiedDirectorViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.RestraintOrdersViewModel), true),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.RestraintOrdersViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.UnspentConvictionsViewModel), true),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.UnspentConvictionsViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.OffencesAwaitingTrialViewModel), true),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.OffencesAwaitingTrialViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.PreviousLicenceViewModel)),
+                            new FormPageDefinition(nameof(PrincipalAuthorityViewModel.PreviousExperience)),
                             new FormPageDefinition()
                         }).ToArray()
                     },
@@ -97,7 +98,7 @@ namespace GLAA.Web.FormLogic
                         FormSection.DirectorOrPartner,
                         new[]
                         {
-                            new FormPageDefinition(nameof(IsPreviousPrincipalAuthorityViewModel.IsPreviousPrincipalAuthority)),
+                            new FormPageDefinition(nameof(DirectorOrPartnerViewModel.IsPreviousPrincipalAuthority)),
                         }
                         .Concat(BasicPersonFields)
                         .Concat(PersonSecurityFields)
@@ -118,20 +119,20 @@ namespace GLAA.Web.FormLogic
                         FormSection.NamedIndividual,
                         new[]
                         {
-                            new FormPageDefinition(nameof(FullNameViewModel.FullName)),
-                            new FormPageDefinition(nameof(DateOfBirthViewModel.DateOfBirth)),
-                            new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
-                            new FormPageDefinition(nameof(BusinessExtensionViewModel.BusinessExtension)),
-                            new FormPageDefinition(nameof(RightToWorkViewModel)),
-                            new FormPageDefinition(nameof(UndischargedBankruptViewModel)),
-                            new FormPageDefinition(nameof(DisqualifiedDirectorViewModel)),
-                            new FormPageDefinition(nameof(RestraintOrdersViewModel), true),
-                            new FormPageDefinition(nameof(RestraintOrdersViewModel)),
-                            new FormPageDefinition(nameof(UnspentConvictionsViewModel), true),
-                            new FormPageDefinition(nameof(UnspentConvictionsViewModel)),
-                            new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel), true),
-                            new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel)),
-                            new FormPageDefinition(nameof(PreviousLicenceViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.FullName)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.DateOfBirth)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.BusinessPhoneNumber)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.BusinessExtension)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.RightToWorkViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.UndischargedBankruptViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.DisqualifiedDirectorViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.RestraintOrdersViewModel), true),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.RestraintOrdersViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.UnspentConvictionsViewModel), true),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.UnspentConvictionsViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.OffencesAwaitingTrialViewModel), true),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.OffencesAwaitingTrialViewModel)),
+                            new FormPageDefinition(nameof(NamedIndividualViewModel.PreviousLicenceViewModel)),
                             new FormPageDefinition()
                         }
                     },
@@ -157,20 +158,20 @@ namespace GLAA.Web.FormLogic
                         new[]
                         {
                             new FormPageDefinition(),
-                            new FormPageDefinition(nameof(OutsideSectorsViewModel)),
-                            new FormPageDefinition(nameof(WrittenAgreementViewModel)),
-                            new FormPageDefinition(nameof(PSCControlledViewModel)),
-                            new FormPageDefinition(nameof(MultipleBranchViewModel)),
-                            new FormPageDefinition(nameof(TransportingWorkersViewModel)),
-                            new FormPageDefinition(nameof(AccommodatingWorkersViewModel)),
-                            new FormPageDefinition(nameof(SourcingWorkersViewModel)),
-                            new FormPageDefinition(nameof(WorkerSupplyMethodViewModel)),
-                            new FormPageDefinition(nameof(WorkerContractViewModel)),
-                            new FormPageDefinition(nameof(BannedFromTradingViewModel)),
-                            new FormPageDefinition(nameof(SubcontractorViewModel)),
-                            new FormPageDefinition(nameof(ShellfishWorkerNumberViewModel)),
-                            new FormPageDefinition(nameof(ShellfishWorkerNationalityViewModel)),
-                            new FormPageDefinition(nameof(PreviouslyWorkedInShellfishViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.OutsideSectorsViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.WrittenAgreementViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.PscControlledViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.MultipleBranchViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.TransportingWorkersViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.AccommodatingWorkersViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.SourcingWorkersViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.WorkerSupplyMethodViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.WorkerContractViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.BannedFromTradingViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.SubcontractorViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.ShellfishWorkerNumberViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.ShellfishWorkerNationalityViewModel)),
+                            new FormPageDefinition(nameof(OrganisationViewModel.PreviouslyWorkedInShellfishViewModel)),
                             new FormPageDefinition()
                         }
                     }
@@ -179,32 +180,32 @@ namespace GLAA.Web.FormLogic
 
         private static readonly FormPageDefinition[] BasicPersonFields =
         {
-            new FormPageDefinition(nameof(FullNameViewModel.FullName)),
-            new FormPageDefinition(nameof(AlternativeFullNameViewModel.AlternativeName)),
-            new FormPageDefinition(nameof(DateOfBirthViewModel.DateOfBirth)),
-            new FormPageDefinition(nameof(BirthDetailsViewModel)),
-            new FormPageDefinition(nameof(JobTitleViewModel.JobTitle)),
-            new FormPageDefinition("Address"),
-            new FormPageDefinition(nameof(BusinessPhoneNumberViewModel.BusinessPhoneNumber)),
-            new FormPageDefinition(nameof(BusinessExtensionViewModel.BusinessExtension)),
-            new FormPageDefinition(nameof(PersonalMobileNumberViewModel.PersonalMobileNumber)),
-            new FormPageDefinition(nameof(PersonalEmailAddressViewModel.PersonalEmailAddress)),
+            new FormPageDefinition(nameof(PersonViewModel.FullName)),
+            new FormPageDefinition(nameof(PersonViewModel.AlternativeName)),
+            new FormPageDefinition(nameof(PersonViewModel.DateOfBirth)),
+            new FormPageDefinition(nameof(PersonViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.JobTitle)),
+            new FormPageDefinition(nameof(PersonViewModel.Address)),
+            new FormPageDefinition(nameof(PersonViewModel.BusinessPhoneNumber)),
+            new FormPageDefinition(nameof(PersonViewModel.BusinessExtension)),
+            new FormPageDefinition(nameof(PersonViewModel.PersonalMobileNumber)),
+            new FormPageDefinition(nameof(PersonViewModel.PersonalEmailAddress)),
         };
 
         private static readonly FormPageDefinition[] PersonSecurityFields =
         {
-            new FormPageDefinition(nameof(NationalityViewModel.Nationality)),
-            new FormPageDefinition(nameof(PassportViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.Nationality)),
+            new FormPageDefinition(nameof(PersonViewModel.PassportViewModel)),
             new FormPageDefinition(nameof(RightToWorkViewModel)),
-            new FormPageDefinition(nameof(UndischargedBankruptViewModel)),
-            new FormPageDefinition(nameof(DisqualifiedDirectorViewModel)),
-            new FormPageDefinition(nameof(RestraintOrdersViewModel), true),
-            new FormPageDefinition(nameof(RestraintOrdersViewModel)),
-            new FormPageDefinition(nameof(UnspentConvictionsViewModel), true),
-            new FormPageDefinition(nameof(UnspentConvictionsViewModel)),
-            new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel), true),
-            new FormPageDefinition(nameof(OffencesAwaitingTrialViewModel)),
-            new FormPageDefinition(nameof(PreviousLicenceViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.UndischargedBankruptViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.DisqualifiedDirectorViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.RestraintOrdersViewModel), true),
+            new FormPageDefinition(nameof(PersonViewModel.RestraintOrdersViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.UnspentConvictionsViewModel), true),
+            new FormPageDefinition(nameof(PersonViewModel.UnspentConvictionsViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.OffencesAwaitingTrialViewModel), true),
+            new FormPageDefinition(nameof(PersonViewModel.OffencesAwaitingTrialViewModel)),
+            new FormPageDefinition(nameof(PersonViewModel.PreviousLicenceViewModel)),
         };
 
         public IDictionary<FormSection, FormPageDefinition[]> Fields { get; set; }
