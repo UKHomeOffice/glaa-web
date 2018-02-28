@@ -1,5 +1,5 @@
-﻿using GLAA.ViewModels;
-using GLAA.Web.Controllers;
+﻿using System.Linq;
+using GLAA.ViewModels;
 
 namespace GLAA.Web.FormLogic
 {
@@ -12,6 +12,7 @@ namespace GLAA.Web.FormLogic
             this.fieldConfiguration = fieldConfiguration;
         }
 
+        [System.Obsolete]
         public object GetViewModel<TParent>(FormSection section, int id, TParent parent)
         {
             var page = GetPageDefinition(section, id);
@@ -24,7 +25,20 @@ namespace GLAA.Web.FormLogic
             return page.GetViewModelExpressionForPage(parent);
         }
 
-        public bool CanViewNextModel<TParent>(FormSection section, int id, TParent parent)
+        public object GetViewModel<TParent>(FormSection section, string actionName, TParent parent)
+        {
+            var page = GetPageDefinition(section, actionName);
+
+            if (page == null || parent == null)
+            {
+                return null;
+            }
+
+            return page.GetViewModelExpressionForPage(parent);
+        }
+
+        [System.Obsolete]
+        public bool CanViewPage<TParent>(FormSection section, int id, TParent parent)
         {
             var page = GetPageDefinition(section, id);
 
@@ -38,11 +52,26 @@ namespace GLAA.Web.FormLogic
             return model == null || model.CanView(parent);
         }
 
+        public bool CanViewPage<TParent>(FormSection section, string actionName, TParent parent)
+        {
+            var page = GetPageDefinition(section, actionName);
+
+            if (page.OverrideViewCondition)
+            {
+                return true;
+            }
+
+            var model = page.GetViewModelExpressionForPage(parent) as ICanView<TParent>;
+
+            return model == null || model.CanView(parent);
+        }
+
         public int GetSectionLength(FormSection section)
         {
             return fieldConfiguration.Fields[section].Length;
         }
 
+        [System.Obsolete]
         private FormPageDefinition GetPageDefinition(FormSection section, int id)
         {
             var index = id - 1;
@@ -51,6 +80,11 @@ namespace GLAA.Web.FormLogic
                 return null;
             }
             return fieldConfiguration.Fields[section][index];
+        }
+
+        private FormPageDefinition GetPageDefinition(FormSection section, string actionName)
+        {
+            return fieldConfiguration[section].FirstOrDefault(x => x.MatchesName(actionName));
         }
 
         private static object GetViewModel<TParent>(FormPageDefinition page, TParent parent)

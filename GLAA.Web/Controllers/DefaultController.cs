@@ -55,7 +55,7 @@ namespace GLAA.Web.Controllers
 
         protected ActionResult GetPreviousView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            if (!FormDefinition.CanViewNextModel(section, id, model))
+            if (!FormDefinition.CanViewPage(section, id, model))
                 return RedirectToPreviousPossibleView(id, section, model);
 
             var viewPath = GetViewPath(section, id);
@@ -66,7 +66,7 @@ namespace GLAA.Web.Controllers
 
         protected ActionResult RedirectToPreviousPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            while (!FormDefinition.CanViewNextModel(section, id, model))
+            while (!FormDefinition.CanViewPage(section, id, model))
                 id--;
 
             return RedirectBackToAction(section, id);
@@ -74,7 +74,7 @@ namespace GLAA.Web.Controllers
 
         protected ActionResult GetNextView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            if (!FormDefinition.CanViewNextModel(section, id, model))
+            if (!FormDefinition.CanViewPage(section, id, model))
                 return RedirectToNextPossibleView(id, section, model);
 
             var viewPath = GetViewPath(section, id);
@@ -85,7 +85,7 @@ namespace GLAA.Web.Controllers
 
         protected ActionResult RedirectToNextPossibleView<T>(int id, FormSection section, T model) where T : IValidatable
         {
-            while (!FormDefinition.CanViewNextModel(section, id, model))
+            while (!FormDefinition.CanViewPage(section, id, model))
                 id++;
 
             return RedirectToAction(section, id);
