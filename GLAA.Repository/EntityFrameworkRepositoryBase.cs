@@ -19,19 +19,21 @@ namespace GLAA.Repository
             DateTimeProvider = dtp;
         }
 
-        public TEntity GetById<TEntity>(int id, bool includeDeleted = false) where TEntity : class, IId
+        public TEntity GetById<TEntity>(int id) where TEntity : class, IId
         {
-            var match = Context.Set<TEntity>().Find(id);
+            var entity = Context.Set<TEntity>().Find(id);
 
-            if (match is IDeletable deletable)
+            if (entity is IDeletable deletable)
             {
-                if (deletable.Deleted)
-                {
-                    return includeDeleted ? match : null;
-                }
+                return deletable.Deleted ? null : entity;
             }
 
-            return match;
+            return entity;
+        }
+
+        public TEntity GetDeletedById<TEntity>(int id) where TEntity : class, IId, IDeletable
+        {
+            return Context.Set<TEntity>().Find(id);
         }
 
         public TEntity Find<TEntity>(Func<TEntity, bool> predicate) where TEntity : class

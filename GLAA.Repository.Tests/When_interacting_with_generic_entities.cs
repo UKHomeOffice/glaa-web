@@ -86,7 +86,7 @@ namespace GLAA.Repository.Tests
             using (var context = new GLAAContext(options))
             {
                 var repo = new EntityFrameworkRepositoryBase(context, dtp);
-                var result = repo.GetById<Address>(id, true);
+                var result = repo.GetDeletedById<Address>(id);
                 Assert.AreEqual(id, result.Id);
                 Assert.AreEqual(expectedAddress, result.AddressLine1);
                 Assert.IsTrue(result.Deleted);
@@ -196,7 +196,7 @@ namespace GLAA.Repository.Tests
             {
                 var repo = new EntityFrameworkRepositoryBase(context, dtp);
                 repo.Delete<Address>(id);
-                var result = repo.GetById<Address>(id, true);
+                var result = repo.GetDeletedById<Address>(id);
                 Assert.IsTrue(result.Deleted);
                 Assert.AreEqual(now, result.DateDeleted);
                 Assert.AreEqual(id, result.Id);
@@ -256,21 +256,21 @@ namespace GLAA.Repository.Tests
                 var repo = new EntityFrameworkRepositoryBase(context, dtp);
                 repo.Delete<NamedIndividual>(id);
 
-                var ni = repo.GetById<NamedIndividual>(id, true);
+                var ni = repo.GetDeletedById<NamedIndividual>(id);
                 Assert.IsTrue(ni.Deleted);
                 Assert.AreEqual(now, ni.DateDeleted);
 
-                var ro = repo.GetById<RestraintOrder>(id, true);
+                var ro = repo.GetDeletedById<RestraintOrder>(id);
                 Assert.IsTrue(ro.Deleted);
                 Assert.AreEqual(now, ro.DateDeleted);
                 Assert.AreEqual(expectedRestraintOrder, ro.Description);
 
-                var c = repo.GetById<Conviction>(id, true);
+                var c = repo.GetDeletedById<Conviction>(id);
                 Assert.IsTrue(c.Deleted);
                 Assert.AreEqual(now, c.DateDeleted);
                 Assert.AreEqual(expectedConviction, c.Description);
 
-                var oat = repo.GetById<OffenceAwaitingTrial>(id, true);
+                var oat = repo.GetDeletedById<OffenceAwaitingTrial>(id);
                 Assert.IsTrue(oat.Deleted);
                 Assert.AreEqual(now, oat.DateDeleted);
                 Assert.AreEqual(expectedOffence, oat.Description);

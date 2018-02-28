@@ -9,7 +9,8 @@ namespace GLAA.Repository
     {
         TEntity Create<TEntity>() where TEntity : class, IId, new();
         int Upsert<TEntity>(TEntity entity) where TEntity : class, IId;
-        TEntity GetById<TEntity>(int id, bool includeDeleted = false) where TEntity : class, IId;
+        TEntity GetById<TEntity>(int id) where TEntity : class, IId;
+        TEntity GetDeletedById<TEntity>(int id) where TEntity : class, IId, IDeletable;
         TEntity Find<TEntity>(Func<TEntity, bool> predicate) where TEntity : class;
         IEnumerable<TEntity> GetAll<TEntity>(bool includeDeleted = false) where TEntity : class;
         /// <summary>
