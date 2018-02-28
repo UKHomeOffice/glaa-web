@@ -14,16 +14,15 @@ namespace GLAA.Repository
         {
         }
 
-        public Licence GetById(int id, bool includeDeleted = false)
+        public Licence GetById(int id)
         {
-            return GetAllEntriesWithStatusesAndAddress().FirstOrDefault(l => l.Id == id && l.Deleted == includeDeleted);
+            return GetAllEntriesWithStatusesAndAddress().FirstOrDefault(l => l.Id == id);
         }
 
-        public Licence GetByApplicationId(string applicationId, bool includeDeleted = false)
+        public Licence GetByApplicationId(string applicationId)
         {
             return GetAllEntriesWithStatusesAndAddress().FirstOrDefault(l =>
-                l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase) &&
-                l.Deleted == includeDeleted);
+                l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<Licence> GetAllLicencesForPublicRegister()
@@ -31,16 +30,16 @@ namespace GLAA.Repository
             return GetAllLicences().Where(x => GetLatestStatus(x).Status.ShowInPublicRegister);
         }
 
-        public IEnumerable<Licence> GetAllLicences(bool includeDeleted = false)
+        public IEnumerable<Licence> GetAllLicences()
         {
-            return GetAllEntriesWithStatusesAndAddress().FilterDeletedEntities(includeDeleted).Where(l =>
+            return GetAllEntriesWithStatusesAndAddress().Where(l =>
                 l.LicenceStatusHistory.Any() &&
                 l.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).First().Status.IsLicence);
         }
 
-        public IEnumerable<Licence> GetAllApplications(bool includeDeleted = false)
+        public IEnumerable<Licence> GetAllApplications()
         {
-            return GetAllEntriesWithStatusesAndAddress().FilterDeletedEntities(includeDeleted).Where(l =>
+            return GetAllEntriesWithStatusesAndAddress().Where(l =>
                 l.LicenceStatusHistory.Any() &&
                 l.LicenceStatusHistory.OrderByDescending(h => h.DateCreated).First().Status.IsApplication);
         }
@@ -79,7 +78,7 @@ namespace GLAA.Repository
             //.Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons);
         }
 
-        public IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress(bool includeDeleted = false)
+        public IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress()
         {
             return Context.Licences
                 .Include(l => l.LicenceStatusHistory).ThenInclude(h => h.Status)
@@ -114,8 +113,7 @@ namespace GLAA.Repository
                 .Include(l => l.LicenceStatusHistory).ThenInclude(c => c.Status).ThenInclude(s => s.NextStatuses).ThenInclude(n => n.NextStatus).ThenInclude(n => n.StatusReasons)
                 .Include(l => l.CurrentStatusChange)
                 .Include(l => l.CurrentSubmittedStatusChange)
-                .Include(l => l.CurrentCommencementStatusChange)
-                .FilterDeletedEntities(includeDeleted);
+                .Include(l => l.CurrentCommencementStatusChange);
         }
 
         public static LicenceStatusChange GetLatestStatus(Licence licence)

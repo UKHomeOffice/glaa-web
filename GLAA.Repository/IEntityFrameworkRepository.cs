@@ -14,7 +14,7 @@ namespace GLAA.Repository
         IEnumerable<TEntity> GetAll<TEntity>(bool includeDeleted = false) where TEntity : class;
         /// <summary>
         /// Mark the entity with this ID as deleted and mark any of its properties 
-        /// with the <see cref="CascadeDeleteAttribute"/> as deleted.
+        /// with the <see cref="CascadeDeleteAttribute"/> as deleted. This will only cascade down one "level".
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity to delete</typeparam>
         /// <param name="id">The ID of the entity to delete</param>

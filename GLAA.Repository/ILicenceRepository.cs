@@ -5,11 +5,11 @@ namespace GLAA.Repository
 {
     public interface ILicenceRepository : IEntityFrameworkRepository
     {
-        Licence GetById(int id, bool includeDeleted = false);
-        Licence GetByApplicationId(string applicationId, bool includeDeleted = false);
+        Licence GetById(int id);
+        Licence GetByApplicationId(string applicationId);
         IEnumerable<Licence> GetAllLicencesForPublicRegister();
-        IEnumerable<Licence> GetAllLicences(bool includeDeleted = false);
-        IEnumerable<Licence> GetAllApplications(bool includeDeleted = false);
-        IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress(bool includeDeleted = false);
+        IEnumerable<Licence> GetAllLicences();
+        IEnumerable<Licence> GetAllApplications();
+        IEnumerable<Licence> GetAllEntriesWithStatusesAndAddress();
     }
 }

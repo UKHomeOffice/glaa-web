@@ -29,17 +29,5 @@ namespace GLAA.Services.Tests.PostDataHandler
             dateTimeProvider = Substitute.For<IDateTimeProvider>();
             statusRepository = Substitute.For<IStatusRepository>();
         }
-
-        [TestMethod]
-        public void it_should_delete_the_entity()
-        {
-            const int expectedId = 1;
-
-            var pdh = new LicenceApplicationPostDataHandler(mapper, repository, licenceRepository, statusRepository, dateTimeProvider);
-
-            pdh.Delete<Licence>(expectedId);
-
-            repository.Received().Delete<Licence>(expectedId);
-        }
     }
 }
