@@ -12,13 +12,23 @@ namespace GLAA.Web.FormLogic
             OverrideViewCondition = false;
         }
 
+        [Obsolete]
         public FormPageDefinition(string subModelName, bool overrideViewCondition = false)
         {
             SubModelName = subModelName;
             OverrideViewCondition = overrideViewCondition;
         }
 
+        public FormPageDefinition(string subModelName, string actionName, bool overrideViewCondition = false)
+        {
+            SubModelName = subModelName;
+            ActionName = actionName;
+            OverrideViewCondition = overrideViewCondition;
+        }
+
         public string SubModelName { get; }
+
+        public string ActionName { get; set; }
 
         public bool OverrideViewCondition { get; }
 
