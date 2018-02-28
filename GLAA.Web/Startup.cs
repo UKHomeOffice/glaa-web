@@ -227,7 +227,16 @@ namespace GLAA.Web
 
                 logger.TimedLog(LogLevel.Information, "Running db seed...");
 
-                serviceScope.ServiceProvider.GetService<GLAAContext>().Seed(defaultStatuses);
+                var dbContext = serviceScope.ServiceProvider.GetService<GLAAContext>();
+
+                dbContext.Seed(defaultStatuses);
+
+                BuildRoles(serviceProvider).Wait();
+                BuildSuperUser(serviceProvider).Wait();
+                BuildUsers(serviceProvider).Wait();
+                var adminUsers = BuildAdminUsersAsync(serviceProvider).Result;
+
+                dbContext.AddAdminUsersWithFullLicence(adminUsers);
 
                 logger.TimedLog(LogLevel.Information, "Completed db seed");
             }
@@ -255,9 +264,6 @@ namespace GLAA.Web
                     name: "applicationPost",
                     template: "Licence/Apply/{controller}/{action}");
             });
-            BuildRoles(serviceProvider).Wait();
-            BuildAdminUser(serviceProvider).Wait();
-            BuildUsers(serviceProvider).Wait();
         }
 
         private List<LicenceStatus> GetDefaultStatuses()
@@ -278,6 +284,7 @@ namespace GLAA.Web
                     defaultStatuses.Add(status);
                 }
             }
+
             return defaultStatuses;
         }
 
@@ -296,7 +303,7 @@ namespace GLAA.Web
             }
         }
 
-        private async Task BuildAdminUser(IServiceProvider serviceProvider)
+        private async Task BuildSuperUser(IServiceProvider serviceProvider)
         {
             var um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
 
@@ -325,6 +332,45 @@ namespace GLAA.Web
             {
                 await um.AddToRoleAsync(su, "Administrator");
             }
+        }
+
+        private async Task<IEnumerable<GLAAUser>> BuildAdminUsersAsync(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
+
+            var keyValuePairs = Configuration.GetSection("AdminUsers")
+                .AsEnumerable()
+                .Where(x => x.Key.Contains("AdminUsers") 
+                    && x.Key.Contains("Email") 
+                    && !string.IsNullOrEmpty(x.Value))
+                .ToList();
+
+            var adminUsers = new List<GLAAUser>();
+
+            for (var i = 0; i < keyValuePairs.Count; i++)
+            {
+                var user = new GLAAUser();
+
+                Configuration.GetSection($"AdminUsers:{i}").Bind(user);
+                var password = Configuration.GetSection($"AdminUsers:{i}:Password").Value;
+                var email = Configuration.GetSection($"AdminUsers:{i}:Email").Value;
+
+                user.UserName = email;
+
+                adminUsers.Add(user);
+
+                var result = await userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
+                {
+                    if (!await userManager.IsInRoleAsync(user, "Administrator"))
+                    {
+                        await userManager.AddToRoleAsync(user, "Administrator");
+                    }
+                }
+            }
+
+            return adminUsers;
         }
 
         private static async Task BuildUsers(IServiceProvider serviceProvider)

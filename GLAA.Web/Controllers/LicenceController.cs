@@ -11,13 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace GLAA.Web.Controllers
 {
     //[SessionTimeout]
     public class LicenceController : LicenceApplicationBaseController
     {
-        private readonly UserManager<GLAAUser> _userManager;
+        private readonly UserManager<GLAAUser> userManager;
 
         public LicenceController(ISessionHelper session,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
@@ -25,9 +26,10 @@ namespace GLAA.Web.Controllers
             ILicenceStatusViewModelBuilder licenceStatusViewModelBuilder,
             IFormDefinition formDefinition,
             IConstantService constantService, IReferenceDataProvider rdp,
-            UserManager<GLAAUser> _userManager) : base(session, licenceApplicationViewModelBuilder,
+            UserManager<GLAAUser> userManager) : base(session, licenceApplicationViewModelBuilder,
             licenceApplicationPostDataHandler, licenceStatusViewModelBuilder, formDefinition, constantService, rdp)
         {
+            this.userManager = userManager;
         }
 
         [Route("Licence/TaskList")]
@@ -531,16 +533,20 @@ namespace GLAA.Web.Controllers
         [Authorize]
         [Route("Licence/ViewApplication")]
         [HttpGet]
-        public IActionResult ViewApplication()
+        public async Task<IActionResult> ViewApplication()
         {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            var model = LicenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).FirstOrDefault();
+
             var licenceId = Session.GetCurrentLicenceId();
 
-            if (licenceId != 0)
+            if (model != null)
             {
 
-                var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+                //var model = LicenceApplicationViewModelBuilder.Build(licenceId);
 
-                model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                model.NewLicenceStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(model.Id);
 
                 ViewData["IsSubmitted"] = model.NewLicenceStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
 
