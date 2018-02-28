@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,18 +10,19 @@ namespace GLAA.Repository
 {
     public class LicenceRepository : EntityFrameworkRepositoryBase, ILicenceRepository
     {
-        public LicenceRepository(GLAAContext dbContext) : base(dbContext)
+        public LicenceRepository(GLAAContext dbContext, IDateTimeProvider dtp) : base(dbContext, dtp)
         {
         }
 
         public Licence GetById(int id)
         {
-            return GetAllEntriesWithStatusesAndAddress().First(l => l.Id == id);
+            return GetAllEntriesWithStatusesAndAddress().FirstOrDefault(l => l.Id == id);
         }
 
         public Licence GetByApplicationId(string applicationId)
         {
-            return GetAllEntriesWithStatusesAndAddress().First(l => l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));
+            return GetAllEntriesWithStatusesAndAddress().FirstOrDefault(l =>
+                l.ApplicationId.Equals(applicationId, StringComparison.OrdinalIgnoreCase));
         }
 
         public IEnumerable<Licence> GetAllLicencesForPublicRegister()
