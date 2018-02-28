@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
-    public class PrincipalAuthority : Person, IPerson, IId, ILinkedToLicence
+    public class PrincipalAuthority : Person, IPerson, IId, ILinkedToLicence, IDeletable
     {        
         public bool IsCurrent { get; set; }
 
@@ -35,5 +34,7 @@ namespace GLAA.Domain.Models
         public string ImmigrationStatus { get; set; }
 
         public DateTime? LeaveToRemainTo { get; set; }
+        public bool Deleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

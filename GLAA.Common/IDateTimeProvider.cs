@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GLAA.Services
+namespace GLAA.Common
 {
     public interface IDateTimeProvider
     {
