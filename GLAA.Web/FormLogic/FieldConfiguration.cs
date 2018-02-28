@@ -35,20 +35,20 @@ namespace GLAA.Web.FormLogic
                         FormSection.OrganisationDetails,
                         new[]
                         {
-                            new FormPageDefinition(),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessName)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.Address)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessPhoneNumber)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessMobileNumber)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessEmailAddress)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessWebsite)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.CommunicationPreference)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.LegalStatus)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessCredentialsViewModel), true),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingIndustries)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.Turnover)),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingCountries)),
-                            new FormPageDefinition()
+                            new FormPageDefinition(string.Empty, "Introduction"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessName), "BusinessName"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.Address), "Address"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessPhoneNumber), "BusinessPhoneNumber"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessMobileNumber), "BusinessMobileNumber"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessEmailAddress), "BusinessEmailAddress"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessWebsite), "BusinessWebsite"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.CommunicationPreference), "CommunicationPreference"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.LegalStatus), "LegalStatus"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessCredentialsViewModel), "BusinessCredentialsViewModel", true),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingIndustries), "OperatingIndustries"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.Turnover), "Turnover"),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingCountries), "OperatingCountries"),
+                            new FormPageDefinition(string.Empty, "Summary")
                         }
                     },
                     {
