@@ -52,12 +52,12 @@
 
         <div class="form-group">
             @Html.LabelWithHintFor(x => x.CountyId)
-            @Html.DropDownListFor(m => m.CountyId, Model.Counties, null, new {@class = "form-control"})
+            @Html.DropDownListFor(m => m.CountyId, Model?.Counties, null, new {@class = "form-control"})
         </div>
     }
 
     <div class="form-group">
         @Html.LabelWithHintFor(x => x.CountryId)
-        @Html.DropDownListFor(m => m.CountryId, Model.Countries, null, new {@class = "form-control"})
+        @Html.DropDownListFor(m => m.CountryId, Model?.Countries, null, new {@class = "form-control"})
     </div>
 }
