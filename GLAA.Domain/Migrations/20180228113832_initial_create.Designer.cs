@@ -12,7 +12,7 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180223150712_initial_create")]
+    [Migration("20180228113832_initial_create")]
     partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -482,11 +482,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("CurrentSubmittedStatusChangeId");
 
-                    b.Property<DateTime?>("DateDeleted");
-
                     b.Property<DateTime?>("DateOfBan");
-
-                    b.Property<bool>("Deleted");
 
                     b.Property<bool>("EmailAlreadyRegistered");
 

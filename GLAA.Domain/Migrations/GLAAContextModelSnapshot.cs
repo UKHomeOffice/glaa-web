@@ -481,11 +481,7 @@ namespace GLAA.Domain.Migrations
 
                     b.Property<int?>("CurrentSubmittedStatusChangeId");
 
-                    b.Property<DateTime?>("DateDeleted");
-
                     b.Property<DateTime?>("DateOfBan");
-
-                    b.Property<bool>("Deleted");
 
                     b.Property<bool>("EmailAlreadyRegistered");
 
