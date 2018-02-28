@@ -36,7 +36,6 @@ namespace GLAA.Repository.Tests
                 context.SaveChanges();
             }
 
-            // For reasons that are unlikely to become clear at the moment, this is best practice
             using (var context = new GLAAContext(options))
             {
                 var repo = new EntityFrameworkRepositoryBase(context, dtp);
