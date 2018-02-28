@@ -12,12 +12,16 @@ namespace GLAA.Repository.Tests
     [TestClass]
     public class When_interacting_with_generic_entities
     {
+        public TestContext TestContext { get; set; }
+
         private IDateTimeProvider dtp;
+        private DbContextOptions<GLAAContext> options;
 
         [TestInitialize]
         public void Setup()
         {
             dtp = Substitute.For<IDateTimeProvider>();
+            options = new DbContextOptionsBuilder<GLAAContext>().UseInMemoryDatabase(TestContext.TestName).Options;
         }
 
         [TestMethod]
@@ -25,9 +29,6 @@ namespace GLAA.Repository.Tests
         {
             const int id = 1;
             const string expectedAddress = "Line 1";
-
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_retrieve_a_non_deleted_entity_by_id)).Options;
 
             using (var context = new GLAAContext(options))
             {
@@ -51,9 +52,6 @@ namespace GLAA.Repository.Tests
             const int id = 1;
             const string expectedAddress = "Line 1";
 
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_not_retrieve_a_deleted_entity_by_id)).Options;
-
             using (var context = new GLAAContext(options))
             {
                 context.Addresses.Add(new Address {Id = id, AddressLine1 = expectedAddress, Deleted = true});
@@ -73,9 +71,6 @@ namespace GLAA.Repository.Tests
         {
             const int id = 1;
             const string expectedAddress = "Line 1";
-
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_retrieve_a_deleted_entity_by_id_if_specified)).Options;
 
             using (var context = new GLAAContext(options))
             {
@@ -99,9 +94,6 @@ namespace GLAA.Repository.Tests
             const int id = 1;
             const string expectedAddress = "Line 1";
 
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_retrieve_a_non_deleted_entity_by_predicate)).Options;
-
             using (var context = new GLAAContext(options))
             {
                 context.Addresses.Add(new Address {Id = id, AddressLine1 = expectedAddress});
@@ -122,9 +114,6 @@ namespace GLAA.Repository.Tests
         {
             const int id = 1;
             const string expectedAddress = "Line 1";
-
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_get_all_non_deleted_entities)).Options;
 
             using (var context = new GLAAContext(options))
             {
@@ -150,9 +139,6 @@ namespace GLAA.Repository.Tests
             const int id2 = 2;
             const string expectedAddress = "Line 1";
             const string expectedDeletedAddress = "Deleted Line 1";
-
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_get_all_entities_including_deleted_if_specified)).Options;
 
             using (var context = new GLAAContext(options))
             {
@@ -183,9 +169,6 @@ namespace GLAA.Repository.Tests
 
             dtp.Now().Returns(now);
 
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_mark_a_deletable_entry_as_deleted)).Options;
-
             using (var context = new GLAAContext(options))
             {
                 context.Addresses.Add(new Address { Id = id, AddressLine1 = expectedAddress });
@@ -214,9 +197,6 @@ namespace GLAA.Repository.Tests
             var now = new DateTime(2018, 1, 1);
 
             dtp.Now().Returns(now);
-
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_mark_items_marked_for_cascading_as_deleted)).Options;
 
             using (var context = new GLAAContext(options))
             {
@@ -280,9 +260,6 @@ namespace GLAA.Repository.Tests
         [TestMethod]
         public void it_should_create_a_new_instance_of_the_entity_and_attach_it_to_be_created()
         {
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_create_a_new_instance_of_the_entity_and_attach_it_to_be_created)).Options;
-
             using (var context = new GLAAContext(options))
             {
                 var repo = new EntityFrameworkRepositoryBase(context, dtp);
@@ -295,9 +272,6 @@ namespace GLAA.Repository.Tests
         [TestMethod]
         public void it_should_save_any_changes_to_the_state_of_the_context()
         {
-            var options = new DbContextOptionsBuilder<GLAAContext>()
-                .UseInMemoryDatabase(nameof(it_should_create_a_new_instance_of_the_entity_and_attach_it_to_be_created)).Options;
-
             using (var context = new GLAAContext(options))
             {
                 var repo = new EntityFrameworkRepositoryBase(context, dtp);
