@@ -44,7 +44,11 @@ namespace GLAA.Web.Tests.Controllers
             licenceViewModelBuilder.Build<OrganisationDetailsViewModel>(Arg.Any<int>())
                 .Returns(new OrganisationDetailsViewModel());
 
-            var result = controller.SaveOrganisationName(new BusinessNameViewModel {BusinessName = "Org Name"}) as RedirectToActionResult;
+            var result = controller.SaveOrganisationName(new BusinessNameViewModel {
+                BusinessName = "Org Name",
+                HasPreviousTradingName = false,
+                HasTradingName = false
+            }) as RedirectToActionResult;
 
             licencePostDataHandler.Received(1).Update(
                 Arg.Any<int>(), 

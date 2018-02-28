@@ -22,7 +22,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.BusinessName, opt => opt.ResolveUsing(BusinessNameResolver))
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.Address, opt => opt.Condition(y => y.Address != null))
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<Licence, BusinessEmailAddressViewModel>()
                 .ForMember(x => x.BusinessEmailAddress, opt => opt.MapFrom(y => y.BusinessEmailAddress))
@@ -177,7 +179,7 @@ namespace GLAA.Services.Automapper
 
         private IEnumerable<PAYENumberRow> PAYENumberResolver(Licence licence)
         {
-            return licence.PAYENumbers.Select(x => new PAYENumberRow
+            return licence.PAYENumbers.Where(z => !z.Deleted).Select(x => new PAYENumberRow
             {
                 Id = x.Id,
                 PAYENumber = x.Number,
@@ -247,7 +249,7 @@ namespace GLAA.Services.Automapper
                 HasTradingName = licence.HasTradingName,
                 TradingName = licence.TradingName,
                 HasPreviousTradingName = licence.HasPreviousTradingName,
-                PreviousTradingNames = licence.PreviousTradingNames?.Select(p => new PreviousTradingNameViewModel
+                PreviousTradingNames = licence.PreviousTradingNames?.Where(z => !z.Deleted).Select(p => new PreviousTradingNameViewModel
                 {
                     Id = p.Id,
                     BusinessName = p.BusinessName,

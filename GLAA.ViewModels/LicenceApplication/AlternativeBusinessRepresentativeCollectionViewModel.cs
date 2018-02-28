@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class AlternativeBusinessRepresentativeCollectionViewModel : YesNoViewModel, IValidatable
+    public class AlternativeBusinessRepresentativeCollectionViewModel : YesNoViewModel, IValidatable, IIsSubmitted
     {
         public IEnumerable<AlternativeBusinessRepresentativeViewModel> AlternativeBusinessRepresentatives { get; set; }
 
@@ -40,5 +40,6 @@ namespace GLAA.ViewModels.LicenceApplication
         }
 
         public bool IsValid { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }

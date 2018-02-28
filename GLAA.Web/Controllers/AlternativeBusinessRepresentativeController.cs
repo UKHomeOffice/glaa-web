@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
@@ -81,13 +82,6 @@ namespace GLAA.Web.Controllers
 
             var model = abrs.AlternativeBusinessRepresentatives.Single(a => a.Id == id);
             LicenceApplicationViewModelBuilder.BuildCountriesFor(model);
-
-
-            if (ViewData["IsSubmitted"] == null)
-            {
-                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
-                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
-            }
 
             return View(GetLastViewPath(FormSection.AlternativeBusinessRepresentative), model);
         }

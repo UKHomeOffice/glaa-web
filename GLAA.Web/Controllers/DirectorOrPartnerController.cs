@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
@@ -45,12 +46,6 @@ namespace GLAA.Web.Controllers
             if ((model.IsPreviousPrincipalAuthority.IsPreviousPrincipalAuthority ?? false) && model.PrincipalAuthorityId.HasValue)
             {
                 Session.SetCurrentPaStatus(model.PrincipalAuthorityId.Value, true);
-            }
-
-            if (ViewData["IsSubmitted"] == null)
-            {
-                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
-                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
             }
 
             return View(GetLastViewPath(FormSection.DirectorOrPartner), model);

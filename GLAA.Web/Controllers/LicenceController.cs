@@ -2,6 +2,7 @@
 using GLAA.Domain.Models;
 using GLAA.Web.Attributes;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
@@ -460,6 +461,15 @@ namespace GLAA.Web.Controllers
         {
             var licenceId = Session.GetCurrentLicenceId();
             var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
+            LicenceApplicationViewModelBuilder.BuildCountriesFor(model.PrincipalAuthority);
+
+            model.DirectorOrPartner.DirectorsOrPartners =
+                model.DirectorOrPartner.DirectorsOrPartners.Select(LicenceApplicationViewModelBuilder
+                    .BuildCountriesFor);
+            model.AlternativeBusinessRepresentatives.AlternativeBusinessRepresentatives =
+                model.AlternativeBusinessRepresentatives.AlternativeBusinessRepresentatives.Select(
+                    LicenceApplicationViewModelBuilder.BuildCountriesFor);
 
             model.Validate();
 

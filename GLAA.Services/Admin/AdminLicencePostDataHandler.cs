@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.ViewModels.Admin;
@@ -24,12 +25,8 @@ namespace GLAA.Services.Admin
             statusChange.DateCreated = dateTimeProvider.Now();
             statusChange.Status = repository.GetById<LicenceStatus>(model.NewLicenceStatus);
             statusChange.Reason = repository.GetById<StatusReason>(model.NewStatusReason);
-            statusChange.NonCompliantStandards = model.StandardCheckboxes.Where(x => x.Checked)
+            statusChange.NonCompliantStandards = model.Standards.Where(x => x.Checked)
                 .Select(y => repository.GetById<LicenceStatusChangeLicensingStandard>(y.Id)).ToList();
-
-            repository.Upsert(statusChange);
-
-            //Update the current status for the Licence.
             statusChange.Licence.CurrentStatusChange = statusChange;
             repository.Upsert(statusChange.Licence);
         }

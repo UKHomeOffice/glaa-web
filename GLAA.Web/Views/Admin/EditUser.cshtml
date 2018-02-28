@@ -14,8 +14,20 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <td>@Html.LabelFor(m => m.FullName)</td>
-                    <td>@Html.TextBoxFor(m => m.FullName, new {@class = "form-control"})</td>
+                    <td>@Html.LabelFor(m => m.Title)</td>
+                    <td>@Html.TextBoxFor(m => m.Title, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.FirstName)</td>
+                    <td>@Html.TextBoxFor(m => m.FirstName, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.MiddleName)</td>
+                    <td>@Html.TextBoxFor(m => m.MiddleName, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.LastName)</td>
+                    <td>@Html.TextBoxFor(m => m.LastName, new {@class = "form-control"})</td>
                 </tr>
                 <tr>
                     <td>@Html.LabelFor(m => m.Email)</td>

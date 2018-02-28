@@ -18,7 +18,9 @@ namespace GLAA.Services.Automapper
             CreateMap<AddressViewModel, Address>()
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.Country, opt => opt.Ignore())
-                .ForMember(x => x.County, opt => opt.Ignore());
+                .ForMember(x => x.County, opt => opt.Ignore())
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
         }
     }
 }

@@ -11,17 +11,19 @@ namespace GLAA.Services.Automapper
         public AlternativeBusinessRepresentativeProfile()
         {
             CreateMap<Licence, AlternativeBusinessRepresentativeCollectionViewModel>()
-                .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.AlternativeBusinessRepresentatives))
+                .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.AlternativeBusinessRepresentatives.Where(z => !z.Deleted)))
                 .ForMember(x => x.HasAlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.HasAlternativeBusinessRepresentatives))
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
-                .ForMember(x => x.YesNo, opt => opt.Ignore());
+                .ForMember(x => x.YesNo, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(ProfileHelpers.GetIsSubmitted));
 
             CreateMap<ICollection<AlternativeBusinessRepresentative>, AlternativeBusinessRepresentativeCollectionViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.HasAlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.FirstOrDefault().Licence.HasAlternativeBusinessRepresentatives))
-                .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y))
-                .ForMember(x => x.YesNo, opt => opt.Ignore());
-            
+                .ForMember(x => x.AlternativeBusinessRepresentatives, opt => opt.MapFrom(y => y.Where(z => !z.Deleted)))
+                .ForMember(x => x.YesNo, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.Ignore());
+
             CreateMap<AlternativeBusinessRepresentative, AlternativeBusinessRepresentativeViewModel>()
                 .ForMember(x => x.IsValid, opt => opt.Ignore())
                 .ForMember(x => x.BirthDetailsViewModel, opt => opt.ResolveUsing(ProfileHelpers.BirthDetailsResolver<AlternativeBusinessRepresentativeViewModel>))
@@ -43,7 +45,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.PreviousLicenceViewModel, opt => opt.ResolveUsing(ProfileHelpers.PreviousLicenceResolver))
                 .ForMember(x => x.IsUk, opt => opt.MapFrom(y => y.CountryOfBirth != null && y.CountryOfBirth.IsUk))
                 .ForMember(x => x.Countries, opt => opt.Ignore())
-                .ForMember(x => x.Counties, opt => opt.Ignore());
+                .ForMember(x => x.Counties, opt => opt.Ignore())
+                .ForMember(x => x.IsSubmitted, opt => opt.ResolveUsing(x => ProfileHelpers.GetIsSubmitted(x.Licence)))
+                .ForMember(x => x.Address, opt => opt.Condition(y => y.Address != null));
 
             CreateMap<AlternativeBusinessRepresentative, AlternativeFullNameViewModel>()
                 .ConvertUsing(ProfileHelpers.AlternativeFullNameResolver);
@@ -85,7 +89,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasOffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial))
                 .ForMember(x => x.OffencesAwaitingTrial, opt => opt.Ignore())
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.HasPreviouslyHeldLicence))
-                .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription));
+                .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription))
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
 
             CreateMap<FullNameViewModel, AlternativeBusinessRepresentative>()
                 .ForMember(x => x.FullName, opt => opt.MapFrom(y => y.FullName))
@@ -182,7 +188,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<AlternativeBusinessRepresentative, RestraintOrdersViewModel>()
                 .ForMember(x => x.HasRestraintOrders, opt => opt.MapFrom(y => y.HasRestraintOrders))
-                .ForMember(x => x.RestraintOrders, opt => opt.MapFrom(y => y.RestraintOrders))
+                .ForMember(x => x.RestraintOrders, opt => opt.MapFrom(y => y.RestraintOrders.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<UnspentConvictionsViewModel, AlternativeBusinessRepresentative>()
@@ -192,7 +198,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<AlternativeBusinessRepresentative, UnspentConvictionsViewModel>()
                 .ForMember(x => x.HasUnspentConvictions, opt => opt.MapFrom(y => y.HasUnspentConvictions))
-                .ForMember(x => x.UnspentConvictions, opt => opt.MapFrom(y => y.UnspentConvictions))
+                .ForMember(x => x.UnspentConvictions, opt => opt.MapFrom(y => y.UnspentConvictions.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<OffencesAwaitingTrialViewModel, AlternativeBusinessRepresentative>()
@@ -202,7 +208,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<AlternativeBusinessRepresentative, OffencesAwaitingTrialViewModel>()
                 .ForMember(x => x.HasOffencesAwaitingTrial, opt => opt.MapFrom(y => y.HasOffencesAwaitingTrial))
-                .ForMember(x => x.OffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrial))
+                .ForMember(x => x.OffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrial.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<PreviousLicenceViewModel, AlternativeBusinessRepresentative>()

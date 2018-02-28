@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
@@ -45,6 +46,12 @@ namespace GLAA.Web.Controllers
 
             if (model.Id.HasValue)
                 Session.SetCurrentNamedIndividualId(model.Id.Value);
+
+            if (ViewData["IsSubmitted"] == null)
+            {
+                var currentStatus = LicenceStatusViewModelBuilder.BuildLatestStatus(licenceId);
+                ViewData["IsSubmitted"] = currentStatus.Id == ConstantService.ApplicationSubmittedOnlineStatusId;
+            }
 
             Session.SetLoadedPage(id);
             return model;

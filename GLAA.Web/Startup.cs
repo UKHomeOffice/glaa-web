@@ -24,10 +24,12 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Amazon.S3;
 using Amazon.Runtime;
+using GLAA.Common;
 using GLAA.Services.AccountCreation;
 using GLAA.Services.PublicRegister;
 using GLAA.Scheduler.Tasks;
 using GLAA.Scheduler.Scheduling;
+using GLAA.Services.Extensions;
 
 namespace GLAA.Web
 {
@@ -131,7 +133,6 @@ namespace GLAA.Web
             services.AddTransient<ILicenceRepository, LicenceRepository>();
             services.AddTransient<IAdminHomeViewModelBuilder, AdminHomeViewModelBuilder>();
             services.AddTransient<IAdminLicenceListViewModelBuilder, AdminLicenceListViewModelBuilder>();
-            services.AddTransient<IAdminLicenceViewModelBuilder, AdminLicenceViewModelBuilder>();
             services.AddTransient<IAdminLicencePostDataHandler, AdminLicencePostDataHandler>();
             services.AddTransient<IAdminUserListViewModelBuilder, AdminUserListViewModelBuilder>();
             services.AddTransient<IAdminUserViewModelBuilder, AdminUserViewModelBuilder>();
@@ -193,7 +194,6 @@ namespace GLAA.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile("secrets/appsettings.secrets.json", optional: true);
-            //.AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
@@ -208,30 +208,29 @@ namespace GLAA.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
             {
+                //app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
             }
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var logFactory = app.ApplicationServices.GetRequiredService<ILoggerFactory>();
-                var logger = logFactory.CreateLogger("Startup Log");
+                var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();                
 
-                logger.LogInformation("Getting statuses from secrets");
+                logger.TimedLog(LogLevel.Information, "Getting statuses from secrets");
 
                 var defaultStatuses = GetDefaultStatuses();
 
-                logger.LogInformation($"Got {defaultStatuses.Count} statuses from secrets");
+                logger.TimedLog(LogLevel.Information, $"Got {defaultStatuses.Count} statuses from secrets");
 
-                logger.LogInformation("Running db seed...");
+                logger.TimedLog(LogLevel.Information, "Running db seed...");
 
                 serviceScope.ServiceProvider.GetService<GLAAContext>().Seed(defaultStatuses);
 
-                logger.LogInformation("Completed db seed");
+                logger.TimedLog(LogLevel.Information, "Completed db seed");
             }
 
             app.UseStaticFiles();

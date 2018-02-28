@@ -1,6 +1,6 @@
 ﻿namespace GLAA.ViewModels.LicenceApplication
 {
-    public class NamedIndividualViewModel : Validatable
+    public class NamedIndividualViewModel : Validatable, IIsSubmitted
     {
         public NamedIndividualViewModel()
         {
@@ -30,5 +30,6 @@
         public UnspentConvictionsViewModel UnspentConvictionsViewModel { get; set; }
         public OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
         public PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
+        public bool IsSubmitted { get; set; }
     }
 }

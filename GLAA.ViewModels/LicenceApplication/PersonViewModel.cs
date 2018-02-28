@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GLAA.ViewModels.LicenceApplication
 {
-    public class PersonViewModel : Validatable, IPersonViewModel, INeedCountries, INeedCounties
+    public class PersonViewModel : Validatable, IPersonViewModel, INeedCountries, INeedCounties, IIsSubmitted
     {
         private IEnumerable<SelectListItem> countries;
 
@@ -27,6 +27,7 @@ namespace GLAA.ViewModels.LicenceApplication
             UnspentConvictionsViewModel = new UnspentConvictionsViewModel();
             OffencesAwaitingTrialViewModel = new OffencesAwaitingTrialViewModel();
             PreviousLicenceViewModel = new PreviousLicenceViewModel();
+            Address = new AddressViewModel();
         }
 
         public bool IsUk { get; set; }
@@ -53,7 +54,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public IEnumerable<SelectListItem> Counties
         {
             set => Address.Counties = value;
-            get => Address.Counties;
+            get => Address?.Counties ?? new List<SelectListItem>();
         }
 
         public IEnumerable<SelectListItem> Countries
@@ -66,5 +67,7 @@ namespace GLAA.ViewModels.LicenceApplication
                 BirthDetailsViewModel.CountryOfBirthViewModel.Countries = value;
             }
         }
+
+        public bool IsSubmitted { get; set; }
     }
 }

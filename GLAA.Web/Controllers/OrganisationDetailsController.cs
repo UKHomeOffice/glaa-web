@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GLAA.Common;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;
@@ -65,7 +66,9 @@ namespace GLAA.Web.Controllers
         {
             Session.SetSubmittedPage(FormSection.OrganisationDetails, 2);
 
-            if (!ModelState.IsValid)
+            model.Validate();
+
+            if (!model.IsValid)
             {
                 return View(GetViewPath(FormSection.OrganisationDetails, 2), model);
             }
