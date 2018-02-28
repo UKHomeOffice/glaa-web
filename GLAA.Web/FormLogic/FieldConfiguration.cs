@@ -209,5 +209,7 @@ namespace GLAA.Web.FormLogic
         };
 
         public IDictionary<FormSection, FormPageDefinition[]> Fields { get; set; }
+
+        public FormPageDefinition[] this[FormSection section] => Fields[section];
     }
 }
