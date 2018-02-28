@@ -1,0 +1,28 @@
+﻿@model GLAA.ViewModels.PublicRegister.PublicRegisterLicenceListViewModel
+
+@{
+    ViewBag.Title = "Add File";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div>
+    Upload a file.
+</div>
+
+
+@using (Html.BeginForm("Index", "PublicRegister"))
+{
+    <div>
+        <label for="FormFileUpload" class="button">Add a File</label>
+        
+        <div style="overflow: hidden; width: 100%;">
+            <input type="file" id="FormFileUpload" value="Add a File" style="position: relative;left: -120px;"/>    
+        </div>
+        
+    </div>
+<br />
+<div>
+    <input type="submit" value="Upload" />
+</div>
+}
