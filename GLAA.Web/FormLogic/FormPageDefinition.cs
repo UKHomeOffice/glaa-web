@@ -43,5 +43,10 @@ namespace GLAA.Web.FormLogic
             var lambda = Expression.Lambda<Func<object>>(propExpression);
             return lambda.Compile()();
         }
+
+        public bool MatchesName(string actionName)
+        {
+            return ActionName.Equals(actionName, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }
