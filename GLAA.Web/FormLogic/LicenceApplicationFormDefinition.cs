@@ -113,7 +113,7 @@ namespace GLAA.Web.FormLogic
             return GetLastPage(section);
         }
 
-        public FormPageDefinition GetNextPossibleAction<TParent>(FormSection section, string actionName, TParent parent)
+        public FormPageDefinition GetNextPossiblePage<TParent>(FormSection section, string actionName, TParent parent)
         {
             var matchLocation = 0;
             // Search through the list of pages for this section until we find the current one
@@ -137,7 +137,7 @@ namespace GLAA.Web.FormLogic
             return GetLastPage(section);
         }
 
-        public FormPageDefinition GetPreviousPossibleAction<TParent>(FormSection section, string actionName, TParent parent)
+        public FormPageDefinition GetPreviousPossiblePage<TParent>(FormSection section, string actionName, TParent parent)
         {
             var matchLocation = GetSectionLength(section) - 1;
             // Search back through the list of pages until we find the current one

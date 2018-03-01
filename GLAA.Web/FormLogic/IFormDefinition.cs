@@ -72,8 +72,8 @@ namespace GLAA.Web.FormLogic
         /// <returns>The previous action name.</returns>
         FormPageDefinition GetPreviousPage(FormSection section, string actionName);
 
-        FormPageDefinition GetNextPossibleAction<TParent>(FormSection section, string actionName, TParent parent);
+        FormPageDefinition GetNextPossiblePage<TParent>(FormSection section, string actionName, TParent parent);
 
-        FormPageDefinition GetPreviousPossibleAction<TParent>(FormSection section, string actionName, TParent parent);
+        FormPageDefinition GetPreviousPossiblePage<TParent>(FormSection section, string actionName, TParent parent);
     }
 }
