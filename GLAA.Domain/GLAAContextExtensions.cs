@@ -660,7 +660,7 @@ namespace GLAA.Domain
         {
             foreach (var user in users)
             {
-                context.AddFullLicence(user.FirstName.Substring(0, 4).ToUpper(), user);
+                context.AddFullLicence($"{user.FirstName.Substring(0, 4).ToUpper()}-0001", user);
             }
 
             context.SaveChanges();

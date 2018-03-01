@@ -88,15 +88,25 @@ namespace GLAA.Web.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {
-                    _logger.TimedLog(LogLevel.Information, "User logged in.");
-
+                {                    
                     var user = await _userManager.FindByEmailAsync(model.Email);
+
+                    _logger.TimedLog(LogLevel.Information, $"User {user.Email} logged in.");
+
+                    var isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
+
+                    if(isAdmin)
+                    {
+                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Administrator'");
+
+                        return RedirectToAction("Index", "Admin");
+                    }
+
                     var isLabourProvider = await _userManager.IsInRoleAsync(user, "Labour Provider");                    
 
                     if (isLabourProvider)
                     {
-                        _logger.LogInformation($"User {user.Email} is in role 'Labour Provider'");
+                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
 
                         try
                         {
@@ -109,11 +119,14 @@ namespace GLAA.Web.Controllers
                         }
                         catch (Exception e)
                         {
+                            _logger.TimedLog(LogLevel.Error, $"User {user.Email} unable to find licence", e);
+
                             return RedirectToAction("TaskList", "Licence");
                         }
                     }
 
-                    return RedirectToAction("Index", "Admin");
+                    //TODO: What happens for other roles? 
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
