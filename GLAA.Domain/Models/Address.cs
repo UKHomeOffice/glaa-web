@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
-    public class Address : IId
+    public class Address : IId, IDeletable
     {                
         [Key]
         public int Id { get; set; }
@@ -23,6 +24,9 @@ namespace GLAA.Domain.Models
 
         public int? CountyId { get; set; }
         [ForeignKey(nameof(CountyId))]
-        public virtual County County { get; set; }        
+        public virtual County County { get; set; }
+
+        public bool Deleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }
