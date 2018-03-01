@@ -656,9 +656,9 @@ namespace GLAA.Domain
             context.AddPublicRegisterLicences(_companyPart1, _companyPart2, _firstNames, _lastNames);
         }
 
-        public static void AddAdminUsersWithFullLicence(this GLAAContext context, IEnumerable<GLAAUser> adminUsers)
+        public static void AddUsersWithFullLicence(this GLAAContext context, IEnumerable<GLAAUser> users)
         {
-            foreach (var user in adminUsers)
+            foreach (var user in users)
             {
                 context.AddFullLicence(user.FirstName.Substring(0, 4).ToUpper(), user);
             }

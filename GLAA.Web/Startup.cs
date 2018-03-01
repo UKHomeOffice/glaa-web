@@ -234,9 +234,10 @@ namespace GLAA.Web
                 BuildRoles(serviceProvider).Wait();
                 BuildSuperUser(serviceProvider).Wait();
                 BuildUsers(serviceProvider).Wait();
-                var adminUsers = BuildAdminUsersAsync(serviceProvider).Result;
+                BuildUsersFromSectionWithRoleAsync(serviceProvider, "AdminUsers", "Administrator").Wait();
+                var licenceUsers = BuildUsersFromSectionWithRoleAsync(serviceProvider, "LicenceUsers", "Labour Provider").Result;
 
-                dbContext.AddAdminUsersWithFullLicence(adminUsers);
+                dbContext.AddUsersWithFullLicence(licenceUsers);
 
                 logger.TimedLog(LogLevel.Information, "Completed db seed");
             }
@@ -334,43 +335,43 @@ namespace GLAA.Web
             }
         }
 
-        private async Task<IEnumerable<GLAAUser>> BuildAdminUsersAsync(IServiceProvider serviceProvider)
+        private async Task<IEnumerable<GLAAUser>> BuildUsersFromSectionWithRoleAsync(IServiceProvider serviceProvider, string section, string role)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
 
-            var keyValuePairs = Configuration.GetSection("AdminUsers")
+            var keyValuePairs = Configuration.GetSection(section)
                 .AsEnumerable()
-                .Where(x => x.Key.Contains("AdminUsers") 
-                    && x.Key.Contains("Email") 
+                .Where(x => x.Key.Contains(section)
+                    && x.Key.Contains("Email")
                     && !string.IsNullOrEmpty(x.Value))
                 .ToList();
 
-            var adminUsers = new List<GLAAUser>();
+            var users = new List<GLAAUser>();
 
             for (var i = 0; i < keyValuePairs.Count; i++)
             {
                 var user = new GLAAUser();
 
-                Configuration.GetSection($"AdminUsers:{i}").Bind(user);
-                var password = Configuration.GetSection($"AdminUsers:{i}:Password").Value;
-                var email = Configuration.GetSection($"AdminUsers:{i}:Email").Value;
+                Configuration.GetSection($"{section}:{i}").Bind(user);
+                var password = Configuration.GetSection($"{section}:{i}:Password").Value;
+                var email = Configuration.GetSection($"{section}:{i}:Email").Value;
 
                 user.UserName = email;
 
-                adminUsers.Add(user);
+                users.Add(user);
 
                 var result = await userManager.CreateAsync(user, password);
 
                 if (result.Succeeded)
                 {
-                    if (!await userManager.IsInRoleAsync(user, "Administrator"))
+                    if (!await userManager.IsInRoleAsync(user, role))
                     {
-                        await userManager.AddToRoleAsync(user, "Administrator");
+                        await userManager.AddToRoleAsync(user, role);
                     }
                 }
             }
 
-            return adminUsers;
+            return users;
         }
 
         private static async Task BuildUsers(IServiceProvider serviceProvider)
