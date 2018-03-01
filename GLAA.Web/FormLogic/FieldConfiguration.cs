@@ -44,7 +44,7 @@ namespace GLAA.Web.FormLogic
                             new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessWebsite), "BusinessWebsite"),
                             new FormPageDefinition(nameof(OrganisationDetailsViewModel.CommunicationPreference), "CommunicationPreference"),
                             new FormPageDefinition(nameof(OrganisationDetailsViewModel.LegalStatus), "LegalStatus"),
-                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessCredentialsViewModel), "BusinessCredentialsViewModel", true),
+                            new FormPageDefinition(nameof(OrganisationDetailsViewModel.BusinessCredentials), "BusinessCredentials", true),
                             new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingIndustries), "OperatingIndustries"),
                             new FormPageDefinition(nameof(OrganisationDetailsViewModel.Turnover), "Turnover"),
                             new FormPageDefinition(nameof(OrganisationDetailsViewModel.OperatingCountries), "OperatingCountries"),

@@ -95,7 +95,7 @@
         {
         <tr>
             <td>Companies House Registration</td>
-            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.CompaniesHouseRegistrationViewModel)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentials.CompaniesHouseRegistrationViewModel)</td>
             @if (isEditable)
             {
                 <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> Companies House Registration</span></a></td>
@@ -104,7 +104,7 @@
         }
         <tr>
             <td>PAYE Status</td>
-            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.PAYEStatusViewModel)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentials.PAYEStatusViewModel)</td>
             @if (isEditable)
             {
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> PAYE Status</span></a></td>
@@ -112,7 +112,7 @@
         </tr>
         <tr>
             <td>VAT Status</td>
-            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.VATStatusViewModel)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentials.VATStatusViewModel)</td>
             @if (isEditable)
             {
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> VAT Status</span></a></td>
@@ -120,7 +120,7 @@
         </tr>
         <tr>
             <td>Tax Reference Number</td>
-            <td>@Html.DisplayFor(m => m.BusinessCredentialsViewModel.TaxReferenceViewModel.TaxReferenceNumber)</td>
+            <td>@Html.DisplayFor(m => m.BusinessCredentials.TaxReferenceViewModel.TaxReferenceNumber)</td>
             @if (isEditable)
             {
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 10 })">Change<span class="visually-hidden"> Tax Reference Number</span></a></td>
