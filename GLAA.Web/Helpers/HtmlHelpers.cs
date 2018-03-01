@@ -316,6 +316,29 @@ namespace GLAA.Web.Core.Helpers
                     $"<span class='form-hint'>{metadata.Description}</span></label>");
         }
 
+        public static IHtmlContent FileUploadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        {
+            var fieldName =
+                html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+            var hasErrors = html.ViewData.ModelState[fieldName]?.Errors != null &&
+                            html.ViewData.ModelState[fieldName].Errors.Any();
+
+            return new HtmlContentBuilder()
+                    .AppendHtml(hasErrors
+                        ? "<div class='form-group form-group-error'>"
+                        : "<div class='form-group'>")
+                    .AppendHtml("<fieldset>")
+                    .AppendHtml("<label class='file-upload-button button' for='FormFileUpload'>Add a File</label>")
+                    .AppendHtml($"<input class='file-upload-control' type='file' id='{fieldName}' required />")
+                    .AppendHtml("<div class='file-upload-selected'>Selected file ready for upload.</div>")
+                    .AppendHtml(html.LabelWithHintFor(expression))
+                    .AppendHtml("<span class=\'error-message\'>")
+                    .AppendHtml(html.ValidationMessageFor(expression))
+                    .AppendHtml("</span>")
+                    .AppendHtml("</fieldset>")
+                    .AppendHtml("</div>");
+        }
+
         private static IHtmlContent BuildFormGroupForControl<TModel, TValue>(IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IHtmlContent control, IUkOnly UkOnlyModel = null)
         {
             var fieldName =
