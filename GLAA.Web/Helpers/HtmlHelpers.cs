@@ -327,15 +327,15 @@ namespace GLAA.Web.Core.Helpers
                     .AppendHtml(hasErrors
                         ? "<div class='form-group form-group-error'>"
                         : "<div class='form-group'>")
-                    .AppendHtml("<fieldset>")
-                    .AppendHtml("<label class='file-upload-button button' for='FormFileUpload'>Add a File</label>")
-                    .AppendHtml($"<input class='file-upload-control' type='file' id='{fieldName}' required />")
+                    //.AppendHtml("<fieldset>")
+                    .AppendHtml($"<label class='file-upload-button button' for='{fieldName}'>Add a File</label>")
+                    .AppendHtml($"<input class='file-upload-control' type='file' id='{fieldName}' name='{fieldName}' required />")
                     .AppendHtml("<div class='file-upload-selected'>Selected file ready for upload.</div>")
                     .AppendHtml(html.LabelWithHintFor(expression))
                     .AppendHtml("<span class=\'error-message\'>")
                     .AppendHtml(html.ValidationMessageFor(expression))
                     .AppendHtml("</span>")
-                    .AppendHtml("</fieldset>")
+                    //.AppendHtml("</fieldset>")
                     .AppendHtml("</div>");
         }
 

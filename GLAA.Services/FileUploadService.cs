@@ -2,10 +2,7 @@
 using Amazon.S3.Model;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GLAA.Services
@@ -14,14 +11,13 @@ namespace GLAA.Services
     {
         private readonly IAmazonS3 client;
         private readonly ILogger logger;
-        private static string bucketName = Environment.GetEnvironmentVariable("BUCKET_NAME");
+        private static readonly string bucketName = Environment.GetEnvironmentVariable("BUCKET_NAME");
 
 
         public FileUploadService(IAmazonS3 client, ILoggerFactory logger)
         {
             this.client = client;
             this.logger = logger.CreateLogger("File Upload Log");
-
         }
 
         public async Task UploadFile(FileStream fileStream)
@@ -32,10 +28,9 @@ namespace GLAA.Services
                 {
                     BucketName = bucketName,
                     Key = "test_" + DateTime.Now.ToShortTimeString(),
-                    InputStream = fileStream
+                    InputStream = fileStream,
+                    ServerSideEncryptionMethod = ServerSideEncryptionMethod.AWSKMS
                 };
-
-                putRequest.ServerSideEncryptionMethod = ServerSideEncryptionMethod.AWSKMS;
 
                 var response = await client.PutObjectAsync(putRequest);
             }
