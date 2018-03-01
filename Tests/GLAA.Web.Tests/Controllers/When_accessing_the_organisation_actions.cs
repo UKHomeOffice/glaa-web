@@ -44,7 +44,7 @@ namespace GLAA.Web.Tests.Controllers
             licenceViewModelBuilder.Build<OrganisationDetailsViewModel>(Arg.Any<int>())
                 .Returns(new OrganisationDetailsViewModel());
 
-            var result = controller.SaveOrganisationName(new BusinessNameViewModel {
+            var result = controller.BusinessName(new BusinessNameViewModel {
                 BusinessName = "Org Name",
                 HasPreviousTradingName = false,
                 HasTradingName = false
