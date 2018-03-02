@@ -344,3 +344,20 @@ table.publicrreigster tbody td {
 .public-register-title-container{
     float:left;
 }
+
+.file-upload-control  {
+    display: none;
+}
+
+.file-upload-button {
+    margin: 20px;
+}
+
+.file-upload-selected {
+    margin:20px;
+    display: none;
+}
+
+.file-upload-control:valid + .file-upload-selected {
+    display: block;
+}

@@ -1,0 +1,26 @@
+﻿@using GLAA.ViewModels.File
+@model GLAA.ViewModels.File.FileSummaryViewModel
+
+@{
+    ViewBag.Title = "Is this the correct file?";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="file-upload">
+    <div>
+        Upload a file.
+    </div>
+
+    @using (Html.BeginForm("Confirm", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            @Html.LabelFor(x => x.Key);
+            @Html.LabelFor(x => x.FileName);
+        </div>
+        <br />
+        <div>
+            <input class="button" type="submit" value="Conbtinue" />
+        </div>
+    }
+</div>

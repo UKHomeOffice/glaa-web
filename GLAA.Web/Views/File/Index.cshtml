@@ -1,0 +1,25 @@
+﻿@using GLAA.ViewModels.File
+@model GLAA.ViewModels.File.FileUploadViewModel
+
+@{
+    ViewBag.Title = "Add File";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="file-upload">
+    <div>
+        Upload a file.
+    </div>
+
+    @using (Html.BeginForm("Index", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div>
+        @Html.FileUploadFor(x => x.FormFileUpload)
+    </div>
+        <br />
+        <div>
+            <input class="button" type="submit" value="Upload" />
+        </div>
+    }
+</div>
