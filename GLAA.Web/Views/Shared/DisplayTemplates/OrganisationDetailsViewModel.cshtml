@@ -29,8 +29,7 @@
             }
             else
             {
-                var text = "Not set";
-                @text
+                <span>Not set</span>
             }
             </td>
             @if (isEditable)
@@ -45,10 +44,10 @@
             @if (Model.BusinessName.HasPreviousTradingName ?? false)
             {
                 @Html.DisplayFor(m => m.BusinessName.PreviousTradingNames, "PreviousTradingNamesViewModel")
-            } else
+            }
+            else
             {
-                var text = "Not set";
-                @text
+                <span>Not set</span>
             }
             </td>
             @if (isEditable)
