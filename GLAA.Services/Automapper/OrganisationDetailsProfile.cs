@@ -179,7 +179,7 @@ namespace GLAA.Services.Automapper
 
         private IEnumerable<PAYENumberRow> PAYENumberResolver(Licence licence)
         {
-            return licence.PAYENumbers.Select(x => new PAYENumberRow
+            return licence.PAYENumbers.Where(z => !z.Deleted).Select(x => new PAYENumberRow
             {
                 Id = x.Id,
                 PAYENumber = x.Number,
@@ -249,7 +249,7 @@ namespace GLAA.Services.Automapper
                 HasTradingName = licence.HasTradingName,
                 TradingName = licence.TradingName,
                 HasPreviousTradingName = licence.HasPreviousTradingName,
-                PreviousTradingNames = licence.PreviousTradingNames?.Select(p => new PreviousTradingNameViewModel
+                PreviousTradingNames = licence.PreviousTradingNames?.Where(z => !z.Deleted).Select(p => new PreviousTradingNameViewModel
                 {
                     Id = p.Id,
                     BusinessName = p.BusinessName,

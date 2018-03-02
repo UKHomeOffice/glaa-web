@@ -1,4 +1,4 @@
-﻿namespace GLAA.Services
+﻿namespace GLAA.Common
 {
     public interface IConstantService
     {

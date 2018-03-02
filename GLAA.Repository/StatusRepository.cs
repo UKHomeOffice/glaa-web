@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Domain;
 using GLAA.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ namespace GLAA.Repository
 {
     public class StatusRepository : EntityFrameworkRepositoryBase, IStatusRepository
     {
-        public StatusRepository(GLAAContext context) : base(context)
+        public StatusRepository(GLAAContext context, IDateTimeProvider dtp) : base(context, dtp)
         {
         }
 

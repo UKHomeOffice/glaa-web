@@ -100,8 +100,6 @@ namespace GLAA.Domain
                 .WithMany(x => x.Licences)
                 .HasForeignKey(x => x.SectorId);
 
-
-
             modelBuilder.Entity<LicenceStatusNextStatus>()
                 .HasOne(x => x.LicenceStatus)
                 .WithMany(x => x.NextStatuses)

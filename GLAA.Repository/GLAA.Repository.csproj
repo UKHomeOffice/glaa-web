@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GLAA.Common\GLAA.Common.csproj" />
     <ProjectReference Include="..\GLAA.Domain\GLAA.Domain.csproj" />
   </ItemGroup>
 
