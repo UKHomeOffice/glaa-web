@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using GLAA.Domain.Models;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.Account;
-using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Core.Models.AccountViewModels;
 using GLAA.Web.Core.Services;
 using GLAA.Web.Helpers;
@@ -17,11 +16,10 @@ using Microsoft.Extensions.Logging;
 using ForgotPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ForgotPasswordViewModel;
 using ResetPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ResetPasswordViewModel;
 using GLAA.Services;
-using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using GLAA.ViewModels;
-using Microsoft.AspNetCore.Hosting;
+using GLAA.Services.Extensions;
 
 namespace GLAA.Web.Controllers
 {
@@ -34,7 +32,7 @@ namespace GLAA.Web.Controllers
         private readonly RoleManager<GLAARole> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly IEmailService emailService;
-        private readonly ILogger _logger;
+        private readonly ILogger<AccountController> _logger;
         private readonly ISessionHelper session;
         private readonly ILicenceApplicationPostDataHandler licencePostDataHandler;
         private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder;
@@ -90,15 +88,25 @@ namespace GLAA.Web.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-
+                {                    
                     var user = await _userManager.FindByEmailAsync(model.Email);
-                    var isLabourProvider = await _userManager.IsInRoleAsync(user, "LabourProvider");                    
+
+                    _logger.TimedLog(LogLevel.Information, $"User {user.Email} logged in.");
+
+                    var isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
+
+                    if(isAdmin)
+                    {
+                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Administrator'");
+
+                        return RedirectToAction("Index", "Admin");
+                    }
+
+                    var isLabourProvider = await _userManager.IsInRoleAsync(user, "Labour Provider");                    
 
                     if (isLabourProvider)
                     {
-                        _logger.LogInformation($"User {user.Email} is in role LabourProvider");
+                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
 
                         try
                         {
@@ -111,11 +119,14 @@ namespace GLAA.Web.Controllers
                         }
                         catch (Exception e)
                         {
+                            _logger.TimedLog(LogLevel.Error, $"User {user.Email} unable to find licence", e);
+
                             return RedirectToAction("TaskList", "Licence");
                         }
                     }
 
-                    return RedirectToAction("Index", "Admin");
+                    //TODO: What happens for other roles? 
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
