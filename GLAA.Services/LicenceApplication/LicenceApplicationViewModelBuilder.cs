@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Repository;
 using GLAA.ViewModels;

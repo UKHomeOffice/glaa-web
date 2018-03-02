@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using GLAA.Common;
 using GLAA.Domain.Models;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
@@ -39,12 +40,12 @@ namespace GLAA.Web.Controllers
             var sectionLength = FormDefinition.GetSectionLength(section);
             var nextPageId = submittedPageId + 1;
 
+            if (Session.GetCurrentUserIsAdmin())
+                return RedirectToAction("Licence", "Admin", new { id = licenceId });
+
             if (nextPageId != sectionLength)
             {
                 var parent = FindParentSection(section, licenceId);
-
-                if (Session.GetCurrentUserIsAdmin())
-                    return RedirectToAction("Licence", "Admin", new {id = licenceId});
 
                 return parent == null
                     ? RedirectToAction("TaskList", "Licence")
