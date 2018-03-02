@@ -9,7 +9,8 @@ namespace GLAA.Domain
 {
     public static class GLAAContextExtensions
     {
-        public static void Seed(this GLAAContext context, List<LicenceStatus> defaultStatuses)
+        public static void Seed(this GLAAContext context, 
+            List<LicenceStatus> defaultStatuses)
         {
             context.Database.Migrate();
 
@@ -640,8 +641,6 @@ namespace GLAA.Domain
 
             context.SaveChanges();
 
-            context.AddFullLicence();
-
             context.AddLicenceWithBusinessDetailsCompleted();
 
             context.AddLicenceWithBusinessDetailsAndPACompleted();
@@ -655,6 +654,16 @@ namespace GLAA.Domain
             context.AddLicenceWithBusinessDetailsPAABRDoPNIAndOrganisationCompleted();
 
             context.AddPublicRegisterLicences(_companyPart1, _companyPart2, _firstNames, _lastNames);
+        }
+
+        public static void AddUsersWithFullLicence(this GLAAContext context, IEnumerable<GLAAUser> users)
+        {
+            foreach (var user in users)
+            {
+                context.AddFullLicence($"{user.FirstName.Substring(0, 4).ToUpper()}-0001", user);
+            }
+
+            context.SaveChanges();
         }
 
         private static void AddPublicRegisterLicences(this GLAAContext context, IReadOnlyList<string> companyPart1, 
@@ -842,9 +851,9 @@ namespace GLAA.Domain
             }
         }
 
-        private static void AddFullLicence(this GLAAContext context)
+        private static void AddFullLicence(this GLAAContext context, string urn, GLAAUser owner)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "FULL-1234"))
+            if (!context.Licences.Any(x => x.ApplicationId == urn))
             {
                 var submittedStatus = new LicenceStatusChange
                 {
@@ -857,7 +866,7 @@ namespace GLAA.Domain
 
                 var fullLicence = new Licence
                 {
-                    ApplicationId = "FULL-1234",
+                    ApplicationId = urn,
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1139,7 +1148,8 @@ namespace GLAA.Domain
                     {
                         submittedStatus
                     },
-                    CurrentStatusChange = submittedStatus
+                    CurrentStatusChange = submittedStatus,
+                    UserId = owner.Id
                 };
 
                 context.Licences.Add(fullLicence);
@@ -1161,13 +1171,13 @@ namespace GLAA.Domain
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
-                    AlternativeName = "Alan Smithee",
+                    AlternativeName = $"Dr.${owner.FullName}",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
                     CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
-                    FullName = "Joe Bloggs",
+                    FullName = owner.FullName,
                     HasAlternativeName = true,
                     JobTitle = "CEO",
                     NationalInsuranceNumber = "JT123456A",
