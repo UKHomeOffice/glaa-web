@@ -641,6 +641,8 @@ namespace GLAA.Domain
 
             context.SaveChanges();
 
+            context.AddLicenceWithDeclarationCompleted();
+
             context.AddLicenceWithBusinessDetailsCompleted();
 
             context.AddLicenceWithBusinessDetailsAndPACompleted();
@@ -1305,9 +1307,25 @@ namespace GLAA.Domain
             }
         }
 
-        private static void AddLicenceWithBusinessDetailsCompleted(this GLAAContext context)
+        private static void AddLicenceWithDeclarationCompleted(this GLAAContext context)
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0001"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0001",
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1)
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+            }
+        }
+        private static void AddLicenceWithBusinessDetailsCompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0002"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1320,7 +1338,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0001",
+                    ApplicationId = "TEST-0002",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1395,7 +1413,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsAndPACompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0002"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0003"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1408,7 +1426,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0002",
+                    ApplicationId = "TEST-0003",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1630,7 +1648,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAAndABRCompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0003"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0004"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1643,7 +1661,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0003",
+                    ApplicationId = "TEST-0004",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1932,7 +1950,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAABRAndDoPCompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0004"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0005"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1945,7 +1963,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0004",
+                    ApplicationId = "TEST-0005",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -2302,7 +2320,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAABRDoPAndNICompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0005"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0006"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -2315,7 +2333,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0005",
+                    ApplicationId = "TEST-0006",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -2719,7 +2737,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAABRDoPNIAndOrganisationCompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0006"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0007"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -2732,7 +2750,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0006",
+                    ApplicationId = "TEST-0007",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",

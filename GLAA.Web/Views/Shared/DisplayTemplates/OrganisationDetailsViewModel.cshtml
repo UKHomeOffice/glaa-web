@@ -19,22 +19,43 @@
               <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 2 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessName.BusinessName)</span></a></td>
             }
         </tr>
+        
         <tr>
             <td>@Html.LabelFor(m => m.BusinessName.TradingName)</td>
-            <td class="@Model.BusinessName?.TradingName">@Html.DisplayFor(m => m.BusinessName.TradingName, new { @class = "org" })</td>
+            <td class="@Model.BusinessName?.TradingName">
+            @if (Model.BusinessName.HasTradingName ?? false)
+            {
+                @Html.DisplayFor(m => m.BusinessName.TradingName, new { @class = "org" })
+            }
+            else
+            {
+                <span>Not set</span>
+            }
+            </td>
             @if (isEditable)
             {
                 <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 2 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessName.BusinessName)</span></a></td>
             }
-        </tr>
+        </tr>        
+
         <tr>
             <td>Previous Trading Names</td>
-            <td class="@Model.BusinessName?.TradingName">@Html.DisplayFor(m => m.BusinessName.PreviousTradingNames, "PreviousTradingNamesViewModel")</td>
+            <td class="@Model.BusinessName?.TradingName">
+            @if (Model.BusinessName.HasPreviousTradingName ?? false)
+            {
+                @Html.DisplayFor(m => m.BusinessName.PreviousTradingNames, "PreviousTradingNamesViewModel")
+            }
+            else
+            {
+                <span>Not set</span>
+            }
+            </td>
             @if (isEditable)
             {
                 <td class="change-answer"><a href="@Url.Action("Part", "OrganisationDetails", new { id = 2 })">Change<span class="visually-hidden"> @Html.LabelFor(m => m.BusinessName.BusinessName)</span></a></td>
             }
         </tr>
+        
         <tr>
             <td>Address</td>
             <td>@Html.DisplayFor(m => m.Address)</td>
