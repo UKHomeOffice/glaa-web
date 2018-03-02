@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GLAA.Domain.Models
 {
-    public class NamedIndividual : IId, ILinkedToLicence
+    public class NamedIndividual : IId, ILinkedToLicence, IDeletable
     {
         [Key]
         public int Id { get; set; }
@@ -39,18 +39,23 @@ namespace GLAA.Domain.Models
 
         public bool? HasRestraintOrders { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<RestraintOrder> RestraintOrders { get; set; }
 
         public bool? HasUnspentConvictions { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<Conviction> UnspentConvictions { get; set; }
 
         public bool? HasOffencesAwaitingTrial { get; set; }
 
+        [CascadeDelete]
         public virtual ICollection<OffenceAwaitingTrial> OffencesAwaitingTrial { get; set; }
 
         public bool? HasPreviouslyHeldLicence { get; set; }
 
         public string PreviousLicenceDescription { get; set; }
+        public bool Deleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }

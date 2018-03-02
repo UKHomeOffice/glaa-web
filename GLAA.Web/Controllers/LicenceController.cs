@@ -2,6 +2,7 @@
 using GLAA.Domain.Models;
 using GLAA.Web.Attributes;
 using System.Linq;
+using GLAA.Common;
 using GLAA.Services;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.LicenceApplication;

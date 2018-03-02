@@ -226,7 +226,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<PrincipalAuthority, RestraintOrdersViewModel>()
                 .ForMember(x => x.HasRestraintOrders, opt => opt.MapFrom(y => y.HasRestraintOrders))
-                .ForMember(x => x.RestraintOrders, opt => opt.MapFrom(y => y.RestraintOrders.AsEnumerable()))
+                .ForMember(x => x.RestraintOrders, opt => opt.MapFrom(y => y.RestraintOrders.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<UnspentConvictionsViewModel, PrincipalAuthority>()
@@ -236,7 +236,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<PrincipalAuthority, UnspentConvictionsViewModel>()
                 .ForMember(x => x.HasUnspentConvictions, opt => opt.MapFrom(y => y.HasUnspentConvictions))
-                .ForMember(x => x.UnspentConvictions, opt => opt.MapFrom(y => y.UnspentConvictions))
+                .ForMember(x => x.UnspentConvictions, opt => opt.MapFrom(y => y.UnspentConvictions.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<OffencesAwaitingTrialViewModel, PrincipalAuthority>()
@@ -246,7 +246,7 @@ namespace GLAA.Services.Automapper
 
             CreateMap<PrincipalAuthority, OffencesAwaitingTrialViewModel>()
                 .ForMember(x => x.HasOffencesAwaitingTrial, opt => opt.MapFrom(y => y.HasOffencesAwaitingTrial))
-                .ForMember(x => x.OffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrial))
+                .ForMember(x => x.OffencesAwaitingTrial, opt => opt.MapFrom(y => y.OffencesAwaitingTrial.Where(z => !z.Deleted)))
                 .ForAllOtherMembers(opt => opt.Ignore());
 
             CreateMap<PreviousLicenceViewModel, PrincipalAuthority>()
@@ -310,7 +310,9 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.HasPreviouslyHeldLicence, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.HasPreviouslyHeldLicence))
                 .ForMember(x => x.PreviousLicenceDescription, opt => opt.MapFrom(y => y.PreviousLicenceViewModel.PreviousLicenceDescription))
                 .ForMember(x => x.RequiresVisa, opt => opt.Ignore())
-                .ForMember(x => x.VisaDescription, opt => opt.Ignore());
+                .ForMember(x => x.VisaDescription, opt => opt.Ignore())
+                .ForMember(x => x.Deleted, opt => opt.Ignore())
+                .ForMember(x => x.DateDeleted, opt => opt.Ignore());
         }
     }
 }

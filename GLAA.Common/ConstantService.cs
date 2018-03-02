@@ -1,4 +1,6 @@
-﻿namespace GLAA.Services
+﻿using GLAA.Common;
+
+namespace GLAA.Services
 {
     public class ConstantService : IConstantService
     {
