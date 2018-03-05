@@ -20,7 +20,7 @@ namespace GLAA.Services
 
         public async Task<VirusScanResult> ScanFileAsync(IFormFile file)
         {
-            logger.TimedLog(LogLevel.Information, "Starting virus scan for file: " + file.FileName);
+            logger.TimedLog(LogLevel.Warning, "Starting virus scan for file: " + file.FileName);
 
             var result = new VirusScanResult();
 
@@ -52,7 +52,7 @@ namespace GLAA.Services
                     if(res.IsSuccessStatusCode)
                     {
                         var data = await content.ReadAsStringAsync();
-                        logger.TimedLog(LogLevel.Information, "Virus scan response : " + data);
+                        logger.TimedLog(LogLevel.Warning, "Virus scan response : " + data);
 
                         result.Success = true;
                         result.Message = data;
@@ -61,7 +61,7 @@ namespace GLAA.Services
                     }
                     else
                     {                        
-                        logger.TimedLog(LogLevel.Information, "Failed to access virus scan service : " + res.StatusCode);
+                        logger.TimedLog(LogLevel.Error, "Failed to access virus scan service : " + res.StatusCode);
                         result.Success = false;
                         result.Message = "Failed to access virus scan service";
                     }
