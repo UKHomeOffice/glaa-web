@@ -658,11 +658,6 @@ namespace GLAA.Domain
             context.AddPublicRegisterLicences(_companyPart1, _companyPart2, _firstNames, _lastNames);
         }
 
-        public static void AddDefaultFullTextCatalog(this GLAAContext context)
-        {
-            context.Database.ExecuteSqlCommand("CREATE FULLTEXT CATALOG ft AS DEFAULT;");
-        }
-
         public static void AddFullTextIndexes(this GLAAContext context, string table, string[] columns)
         {
             var commaSeparatedColumns = string.Join(',', columns);
