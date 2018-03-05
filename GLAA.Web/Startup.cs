@@ -241,8 +241,8 @@ namespace GLAA.Web
                 dbContext.AddUsersWithFullLicence(licenceUsers);
 
                 // Full text
-                dbContext.AddDefaultFullTextCatalog();
-                dbContext.AddFullTextIndexes("Licence", new[] { "BusinessName", "TradingName" });
+                //dbContext.AddDefaultFullTextCatalog();
+                //dbContext.AddFullTextIndexes("Licence", new[] { "BusinessName", "TradingName" });
 
                 logger.TimedLog(LogLevel.Information, "Completed db seed");
             }
