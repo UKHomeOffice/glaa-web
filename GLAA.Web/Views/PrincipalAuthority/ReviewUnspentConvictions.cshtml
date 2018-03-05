@@ -8,7 +8,7 @@
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "22" } })
 
-@using (Html.BeginForm("ReviewPrincipalAuthorityUnspentConvictions", "PrincipalAuthority", FormMethod.Post))
+@using (Html.BeginForm("ReviewUnspentConvictions", "PrincipalAuthority", FormMethod.Post))
 {
     <div class="grid-row">
         <div class="column-two-thirds">

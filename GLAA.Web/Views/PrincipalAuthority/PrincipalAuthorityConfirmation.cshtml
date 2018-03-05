@@ -6,7 +6,7 @@
 
 @Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "PrincipalAuthority" }, { "submittedPageId", "3" } })
 
-@using (Html.BeginForm("SavePrincipalAuthorityConfirmation", "PrincipalAuthority"))
+@using (Html.BeginForm("PrincipalAuthorityConfirmation", "PrincipalAuthority"))
 {
     <div class="grid-row">
         <div class="column-full">
