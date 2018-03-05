@@ -44,7 +44,7 @@ namespace GLAA.Web.Tests.Controllers
             licenceViewModelBuilder.Build<OrganisationDetailsViewModel>(Arg.Any<int>())
                 .Returns(new OrganisationDetailsViewModel());
 
-            var result = controller.SaveOrganisationName(new BusinessNameViewModel {
+            var result = controller.BusinessName(new BusinessNameViewModel {
                 BusinessName = "Org Name",
                 HasPreviousTradingName = false,
                 HasTradingName = false
@@ -56,8 +56,7 @@ namespace GLAA.Web.Tests.Controllers
                 Arg.Any<BusinessNameViewModel>());
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("Part", result.ActionName);
-            Assert.AreEqual(3, result.RouteValues["id"]);
+            Assert.AreEqual("Address", result.ActionName);
         }
     }
 }

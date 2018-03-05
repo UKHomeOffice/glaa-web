@@ -4,9 +4,9 @@
 
 @model GLAA.ViewModels.LicenceApplication.AddressViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "3" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "Address" } })
 
-@using (Html.BeginForm("SaveAddress", "OrganisationDetails"))
+@using (Html.BeginForm("Address", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">

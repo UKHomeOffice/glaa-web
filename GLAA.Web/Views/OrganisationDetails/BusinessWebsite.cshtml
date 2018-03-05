@@ -4,9 +4,9 @@
 
 @model GLAA.ViewModels.LicenceApplication.BusinessWebsiteViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "7" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "BusinessWebsite" } })
 
-@using (Html.BeginForm("SaveBusinessWebsite", "OrganisationDetails"))
+@using (Html.BeginForm("BusinessWebsite", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">

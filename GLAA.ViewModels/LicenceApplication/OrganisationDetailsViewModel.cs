@@ -24,7 +24,7 @@ namespace GLAA.ViewModels.LicenceApplication
             BusinessEmailAddress = new BusinessEmailAddressViewModel();
             BusinessWebsite = new BusinessWebsiteViewModel();
             LegalStatus = new LegalStatusViewModel();
-            BusinessCredentialsViewModel = new BusinessCredentialsViewModel();
+            BusinessCredentials = new BusinessCredentialsViewModel();
         }
 
         public BusinessNameViewModel BusinessName { get; set; }
@@ -38,7 +38,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public BusinessEmailAddressViewModel BusinessEmailAddress { get; set; }
         public BusinessWebsiteViewModel BusinessWebsite { get; set; }
         public LegalStatusViewModel LegalStatus { get; set; }
-        public BusinessCredentialsViewModel BusinessCredentialsViewModel { get; set; }
+        public BusinessCredentialsViewModel BusinessCredentials { get; set; }
 
         public IEnumerable<SelectListItem> Countries
         {
