@@ -144,6 +144,7 @@ namespace GLAA.Web
             services.AddTransient<IPublicRegisterPostDataHandler, PublicRegisterPostDataHandler>();
 
             services.AddTransient<IFileUploadService, FileUploadService>();
+            services.AddTransient<IVirusScanService, VirusScanService>();
 
             // notify
             services.AddTransient<IEmailService>(x => new EmailService(
