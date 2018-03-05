@@ -9,9 +9,15 @@ namespace GLAA.Web.Helpers
         void SetInt(string key, int value);
         int GetInt(string key);
         bool GetBool(string key);
+        [System.Obsolete]
         void SetSubmittedPage(FormSection section, int id);
+        void SetSubmittedPage(FormSection section, string actionName);
+        [System.Obsolete]
         void SetLoadedPage(int id);
+        void SetLoadedPage(string actionName);
+        [System.Obsolete]
         int GetLoadedPage();
+        string GetLoadedActionName();
         int GetCurrentPaId();
         bool GetCurrentPaIsDirector();
         void SetCurrentPaStatus(int id, bool isDirector);

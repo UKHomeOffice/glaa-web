@@ -16,7 +16,7 @@ namespace GLAA.Services.Automapper
                 .ForMember(x => x.OperatingIndustries, opt => opt.ResolveUsing(ProfileHelpers.OperatingIndustriesResolver))
                 .ForMember(x => x.OperatingCountries, opt => opt.ResolveUsing(OperatingCountriesResolver))
                 .ForMember(x => x.LegalStatus, opt => opt.ResolveUsing(LegalStatusResolver))
-                .ForMember(x => x.BusinessCredentialsViewModel, opt => opt.MapFrom(y => y))
+                .ForMember(x => x.BusinessCredentials, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.CommunicationPreference, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.Turnover, opt => opt.MapFrom(y => y))
                 .ForMember(x => x.BusinessName, opt => opt.ResolveUsing(BusinessNameResolver))

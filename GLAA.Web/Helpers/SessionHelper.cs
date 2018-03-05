@@ -54,14 +54,30 @@ namespace GLAA.Web.Helpers
             SetInt("LastSubmittedPageId", id);
         }
 
+        public void SetSubmittedPage(FormSection section, string actionName)
+        {
+            SetString("LastSubmittedPageSection", section.ToString());
+            SetString("LastSubmittedPageName", actionName);
+        }
+
         public void SetLoadedPage(int id)
         {
             SetInt("LastLoadedPageId", id);
         }
 
+        public void SetLoadedPage(string actionName)
+        {
+            SetString("LastLoadedPageName", actionName);
+        }
+
         public int GetLoadedPage()
         {
             return GetInt("LastLoadedPageId");
+        }
+
+        public string GetLoadedActionName()
+        {
+            return GetString("LastLoadedPageName");
         }
 
         public int GetCurrentPaId()
