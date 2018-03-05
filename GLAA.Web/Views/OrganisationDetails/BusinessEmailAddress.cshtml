@@ -4,7 +4,7 @@
 
 @model GLAA.ViewModels.LicenceApplication.BusinessEmailAddressViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "6" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "BusinessEmailAddress" } })
 
 @using (Html.BeginForm("BusinessEmailAddress", "OrganisationDetails"))
 {

@@ -4,7 +4,7 @@
 
 @model GLAA.ViewModels.LicenceApplication.TurnoverViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "12" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "Turnover" } })
 
 @using (Html.BeginForm("Turnover", "OrganisationDetails"))
 {

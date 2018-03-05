@@ -12,7 +12,7 @@
     }
 }
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData){{"section", "OrganisationDetails"}, {"submittedPageId", "2"}})
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData){{"section", "OrganisationDetails"}, { "actionName", "BusinessName"}})
 
 @using (Html.BeginForm("BusinessName", "OrganisationDetails"))
 {

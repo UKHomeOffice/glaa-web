@@ -4,7 +4,7 @@
 
 @model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "8" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "CommunicationPreference" } })
 
 @using (Html.BeginForm("CommunicationPreference", "OrganisationDetails"))
 {

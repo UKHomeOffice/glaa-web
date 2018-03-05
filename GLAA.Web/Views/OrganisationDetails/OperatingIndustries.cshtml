@@ -3,7 +3,7 @@
     ViewBag.Title = "Which GLAA sectors would you like to operate in?";
 }
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "11" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "OperatingIndustries" } })
 
 @using (Html.BeginForm("OperatingIndustries", "OrganisationDetails"))
 {
