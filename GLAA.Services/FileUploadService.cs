@@ -1,11 +1,9 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GLAA.Services
@@ -14,14 +12,15 @@ namespace GLAA.Services
     {
         private readonly IAmazonS3 client;
         private readonly ILogger logger;
+        private readonly IVirusScanService virusScanService;
         private static string bucketName = Environment.GetEnvironmentVariable("BUCKET_NAME");
 
 
-        public FileUploadService(IAmazonS3 client, ILoggerFactory logger)
+        public FileUploadService(IAmazonS3 client, ILoggerFactory logger, IVirusScanService virusScanService)
         {
             this.client = client;
             this.logger = logger.CreateLogger("File Upload Log");
-
+            this.virusScanService = virusScanService;
         }
 
         public async Task UploadFile(FileStream fileStream)
@@ -36,6 +35,10 @@ namespace GLAA.Services
                 };
 
                 putRequest.ServerSideEncryptionMethod = ServerSideEncryptionMethod.AWSKMS;
+
+                var file = new FormFile(fileStream, 0, fileStream.Length, "FileUploadControl", "RobotHand.png");                
+
+                var virusScanResult = await virusScanService.ScanFileAsync(file);
 
                 var response = await client.PutObjectAsync(putRequest);
             }
