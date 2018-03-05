@@ -9,16 +9,27 @@ namespace GLAA.Web.FormLogic
         public FormPageDefinition()
         {
             SubModelName = string.Empty;
+            ActionName = string.Empty;
             OverrideViewCondition = false;
         }
 
+        [Obsolete]
         public FormPageDefinition(string subModelName, bool overrideViewCondition = false)
         {
             SubModelName = subModelName;
             OverrideViewCondition = overrideViewCondition;
         }
 
+        public FormPageDefinition(string subModelName, string actionName, bool overrideViewCondition = false)
+        {
+            SubModelName = subModelName;
+            ActionName = actionName;
+            OverrideViewCondition = overrideViewCondition;
+        }
+
         public string SubModelName { get; }
+
+        public string ActionName { get; set; }
 
         public bool OverrideViewCondition { get; }
 
@@ -32,6 +43,11 @@ namespace GLAA.Web.FormLogic
             var propExpression = Expression.Property(Expression.Constant(parent), SubModelName);
             var lambda = Expression.Lambda<Func<object>>(propExpression);
             return lambda.Compile()();
+        }
+
+        public bool MatchesName(string actionName)
+        {
+            return ActionName.Equals(actionName, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

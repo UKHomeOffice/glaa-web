@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "What is your preferred channel of communication?";
+}
+
+@model GLAA.ViewModels.LicenceApplication.CommunicationPreferenceViewModel
+
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "CommunicationPreference" } })
+
+@using (Html.BeginForm("CommunicationPreference", "OrganisationDetails"))
+{
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            @Html.Partial("_GdsValidationSummary")
+        </div>
+        <div class="column-full">
+            <h1 class="heading-large">
+                @ViewBag.Title
+            </h1>
+        </div>
+        <div class="column-two-thirds">
+            @Html.RadioButtonFormGroupForEnum(x => x.CommunicationPreference)
+        </div>
+    </div>
+
+    <button type="submit" class="button">Save and continue</button>
+}
+
+@section Scripts {
+}

@@ -5,9 +5,9 @@
 
 @model GLAA.ViewModels.LicenceApplication.LegalStatusViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "submittedPageId", "9" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "OrganisationDetails" }, { "actionName", "LegalStatus" } })
 
-@using (Html.BeginForm("SaveLegalStatus", "OrganisationDetails"))
+@using (Html.BeginForm("LegalStatus", "OrganisationDetails"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -33,7 +33,7 @@
                             @Html.Label(status.Name)
                         </div>
 
-                        @if (status.Name == "Other")
+                        if (status.Name == "Other")
                         {
                             switchValue = status.Name;
                             <div class="panel panel-border-narrow js-hidden" id="other-legal-status-detail">
