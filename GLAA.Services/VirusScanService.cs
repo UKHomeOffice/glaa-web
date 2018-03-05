@@ -24,10 +24,19 @@ namespace GLAA.Services
 
             var result = new VirusScanResult();
 
-            using (HttpClient client = new HttpClient())
+            var handler = new HttpClientHandler
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                }
+            };
+
+            using (HttpClient client = new HttpClient(handler))
             {
                 var requestContent = new MultipartFormDataContent();
-                var fileContent = new StreamContent(file.OpenReadStream());
+                var fileContent = new StreamContent(file.OpenReadStream());                
 
                 fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
                 {
@@ -37,12 +46,12 @@ namespace GLAA.Services
 
                 requestContent.Add(fileContent);
 
-                using (HttpResponseMessage res = await client.PostAsync(clamAVUrl, requestContent))
-                using (HttpContent content = res.Content)
+                using (var res = await client.PostAsync(clamAVUrl, requestContent))
+                using (var content = res.Content)
                 {
                     if(res.IsSuccessStatusCode)
                     {
-                        string data = await content.ReadAsStringAsync();
+                        var data = await content.ReadAsStringAsync();
                         logger.TimedLog(LogLevel.Information, "Virus scan response : " + data);
 
                         result.Success = true;
