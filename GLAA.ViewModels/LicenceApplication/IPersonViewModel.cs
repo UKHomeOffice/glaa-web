@@ -7,7 +7,7 @@
         FullNameViewModel FullName { get; set; }
         AlternativeFullNameViewModel AlternativeName { get; set; }
         DateOfBirthViewModel DateOfBirth { get; set; }
-        BirthDetailsViewModel BirthDetailsViewModel { get; set; }
+        BirthDetailsViewModel BirthDetails { get; set; }
         JobTitleViewModel JobTitle { get; set; }
         AddressViewModel Address { get; set; }
         BusinessPhoneNumberViewModel BusinessPhoneNumber { get; set; }
@@ -16,12 +16,12 @@
         PersonalMobileNumberViewModel PersonalMobileNumber { get; set; }
 
         NationalityViewModel Nationality { get; set; }
-        PassportViewModel PassportViewModel { get; set; }
-        UndischargedBankruptViewModel UndischargedBankruptViewModel { get; set; }
-        DisqualifiedDirectorViewModel DisqualifiedDirectorViewModel { get; set; }
-        RestraintOrdersViewModel RestraintOrdersViewModel { get; set; }
-        UnspentConvictionsViewModel UnspentConvictionsViewModel { get; set; }
-        OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
-        PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
+        PassportViewModel Passport { get; set; }
+        UndischargedBankruptViewModel UndischargedBankrupt { get; set; }
+        DisqualifiedDirectorViewModel DisqualifiedDirector { get; set; }
+        RestraintOrdersViewModel RestraintOrders { get; set; }
+        UnspentConvictionsViewModel UnspentConvictions { get; set; }
+        OffencesAwaitingTrialViewModel OffencesAwaitingTrial { get; set; }
+        PreviousLicenceViewModel PreviousLicence { get; set; }
     }
 }

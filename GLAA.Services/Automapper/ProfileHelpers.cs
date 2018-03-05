@@ -150,7 +150,7 @@ namespace GLAA.Services.Automapper
             return new CountryOfBirthViewModel
             {
                 CountryOfBirthId = person.CountryOfBirthId,
-                Countries = viewModel.BirthDetailsViewModel.CountryOfBirthViewModel.Countries
+                Countries = viewModel.BirthDetails.CountryOfBirthViewModel.Countries
             };
         }
 

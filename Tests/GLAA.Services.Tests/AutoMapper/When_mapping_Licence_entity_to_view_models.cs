@@ -136,36 +136,36 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expectedYesNoList.Count, actual.AlternativeName.YesNo.Count);
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth.DateOfBirth.Date);
-            Assert.AreEqual(expected.TownOfBirth, actual.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth);
-            Assert.AreEqual(expected.CountryOfBirthId, actual.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId);
+            Assert.AreEqual(expected.TownOfBirth, actual.BirthDetails.TownOfBirthViewModel.TownOfBirth);
+            Assert.AreEqual(expected.CountryOfBirthId, actual.BirthDetails.CountryOfBirthViewModel.CountryOfBirthId);
             Assert.AreEqual(expected.CountryOfBirth.IsUk, actual.IsUk);
             Assert.AreEqual(expected.JobTitle, actual.JobTitle.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber, actual.BusinessPhoneNumber.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension, actual.BusinessExtension.BusinessExtension);
             Assert.AreEqual(expected.PersonalEmailAddress, actual.PersonalEmailAddress.PersonalEmailAddress);
             Assert.AreEqual(expected.PersonalMobileNumber, actual.PersonalMobileNumber.PersonalMobileNumber);
-            Assert.AreEqual(expected.NationalInsuranceNumber, actual.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber);
+            Assert.AreEqual(expected.NationalInsuranceNumber, actual.BirthDetails.NationalInsuranceNumberViewModel.NationalInsuranceNumber);
 
             AssertAddress(expected.Address, actual.Address);
 
             Assert.AreEqual(expected.Nationality, actual.Nationality.Nationality);
-            Assert.AreEqual(expected.HasPassport, actual.PassportViewModel.HasPassport);
-            Assert.AreEqual(expected.IsUndischargedBankrupt, actual.UndischargedBankruptViewModel.IsUndischargedBankrupt);
-            Assert.AreEqual(expected.BankruptcyNumber, actual.UndischargedBankruptViewModel.BankruptcyNumber);
-            Assert.AreEqual(expected.BankruptcyDate, actual.UndischargedBankruptViewModel.BankruptcyDate.Date);
-            Assert.AreEqual(expected.IsDisqualifiedDirector, actual.DisqualifiedDirectorViewModel.IsDisqualifiedDirector);
-            Assert.AreEqual(expected.DisqualificationDetails, actual.DisqualifiedDirectorViewModel.DisqualificationDetails);
-            Assert.AreEqual(expected.HasRestraintOrders, actual.RestraintOrdersViewModel.HasRestraintOrders);
-            Assert.AreEqual(expected.RestraintOrders.Single().Description, actual.RestraintOrdersViewModel.RestraintOrders.Single().Description);
-            Assert.AreEqual(expected.RestraintOrders.Single().Date, actual.RestraintOrdersViewModel.RestraintOrders.Single().Date.Date);
-            Assert.AreEqual(expected.HasUnspentConvictions, actual.UnspentConvictionsViewModel.HasUnspentConvictions);
-            Assert.AreEqual(expected.UnspentConvictions.Single().Description, actual.UnspentConvictionsViewModel.UnspentConvictions.Single().Description);
-            Assert.AreEqual(expected.UnspentConvictions.Single().Date, actual.UnspentConvictionsViewModel.UnspentConvictions.Single().Date.Date);
-            Assert.AreEqual(expected.HasOffencesAwaitingTrial, actual.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial);
-            Assert.AreEqual(expected.OffencesAwaitingTrial.Single().Description, actual.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Single().Description);
-            Assert.AreEqual(expected.OffencesAwaitingTrial.Single().Date, actual.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Single().Date.Date);
-            Assert.AreEqual(expected.HasPreviouslyHeldLicence, actual.PreviousLicenceViewModel.HasPreviouslyHeldLicence);
-            Assert.AreEqual(expected.PreviousLicenceDescription, actual.PreviousLicenceViewModel.PreviousLicenceDescription);
+            Assert.AreEqual(expected.HasPassport, actual.Passport.HasPassport);
+            Assert.AreEqual(expected.IsUndischargedBankrupt, actual.UndischargedBankrupt.IsUndischargedBankrupt);
+            Assert.AreEqual(expected.BankruptcyNumber, actual.UndischargedBankrupt.BankruptcyNumber);
+            Assert.AreEqual(expected.BankruptcyDate, actual.UndischargedBankrupt.BankruptcyDate.Date);
+            Assert.AreEqual(expected.IsDisqualifiedDirector, actual.DisqualifiedDirector.IsDisqualifiedDirector);
+            Assert.AreEqual(expected.DisqualificationDetails, actual.DisqualifiedDirector.DisqualificationDetails);
+            Assert.AreEqual(expected.HasRestraintOrders, actual.RestraintOrders.HasRestraintOrders);
+            Assert.AreEqual(expected.RestraintOrders.Single().Description, actual.RestraintOrders.RestraintOrders.Single().Description);
+            Assert.AreEqual(expected.RestraintOrders.Single().Date, actual.RestraintOrders.RestraintOrders.Single().Date.Date);
+            Assert.AreEqual(expected.HasUnspentConvictions, actual.UnspentConvictions.HasUnspentConvictions);
+            Assert.AreEqual(expected.UnspentConvictions.Single().Description, actual.UnspentConvictions.UnspentConvictions.Single().Description);
+            Assert.AreEqual(expected.UnspentConvictions.Single().Date, actual.UnspentConvictions.UnspentConvictions.Single().Date.Date);
+            Assert.AreEqual(expected.HasOffencesAwaitingTrial, actual.OffencesAwaitingTrial.HasOffencesAwaitingTrial);
+            Assert.AreEqual(expected.OffencesAwaitingTrial.Single().Description, actual.OffencesAwaitingTrial.OffencesAwaitingTrial.Single().Description);
+            Assert.AreEqual(expected.OffencesAwaitingTrial.Single().Date, actual.OffencesAwaitingTrial.OffencesAwaitingTrial.Single().Date.Date);
+            Assert.AreEqual(expected.HasPreviouslyHeldLicence, actual.PreviousLicence.HasPreviouslyHeldLicence);
+            Assert.AreEqual(expected.PreviousLicenceDescription, actual.PreviousLicence.PreviousLicenceDescription);
         }
 
         private void AssertAddress(Address expected, AddressViewModel actual)
@@ -344,9 +344,9 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<PrincipalAuthorityViewModel>(input);
 
-            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
-            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
-            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
+            Assert.AreEqual(0, result.RestraintOrders.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictions.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrial.OffencesAwaitingTrial.Count());
         }
 
         [TestMethod]
@@ -386,9 +386,9 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<AlternativeBusinessRepresentativeViewModel>(input);
 
-            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
-            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
-            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
+            Assert.AreEqual(0, result.RestraintOrders.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictions.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrial.OffencesAwaitingTrial.Count());
         }
 
         [TestMethod]
@@ -473,9 +473,9 @@ namespace GLAA.Services.Tests.AutoMapper
 
             var result = this.mapper.Map<DirectorOrPartnerViewModel>(input);
 
-            Assert.AreEqual(0, result.RestraintOrdersViewModel.RestraintOrders.Count());
-            Assert.AreEqual(0, result.UnspentConvictionsViewModel.UnspentConvictions.Count());
-            Assert.AreEqual(0, result.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial.Count());
+            Assert.AreEqual(0, result.RestraintOrders.RestraintOrders.Count());
+            Assert.AreEqual(0, result.UnspentConvictions.UnspentConvictions.Count());
+            Assert.AreEqual(0, result.OffencesAwaitingTrial.OffencesAwaitingTrial.Count());
         }
 
         [TestMethod]

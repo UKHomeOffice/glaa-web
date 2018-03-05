@@ -62,15 +62,15 @@ namespace GLAA.Services.Tests.AutoMapper
                     Date = expectedDateOfBirth
                 }
             };
-            inputPerson.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth = expectedTown;
-            inputPerson.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId = expectedCountry;
+            inputPerson.BirthDetails.TownOfBirthViewModel.TownOfBirth = expectedTown;
+            inputPerson.BirthDetails.CountryOfBirthViewModel.CountryOfBirthId = expectedCountry;
             inputPerson.JobTitle.JobTitle = expectedJobTitle;
             inputPerson.Address = expectedAddress;
             inputPerson.BusinessExtension.BusinessExtension = expectedBusExt;
             inputPerson.BusinessPhoneNumber.BusinessPhoneNumber = expectedBusPhoneNo;
             inputPerson.PersonalEmailAddress.PersonalEmailAddress = expectedEmail;
             inputPerson.PersonalMobileNumber.PersonalMobileNumber = expectedMobile;
-            inputPerson.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber = expectedNatIns;
+            inputPerson.BirthDetails.NationalInsuranceNumberViewModel.NationalInsuranceNumber = expectedNatIns;
         }
 
         private void AssertPerson(IPersonViewModel expected, IPerson actual)
@@ -79,14 +79,14 @@ namespace GLAA.Services.Tests.AutoMapper
             Assert.AreEqual(expected.AlternativeName.AlternativeName, actual.AlternativeName);
             Assert.AreEqual(expected.AlternativeName.HasAlternativeName, actual.HasAlternativeName);
             Assert.AreEqual(expected.DateOfBirth.DateOfBirth.Date, actual.DateOfBirth);
-            Assert.AreEqual(expected.BirthDetailsViewModel.TownOfBirthViewModel.TownOfBirth, actual.TownOfBirth);
-            Assert.AreEqual(expected.BirthDetailsViewModel.CountryOfBirthViewModel.CountryOfBirthId, actual.CountryOfBirthId);
+            Assert.AreEqual(expected.BirthDetails.TownOfBirthViewModel.TownOfBirth, actual.TownOfBirth);
+            Assert.AreEqual(expected.BirthDetails.CountryOfBirthViewModel.CountryOfBirthId, actual.CountryOfBirthId);
             Assert.AreEqual(expected.JobTitle.JobTitle, actual.JobTitle);
             Assert.AreEqual(expected.BusinessPhoneNumber.BusinessPhoneNumber, actual.BusinessPhoneNumber);
             Assert.AreEqual(expected.BusinessExtension.BusinessExtension, actual.BusinessExtension);
             Assert.AreEqual(expected.PersonalEmailAddress.PersonalEmailAddress, actual.PersonalEmailAddress);
             Assert.AreEqual(expected.PersonalMobileNumber.PersonalMobileNumber, actual.PersonalMobileNumber);
-            Assert.AreEqual(expected.BirthDetailsViewModel.NationalInsuranceNumberViewModel.NationalInsuranceNumber, actual.NationalInsuranceNumber);
+            Assert.AreEqual(expected.BirthDetails.NationalInsuranceNumberViewModel.NationalInsuranceNumber, actual.NationalInsuranceNumber);
 
             AssertAddress(expected.Address, actual.Address);
         }
@@ -241,8 +241,8 @@ namespace GLAA.Services.Tests.AutoMapper
         {
             var input = new PrincipalAuthorityViewModel();
 
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Months = 18;
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Years = 1;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Months = 18;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Years = 1;
 
             var result = this.mapper.Map<PrincipalAuthority>(input);
 
@@ -251,8 +251,8 @@ namespace GLAA.Services.Tests.AutoMapper
 
             input = new PrincipalAuthorityViewModel();
 
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Months = 18;
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Years = null;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Months = 18;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Years = null;
 
             result = this.mapper.Map<PrincipalAuthority>(input);
 
@@ -261,8 +261,8 @@ namespace GLAA.Services.Tests.AutoMapper
 
             input = new PrincipalAuthorityViewModel();
 
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Months = 6;
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Years = null;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Months = 6;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Years = null;
 
             result = this.mapper.Map<PrincipalAuthority>(input);
 
@@ -271,8 +271,8 @@ namespace GLAA.Services.Tests.AutoMapper
 
             input = new PrincipalAuthorityViewModel();
 
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Months = null;
-            input.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork.Years = 1;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Months = null;
+            input.PrincipalAuthorityRightToWork.LengthOfUKWork.Years = 1;
 
             result = this.mapper.Map<PrincipalAuthority>(input);
 

@@ -12,7 +12,7 @@ namespace GLAA.ViewModels.LicenceApplication
             FullName = new FullNameViewModel();
             AlternativeName = new AlternativeFullNameViewModel();
             DateOfBirth = new DateOfBirthViewModel();
-            BirthDetailsViewModel = new BirthDetailsViewModel();
+            BirthDetails = new BirthDetailsViewModel();
             JobTitle = new JobTitleViewModel();
             Address = new AddressViewModel();
             BusinessPhoneNumber = new BusinessPhoneNumberViewModel();
@@ -20,13 +20,13 @@ namespace GLAA.ViewModels.LicenceApplication
             PersonalEmailAddress = new PersonalEmailAddressViewModel();
             PersonalMobileNumber = new PersonalMobileNumberViewModel();
             Nationality = new NationalityViewModel();
-            PassportViewModel = new PassportViewModel();
-            UndischargedBankruptViewModel = new UndischargedBankruptViewModel();
-            DisqualifiedDirectorViewModel = new DisqualifiedDirectorViewModel();
-            RestraintOrdersViewModel = new RestraintOrdersViewModel();
-            UnspentConvictionsViewModel = new UnspentConvictionsViewModel();
-            OffencesAwaitingTrialViewModel = new OffencesAwaitingTrialViewModel();
-            PreviousLicenceViewModel = new PreviousLicenceViewModel();
+            Passport = new PassportViewModel();
+            UndischargedBankrupt = new UndischargedBankruptViewModel();
+            DisqualifiedDirector = new DisqualifiedDirectorViewModel();
+            RestraintOrders = new RestraintOrdersViewModel();
+            UnspentConvictions = new UnspentConvictionsViewModel();
+            OffencesAwaitingTrial = new OffencesAwaitingTrialViewModel();
+            PreviousLicence = new PreviousLicenceViewModel();
             Address = new AddressViewModel();
         }
 
@@ -34,7 +34,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public FullNameViewModel FullName { get; set; }
         public AlternativeFullNameViewModel AlternativeName { get; set; }
         public DateOfBirthViewModel DateOfBirth { get; set; }
-        public BirthDetailsViewModel BirthDetailsViewModel { get; set; }
+        public BirthDetailsViewModel BirthDetails { get; set; }
         public JobTitleViewModel JobTitle { get; set; }
         public AddressViewModel Address { get; set; }
         public BusinessPhoneNumberViewModel BusinessPhoneNumber { get; set; }
@@ -42,13 +42,13 @@ namespace GLAA.ViewModels.LicenceApplication
         public PersonalEmailAddressViewModel PersonalEmailAddress { get; set; }
         public PersonalMobileNumberViewModel PersonalMobileNumber { get; set; }
         public NationalityViewModel Nationality { get; set; }
-        public PassportViewModel PassportViewModel { get; set; }
-        public UndischargedBankruptViewModel UndischargedBankruptViewModel { get; set; }
-        public DisqualifiedDirectorViewModel DisqualifiedDirectorViewModel { get; set; }
-        public RestraintOrdersViewModel RestraintOrdersViewModel { get; set; }
-        public UnspentConvictionsViewModel UnspentConvictionsViewModel { get; set; }
-        public OffencesAwaitingTrialViewModel OffencesAwaitingTrialViewModel { get; set; }
-        public PreviousLicenceViewModel PreviousLicenceViewModel { get; set; }
+        public PassportViewModel Passport { get; set; }
+        public UndischargedBankruptViewModel UndischargedBankrupt { get; set; }
+        public DisqualifiedDirectorViewModel DisqualifiedDirector { get; set; }
+        public RestraintOrdersViewModel RestraintOrders { get; set; }
+        public UnspentConvictionsViewModel UnspentConvictions { get; set; }
+        public OffencesAwaitingTrialViewModel OffencesAwaitingTrial { get; set; }
+        public PreviousLicenceViewModel PreviousLicence { get; set; }
 
         public IEnumerable<SelectListItem> Counties
         {
@@ -63,7 +63,7 @@ namespace GLAA.ViewModels.LicenceApplication
             {
                 countries = value;
                 Address.Countries = value;
-                BirthDetailsViewModel.CountryOfBirthViewModel.Countries = value;
+                BirthDetails.CountryOfBirthViewModel.Countries = value;
             }
         }
 
