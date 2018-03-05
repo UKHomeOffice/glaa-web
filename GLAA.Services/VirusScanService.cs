@@ -24,16 +24,16 @@ namespace GLAA.Services
 
             var result = new VirusScanResult();
 
-            var handler = new HttpClientHandler
-            {
-                ClientCertificateOptions = ClientCertificateOption.Manual,
-                ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
-                {
-                    return true;
-                }
-            };
+            //var handler = new HttpClientHandler
+            //{
+            //    ClientCertificateOptions = ClientCertificateOption.Manual,
+            //    ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
+            //    {
+            //        return true;
+            //    }
+            //};
 
-            using (HttpClient client = new HttpClient(handler))
+            using (HttpClient client = new HttpClient())
             {
                 var requestContent = new MultipartFormDataContent();
                 var fileContent = new StreamContent(file.OpenReadStream());                
