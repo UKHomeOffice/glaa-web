@@ -9,7 +9,8 @@ namespace GLAA.Domain
 {
     public static class GLAAContextExtensions
     {
-        public static void Seed(this GLAAContext context, List<LicenceStatus> defaultStatuses)
+        public static void Seed(this GLAAContext context,
+            List<LicenceStatus> defaultStatuses)
         {
             context.Database.Migrate();
 
@@ -428,13 +429,13 @@ namespace GLAA.Domain
 
             if (!context.Countries.Any())
             {
-                context.Countries.AddRange(countries.Select(c => new Country {Name = c, IsUk = c.StartsWith("UK ")}));
+                context.Countries.AddRange(countries.Select(c => new Country { Name = c, IsUk = c.StartsWith("UK ") }));
                 context.SaveChanges();
             }
 
             if (!context.Counties.Any())
             {
-                context.Counties.AddRange(counties.Select(c => new County {Name = c}));
+                context.Counties.AddRange(counties.Select(c => new County { Name = c }));
                 context.SaveChanges();
             }
 
@@ -640,7 +641,7 @@ namespace GLAA.Domain
 
             context.SaveChanges();
 
-            context.AddFullLicence();
+            context.AddLicenceWithDeclarationCompleted();
 
             context.AddLicenceWithBusinessDetailsCompleted();
 
@@ -657,7 +658,29 @@ namespace GLAA.Domain
             context.AddPublicRegisterLicences(_companyPart1, _companyPart2, _firstNames, _lastNames);
         }
 
-        private static void AddPublicRegisterLicences(this GLAAContext context, IReadOnlyList<string> companyPart1, 
+        public static void AddDefaultFullTextCatalog(this GLAAContext context)
+        {
+            context.Database.ExecuteSqlCommand("IF NOT EXISTS (SELECT 1 FROM sys.fulltext_catalogs WHERE[name] = 'ft') BEGIN CREATE FULLTEXT CATALOG ft AS DEFAULT; END");
+        }
+
+        public static void AddFullTextIndexes(this GLAAContext context, string table, string[] columns)
+        {
+            var commaSeparatedColumns = string.Join(',', columns);
+            var cmd = string.Format("CREATE FULLTEXT INDEX ON {0}({1}) KEY INDEX PK_{0} WITH STOPLIST = SYSTEM", table, commaSeparatedColumns);
+            context.Database.ExecuteSqlCommand(cmd);
+        }
+
+        public static void AddUsersWithFullLicence(this GLAAContext context, IEnumerable<GLAAUser> users)
+        {
+            foreach (var user in users)
+            {
+                context.AddFullLicence($"{user.FirstName.Substring(0, 4).ToUpper()}-0001", user);
+            }
+
+            context.SaveChanges();
+        }
+
+        private static void AddPublicRegisterLicences(this GLAAContext context, IReadOnlyList<string> companyPart1,
             IReadOnlyList<string> companyPart2, IReadOnlyList<string> firstNames, IReadOnlyList<string> lastNames)
         {
             var rnd = new Random();
@@ -842,9 +865,9 @@ namespace GLAA.Domain
             }
         }
 
-        private static void AddFullLicence(this GLAAContext context)
+        private static void AddFullLicence(this GLAAContext context, string urn, GLAAUser owner)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "FULL-1234"))
+            if (!context.Licences.Any(x => x.ApplicationId == urn))
             {
                 var submittedStatus = new LicenceStatusChange
                 {
@@ -857,7 +880,7 @@ namespace GLAA.Domain
 
                 var fullLicence = new Licence
                 {
-                    ApplicationId = "FULL-1234",
+                    ApplicationId = urn,
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1139,7 +1162,8 @@ namespace GLAA.Domain
                     {
                         submittedStatus
                     },
-                    CurrentStatusChange = submittedStatus
+                    CurrentStatusChange = submittedStatus,
+                    UserId = owner.Id
                 };
 
                 context.Licences.Add(fullLicence);
@@ -1161,13 +1185,13 @@ namespace GLAA.Domain
                         Postcode = "FA2 4KE",
                         Country = context.Countries.Single(c => c.Name.Equals("UK England")),
                     },
-                    AlternativeName = "Alan Smithee",
+                    AlternativeName = $"Dr.${owner.FullName}",
                     BusinessExtension = "999",
                     BusinessPhoneNumber = "07777777777",
                     CountryOfBirth = context.Countries.Single(c => c.Name.Equals("UK England")),
                     CountyOfBirth = "Wiltshire",
                     DateOfBirth = DateTime.Now,
-                    FullName = "Joe Bloggs",
+                    FullName = owner.FullName,
                     HasAlternativeName = true,
                     JobTitle = "CEO",
                     NationalInsuranceNumber = "JT123456A",
@@ -1295,9 +1319,25 @@ namespace GLAA.Domain
             }
         }
 
-        private static void AddLicenceWithBusinessDetailsCompleted(this GLAAContext context)
+        private static void AddLicenceWithDeclarationCompleted(this GLAAContext context)
         {
             if (!context.Licences.Any(x => x.ApplicationId == "TEST-0001"))
+            {
+                var testLicence = new Licence
+                {
+                    ApplicationId = "TEST-0001",
+                    SignatoryName = "The signatory name",
+                    SignatureDate = new DateTime(2017, 1, 1)
+                };
+
+                context.Licences.Add(testLicence);
+
+                context.SaveChanges();
+            }
+        }
+        private static void AddLicenceWithBusinessDetailsCompleted(this GLAAContext context)
+        {
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0002"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1310,7 +1350,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0001",
+                    ApplicationId = "TEST-0002",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1385,7 +1425,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsAndPACompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0002"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0003"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1398,7 +1438,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0002",
+                    ApplicationId = "TEST-0003",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1620,7 +1660,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAAndABRCompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0003"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0004"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1633,7 +1673,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0003",
+                    ApplicationId = "TEST-0004",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -1922,7 +1962,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAABRAndDoPCompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0004"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0005"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -1935,7 +1975,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0004",
+                    ApplicationId = "TEST-0005",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -2292,7 +2332,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAABRDoPAndNICompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0005"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0006"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -2305,7 +2345,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0005",
+                    ApplicationId = "TEST-0006",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",
@@ -2709,7 +2749,7 @@ namespace GLAA.Domain
 
         private static void AddLicenceWithBusinessDetailsPAABRDoPNIAndOrganisationCompleted(this GLAAContext context)
         {
-            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0006"))
+            if (!context.Licences.Any(x => x.ApplicationId == "TEST-0007"))
             {
                 var licenceStatusChange = new LicenceStatusChange
                 {
@@ -2722,7 +2762,7 @@ namespace GLAA.Domain
 
                 var testLicence = new Licence
                 {
-                    ApplicationId = "TEST-0006",
+                    ApplicationId = "TEST-0007",
                     Address = new Address
                     {
                         AddressLine1 = "123 Fake Street",

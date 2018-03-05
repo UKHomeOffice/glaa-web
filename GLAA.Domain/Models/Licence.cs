@@ -26,7 +26,6 @@ namespace GLAA.Domain.Models
         #endregion
 
         #region OrganisationDetails
-
         public string BusinessName { get; set; }
         public bool? HasTradingName { get; set; }
         public string TradingName { get; set; }

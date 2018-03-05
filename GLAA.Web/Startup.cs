@@ -228,7 +228,26 @@ namespace GLAA.Web
 
                 logger.TimedLog(LogLevel.Information, "Running db seed...");
 
-                serviceScope.ServiceProvider.GetService<GLAAContext>().Seed(defaultStatuses);
+                var dbContext = serviceScope.ServiceProvider.GetService<GLAAContext>();
+
+                dbContext.Seed(defaultStatuses);
+
+                BuildRoles(serviceProvider).Wait();
+                BuildSuperUser(serviceProvider).Wait();
+                BuildUsers(serviceProvider).Wait();
+                BuildUsersFromSectionWithRoleAsync(serviceProvider, "AdminUsers", "Administrator").Wait();
+                var licenceUsers = BuildUsersFromSectionWithRoleAsync(serviceProvider, "LicenceUsers", "Labour Provider").Result;
+
+                dbContext.AddUsersWithFullLicence(licenceUsers);
+
+                // Full text                           
+                if(env.IsDevelopment())
+                {
+                    // when working locally and we have no db we need to create the default catalog
+                    // but not when deploying as it's created as part of the kube-db-setup
+                    dbContext.AddDefaultFullTextCatalog();
+                }
+                dbContext.AddFullTextIndexes("Licence", new[] { "BusinessName", "TradingName" });
 
                 logger.TimedLog(LogLevel.Information, "Completed db seed");
             }
@@ -256,9 +275,6 @@ namespace GLAA.Web
                     name: "applicationPost",
                     template: "Licence/Apply/{controller}/{action}");
             });
-            BuildRoles(serviceProvider).Wait();
-            BuildAdminUser(serviceProvider).Wait();
-            BuildUsers(serviceProvider).Wait();
         }
 
         private List<LicenceStatus> GetDefaultStatuses()
@@ -279,6 +295,7 @@ namespace GLAA.Web
                     defaultStatuses.Add(status);
                 }
             }
+
             return defaultStatuses;
         }
 
@@ -297,7 +314,7 @@ namespace GLAA.Web
             }
         }
 
-        private async Task BuildAdminUser(IServiceProvider serviceProvider)
+        private async Task BuildSuperUser(IServiceProvider serviceProvider)
         {
             var um = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
 
@@ -326,6 +343,45 @@ namespace GLAA.Web
             {
                 await um.AddToRoleAsync(su, "Administrator");
             }
+        }
+
+        private async Task<IEnumerable<GLAAUser>> BuildUsersFromSectionWithRoleAsync(IServiceProvider serviceProvider, string section, string role)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<GLAAUser>>();
+
+            var keyValuePairs = Configuration.GetSection(section)
+                .AsEnumerable()
+                .Where(x => x.Key.Contains(section)
+                    && x.Key.Contains("Email")
+                    && !string.IsNullOrEmpty(x.Value))
+                .ToList();
+
+            var users = new List<GLAAUser>();
+
+            for (var i = 0; i < keyValuePairs.Count; i++)
+            {
+                var user = new GLAAUser();
+
+                Configuration.GetSection($"{section}:{i}").Bind(user);
+                var password = Configuration.GetSection($"{section}:{i}:Password").Value;
+                var email = Configuration.GetSection($"{section}:{i}:Email").Value;
+
+                user.UserName = email;
+
+                users.Add(user);
+
+                var result = await userManager.CreateAsync(user, password);
+
+                if (result.Succeeded)
+                {
+                    if (!await userManager.IsInRoleAsync(user, role))
+                    {
+                        await userManager.AddToRoleAsync(user, role);
+                    }
+                }
+            }
+
+            return users;
         }
 
         private static async Task BuildUsers(IServiceProvider serviceProvider)
