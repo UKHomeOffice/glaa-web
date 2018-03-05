@@ -240,8 +240,13 @@ namespace GLAA.Web
 
                 dbContext.AddUsersWithFullLicence(licenceUsers);
 
-                // Full text
-                //dbContext.AddDefaultFullTextCatalog();                                
+                // Full text                           
+                if(env.IsDevelopment())
+                {
+                    // when working locally and we have no db we need to create the default catalog
+                    // but not when deploying as it's created as part of the kube-db-setup
+                    dbContext.AddDefaultFullTextCatalog();
+                }
                 dbContext.AddFullTextIndexes("Licence", new[] { "BusinessName", "TradingName" });
 
                 logger.TimedLog(LogLevel.Information, "Completed db seed");
