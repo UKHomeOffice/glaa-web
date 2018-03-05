@@ -49,10 +49,11 @@ namespace GLAA.Services
                 using (var res = await client.PostAsync(clamAVUrl, requestContent))
                 using (var content = res.Content)
                 {
-                    if(res.IsSuccessStatusCode)
-                    {
-                        var data = await content.ReadAsStringAsync();
-                        logger.TimedLog(LogLevel.Warning, "Virus scan response : " + data);
+                    var data = await content.ReadAsStringAsync();
+
+                    if (res.IsSuccessStatusCode)
+                    {                        
+                        logger.TimedLog(LogLevel.Warning, "Virus scan response: " + data);
 
                         result.Success = true;
                         result.Message = data;
@@ -60,8 +61,8 @@ namespace GLAA.Services
                         //if (data.Contains("ok: false")) { // do things }
                     }
                     else
-                    {                        
-                        logger.TimedLog(LogLevel.Error, "Failed to access virus scan service : " + res.StatusCode);
+                    {                           
+                        logger.TimedLog(LogLevel.Error, "Failed to access virus scan service: " + res.StatusCode + " : " + data);
                         result.Success = false;
                         result.Message = "Failed to access virus scan service";
                     }
