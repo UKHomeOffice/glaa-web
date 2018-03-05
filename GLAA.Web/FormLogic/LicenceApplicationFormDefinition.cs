@@ -141,7 +141,7 @@ namespace GLAA.Web.FormLogic
         {
             var matchLocation = GetSectionLength(section) - 1;
             // Search back through the list of pages until we find the current one
-            for (var i = GetSectionLength(section) - 1; i > 0; i--)
+            for (var i = GetSectionLength(section) - 1; i >= 0; i--)
             {
                 // Only start looking for the previous possible action once we know where to start looking from
                 if (fieldConfiguration[section][i].MatchesName(actionName))
@@ -149,7 +149,7 @@ namespace GLAA.Web.FormLogic
                     matchLocation = i;
                 }
                 // If we've gone back past the current page, can we view this one?
-                if (matchLocation < i && CanViewPage(section, fieldConfiguration[section][i].ActionName, parent))
+                if (matchLocation > i && CanViewPage(section, fieldConfiguration[section][i].ActionName, parent))
                 {
                     // If so, return it. If not, try the previous page.
                     return fieldConfiguration[section][i];

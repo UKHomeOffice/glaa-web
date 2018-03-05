@@ -9,6 +9,7 @@ namespace GLAA.Web.FormLogic
         public FormPageDefinition()
         {
             SubModelName = string.Empty;
+            ActionName = string.Empty;
             OverrideViewCondition = false;
         }
 
