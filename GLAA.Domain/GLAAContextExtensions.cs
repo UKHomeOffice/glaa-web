@@ -9,7 +9,7 @@ namespace GLAA.Domain
 {
     public static class GLAAContextExtensions
     {
-        public static void Seed(this GLAAContext context, 
+        public static void Seed(this GLAAContext context,
             List<LicenceStatus> defaultStatuses)
         {
             context.Database.Migrate();
@@ -429,13 +429,13 @@ namespace GLAA.Domain
 
             if (!context.Countries.Any())
             {
-                context.Countries.AddRange(countries.Select(c => new Country {Name = c, IsUk = c.StartsWith("UK ")}));
+                context.Countries.AddRange(countries.Select(c => new Country { Name = c, IsUk = c.StartsWith("UK ") }));
                 context.SaveChanges();
             }
 
             if (!context.Counties.Any())
             {
-                context.Counties.AddRange(counties.Select(c => new County {Name = c}));
+                context.Counties.AddRange(counties.Select(c => new County { Name = c }));
                 context.SaveChanges();
             }
 
@@ -658,6 +658,11 @@ namespace GLAA.Domain
             context.AddPublicRegisterLicences(_companyPart1, _companyPart2, _firstNames, _lastNames);
         }
 
+        public static void AddDefaultFullTextCatalog(this GLAAContext context)
+        {
+            context.Database.ExecuteSqlCommand("IF NOT EXISTS (SELECT 1 FROM sys.fulltext_catalogs WHERE[name] = 'ft') BEGIN CREATE FULLTEXT CATALOG ft AS DEFAULT; END");
+        }
+
         public static void AddFullTextIndexes(this GLAAContext context, string table, string[] columns)
         {
             var commaSeparatedColumns = string.Join(',', columns);
@@ -675,7 +680,7 @@ namespace GLAA.Domain
             context.SaveChanges();
         }
 
-        private static void AddPublicRegisterLicences(this GLAAContext context, IReadOnlyList<string> companyPart1, 
+        private static void AddPublicRegisterLicences(this GLAAContext context, IReadOnlyList<string> companyPart1,
             IReadOnlyList<string> companyPart2, IReadOnlyList<string> firstNames, IReadOnlyList<string> lastNames)
         {
             var rnd = new Random();
