@@ -56,8 +56,7 @@ namespace GLAA.Web.Tests.Controllers
                 Arg.Any<BusinessNameViewModel>());
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("Part", result.ActionName);
-            Assert.AreEqual(3, result.RouteValues["id"]);
+            Assert.AreEqual("Address", result.ActionName);
         }
     }
 }
