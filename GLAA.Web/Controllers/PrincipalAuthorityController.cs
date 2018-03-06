@@ -81,6 +81,11 @@ namespace GLAA.Web.Controllers
             return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, submittedPage);
         }
 
+        public IActionResult Introduction(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Introduction), back);
+        }
+
         [HttpGet]
         [ImportModelState]
         public IActionResult IsDirector(bool? back = false)
@@ -157,16 +162,16 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult AlternativeFullName(bool? back = false)
+        public IActionResult AlternativeName(bool? back = false)
         {
-            return PrincipalAuthorityGet(nameof(AlternativeFullName), back);
+            return PrincipalAuthorityGet(nameof(AlternativeName), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult AlternativeFullName(AlternativeFullNameViewModel model)
+        public IActionResult AlternativeName(AlternativeFullNameViewModel model)
         {
-            return PrincipalAuthorityPost(model, nameof(AlternativeFullName));
+            return PrincipalAuthorityPost(model, nameof(AlternativeName));
         }
 
         [HttpGet]
@@ -522,6 +527,11 @@ namespace GLAA.Web.Controllers
         public IActionResult PreviousExperience(PreviousExperienceViewModel model)
         {
             return PrincipalAuthorityPost(model, nameof(PreviousExperience), false);
+        }
+
+        public IActionResult Summary(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Summary), back);
         }
     }
 }

@@ -55,14 +55,14 @@
                             <li class="task-list-item">
                                 @if (Model.PrincipalAuthority != null && Model.PrincipalAuthority.IsValid)
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "PrincipalAuthority", new { id = 27 })">
+                                    <a class="task-name" href="@Url.Action("Summary", "PrincipalAuthority")">
                                         Your Principal Authority details
                                     </a>
                                     <strong class="task-completed" id="principal-authority-details-completed">Completed</strong>
                                 }
                                 else
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "PrincipalAuthority", new { id = 1 })">
+                                    <a class="task-name" href="@Url.Action("Introduction", "PrincipalAuthority")">
                                         Your Principal Authority details
                                     </a>
                                 }

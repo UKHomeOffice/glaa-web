@@ -61,9 +61,9 @@ namespace GLAA.Web.Controllers
 
         [HttpGet]
         [ImportModelState]
-        public IActionResult Introduction()
+        public IActionResult Introduction(bool? back = false)
         {
-            return OrganisationDetailsGet(nameof(Introduction));
+            return OrganisationDetailsGet(nameof(Introduction), back);
         }
 
         [HttpGet]
