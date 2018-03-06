@@ -43,7 +43,7 @@ namespace GLAA.Web.Controllers
             SignInManager<GLAAUser> signInManager,
             RoleManager<GLAARole> roleManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger, 
+            ILogger<AccountController> logger,
             ILicenceApplicationPostDataHandler licencePostDataHandler,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ISessionHelper session,
@@ -88,45 +88,33 @@ namespace GLAA.Web.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {                    
+                {
                     var user = await _userManager.FindByEmailAsync(model.Email);
 
                     _logger.TimedLog(LogLevel.Information, $"User {user.Email} logged in.");
 
                     var isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
 
-                    if(isAdmin)
+                    if (isAdmin)
                     {
                         _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Administrator'");
 
                         return RedirectToAction("Index", "Admin");
                     }
 
-                    var isLabourProvider = await _userManager.IsInRoleAsync(user, "Labour Provider");                    
+                    _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
 
-                    if (isLabourProvider)
+                    var licence = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).FirstOrDefault();
+
+                    if (licence != null)
                     {
-                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
+                        session.SetCurrentLicenceId(licence.Id);
 
-                        try
-                        {
-                            var licenceId = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).First().Id;
-
-                            session.SetCurrentLicenceId(licenceId);
-
-                            return RedirectToAction("Portal", "Licence", null);
-
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.TimedLog(LogLevel.Error, $"User {user.Email} unable to find licence", e);
-
-                            return RedirectToAction("TaskList", "Licence");
-                        }
+                        return RedirectToAction("Portal", "Licence", null);
                     }
 
-                    //TODO: What happens for other roles? 
-                    
+                    return RedirectToAction("TaskList", "Licence");
+
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -391,7 +379,7 @@ namespace GLAA.Web.Controllers
                 //TODO: do we need users to confirm accounts
                 //|| !(await _userManager.IsEmailConfirmedAsync(user))
 
-                if (user == null )
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed                    
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
@@ -410,7 +398,7 @@ namespace GLAA.Web.Controllers
                 var template = configuration.GetSection("GOVNotify:EmailTemplates")["ResetPassword"];
 
                 var success = emailService.Send(msg, template);
-                
+
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 

@@ -8,6 +8,7 @@ using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace GLAA.Services.AccountCreation
 {
@@ -28,15 +29,15 @@ namespace GLAA.Services.AccountCreation
             configuration = cs;
         }
 
-        public bool Exists(string email)
+        public async Task<bool> ExistsAsync(string email)
         {
-            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var user = await userManager.FindByEmailAsync(email);
             return user?.EmailConfirmed ?? false;
         }
 
-        public void DeleteIfUnconfirmed(string email)
+        public async Task DeleteIfUnconfirmedAsync(string email)
         {
-            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var user = await userManager.FindByEmailAsync(email);
             if (user != null && !user.EmailConfirmed)
             {
                 if (user.AddressId != null)
@@ -44,27 +45,32 @@ namespace GLAA.Services.AccountCreation
                     repository.Delete<Address>(user.AddressId.Value);
                 }
 
-                userManager.DeleteAsync(user).GetAwaiter().GetResult();
+                await userManager.DeleteAsync(user);
             }
         }
 
-        public void Update<T>(string email, T model)
+        public async Task UpdateAsync<T>(string email, T model)
         {
-            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var user = await userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
                 user = mapper.Map<GLAAUser>(model);
-                userManager.CreateAsync(user).GetAwaiter().GetResult();
+                await userManager.CreateAsync(user);
+
+                if(!await userManager.IsInRoleAsync(user, "Labour Provider"))
+                {
+                    await userManager.AddToRoleAsync(user, "Labour Provider");
+                }
             }
             else
             {
                 mapper.Map(model, user);
-                userManager.UpdateAsync(user).GetAwaiter().GetResult();
+                await userManager.UpdateAsync(user);
             }
         }
 
-        public void UpdateAddress(string email, AddressViewModel model)
+        public async Task UpdateAddressAsync(string email, AddressViewModel model)
         {
             var user = userManager.FindCompleteUserByEmail(email);
 
@@ -75,26 +81,28 @@ namespace GLAA.Services.AccountCreation
 
             mapper.Map(model, user.Address);
 
-            userManager.UpdateAsync(user).GetAwaiter().GetResult();
+            await userManager.UpdateAsync(user);
         }
 
-        public void SetPassword(string email, string password)
+        public async Task<bool> SetPasswordAsync(string email, string password)
         {
-            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var user = await userManager.FindByEmailAsync(email);
 
-            userManager.AddPasswordAsync(user, password).GetAwaiter().GetResult();
+            var result = await userManager.AddPasswordAsync(user, password);
+
+            return result.Succeeded;
         }
 
-        public void SendConfirmation(string email, IUrlHelper url)
+        public async Task SendConfirmationAsync(string email, IUrlHelper url)
         {
             if (string.IsNullOrEmpty(email) || url == null)
             {
                 return;
             }
 
-            var user = userManager.FindByEmailAsync(email).GetAwaiter().GetResult();
+            var user = await userManager.FindByEmailAsync(email);
 
-            var token = userManager.GenerateEmailConfirmationTokenAsync(user).GetAwaiter().GetResult();
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = token});
 
             var msg = new NotifyMailMessage(email, new Dictionary<string, dynamic>
