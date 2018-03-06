@@ -1,6 +1,7 @@
 ﻿using GLAA.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
@@ -12,6 +13,12 @@ namespace GLAA.Services
     public class VirusScanService : IVirusScanService        
     {
         private const string clamAVUrl = "https://clamav.virus-scan.svc.cluster.local/scan";
+        private List<string> certificatePaths = new List<string>
+        {
+            @"certificates/ca-bundle.crt",
+            @"certificates/ca-bundle.trust.crt",
+            @"certificates/ca-certificates.crt"
+        };
 
         private readonly ILogger<VirusScanService> logger;
 
@@ -20,9 +27,9 @@ namespace GLAA.Services
             this.logger = logger;
         }
 
-        private X509Certificate2 GetCert()
+        private X509Certificate2 GetCert(string path)
         {
-            var cert = new X509Certificate2(@"certificates/ca-bundle.crt");
+            var cert = new X509Certificate2(path);
 
             logger.TimedLog(LogLevel.Information, "Getting SSL certificate...");
             logger.TimedLog(LogLevel.Information, "Certificate issuer: " + cert.Issuer);
@@ -41,9 +48,21 @@ namespace GLAA.Services
                 SslProtocols = SslProtocols.Tls12
             };
 
-            handler.ClientCertificates.Add(GetCert());
+            handler.ClientCertificates.AddRange(GetCertificates());
 
             return handler;
+        }
+
+        private X509Certificate[] GetCertificates()
+        {
+            var certificates = new X509Certificate[] { };
+
+            for (int i = 0; i < certificatePaths.Count; i++)
+            {
+                certificates[i] = GetCert(certificatePaths[i]);
+            }
+
+            return certificates;
         }
 
         public async Task<VirusScanResult> ScanFileAsync(IFormFile file)
