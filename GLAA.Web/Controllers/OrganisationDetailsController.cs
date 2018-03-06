@@ -164,7 +164,7 @@ namespace GLAA.Web.Controllers
         [ExportModelState]
         public IActionResult BusinessEmailAddress(BusinessEmailAddressViewModel model)
         {
-            return OrganisationDetailsPost(model, nameof(BusinessMobileNumber));
+            return OrganisationDetailsPost(model, nameof(BusinessEmailAddress));
         }
 
         [HttpGet]
