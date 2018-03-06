@@ -43,7 +43,7 @@ namespace GLAA.Web.Controllers
             SignInManager<GLAAUser> signInManager,
             RoleManager<GLAARole> roleManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger, 
+            ILogger<AccountController> logger,
             ILicenceApplicationPostDataHandler licencePostDataHandler,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ISessionHelper session,
@@ -88,14 +88,14 @@ namespace GLAA.Web.Controllers
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {                    
+                {
                     var user = await _userManager.FindByEmailAsync(model.Email);
 
                     _logger.TimedLog(LogLevel.Information, $"User {user.Email} logged in.");
 
                     var isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
 
-                    if(isAdmin)
+                    if (isAdmin)
                     {
                         _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Administrator'");
 
@@ -106,7 +106,7 @@ namespace GLAA.Web.Controllers
 
                     var licence = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).FirstOrDefault();
 
-                    if(licence != null)
+                    if (licence != null)
                     {
                         session.SetCurrentLicenceId(licence.Id);
 
@@ -114,7 +114,7 @@ namespace GLAA.Web.Controllers
                     }
 
                     return RedirectToAction("TaskList", "Licence");
-                    
+
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -379,7 +379,7 @@ namespace GLAA.Web.Controllers
                 //TODO: do we need users to confirm accounts
                 //|| !(await _userManager.IsEmailConfirmedAsync(user))
 
-                if (user == null )
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed                    
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
@@ -398,7 +398,7 @@ namespace GLAA.Web.Controllers
                 var template = configuration.GetSection("GOVNotify:EmailTemplates")["ResetPassword"];
 
                 var success = emailService.Send(msg, template);
-                
+
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
