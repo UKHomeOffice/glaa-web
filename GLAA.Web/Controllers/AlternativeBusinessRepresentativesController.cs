@@ -21,9 +21,7 @@ namespace GLAA.Web.Controllers
         {
         }
 
-        [HttpGet]
-        [ExportModelState]
-        public IActionResult Part(int id, bool? back)
+        private IActionResult AbrGet(string actionName, bool? back)
         {
             Session.ClearCurrentAbrId();
 
@@ -34,26 +32,47 @@ namespace GLAA.Web.Controllers
                     .Build<AlternativeBusinessRepresentativeCollectionViewModel>(licenceId);
 
             return back.HasValue && back.Value
-                ? GetPreviousView(id, FormSection.AlternativeBusinessRepresentatives, model)
-                : GetNextView(id, FormSection.AlternativeBusinessRepresentatives, model);
+                ? GetPreviousView(FormSection.AlternativeBusinessRepresentatives, actionName, model)
+                : GetNextView(FormSection.AlternativeBusinessRepresentatives, actionName, model);
+        }
+
+        [HttpGet]
+        [ExportModelState]
+        public IActionResult Introduction(bool? back = false)
+        {
+            return AbrGet(nameof(Introduction), back);
+        }
+
+        [HttpGet]
+        [ExportModelState]
+        public IActionResult HasAlternativeBusinessRepresentatives(bool? back = false)
+        {
+            return AbrGet(nameof(HasAlternativeBusinessRepresentatives), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveAlternativeBusinessRepresentatives(AlternativeBusinessRepresentativeCollectionViewModel model)
+        public IActionResult HasAlternativeBusinessRepresentatives(AlternativeBusinessRepresentativeCollectionViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentatives, 2);
+            Session.SetSubmittedPage(FormSection.AlternativeBusinessRepresentatives, nameof(HasAlternativeBusinessRepresentatives));
 
             model = RepopulateDropdowns(model);
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.AlternativeBusinessRepresentatives, 2), model);
+                return View(nameof(HasAlternativeBusinessRepresentatives), model);
             }
 
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x, model);
 
-            return RedirectToAction(FormSection.AlternativeBusinessRepresentatives, 3);
+            return RedirectToAction(FormSection.AlternativeBusinessRepresentatives, nameof(Summary));
+        }
+
+        [HttpGet]
+        [ExportModelState]
+        public IActionResult Summary(bool? back = false)
+        {
+            return AbrGet(nameof(Summary), back);
         }
     }
 }

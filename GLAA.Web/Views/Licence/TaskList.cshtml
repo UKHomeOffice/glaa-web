@@ -70,14 +70,14 @@
                             <li class="task-list-item">
                                 @if (Model.AlternativeBusinessRepresentatives != null && Model.AlternativeBusinessRepresentatives.IsValid)
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "AlternativeBusinessRepresentatives", new { id = 3 })">
+                                    <a class="task-name" href="@Url.Action("Summary", "AlternativeBusinessRepresentatives", new { id = 3 })">
                                         Alternative Business Representatives
                                     </a>
                                     <strong class="task-completed" id="contact-details-completed">Completed</strong>
                                 }
                                 else
                                 {
-                                    <a class="task-name" href="@Url.Action("Part", "AlternativeBusinessRepresentatives", new { id = 1 })">
+                                    <a class="task-name" href="@Url.Action("Introduction", "AlternativeBusinessRepresentatives", new { id = 1 })">
                                         Alternative Business Representatives
                                     </a>
                                 }

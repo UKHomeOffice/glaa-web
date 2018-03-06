@@ -81,9 +81,9 @@ namespace GLAA.Web.FormLogic
                         FormSection.AlternativeBusinessRepresentatives,
                         new []
                         {
-                            new FormPageDefinition(),
-                            new FormPageDefinition(),
-                            new FormPageDefinition()
+                            new FormPageDefinition(string.Empty, "Introduction"),
+                            new FormPageDefinition(nameof(AlternativeBusinessRepresentativeCollectionViewModel.HasAlternativeBusinessRepresentatives), "HasAlternativeBusinessRepresentatives"),
+                            new FormPageDefinition(string.Empty, "Summary")
                         }
                     },
                     {
