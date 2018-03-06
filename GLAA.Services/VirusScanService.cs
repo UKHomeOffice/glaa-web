@@ -45,7 +45,7 @@ namespace GLAA.Services
             var handler = new HttpClientHandler
             {
                 ClientCertificateOptions = ClientCertificateOption.Manual,
-                SslProtocols = SslProtocols.Tls12
+                SslProtocols = SslProtocols.Tls
             };
 
             handler.ClientCertificates.AddRange(GetCertificates());
@@ -57,7 +57,7 @@ namespace GLAA.Services
         {
             var certificates = new X509Certificate[] { };
 
-            for (int i = 0; i < certificatePaths.Count; i++)
+            for (int i = 0; i < certificatePaths.Count - 1; i++)
             {
                 certificates[i] = GetCert(certificatePaths[i]);
             }
