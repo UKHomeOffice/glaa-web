@@ -39,7 +39,7 @@ namespace GLAA.Services
             {
                 ClientCertificateOptions = ClientCertificateOption.Manual,
                 SslProtocols = SslProtocols.Tls12,
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true }
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
             };
 
             handler.ClientCertificates.Add(GetCert());
