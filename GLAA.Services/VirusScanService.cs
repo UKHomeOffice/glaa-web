@@ -38,7 +38,8 @@ namespace GLAA.Services
             var handler = new HttpClientHandler
             {
                 ClientCertificateOptions = ClientCertificateOption.Manual,
-                SslProtocols = SslProtocols.Tls12
+                SslProtocols = SslProtocols.Tls12,
+                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true }
             };
 
             handler.ClientCertificates.Add(GetCert());
@@ -52,7 +53,7 @@ namespace GLAA.Services
 
             var result = new VirusScanResult();
 
-            using (HttpClient client = new HttpClient(GetSSLHandler()))
+            using (var client = new HttpClient(GetSSLHandler()))
             {
                 var requestContent = new MultipartFormDataContent();
                 var fileContent = new StreamContent(file.OpenReadStream());                
