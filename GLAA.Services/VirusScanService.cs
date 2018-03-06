@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace GLAA.Services
@@ -18,22 +20,39 @@ namespace GLAA.Services
             this.logger = logger;
         }
 
+        private X509Certificate2 GetCert()
+        {
+            var cert = new X509Certificate2(@"certificates/ca-bundle.crt");
+
+            logger.TimedLog(LogLevel.Information, "Getting SSL certificate...");
+            logger.TimedLog(LogLevel.Information, "Certificate issuer: " + cert.Issuer);
+            logger.TimedLog(LogLevel.Information, "Effective date: " + cert.GetEffectiveDateString());
+            logger.TimedLog(LogLevel.Information, "Name info: " + cert.GetNameInfo(X509NameType.SimpleName, true));
+            logger.TimedLog(LogLevel.Information, "Has private key?: " + cert.HasPrivateKey);
+
+            return cert;
+        }
+
+        private HttpClientHandler GetSSLHandler()
+        {
+            var handler = new HttpClientHandler
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                SslProtocols = SslProtocols.Tls12
+            };
+
+            handler.ClientCertificates.Add(GetCert());
+
+            return handler;
+        }
+
         public async Task<VirusScanResult> ScanFileAsync(IFormFile file)
         {
-            logger.TimedLog(LogLevel.Warning, "Starting virus scan for file: " + file.FileName);
+            logger.TimedLog(LogLevel.Information, "Starting virus scan for file: " + file.FileName);
 
             var result = new VirusScanResult();
 
-            //var handler = new HttpClientHandler
-            //{
-            //    ClientCertificateOptions = ClientCertificateOption.Manual,
-            //    ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
-            //    {
-            //        return true;
-            //    }
-            //};
-
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient(GetSSLHandler()))
             {
                 var requestContent = new MultipartFormDataContent();
                 var fileContent = new StreamContent(file.OpenReadStream());                
