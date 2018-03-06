@@ -412,7 +412,7 @@ namespace GLAA.Web.Controllers
                 return View(nameof(ReviewRestraintOrders), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(UnspentConvictions));
+            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(ReviewRestraintOrders));
         }
 
         [HttpGet]
@@ -455,7 +455,7 @@ namespace GLAA.Web.Controllers
                 return View(nameof(ReviewUnspentConvictions), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(OffencesAwaitingTrial));
+            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(ReviewUnspentConvictions));
         }
 
         [HttpGet]
@@ -498,7 +498,7 @@ namespace GLAA.Web.Controllers
                 return View(nameof(ReviewOffencesAwaitingTrial), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(PreviousLicence));
+            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(ReviewOffencesAwaitingTrial));
         }
 
         [HttpGet]
