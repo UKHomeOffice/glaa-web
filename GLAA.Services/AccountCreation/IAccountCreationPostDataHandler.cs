@@ -1,20 +1,21 @@
 ﻿using GLAA.ViewModels.LicenceApplication;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GLAA.Services.AccountCreation
 {
     public interface IAccountCreationPostDataHandler
     {
-        bool Exists(string email);
+        Task<bool> ExistsAsync(string email);
 
-        void DeleteIfUnconfirmed(string email);
+        Task DeleteIfUnconfirmedAsync(string email);
 
-        void Update<T>(string email, T model);
+        Task UpdateAsync<T>(string email, T model);
 
-        void UpdateAddress(string email, AddressViewModel model);
+        Task UpdateAddressAsync(string email, AddressViewModel model);
 
-        void SetPassword(string email, string password);
+        Task<bool> SetPasswordAsync(string email, string password);
 
-        void SendConfirmation(string email, IUrlHelper url);
+        Task SendConfirmationAsync(string email, IUrlHelper url);
     }
 }
