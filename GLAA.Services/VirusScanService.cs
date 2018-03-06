@@ -38,11 +38,11 @@ namespace GLAA.Services
             var handler = new HttpClientHandler
             {
                 ClientCertificateOptions = ClientCertificateOption.Manual,
-                SslProtocols = SslProtocols.Tls12,
+                //SslProtocols = SslProtocols.Tls12,
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
             };
 
-            handler.ClientCertificates.Add(GetCert());
+            //handler.ClientCertificates.Add(GetCert());
 
             return handler;
         }
