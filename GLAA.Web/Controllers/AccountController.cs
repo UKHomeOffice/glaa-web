@@ -102,30 +102,18 @@ namespace GLAA.Web.Controllers
                         return RedirectToAction("Index", "Admin");
                     }
 
-                    var isLabourProvider = await _userManager.IsInRoleAsync(user, "Labour Provider");                    
+                    _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
 
-                    if (isLabourProvider)
+                    var licence = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).FirstOrDefault();
+
+                    if(licence != null)
                     {
-                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
+                        session.SetCurrentLicenceId(licence.Id);
 
-                        try
-                        {
-                            var licenceId = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).First().Id;
-
-                            session.SetCurrentLicenceId(licenceId);
-
-                            return RedirectToAction("Portal", "Licence", null);
-
-                        }
-                        catch (Exception e)
-                        {
-                            _logger.TimedLog(LogLevel.Error, $"User {user.Email} unable to find licence", e);
-
-                            return RedirectToAction("TaskList", "Licence");
-                        }
+                        return RedirectToAction("Portal", "Licence", null);
                     }
 
-                    //TODO: What happens for other roles? 
+                    return RedirectToAction("TaskList", "Licence");
                     
                 }
                 if (result.RequiresTwoFactor)
