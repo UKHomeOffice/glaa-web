@@ -87,7 +87,7 @@ namespace GLAA.Services.Tests.Validation
                 {
                     HasPassport = true
                 },
-                RightToWorkViewModel = new RightToWorkViewModel
+                RightToWork = new RightToWorkViewModel
                 {
                     RequiresVisa = true,
                     VisaDescription = "description"

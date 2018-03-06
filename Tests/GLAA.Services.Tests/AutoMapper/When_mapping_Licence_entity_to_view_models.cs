@@ -359,8 +359,8 @@ namespace GLAA.Services.Tests.AutoMapper
             var result = this.mapper.Map<AlternativeBusinessRepresentativeViewModel>(input);
 
             AssertPerson(input, result);
-            Assert.AreEqual(input.RequiresVisa, result.RightToWorkViewModel.RequiresVisa);
-            Assert.AreEqual(input.VisaDescription, result.RightToWorkViewModel.VisaDescription);
+            Assert.AreEqual(input.RequiresVisa, result.RightToWork.RequiresVisa);
+            Assert.AreEqual(input.VisaDescription, result.RightToWork.VisaDescription);
         }
 
         [TestMethod]
@@ -414,8 +414,8 @@ namespace GLAA.Services.Tests.AutoMapper
             var result = this.mapper.Map<AlternativeBusinessRepresentativeCollectionViewModel>(input);
 
             AssertPerson(person, result.AlternativeBusinessRepresentatives.Single());
-            Assert.AreEqual(input.Single().RequiresVisa, result.AlternativeBusinessRepresentatives.Single().RightToWorkViewModel.RequiresVisa);
-            Assert.AreEqual(input.Single().VisaDescription, result.AlternativeBusinessRepresentatives.Single().RightToWorkViewModel.VisaDescription);
+            Assert.AreEqual(input.Single().RequiresVisa, result.AlternativeBusinessRepresentatives.Single().RightToWork.RequiresVisa);
+            Assert.AreEqual(input.Single().VisaDescription, result.AlternativeBusinessRepresentatives.Single().RightToWork.VisaDescription);
         }
 
         [TestMethod]

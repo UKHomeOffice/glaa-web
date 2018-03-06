@@ -1,13 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Principal Authority - Part 14";
+    ViewBag.Title = "Does the ABR have a passport?";
     var switchValue = "true";
 }
 
-@model GLAA.ViewModels.LicenceApplication.UndischargedBankruptViewModel
+@model GLAA.ViewModels.LicenceApplication.PassportViewModel
 
-@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "14" } })
+@Html.Partial("_BackButton", new ViewDataDictionary(ViewData) { { "section", "AlternativeBusinessRepresentative" }, { "submittedPageId", "12" } })
 
-@using (Html.BeginForm("SaveUndischargedBankrupt", "AlternativeBusinessRepresentative"))
+@using (Html.BeginForm("Passport", "AlternativeBusinessRepresentative"))
 {
     <div class="grid-row">
         <div class="column-two-thirds">
@@ -15,7 +15,7 @@
         </div>
         <div class="column-full">
             <h1 class="heading-large">
-                Are you an un-discharged bankrupt?
+                Does the ABR have a passport?
             </h1>
         </div>
         <div class="column-two-thirds">
@@ -27,18 +27,18 @@
                     @foreach (var option in Model.YesNo)
                     {
                         <div class="multiple-choice">
-                            @Html.RadioButtonFor(x => x.IsUndischargedBankrupt, option.Value, new { id = $"IsUndischargedBankrupt_{option.Text}" })
-                            @Html.LabelFor(x => x.IsUndischargedBankrupt, option.Text, new { @for = $"IsUndischargedBankrupt_{option.Text}" })
+                            @Html.RadioButtonFor(x => x.HasPassport, option.Value, new { id = $"HasPassport_{option.Text}" })
+                            @Html.LabelFor(x => x.HasPassport, option.Text, new { @for = $"HasPassport_{option.Text}" })
                         </div>
 
                         if (option.Value == switchValue)
                         {
-                            <div class="panel panel-border-narrow js-hidden" id="bankrupt-detail">
-                                @Html.DateFormGroupFor(x => x.BankruptcyDate)
-                                @Html.TextFormGroupFor(x => x.BankruptcyNumber)
+                            <div class="panel panel-border-narrow js-hidden" id="passport-detail">
+                                You will be required to download a copy of your passport prior to submitting this application form.
                             </div>
                         }
                     }
+
                 </fieldset>
             </div>
         </div>
@@ -52,9 +52,7 @@
     <script>
         $(document).ready(function () {
             hiddenContent.hideContent();
-            branchedQuestion.toggleBranch('.multiple-choice input', '#bankrupt-detail', @switchValue);
+            branchedQuestion.toggleBranch('.multiple-choice input', '#passport-detail', @switchValue);
         });
     </script>
 }
-
-

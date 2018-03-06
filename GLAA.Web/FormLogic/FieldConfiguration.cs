@@ -91,7 +91,7 @@ namespace GLAA.Web.FormLogic
                         BasicPersonFields
                         .Concat(PersonSecurityFields)
                         .Concat(new[] {
-                            new FormPageDefinition()
+                            new FormPageDefinition(string.Empty, "Summary")
                         }).ToArray()
                     },
                     {
@@ -194,18 +194,18 @@ namespace GLAA.Web.FormLogic
 
         private static readonly FormPageDefinition[] PersonSecurityFields =
         {
-            new FormPageDefinition(nameof(PersonViewModel.Nationality)),
-            new FormPageDefinition(nameof(PersonViewModel.Passport)),
-            new FormPageDefinition(nameof(RightToWorkViewModel)),
-            new FormPageDefinition(nameof(PersonViewModel.UndischargedBankrupt)),
-            new FormPageDefinition(nameof(PersonViewModel.DisqualifiedDirector)),
-            new FormPageDefinition(nameof(PersonViewModel.RestraintOrders), true),
-            new FormPageDefinition(nameof(PersonViewModel.RestraintOrders)),
-            new FormPageDefinition(nameof(PersonViewModel.UnspentConvictions), true),
-            new FormPageDefinition(nameof(PersonViewModel.UnspentConvictions)),
-            new FormPageDefinition(nameof(PersonViewModel.OffencesAwaitingTrial), true),
-            new FormPageDefinition(nameof(PersonViewModel.OffencesAwaitingTrial)),
-            new FormPageDefinition(nameof(PersonViewModel.PreviousLicence)),
+            new FormPageDefinition(nameof(PersonViewModel.Nationality), "Nationality"),
+            new FormPageDefinition(nameof(PersonViewModel.Passport), "Passport"),
+            new FormPageDefinition(nameof(AlternativeBusinessRepresentativeViewModel.RightToWork), "RightToWork"),
+            new FormPageDefinition(nameof(PersonViewModel.UndischargedBankrupt), "UndischargedBankrupt"),
+            new FormPageDefinition(nameof(PersonViewModel.DisqualifiedDirector), "DisqualifiedDirector"),
+            new FormPageDefinition(nameof(PersonViewModel.RestraintOrders), "RestraintOrders", true),
+            new FormPageDefinition(nameof(PersonViewModel.RestraintOrders), "ReviewRestraintOrders"),
+            new FormPageDefinition(nameof(PersonViewModel.UnspentConvictions), "UnspentConvictions", true),
+            new FormPageDefinition(nameof(PersonViewModel.UnspentConvictions), "ReviewUnspentConvictions"),
+            new FormPageDefinition(nameof(PersonViewModel.OffencesAwaitingTrial), "OffencesAwaitingTrial", true),
+            new FormPageDefinition(nameof(PersonViewModel.OffencesAwaitingTrial), "ReviewOffencesAwaitingTrial"),
+            new FormPageDefinition(nameof(PersonViewModel.PreviousLicence), "PreviousLicence"),
         };
 
         public IDictionary<FormSection, FormPageDefinition[]> Fields { get; set; }
