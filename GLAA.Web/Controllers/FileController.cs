@@ -30,12 +30,12 @@ namespace GLAA.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult FileReview(string id)
+        public IActionResult FileReview(string key)
         {
             //TODO - Get currently staged files for upload.
-            if (!string.IsNullOrWhiteSpace(id))
+            if (!string.IsNullOrWhiteSpace(key))
             {
-                var fileSummaryViewModel = fileService.GetFileSummary(id).Result;
+                var fileSummaryViewModel = fileService.GetFileSummary(key);
 
                 return View(fileSummaryViewModel);
             }
@@ -43,20 +43,35 @@ namespace GLAA.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public void Index(FileUploadViewModel fileUploadViewModel)
+        [HttpGet]
+        public IActionResult FilePreviewImage(string key)
         {
-            //TODO - handle file upload.
+            //TODO - Get currently staged files for upload.
+            if (!string.IsNullOrWhiteSpace(key))
+                return fileService.GetFilePreviewImage(key).Result;
 
-            var fileUploadedViewModel = fileService.UploadFile(fileUploadViewModel).Result;
-
-            RedirectToAction("FileReview", new { id = fileUploadedViewModel.Key });
+            return new NotFoundResult();
         }
 
         [HttpPost]
-        public void Confirm(FileSummaryViewModel fileSummaryViewModel)
+        public IActionResult Index(FileUploadViewModel fileUploadViewModel)
         {
-            //TODO - associated uploaded files with
+            var fileUploadedViewModel = fileService.UploadFile(fileUploadViewModel).Result;
+
+            return RedirectToAction("FileReview", new { key = fileUploadedViewModel.Key });
+        }
+
+        [HttpPost]
+        public IActionResult Confirm(FileSummaryViewModel fileSummaryViewModel)
+        {
+            if (fileSummaryViewModel.CorrectFile)
+            {
+                //TODO - handle redirect to the file collection summary.    
+            }
+            else
+                return Index("");
+
+            return null;
         }
     }
 }

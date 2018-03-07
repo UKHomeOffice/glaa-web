@@ -35,6 +35,7 @@ namespace GLAA.Domain
         public DbSet<Country> Countries { get; set; }
         public DbSet<County> Counties { get; set; }
         public DbSet<PAYENumber> PAYENumbers { get; set; }
+        public DbSet<File> Files { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            

@@ -12,8 +12,8 @@ using System;
 namespace GLAA.Domain.Migrations
 {
     [DbContext(typeof(GLAAContext))]
-    [Migration("20180228113832_initial_create")]
-    partial class initial_create
+    [Migration("20180305150455_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -330,6 +330,30 @@ namespace GLAA.Domain.Migrations
                     b.HasIndex("PrincipalAuthorityId");
 
                     b.ToTable("DirectorOrPartner");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.File", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DateDeleted");
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<string>("FileName");
+
+                    b.Property<string>("FileType");
+
+                    b.Property<Guid>("Key");
+
+                    b.Property<int?>("LicenceId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LicenceId");
+
+                    b.ToTable("File");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.GLAARole", b =>
@@ -1240,6 +1264,13 @@ namespace GLAA.Domain.Migrations
                     b.HasOne("GLAA.Domain.Models.PrincipalAuthority", "PrincipalAuthority")
                         .WithMany()
                         .HasForeignKey("PrincipalAuthorityId");
+                });
+
+            modelBuilder.Entity("GLAA.Domain.Models.File", b =>
+                {
+                    b.HasOne("GLAA.Domain.Models.Licence", "Licence")
+                        .WithMany()
+                        .HasForeignKey("LicenceId");
                 });
 
             modelBuilder.Entity("GLAA.Domain.Models.GLAAUser", b =>

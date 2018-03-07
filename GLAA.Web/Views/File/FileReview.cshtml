@@ -2,25 +2,40 @@
 @model GLAA.ViewModels.File.FileSummaryViewModel
 
 @{
-    ViewBag.Title = "Is this the correct file?";
+    ViewBag.Title = "Is this file correct?";
 }
 
-<h1>@ViewBag.Title</h1>
+<h1 class="heading-large">@ViewBag.Title</h1>
 
 <div class="file-upload">
-    <div>
-        Upload a file.
-    </div>
 
     @using (Html.BeginForm("Confirm", "File", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div>
-            @Html.LabelFor(x => x.Key);
-            @Html.LabelFor(x => x.FileName);
+            <img src="@Url.Action("FilePreviewImage", new {key = Model.Key})" alt="@Model.FileName" />
+        </div>
+        <div>
+            @Model.FileName
+        </div>
+        <div>
+            <div class="form-group">
+                <fieldset>
+                    <legend>
+                        <span class="body-text"></span>
+                    </legend>
+                    @foreach (var option in Model.YesNo)
+                    {
+                        <div class="multiple-choice">
+                            @Html.RadioButtonFor(x => x.CorrectFile, option.Value, new { id = $"CorrectFile_{option.Text}" })
+                            @Html.LabelFor(x => x.CorrectFile, option.Text, new { @for = $"CorrectFile_{option.Text}" })
+                        </div>
+                    }
+                </fieldset>
+            </div>
         </div>
         <br />
         <div>
-            <input class="button" type="submit" value="Conbtinue" />
+            <input class="button" type="submit" value="Continue" />
         </div>
     }
 </div>

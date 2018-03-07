@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GLAA.Domain.Migrations
 {
-    public partial class initial_create : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -581,6 +581,30 @@ namespace GLAA.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "File",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    DateDeleted = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<bool>(nullable: false),
+                    FileName = table.Column<string>(nullable: true),
+                    FileType = table.Column<string>(nullable: true),
+                    Key = table.Column<Guid>(nullable: false),
+                    LicenceId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_File", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_File_Licence_LicenceId",
+                        column: x => x.LicenceId,
+                        principalTable: "Licence",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LicenceIndustry",
                 columns: table => new
                 {
@@ -1140,6 +1164,11 @@ namespace GLAA.Domain.Migrations
                 column: "PrincipalAuthorityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_File_LicenceId",
+                table: "File",
+                column: "LicenceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Licence_AddressId",
                 table: "Licence",
                 column: "AddressId");
@@ -1449,6 +1478,9 @@ namespace GLAA.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Conviction");
+
+            migrationBuilder.DropTable(
+                name: "File");
 
             migrationBuilder.DropTable(
                 name: "LicenceIndustry");
