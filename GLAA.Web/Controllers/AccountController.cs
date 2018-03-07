@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using GLAA.Domain.Models;
 using GLAA.Services.LicenceApplication;
 using GLAA.ViewModels.Account;
-using GLAA.ViewModels.LicenceApplication;
 using GLAA.Web.Core.Models.AccountViewModels;
 using GLAA.Web.Core.Services;
 using GLAA.Web.Helpers;
@@ -17,11 +16,10 @@ using Microsoft.Extensions.Logging;
 using ForgotPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ForgotPasswordViewModel;
 using ResetPasswordViewModel = GLAA.Web.Core.Models.AccountViewModels.ResetPasswordViewModel;
 using GLAA.Services;
-using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using GLAA.ViewModels;
-using Microsoft.AspNetCore.Hosting;
+using GLAA.Services.Extensions;
 
 namespace GLAA.Web.Controllers
 {
@@ -34,7 +32,7 @@ namespace GLAA.Web.Controllers
         private readonly RoleManager<GLAARole> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly IEmailService emailService;
-        private readonly ILogger _logger;
+        private readonly ILogger<AccountController> _logger;
         private readonly ISessionHelper session;
         private readonly ILicenceApplicationPostDataHandler licencePostDataHandler;
         private readonly ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder;
@@ -45,7 +43,7 @@ namespace GLAA.Web.Controllers
             SignInManager<GLAAUser> signInManager,
             RoleManager<GLAARole> roleManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger, 
+            ILogger<AccountController> logger,
             ILicenceApplicationPostDataHandler licencePostDataHandler,
             ILicenceApplicationViewModelBuilder licenceApplicationViewModelBuilder,
             ISessionHelper session,
@@ -91,31 +89,32 @@ namespace GLAA.Web.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-
                     var user = await _userManager.FindByEmailAsync(model.Email);
-                    var isLabourProvider = await _userManager.IsInRoleAsync(user, "LabourProvider");                    
 
-                    if (isLabourProvider)
+                    _logger.TimedLog(LogLevel.Information, $"User {user.Email} logged in.");
+
+                    var isAdmin = await _userManager.IsInRoleAsync(user, "Administrator");
+
+                    if (isAdmin)
                     {
-                        _logger.LogInformation($"User {user.Email} is in role LabourProvider");
+                        _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Administrator'");
 
-                        try
-                        {
-                            var licenceId = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).First().Id;
-
-                            session.SetCurrentLicenceId(licenceId);
-
-                            return RedirectToAction("Portal", "Licence", null);
-
-                        }
-                        catch (Exception e)
-                        {
-                            return RedirectToAction("TaskList", "Licence");
-                        }
+                        return RedirectToAction("Index", "Admin");
                     }
 
-                    return RedirectToAction("Index", "Admin");
+                    _logger.TimedLog(LogLevel.Information, $"User {user.Email} accessed role 'Labour Provider'");
+
+                    var licence = licenceApplicationViewModelBuilder.BuildLicencesForUser(user.Id).FirstOrDefault();
+
+                    if (licence != null)
+                    {
+                        session.SetCurrentLicenceId(licence.Id);
+
+                        return RedirectToAction("Portal", "Licence", null);
+                    }
+
+                    return RedirectToAction("TaskList", "Licence");
+
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -380,7 +379,7 @@ namespace GLAA.Web.Controllers
                 //TODO: do we need users to confirm accounts
                 //|| !(await _userManager.IsEmailConfirmedAsync(user))
 
-                if (user == null )
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed                    
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
@@ -399,7 +398,7 @@ namespace GLAA.Web.Controllers
                 var template = configuration.GetSection("GOVNotify:EmailTemplates")["ResetPassword"];
 
                 var success = emailService.Send(msg, template);
-                
+
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 

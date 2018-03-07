@@ -40,11 +40,19 @@ GO
 
 PRINT 'Database created';
 
+GO
+
 USE [GLAA_Core]
 
 GO
 
+CREATE FULLTEXT CATALOG ft AS DEFAULT;
 
+GO
+
+PRINT 'Create full text catalog';
+
+GO
 
 IF NOT EXISTS (SELECT [name] FROM [sys].[database_principals] WHERE [type] = 'S' AND [name] = '$(APP_USER)')
 

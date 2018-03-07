@@ -7,6 +7,7 @@ using GLAA.Web.Attributes;
 using GLAA.Web.FormLogic;
 using GLAA.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GLAA.Web.Controllers
 {
@@ -125,19 +126,19 @@ namespace GLAA.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResendVerification()
+        public async Task<IActionResult> ResendVerification()
         {
-            accountCreationPostDataHandler.SendConfirmation(session.GetString(CurrentPaEmail), Url);
+            await accountCreationPostDataHandler.SendConfirmationAsync(session.GetString(CurrentPaEmail), Url);
             return RedirectToAction(nameof(VerificationSent));
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
+        public async Task<IActionResult> SaveEmailAddress(PrincipalAuthorityEmailAddressViewModel model)
         {
             session.SetSubmittedPage(FormSection.SignUp, 1);
 
-            if (accountCreationPostDataHandler.Exists(model.EmailAddress))
+            if (await accountCreationPostDataHandler.ExistsAsync(model.EmailAddress))
             {
                 ViewData["doOverride"] = true;
                 ModelState.AddModelError("EmailAddress", "A user with this email address already exists in the system.");
@@ -152,19 +153,19 @@ namespace GLAA.Web.Controllers
             if (!model.EmailAddress.Equals(session.GetString(CurrentPaEmail),
                 StringComparison.InvariantCultureIgnoreCase))
             {
-                accountCreationPostDataHandler.DeleteIfUnconfirmed(model.EmailAddress);
+                await accountCreationPostDataHandler.DeleteIfUnconfirmedAsync(model.EmailAddress);
             }
 
             session.SetString(CurrentPaEmail, model.EmailAddress);
 
-            accountCreationPostDataHandler.Update(model.EmailAddress, model);
+            await accountCreationPostDataHandler.UpdateAsync(model.EmailAddress, model);
 
             return CheckParentValidityAndRedirect(1);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveFullName(PrincipalAuthorityFullNameViewModel model)
+        public async Task<IActionResult> SaveFullName(PrincipalAuthorityFullNameViewModel model)
         {
             session.SetSubmittedPage(FormSection.SignUp, 2);
 
@@ -173,14 +174,14 @@ namespace GLAA.Web.Controllers
                 return View(GetViewPath(FormSection.SignUp, 2), model);
             }
 
-            accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
+            await accountCreationPostDataHandler.UpdateAsync(session.GetString(CurrentPaEmail), model);
 
             return CheckParentValidityAndRedirect(2);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveAddress(AddressViewModel model)
+        public async Task<IActionResult> SaveAddress(AddressViewModel model)
         {
             session.SetSubmittedPage(FormSection.SignUp, 3);
 
@@ -193,14 +194,14 @@ namespace GLAA.Web.Controllers
                 return View(GetViewPath(FormSection.SignUp, 3), model);
             }
 
-            accountCreationPostDataHandler.UpdateAddress(session.GetString(CurrentPaEmail), model);
+            await accountCreationPostDataHandler.UpdateAddressAsync(session.GetString(CurrentPaEmail), model);
 
             return CheckParentValidityAndRedirect(3);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveCommunicationPreference(CommunicationPreferenceViewModel model)
+        public async Task<IActionResult> SaveCommunicationPreference(CommunicationPreferenceViewModel model)
         {
             session.SetSubmittedPage(FormSection.SignUp, 4);
 
@@ -209,14 +210,14 @@ namespace GLAA.Web.Controllers
                 return View(GetViewPath(FormSection.SignUp, 4), model);
             }
 
-            accountCreationPostDataHandler.Update(session.GetString(CurrentPaEmail), model);
+            await accountCreationPostDataHandler.UpdateAsync(session.GetString(CurrentPaEmail), model);
 
             return CheckParentValidityAndRedirect(4);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePassword(PasswordViewModel model)
+        public async Task<IActionResult> SavePassword(PasswordViewModel model)
         {
             session.SetSubmittedPage(FormSection.SignUp, 5);
 
@@ -225,16 +226,16 @@ namespace GLAA.Web.Controllers
                 return View(GetViewPath(FormSection.SignUp, 5), model);
             }
 
-            accountCreationPostDataHandler.SetPassword(session.GetString(CurrentPaEmail), model.Password);
+            var passwordSetResult = await accountCreationPostDataHandler.SetPasswordAsync(session.GetString(CurrentPaEmail), model.Password);
 
             return CheckParentValidityAndRedirect(5);
         }
         
         [HttpPost]
         [ExportModelState]
-        public ActionResult SendVerification()
+        public async Task<IActionResult> SendVerification()
         {
-            accountCreationPostDataHandler.SendConfirmation(session.GetString(CurrentPaEmail), Url);
+            await accountCreationPostDataHandler.SendConfirmationAsync(session.GetString(CurrentPaEmail), Url);
             return RedirectToAction(nameof(VerificationSent));
         }
     }
