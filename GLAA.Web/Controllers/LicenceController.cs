@@ -42,7 +42,13 @@ namespace GLAA.Web.Controllers
             Session.ClearCurrentDopStatus();
 
             var licenceId = Session.GetCurrentLicenceId();
-            var model = LicenceApplicationViewModelBuilder.Build(licenceId);
+
+            var model = LicenceApplicationViewModelBuilder.Build<LicenceApplicationViewModel>(licenceId);
+
+            if(licenceId == 0)
+            {
+                Session.SetCurrentLicenceId(LicenceApplicationPostDataHandler.Insert(model));
+            }
 
             //TODO: It's feasible we could access this page with no licenceId where the model will be null
             //TODO: how should we handle this
