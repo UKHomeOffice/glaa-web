@@ -30,6 +30,7 @@ using GLAA.Services.PublicRegister;
 using GLAA.Scheduler.Tasks;
 using GLAA.Scheduler.Scheduling;
 using GLAA.Services.Extensions;
+using GLAA.Services.File;
 
 namespace GLAA.Web
 {
@@ -143,8 +144,10 @@ namespace GLAA.Web
             services.AddTransient<IPublicRegisterViewModelBuilder, PublicRegisterViewModelBuilder>();
             services.AddTransient<IPublicRegisterPostDataHandler, PublicRegisterPostDataHandler>();
 
+            // file access
             services.AddTransient<IFileUploadService, FileUploadService>();
             services.AddTransient<IVirusScanService, VirusScanService>();
+            services.AddTransient<IFileService, FileService>();
 
             // notify
             services.AddTransient<IEmailService>(x => new EmailService(

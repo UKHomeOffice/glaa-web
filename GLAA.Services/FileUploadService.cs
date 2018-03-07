@@ -31,7 +31,8 @@ namespace GLAA.Services
                 {
                     BucketName = bucketName,
                     Key = "test_" + DateTime.Now.ToShortTimeString(),
-                    InputStream = fileStream
+                    InputStream = fileStream,
+                    ServerSideEncryptionMethod = ServerSideEncryptionMethod.AWSKMS
                 };
 
                 putRequest.ServerSideEncryptionMethod = ServerSideEncryptionMethod.AWSKMS;
