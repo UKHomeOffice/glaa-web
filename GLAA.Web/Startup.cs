@@ -248,6 +248,7 @@ namespace GLAA.Web
                     // but not when deploying as it's created as part of the kube-db-setup
                     dbContext.AddDefaultFullTextCatalog();
                 }
+
                 dbContext.AddFullTextIndexes("Licence", new[] { "BusinessName", "TradingName" });
 
                 logger.TimedLog(LogLevel.Information, "Completed db seed");

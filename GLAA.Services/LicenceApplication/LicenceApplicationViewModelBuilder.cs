@@ -88,7 +88,10 @@ namespace GLAA.Services.LicenceApplication
 
             var model = New<T>();
 
-            model = mapper.Map(licence, model);
+            if (licence != null)
+            {
+                model = mapper.Map(licence, model);
+            }
 
             return model;
         }
