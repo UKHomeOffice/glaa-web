@@ -40,7 +40,7 @@ namespace GLAA.Services.Tests.Validation
                         Date = DateTime.Now
                     }
                 },
-                BirthDetailsViewModel = new BirthDetailsViewModel
+                BirthDetails = new BirthDetailsViewModel
                 {
                     TownOfBirthViewModel = new TownOfBirthViewModel
                     {
@@ -86,11 +86,11 @@ namespace GLAA.Services.Tests.Validation
                 {
                     Nationality = "British"
                 },
-                PassportViewModel = new PassportViewModel
+                Passport = new PassportViewModel
                 {
                     HasPassport = true
                 },
-                PrincipalAuthorityRightToWorkViewModel = new PrincipalAuthorityRightToWorkViewModel
+                PrincipalAuthorityRightToWork = new PrincipalAuthorityRightToWorkViewModel
                 {
                     RightToWorkInUk = PermissionToWorkEnum.HasVisa,
                     VisaNumber = "12341234",
@@ -102,7 +102,7 @@ namespace GLAA.Services.Tests.Validation
                         Years = 1
                     }
                 },
-                UndischargedBankruptViewModel = new UndischargedBankruptViewModel
+                UndischargedBankrupt = new UndischargedBankruptViewModel
                 {
                     IsUndischargedBankrupt = true,
                     BankruptcyDate = new DateViewModel
@@ -111,12 +111,12 @@ namespace GLAA.Services.Tests.Validation
                     },
                     BankruptcyNumber = "1234567"
                 },
-                DisqualifiedDirectorViewModel = new DisqualifiedDirectorViewModel
+                DisqualifiedDirector = new DisqualifiedDirectorViewModel
                 {
                     IsDisqualifiedDirector = true,
                     DisqualificationDetails = "Details"
                 },
-                RestraintOrdersViewModel = new RestraintOrdersViewModel
+                RestraintOrders = new RestraintOrdersViewModel
                 {
                     HasRestraintOrders = true,
                     RestraintOrders = new[]
@@ -128,7 +128,7 @@ namespace GLAA.Services.Tests.Validation
                         }
                     }
                 },
-                UnspentConvictionsViewModel = new UnspentConvictionsViewModel
+                UnspentConvictions = new UnspentConvictionsViewModel
                 {
                     HasUnspentConvictions = true,
                     UnspentConvictions = new[]
@@ -140,7 +140,7 @@ namespace GLAA.Services.Tests.Validation
                         }
                     }
                 },
-                OffencesAwaitingTrialViewModel = new OffencesAwaitingTrialViewModel
+                OffencesAwaitingTrial = new OffencesAwaitingTrialViewModel
                 {
                     HasOffencesAwaitingTrial = true,
                     OffencesAwaitingTrial = new[]
@@ -152,7 +152,7 @@ namespace GLAA.Services.Tests.Validation
                         }
                     }
                 },
-                PreviousLicenceViewModel = new PreviousLicenceViewModel
+                PreviousLicence = new PreviousLicenceViewModel
                 {
                     HasPreviouslyHeldLicence = true,
                     PreviousLicenceDescription = "description"
@@ -204,7 +204,7 @@ namespace GLAA.Services.Tests.Validation
             // in this test, we're not checking the automapping of the address.NonUk > ni_number.IsUk
             // it's shown here for info
             model.Address.NonUK = false;
-            model.BirthDetailsViewModel.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
+            model.BirthDetails.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
             {
                 IsUk = true,
                 NationalInsuranceNumber = null
@@ -218,7 +218,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_with_a_visa_and_no_visa_number_is_invalid()
         {
-            model.PrincipalAuthorityRightToWorkViewModel.VisaNumber = null;
+            model.PrincipalAuthorityRightToWork.VisaNumber = null;
 
             model.Validate();
 
@@ -228,7 +228,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_with_a_visa_and_no_immigration_status_is_invalid()
         {
-            model.PrincipalAuthorityRightToWorkViewModel.ImmigrationStatus = null;
+            model.PrincipalAuthorityRightToWork.ImmigrationStatus = null;
 
             model.Validate();
 
@@ -238,7 +238,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_with_a_visa_and_no_leave_to_reamin_date_is_invalid()
         {
-            model.PrincipalAuthorityRightToWorkViewModel.LeaveToRemainTo = new DateViewModel();
+            model.PrincipalAuthorityRightToWork.LeaveToRemainTo = new DateViewModel();
 
             model.Validate();
 
@@ -248,7 +248,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_with_a_visa_and_no_length_of_uk_work_is_invalid()
         {
-            model.PrincipalAuthorityRightToWorkViewModel.LengthOfUKWork = new TimeSpanViewModel();
+            model.PrincipalAuthorityRightToWork.LengthOfUKWork = new TimeSpanViewModel();
 
             model.Validate();
 
@@ -258,7 +258,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_is_an_undischarged_bankrupt_and_no_bankruptcy_date_is_invalid()
         {
-            model.UndischargedBankruptViewModel.BankruptcyDate = new DateViewModel();
+            model.UndischargedBankrupt.BankruptcyDate = new DateViewModel();
 
             model.Validate();
 
@@ -268,7 +268,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_is_an_undischarged_bankrupt_and_no_bankruptcy_number_is_invalid()
         {
-            model.UndischargedBankruptViewModel.BankruptcyNumber = null;
+            model.UndischargedBankrupt.BankruptcyNumber = null;
 
             model.Validate();
 
@@ -278,7 +278,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_is_an_undischarged_bankrupt_and_an_invalid_bankruptcy_number_is_invalid()
         {
-            model.UndischargedBankruptViewModel.BankruptcyNumber = "Invalid";
+            model.UndischargedBankrupt.BankruptcyNumber = "Invalid";
 
             model.Validate();
 
@@ -288,7 +288,7 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_is_a_disqualified_director_and_no_details_is_invalid()
         {
-            model.DisqualifiedDirectorViewModel.DisqualificationDetails = null;
+            model.DisqualifiedDirector.DisqualificationDetails = null;
 
             model.Validate();
 
@@ -298,8 +298,8 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_has_restraint_orders_but_no_details_is_invalid()
         {
-            model.RestraintOrdersViewModel.HasRestraintOrders = true;
-            model.RestraintOrdersViewModel.RestraintOrders = new List<RestraintOrderViewModel>();
+            model.RestraintOrders.HasRestraintOrders = true;
+            model.RestraintOrders.RestraintOrders = new List<RestraintOrderViewModel>();
 
             model.Validate();
 
@@ -309,8 +309,8 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_has_convictions_but_no_details_is_invalid()
         {
-            model.UnspentConvictionsViewModel.HasUnspentConvictions = true;
-            model.UnspentConvictionsViewModel.UnspentConvictions = new List<UnspentConvictionViewModel>();
+            model.UnspentConvictions.HasUnspentConvictions = true;
+            model.UnspentConvictions.UnspentConvictions = new List<UnspentConvictionViewModel>();
 
             model.Validate();
 
@@ -320,8 +320,8 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_has_offences_but_no_details_is_invalid()
         {
-            model.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial = true;
-            model.OffencesAwaitingTrialViewModel.OffencesAwaitingTrial = new List<OffenceAwaitingTrialViewModel>();
+            model.OffencesAwaitingTrial.HasOffencesAwaitingTrial = true;
+            model.OffencesAwaitingTrial.OffencesAwaitingTrial = new List<OffenceAwaitingTrialViewModel>();
 
             model.Validate();
 
@@ -331,8 +331,8 @@ namespace GLAA.Services.Tests.Validation
         [TestMethod]
         public void a_model_that_has_previous_licences_but_no_details_is_invalid()
         {
-            model.PreviousLicenceViewModel.HasPreviouslyHeldLicence = true;
-            model.PreviousLicenceViewModel.PreviousLicenceDescription = null;
+            model.PreviousLicence.HasPreviouslyHeldLicence = true;
+            model.PreviousLicence.PreviousLicenceDescription = null;
 
             model.Validate();
 
@@ -345,7 +345,7 @@ namespace GLAA.Services.Tests.Validation
             // in this test, we're not checking the automapping of the address.NonUk > ni_number.IsUk
             // it's shown here for info
             model.Address.NonUK = false;
-            model.BirthDetailsViewModel.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
+            model.BirthDetails.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
             {
                 IsUk = true,
                 NationalInsuranceNumber = "JT123456A"
@@ -362,7 +362,7 @@ namespace GLAA.Services.Tests.Validation
             // in this test, we're not checking the automapping of the address.NonUk > ni_number.IsUk
             // it's shown here for info
             model.Address.NonUK = true;
-            model.BirthDetailsViewModel.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
+            model.BirthDetails.NationalInsuranceNumberViewModel = new NationalInsuranceNumberViewModel
             {
                 IsUk = false,
                 NationalInsuranceNumber = null

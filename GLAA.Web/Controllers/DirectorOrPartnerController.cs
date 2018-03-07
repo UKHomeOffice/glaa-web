@@ -314,7 +314,7 @@ namespace GLAA.Web.Controllers
             var parent =
                 LicenceApplicationViewModelBuilder.Build<DirectorOrPartnerViewModel, DirectorOrPartner>(licenceId,
                     l => l.DirectorOrPartners.Single(p => p.Id == Session.GetCurrentDopId()));
-            model = parent.RestraintOrdersViewModel;
+            model = parent.RestraintOrders;
 
             if ((model.HasRestraintOrders ?? false) && !model.RestraintOrders.Any())
             {
@@ -343,7 +343,7 @@ namespace GLAA.Web.Controllers
             var parent =
                 LicenceApplicationViewModelBuilder.Build<DirectorOrPartnerViewModel, DirectorOrPartner>(licenceId,
                     l => l.DirectorOrPartners.Single(p => p.Id == Session.GetCurrentDopId()));
-            model = parent.UnspentConvictionsViewModel;
+            model = parent.UnspentConvictions;
 
             if ((model.HasUnspentConvictions ?? false) && !model.UnspentConvictions.Any())
             {
@@ -372,7 +372,7 @@ namespace GLAA.Web.Controllers
             var parent =
                 LicenceApplicationViewModelBuilder.Build<DirectorOrPartnerViewModel, DirectorOrPartner>(licenceId,
                     l => l.DirectorOrPartners.Single(p => p.Id == Session.GetCurrentDopId()));
-            model = parent.OffencesAwaitingTrialViewModel;
+            model = parent.OffencesAwaitingTrial;
 
             if ((model.HasOffencesAwaitingTrial ?? false) && !model.OffencesAwaitingTrial.Any())
             {

@@ -163,7 +163,7 @@ namespace GLAA.Web.Controllers
                     break;
             }
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -174,7 +174,7 @@ namespace GLAA.Web.Controllers
         {
             LicenceApplicationPostDataHandler.Delete<RestraintOrder>(id);
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -276,7 +276,7 @@ namespace GLAA.Web.Controllers
                     break;
             }
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -287,7 +287,7 @@ namespace GLAA.Web.Controllers
         {
             LicenceApplicationPostDataHandler.Delete<Conviction>(id);
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -394,7 +394,7 @@ namespace GLAA.Web.Controllers
                     break;
             }
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -405,7 +405,7 @@ namespace GLAA.Web.Controllers
         {
             LicenceApplicationPostDataHandler.Delete<OffenceAwaitingTrial>(id);
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -432,7 +432,7 @@ namespace GLAA.Web.Controllers
 
             LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), l => l.PreviousTradingNames, model, model.Id);
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }
@@ -443,7 +443,7 @@ namespace GLAA.Web.Controllers
         {
             LicenceApplicationPostDataHandler.Delete<PreviousTradingName>(id);
 
-            var lastLoaded = Session.GetLoadedPage();
+            var lastLoaded = Session.GetLoadedActionName();
 
             return RedirectToAction(section, lastLoaded);
         }

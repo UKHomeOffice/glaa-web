@@ -41,7 +41,7 @@ namespace GLAA.Services.Tests.Validation
                         Date = DateTime.Now
                     }
                 },
-                BirthDetailsViewModel =  new BirthDetailsViewModel
+                BirthDetails =  new BirthDetailsViewModel
                 {
                     TownOfBirthViewModel = new TownOfBirthViewModel
                     {
@@ -83,16 +83,16 @@ namespace GLAA.Services.Tests.Validation
                 {
                     Nationality = "British"
                 },
-                PassportViewModel = new PassportViewModel
+                Passport = new PassportViewModel
                 {
                     HasPassport = true
                 },
-                RightToWorkViewModel = new RightToWorkViewModel
+                RightToWork = new RightToWorkViewModel
                 {
                     RequiresVisa = true,
                     VisaDescription = "description"
                 },
-                UndischargedBankruptViewModel = new UndischargedBankruptViewModel
+                UndischargedBankrupt = new UndischargedBankruptViewModel
                 {
                     IsUndischargedBankrupt = true,
                     BankruptcyDate = new DateViewModel
@@ -101,12 +101,12 @@ namespace GLAA.Services.Tests.Validation
                     },
                     BankruptcyNumber = "1234567"
                 },
-                DisqualifiedDirectorViewModel = new DisqualifiedDirectorViewModel
+                DisqualifiedDirector = new DisqualifiedDirectorViewModel
                 {
                     IsDisqualifiedDirector = true,
                     DisqualificationDetails = "Details"
                 },
-                RestraintOrdersViewModel = new RestraintOrdersViewModel
+                RestraintOrders = new RestraintOrdersViewModel
                 {
                     HasRestraintOrders = true,
                     RestraintOrders = new[]
@@ -118,7 +118,7 @@ namespace GLAA.Services.Tests.Validation
                         }
                     }
                 },
-                UnspentConvictionsViewModel = new UnspentConvictionsViewModel
+                UnspentConvictions = new UnspentConvictionsViewModel
                 {
                     HasUnspentConvictions = true,
                     UnspentConvictions = new[]
@@ -130,7 +130,7 @@ namespace GLAA.Services.Tests.Validation
                         }
                     }
                 },
-                OffencesAwaitingTrialViewModel = new OffencesAwaitingTrialViewModel
+                OffencesAwaitingTrial = new OffencesAwaitingTrialViewModel
                 {
                     HasOffencesAwaitingTrial = true,
                     OffencesAwaitingTrial = new[]
@@ -142,7 +142,7 @@ namespace GLAA.Services.Tests.Validation
                         }
                     }
                 },
-                PreviousLicenceViewModel = new PreviousLicenceViewModel
+                PreviousLicence = new PreviousLicenceViewModel
                 {
                     HasPreviouslyHeldLicence = true,
                     PreviousLicenceDescription = "description"
@@ -166,7 +166,7 @@ namespace GLAA.Services.Tests.Validation
                         Date = DateTime.Now
                     }
                 },
-                BirthDetailsViewModel = new BirthDetailsViewModel
+                BirthDetails = new BirthDetailsViewModel
                 {
                     TownOfBirthViewModel = new TownOfBirthViewModel
                     {

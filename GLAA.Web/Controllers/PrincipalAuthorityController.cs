@@ -24,7 +24,7 @@ namespace GLAA.Web.Controllers
         {
         }
 
-        private PrincipalAuthorityViewModel SetupGetPart(int id)
+        private PrincipalAuthorityViewModel SetupGetPart(string actionName)
         {
             var licenceId = Session.GetCurrentLicenceId();
             var model = LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
@@ -36,37 +36,35 @@ namespace GLAA.Web.Controllers
             if (model.DirectorOrPartnerId.HasValue)
                 Session.SetCurrentDopStatus(model.DirectorOrPartnerId.Value, model.IsDirector.IsDirector ?? false);
 
-            Session.SetLoadedPage(id);
+            Session.SetLoadedPage(actionName);
             return model;
         }
 
-        [HttpGet]
-        [ImportModelState]
-        public IActionResult Part(int id, bool? back = false)
+        private IActionResult PrincipalAuthorityGet(string actionName, bool? back = false)
         {
-            var model = SetupGetPart(id);
+            var model = SetupGetPart(actionName);
 
             return
                 back.HasValue && back.Value
-                    ? GetPreviousView(id, FormSection.PrincipalAuthority, model)
-                    : GetNextView(id, FormSection.PrincipalAuthority, model);
+                    ? GetPreviousView(FormSection.PrincipalAuthority, actionName, model)
+                    : GetNextView(FormSection.PrincipalAuthority, actionName, model);
         }
 
 
-        private IActionResult PrincipalAuthorityPost<T>(T model, int submittedPageId, bool doDopLinking = true)
+        private IActionResult PrincipalAuthorityPost<T>(T model, string submittedPage, bool doDopLinking = true)
         {
-            return PrincipalAuthorityPost(model, submittedPageId, doDopLinking, m => !ModelState.IsValid);
+            return PrincipalAuthorityPost(model, submittedPage, doDopLinking, m => !ModelState.IsValid);
         }
 
-        private IActionResult PrincipalAuthorityPost<T>(T model, int submittedPageId, bool doDopLinking, Func<T, bool> modelIsInvalid)
+        private IActionResult PrincipalAuthorityPost<T>(T model, string submittedPage, bool doDopLinking, Func<T, bool> modelIsInvalid)
         {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, submittedPageId);
+            Session.SetSubmittedPage(FormSection.PrincipalAuthority, submittedPage);
 
             model = RepopulateDropdowns(model);
 
             if (modelIsInvalid(model))
             {
-                return View(GetViewPath(FormSection.PrincipalAuthority, submittedPageId), model);
+                return View(submittedPage, model);
             }
 
             if (Session.GetCurrentPaIsDirector() && doDopLinking)
@@ -80,18 +78,30 @@ namespace GLAA.Web.Controllers
 
             Session.SetCurrentPaStatus(paId, doDopLinking);
 
-            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, submittedPageId);
+            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, submittedPage);
+        }
+
+        public IActionResult Introduction(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Introduction), back);
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult IsDirector(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(IsDirector), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveIsDirector(IsDirectorViewModel model)
+        public IActionResult IsDirector(IsDirectorViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 2);
+            Session.SetSubmittedPage(FormSection.PrincipalAuthority, nameof(IsDirector));
 
             if (!ModelState.IsValid || !model.IsDirector.HasValue)
             {
-                return View(GetViewPath(FormSection.PrincipalAuthority, 2), model);
+                return View(nameof(IsDirector), model);
             }
 
             var paId = LicenceApplicationPostDataHandler.Update(Session.GetCurrentLicenceId(), x => x.PrincipalAuthorities,
@@ -114,58 +124,100 @@ namespace GLAA.Web.Controllers
                 LicenceApplicationPostDataHandler.UpsertDirectorOrPartnerAndLinkToPrincipalAuthority(
                     Session.GetCurrentLicenceId(), paId, dopId, model);
 
-                return RedirectToAction(FormSection.PrincipalAuthority, 4);
+                return RedirectToAction(FormSection.PrincipalAuthority, nameof(FullName));
             }
 
             LicenceApplicationPostDataHandler.UnlinkDirectorOrPartnerFromPrincipalAuthority(Session.GetCurrentPaId());
 
-            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, 2);
+            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, nameof(IsDirector));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult PrincipalAuthorityConfirmation(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(PrincipalAuthorityConfirmation), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePrincipalAuthorityConfirmation(PrincipalAuthorityConfirmationViewModel model)
+        public IActionResult PrincipalAuthorityConfirmation(PrincipalAuthorityConfirmationViewModel model)
         {
-            return PrincipalAuthorityPost(model, 3, false, m => !ModelState.IsValid || !m.WillProvideConfirmation);
+            return PrincipalAuthorityPost(model, nameof(PrincipalAuthorityConfirmation), false, m => !ModelState.IsValid || !m.WillProvideConfirmation);
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult FullName(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(FullName), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveFullName(FullNameViewModel model)
+        public IActionResult FullName(FullNameViewModel model)
         {
-            return PrincipalAuthorityPost(model, 4);
+            return PrincipalAuthorityPost(model, nameof(FullName));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult AlternativeName(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(AlternativeName), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveAlternativeFullName(AlternativeFullNameViewModel model)
+        public IActionResult AlternativeName(AlternativeFullNameViewModel model)
         {
-            return PrincipalAuthorityPost(model, 5);
+            return PrincipalAuthorityPost(model, nameof(AlternativeName));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult DateOfBirth(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(DateOfBirth), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveDateOfBirth(DateOfBirthViewModel model)
+        public IActionResult DateOfBirth(DateOfBirthViewModel model)
         {
-            return PrincipalAuthorityPost(model, 6);
+            return PrincipalAuthorityPost(model, nameof(DateOfBirth));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult JobTitle(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(JobTitle), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveJobTitle(JobTitleViewModel model)
+        public IActionResult JobTitle(JobTitleViewModel model)
         {
-            return PrincipalAuthorityPost(model, 8);
+            return PrincipalAuthorityPost(model, nameof(JobTitle));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult Address(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Address), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveAddress(AddressViewModel model)
+        public IActionResult Address(AddressViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 9);
+            Session.SetSubmittedPage(FormSection.PrincipalAuthority, nameof(Address));
 
             if (!ModelState.IsValid)
             {
-                return View(GetViewPath(FormSection.PrincipalAuthority, 9), model);
+                return View(nameof(Address), model);
             }
 
             if (Session.GetCurrentPaIsDirector())
@@ -177,178 +229,309 @@ namespace GLAA.Web.Controllers
             LicenceApplicationPostDataHandler.UpdateAddress(Session.GetCurrentLicenceId(),
                 x => x.PrincipalAuthorities.SingleOrDefault(pa => pa.Id == Session.GetCurrentPaId()), model);
 
-            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, 9);
+            return CheckParentValidityAndRedirect(FormSection.PrincipalAuthority, nameof(Address));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult BusinessPhoneNumber(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(BusinessPhoneNumber), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBusinessPhoneNumber(BusinessPhoneNumberViewModel model)
+        public IActionResult BusinessPhoneNumber(BusinessPhoneNumberViewModel model)
         {
-            return PrincipalAuthorityPost(model, 10);
+            return PrincipalAuthorityPost(model, nameof(BusinessPhoneNumber));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult BusinessExtension(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(BusinessExtension), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBusinessExtension(BusinessExtensionViewModel model)
+        public IActionResult BusinessExtension(BusinessExtensionViewModel model)
         {
-            return PrincipalAuthorityPost(model, 11);
+            return PrincipalAuthorityPost(model, nameof(BusinessExtension));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult BirthDetails(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(BirthDetails), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveBirthDetails(BirthDetailsViewModel model)
+        public IActionResult BirthDetails(BirthDetailsViewModel model)
         {
-            return PrincipalAuthorityPost(model, 7);
+            return PrincipalAuthorityPost(model, nameof(BirthDetails));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult PersonalMobileNumber(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(PersonalMobileNumber), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePersonalMobileNumber(PersonalMobileNumberViewModel model)
+        public IActionResult PersonalMobileNumber(PersonalMobileNumberViewModel model)
         {
-            return PrincipalAuthorityPost(model, 12);
+            return PrincipalAuthorityPost(model, nameof(PersonalMobileNumber));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult PersonalEmailAddress(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(PersonalEmailAddress), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePersonalEmailAddress(PersonalEmailAddressViewModel model)
+        public IActionResult PersonalEmailAddress(PersonalEmailAddressViewModel model)
         {
-            return PrincipalAuthorityPost(model, 13);
+            return PrincipalAuthorityPost(model, nameof(PersonalEmailAddress));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult Nationality(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Nationality), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveNationality(NationalityViewModel model)
+        public IActionResult Nationality(NationalityViewModel model)
         {
-            return PrincipalAuthorityPost(model, 14);
+            return PrincipalAuthorityPost(model, nameof(Nationality));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult Passport(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Passport), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePassport(PassportViewModel model)
+        public IActionResult Passport(PassportViewModel model)
         {
-            return PrincipalAuthorityPost(model, 15);
+            return PrincipalAuthorityPost(model, nameof(Passport));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult PrincipalAuthorityRightToWork(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(PrincipalAuthorityRightToWork), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePrincipalAuthorityRightToWork(PrincipalAuthorityRightToWorkViewModel model)
+        public IActionResult PrincipalAuthorityRightToWork(PrincipalAuthorityRightToWorkViewModel model)
         {
-            return PrincipalAuthorityPost(model, 16);
+            return PrincipalAuthorityPost(model, nameof(PrincipalAuthorityRightToWork));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult UndischargedBankrupt(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(UndischargedBankrupt), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveUndischargedBankrupt(UndischargedBankruptViewModel model)
+        public IActionResult UndischargedBankrupt(UndischargedBankruptViewModel model)
         {
-            return PrincipalAuthorityPost(model, 17);
+            return PrincipalAuthorityPost(model, nameof(UndischargedBankrupt));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult DisqualifiedDirector(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(DisqualifiedDirector), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveDisqualifiedDirector(DisqualifiedDirectorViewModel model)
+        public IActionResult DisqualifiedDirector(DisqualifiedDirectorViewModel model)
         {
-            return PrincipalAuthorityPost(model, 18);
+            return PrincipalAuthorityPost(model, nameof(DisqualifiedDirector));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult RestraintOrders(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(RestraintOrders), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveRestraintOrders(RestraintOrdersViewModel model)
+        public IActionResult RestraintOrders(RestraintOrdersViewModel model)
         {
-            return PrincipalAuthorityPost(model, 19);
+            return PrincipalAuthorityPost(model, nameof(RestraintOrders));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult ReviewRestraintOrders(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(ReviewRestraintOrders), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult ReviewPrincipalAuthorityRestraintOrders(RestraintOrdersViewModel model)
+        public IActionResult ReviewRestraintOrders(RestraintOrdersViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 20);
+            Session.SetSubmittedPage(FormSection.PrincipalAuthority, nameof(ReviewRestraintOrders));
 
             var licenceId = Session.GetCurrentLicenceId();
             var parent =
                 LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
                     l => l.PrincipalAuthorities.SingleOrDefault(p => p.Id == Session.GetCurrentPaId()));
-            model = parent.RestraintOrdersViewModel;
+            model = parent.RestraintOrders;
 
             if ((model.HasRestraintOrders ?? false) && !model.RestraintOrders.Any())
             {
                 ModelState.AddModelError(nameof(model.RestraintOrders), "Please enter details of the restraint or confiscation orders or civil recoveries that you have been the subject of.");
                 ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.PrincipalAuthority, 20), model);
+                return View(nameof(ReviewRestraintOrders), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, 21);
+            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(ReviewRestraintOrders));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult UnspentConvictions(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(UnspentConvictions), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveUnspentConvictions(UnspentConvictionsViewModel model)
+        public IActionResult UnspentConvictions(UnspentConvictionsViewModel model)
         {
-            return PrincipalAuthorityPost(model, 21);
+            return PrincipalAuthorityPost(model, nameof(UnspentConvictions));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult ReviewUnspentConvictions(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(ReviewUnspentConvictions), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult ReviewPrincipalAuthorityUnspentConvictions(UnspentConvictionsViewModel model)
+        public IActionResult ReviewUnspentConvictions(UnspentConvictionsViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 22);
+            Session.SetSubmittedPage(FormSection.PrincipalAuthority, nameof(ReviewUnspentConvictions));
 
             var licenceId = Session.GetCurrentLicenceId();
             var parent =
                 LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
                     l => l.PrincipalAuthorities.SingleOrDefault(p => p.Id == Session.GetCurrentPaId()));
-            model = parent.UnspentConvictionsViewModel;
+            model = parent.UnspentConvictions;
 
             if ((model.HasUnspentConvictions ?? false) && !model.UnspentConvictions.Any())
             {
                 ModelState.AddModelError(nameof(model.UnspentConvictions), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
                 ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.PrincipalAuthority, 22), model);
+                return View(nameof(ReviewUnspentConvictions), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, 23);
+            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(ReviewUnspentConvictions));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult OffencesAwaitingTrial(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(OffencesAwaitingTrial), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SaveOffencesAwaitingTrial(OffencesAwaitingTrialViewModel model)
+        public IActionResult OffencesAwaitingTrial(OffencesAwaitingTrialViewModel model)
         {
-            return PrincipalAuthorityPost(model, 23);
+            return PrincipalAuthorityPost(model, nameof(OffencesAwaitingTrial));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult ReviewOffencesAwaitingTrial(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(ReviewOffencesAwaitingTrial), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult ReviewPrincipalAuthorityOffencesAwaitingTrial(OffencesAwaitingTrialViewModel model)
+        public IActionResult ReviewOffencesAwaitingTrial(OffencesAwaitingTrialViewModel model)
         {
-            Session.SetSubmittedPage(FormSection.PrincipalAuthority, 24);
+            Session.SetSubmittedPage(FormSection.PrincipalAuthority, nameof(ReviewOffencesAwaitingTrial));
 
             var licenceId = Session.GetCurrentLicenceId();
             var parent =
                 LicenceApplicationViewModelBuilder.Build<PrincipalAuthorityViewModel, PrincipalAuthority>(licenceId,
                     l => l.PrincipalAuthorities.SingleOrDefault(p => p.Id == Session.GetCurrentPaId()));
-            model = parent.OffencesAwaitingTrialViewModel;
+            model = parent.OffencesAwaitingTrial;
 
             if ((model.HasOffencesAwaitingTrial ?? false) && !model.OffencesAwaitingTrial.Any())
             {
                 ModelState.AddModelError(nameof(model.OffencesAwaitingTrial), "Please enter details of the unspent criminal convictions, or alternative sanctions or penalties for proven offences you have.");
                 ViewData.Add("doOverride", true);
-                return View(GetViewPath(FormSection.PrincipalAuthority, 24), model);
+                return View(nameof(ReviewOffencesAwaitingTrial), model);
             }
 
-            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, 25);
+            return ValidateParentAndRedirect(parent, FormSection.PrincipalAuthority, nameof(ReviewOffencesAwaitingTrial));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult PreviousLicence(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(PreviousLicence), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePreviousLicence(PreviousLicenceViewModel model)
+        public IActionResult PreviousLicence(PreviousLicenceViewModel model)
         {
-            return PrincipalAuthorityPost(model, 25);
+            return PrincipalAuthorityPost(model, nameof(PreviousLicence));
+        }
+
+        [HttpGet]
+        [ImportModelState]
+        public IActionResult PreviousExperience(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(PreviousExperience), back);
         }
 
         [HttpPost]
         [ExportModelState]
-        public IActionResult SavePreviousExperience(PreviousExperienceViewModel model)
+        public IActionResult PreviousExperience(PreviousExperienceViewModel model)
         {
-            return PrincipalAuthorityPost(model, 26, false);
+            return PrincipalAuthorityPost(model, nameof(PreviousExperience), false);
+        }
+
+        public IActionResult Summary(bool? back = false)
+        {
+            return PrincipalAuthorityGet(nameof(Summary), back);
         }
     }
 }

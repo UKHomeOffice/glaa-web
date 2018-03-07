@@ -272,17 +272,17 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool CanView(PrincipalAuthorityViewModel parent)
         {
-            return parent.RestraintOrdersViewModel.HasRestraintOrders ?? false;
+            return parent.RestraintOrders.HasRestraintOrders ?? false;
         }
 
         public bool CanView(DirectorOrPartnerViewModel parent)
         {
-            return parent.RestraintOrdersViewModel.HasRestraintOrders ?? false;
+            return parent.RestraintOrders.HasRestraintOrders ?? false;
         }
 
         public bool CanView(AlternativeBusinessRepresentativeViewModel parent)
         {
-            return parent.RestraintOrdersViewModel.HasRestraintOrders ?? false;
+            return parent.RestraintOrders.HasRestraintOrders ?? false;
         }
 
         public bool CanView(NamedIndividualViewModel parent)
@@ -347,17 +347,17 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool CanView(PrincipalAuthorityViewModel parent)
         {
-            return parent.UnspentConvictionsViewModel.HasUnspentConvictions ?? false;
+            return parent.UnspentConvictions.HasUnspentConvictions ?? false;
         }
 
         public bool CanView(DirectorOrPartnerViewModel parent)
         {
-            return parent.UnspentConvictionsViewModel.HasUnspentConvictions ?? false;
+            return parent.UnspentConvictions.HasUnspentConvictions ?? false;
         }
 
         public bool CanView(AlternativeBusinessRepresentativeViewModel parent)
         {
-            return parent.UnspentConvictionsViewModel.HasUnspentConvictions ?? false;
+            return parent.UnspentConvictions.HasUnspentConvictions ?? false;
         }
 
         public bool CanView(NamedIndividualViewModel parent)
@@ -422,17 +422,17 @@ namespace GLAA.ViewModels.LicenceApplication
 
         public bool CanView(PrincipalAuthorityViewModel parent)
         {
-            return parent.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial ?? false;
+            return parent.OffencesAwaitingTrial.HasOffencesAwaitingTrial ?? false;
         }
 
         public bool CanView(DirectorOrPartnerViewModel parent)
         {
-            return parent.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial ?? false;
+            return parent.OffencesAwaitingTrial.HasOffencesAwaitingTrial ?? false;
         }
 
         public bool CanView(AlternativeBusinessRepresentativeViewModel parent)
         {
-            return parent.OffencesAwaitingTrialViewModel.HasOffencesAwaitingTrial ?? false;
+            return parent.OffencesAwaitingTrial.HasOffencesAwaitingTrial ?? false;
         }
 
         public bool CanView(NamedIndividualViewModel parent)

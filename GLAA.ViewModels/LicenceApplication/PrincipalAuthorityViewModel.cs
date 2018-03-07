@@ -13,7 +13,7 @@ namespace GLAA.ViewModels.LicenceApplication
             IsDirector = new IsDirectorViewModel();
             PreviousExperience = new PreviousExperienceViewModel();
             PrincipalAuthorityConfirmation = new PrincipalAuthorityConfirmationViewModel();
-            PrincipalAuthorityRightToWorkViewModel = new PrincipalAuthorityRightToWorkViewModel();
+            PrincipalAuthorityRightToWork = new PrincipalAuthorityRightToWorkViewModel();
         }
 
         public int? Id { get; set; }
@@ -23,7 +23,7 @@ namespace GLAA.ViewModels.LicenceApplication
         public IsDirectorViewModel IsDirector { get; set; }
         public PrincipalAuthorityConfirmationViewModel PrincipalAuthorityConfirmation { get; set; }
         public PreviousExperienceViewModel PreviousExperience { get; set; }
-        public PrincipalAuthorityRightToWorkViewModel PrincipalAuthorityRightToWorkViewModel { get; set; }
+        public PrincipalAuthorityRightToWorkViewModel PrincipalAuthorityRightToWork { get; set; }
         public LegalStatusEnum? LegalStatus { get; set; }
     }
 

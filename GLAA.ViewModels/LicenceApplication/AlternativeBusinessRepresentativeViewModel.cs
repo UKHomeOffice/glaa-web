@@ -4,11 +4,11 @@
     {
         public AlternativeBusinessRepresentativeViewModel()
         {
-            RightToWorkViewModel = new RightToWorkViewModel();
+            RightToWork = new RightToWorkViewModel();
         }
 
         public int? Id { get; set; }
 
-        public RightToWorkViewModel RightToWorkViewModel { get; set; }
+        public RightToWorkViewModel RightToWork { get; set; }
     }
 }
